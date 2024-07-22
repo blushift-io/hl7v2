@@ -1,35 +1,47 @@
 package hl7v2
 
-import "errors"
+import (
+	"bytes"
+	"errors"
+)
 
 var (
 	ErrEncodingTooShort = errors.New("invalid delimiters, encoding chars must be at least 5 bytes")
 	ErrEncodingInvalid  = errors.New("invalid encoding chars")
 )
 
-//go:generate enumer -type=DelimiterType --linecomment
-//DelimiterType is an enum of valid delimiters
+// Type is an enum of valid delimiters
+//
+//go:generate enumer -type=DelimiterType --linecomment -output=delimiter_enums.go
 type DelimiterType int
 
 const (
-	DelimiterInvalid      DelimiterType = iota //invalid
-	DelimiterSegment                           //segment
-	DelimiterField                             //field
-	DelimiterRepetition                        //repetition
-	DelimiterComponent                         //component
-	DelimiterSubcomponent                      //subcomponent
-	DelimiterEscape                            //escape
-	DelimiterTruncation                        //truncation
+	InvalidDelimiter      DelimiterType = iota //invalid
+	SegmentDelimiter                           //segment
+	FieldDelimiter                             //field
+	RepetitionDelimiter                        //repetition
+	ComponentDelimiter                         //component
+	SubcomponentDelimiter                      //subcomponent
+	EscapeDelimiter                            //escape
+	TruncationDelimiter                        //truncation
 )
 
-//Delimiter is a byte representation of a single delimiter
+// Delimiter is a byte representation of a single delimiter
 type Delimiter byte
 
 func (d Delimiter) String() string {
 	return string(d)
 }
 
-//Delimiters holds the message delimiters
+func (d Delimiter) Byte() byte {
+	return byte(d)
+}
+
+func (d Delimiter) Bytes() []byte {
+	return []byte{byte(d)}
+}
+
+// Delimiters holds the message delimiters
 type Delimiters struct {
 	Segment      Delimiter
 	Field        Delimiter
@@ -42,7 +54,7 @@ type Delimiters struct {
 
 type SetDelimiter func(*Delimiters)
 
-//DefaultDelimiters returns the default delimiters
+// DefaultDelimiters returns the default delimiters
 func DefaultDelimiters() *Delimiters {
 	return &Delimiters{
 		Segment:      '\r',
@@ -129,4 +141,60 @@ func ParseDelimiters(b []byte) (*Delimiters, error) {
 	}
 
 	return delims, nil
+}
+
+func (d *Delimiters) Join(b [][]byte, typ DelimiterType) []byte {
+	var delim Delimiter
+	switch typ {
+	case SegmentDelimiter:
+		delim = d.Segment
+	case FieldDelimiter:
+		delim = d.Field
+	case RepetitionDelimiter:
+		delim = d.Repetition
+	case ComponentDelimiter:
+		delim = d.Component
+	case SubcomponentDelimiter:
+		delim = d.Subcomponent
+	case EscapeDelimiter:
+		delim = d.Escape
+	case TruncationDelimiter:
+		delim = d.Truncation
+	default:
+		panic("invalid delimiter type")
+	}
+
+	return bytes.Join(b, delim.Bytes())
+}
+
+func (d *Delimiters) Split(b []byte, typ DelimiterType) [][]byte {
+	var delim Delimiter
+	switch typ {
+	case SegmentDelimiter:
+		delim = d.Segment
+	case FieldDelimiter:
+		delim = d.Field
+	case RepetitionDelimiter:
+		delim = d.Repetition
+	case ComponentDelimiter:
+		delim = d.Component
+	case SubcomponentDelimiter:
+		delim = d.Subcomponent
+	case EscapeDelimiter:
+		delim = d.Escape
+	case TruncationDelimiter:
+		delim = d.Truncation
+	default:
+		panic("invalid delimiter type")
+	}
+
+	return bytes.Split(b, delim.Bytes())
+}
+
+func getDelimiters(delims ...*Delimiters) *Delimiters {
+	if len(delims) > 0 && delims[0] != nil {
+		return delims[0]
+	}
+
+	return DefaultDelimiters()
 }

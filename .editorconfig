@@ -1,0 +1,4 @@
+root = true
+
+[*.hl7]
+end_of_line = cr
