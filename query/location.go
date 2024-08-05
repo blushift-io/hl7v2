@@ -50,3 +50,31 @@ func ParseLocation(q string) (Location, error) {
 
 	return loc, nil
 }
+
+func (l Location) String() string {
+	str := ""
+	if len(l.Segment) > 0 {
+		str += l.Segment
+	}
+	if l.SegmentRep > 0 {
+		str += fmt.Sprintf("[%d]", l.SegmentRep)
+	}
+
+	if l.Field > 0 {
+		str += fmt.Sprintf(".%d", l.Field)
+	}
+
+	if l.FieldRep > 0 {
+		str += fmt.Sprintf("[%d]", l.FieldRep)
+	}
+
+	if l.Component > 0 {
+		str += fmt.Sprintf(".%d", l.Component)
+	}
+
+	if l.Subcomponent > 0 {
+		str += fmt.Sprintf(".%d", l.Subcomponent)
+	}
+
+	return str
+}

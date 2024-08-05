@@ -27,8 +27,8 @@ func (c RawComponent) String(delims ...*Delimiters) string {
 	return string(c.collect(delims...))
 }
 
-func (c RawComponent) Value() Value {
-	return NewValue(c.collect())
+func (c RawComponent) Value(delims ...*Delimiters) Value {
+	return NewValue(c.collect(delims...))
 }
 
 func (c RawComponent) Query(loc query.Location, delims ...*Delimiters) (*Value, error) {
@@ -86,6 +86,10 @@ func (el *Component) Children() []Element {
 	return makeElements(el.children...)
 }
 
+func (el *Component) Length() int {
+	return len(el.children)
+}
+
 func (el *Component) Position() int {
 	return el.pos
 }
@@ -113,7 +117,7 @@ func (el *Component) GetLocation(loc query.Location) (Element, error) {
 }
 
 func (el *Component) Location() query.Location {
-	return query.Location{
-		Component: el.pos,
-	}
+	loc := el.parent.Location()
+	loc.Component = el.pos
+	return loc
 }

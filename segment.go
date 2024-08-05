@@ -17,7 +17,17 @@ func (s RawSegment) collect(delims ...*Delimiters) []byte {
 		b = append(b, field.collect(d))
 	}
 
-	return d.Join(b, FieldDelimiter)
+	var res []byte
+	if s.ID() == "MSH" {
+		res = append(res, b[0]...)
+		res = append(res, b[1]...)
+		res = append(res, d.Join(b[2:], FieldDelimiter)...)
+	} else {
+		res = d.Join(b, FieldDelimiter)
+	}
+
+	return res
+
 }
 
 func (s RawSegment) Query(loc query.Location, delims ...*Delimiters) (*Value, error) {
@@ -26,8 +36,8 @@ func (s RawSegment) Query(loc query.Location, delims ...*Delimiters) (*Value, er
 		return &val, nil
 	}
 
-	if int(loc.Field) > len(s) {
-		return nil, fmt.Errorf("field %d not found", loc.Field)
+	if int(loc.Field) > len(s)-1 {
+		return nil, ErrValueNotFound
 	}
 
 	return s[loc.Field].Query(loc, delims...)
@@ -39,6 +49,10 @@ func (s RawSegment) ID() string {
 	}
 
 	return s[0].String()
+}
+
+func (s RawSegment) Value(delims ...*Delimiters) Value {
+	return NewValue(s.collect(delims...))
 }
 
 func (s RawSegment) String(delims ...*Delimiters) string {
@@ -91,18 +105,36 @@ func (s *Segment) Children() []Element {
 	return makeElements(s.children...)
 }
 
+func (s *Segment) Length() int {
+	return len(s.children)
+}
+
 func (s *Segment) Position() int {
 	return s.pos
 }
 
+func (s *Segment) Index() int {
+	if len(s.children) < 2 {
+		return 0
+	}
+
+	return s.children[1].Value().Int()
+}
+
 func (s *Segment) Location() query.Location {
+	rep := s.children[1].Value().Int()
+
 	return query.Location{
 		Segment:    s.Name(),
-		SegmentRep: s.pos,
+		SegmentRep: rep,
 	}
 }
 
 func (s *Segment) GetLocation(loc query.Location) (Element, error) {
+	if loc.Segment != s.id {
+		return nil, fmt.Errorf("segment mismatch: querying %s, got %s", s.id, loc.Segment)
+
+	}
 	if int(loc.Field) > len(s.children) {
 		return nil, fmt.Errorf("field %d not found", loc.Field)
 	}

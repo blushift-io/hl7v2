@@ -4,9 +4,6 @@ import (
 	"fmt"
 	"os"
 	"testing"
-
-	"github.com/blushift-io/hl7v2/query"
-	"github.com/davecgh/go-spew/spew"
 )
 
 func TestParseRawMessage(t *testing.T) {
@@ -39,14 +36,7 @@ func TestQueryRawMessage(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	q, err := query.ParseLocation("PV1.3[1]")
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	spew.Dump(q)
-
-	v, err := m.Query(q)
+	v, err := m.QueryValue("PV1.3[1]")
 	if err != nil {
 		t.Fatal(err)
 	}

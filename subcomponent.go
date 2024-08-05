@@ -50,6 +50,10 @@ func (el *Subcomponent) Children() []Element {
 	return nil
 }
 
+func (el *Subcomponent) Length() int {
+	return 1
+}
+
 func (el *Subcomponent) Position() int {
 	return el.pos
 }

@@ -3,6 +3,7 @@ package hl7v2
 import (
 	"bytes"
 	"errors"
+	"fmt"
 )
 
 var (
@@ -24,6 +25,8 @@ const (
 	SubcomponentDelimiter                      //subcomponent
 	EscapeDelimiter                            //escape
 	TruncationDelimiter                        //truncation
+
+	segmentDelimiter = byte('\r')
 )
 
 // Delimiter is a byte representation of a single delimiter
@@ -197,4 +200,30 @@ func getDelimiters(delims ...*Delimiters) *Delimiters {
 	}
 
 	return DefaultDelimiters()
+}
+
+func getEncodingChars(b []byte) ([]byte, error) {
+	buf := bytes.NewBuffer(b)
+
+	hdr := make([]byte, 3)
+	_, err := buf.Read(hdr)
+	if err != nil {
+		return nil, fmt.Errorf("error reading message header: %w", err)
+	}
+
+	if string(hdr) != "MSH" {
+		return nil, fmt.Errorf("invalid message: expected header 'MSH', got '%s'", hdr)
+	}
+
+	fs, err := buf.ReadByte()
+	if err != nil {
+		return nil, fmt.Errorf("error reading segment delimiter: %w", err)
+	}
+
+	encChars, err := buf.ReadBytes(fs)
+	if err != nil {
+		return nil, fmt.Errorf("error reading encoding characters: %w", err)
+	}
+
+	return append([]byte{fs}, encChars[:len(encChars)-1]...), nil
 }

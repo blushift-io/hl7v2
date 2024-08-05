@@ -1,4 +1,4 @@
-package grammar
+package query
 
 import (
 	"fmt"
@@ -10,7 +10,7 @@ var (
 	matchSegment = regexp.MustCompile("^([A-Z])([A-Z])([A-Z]|[0-9])$")
 )
 
-func New(q string) ([]Grammar, error) {
+func ParseGrammars(q string) (Grammars, error) {
 	if len(q) == 0 {
 		return nil, fmt.Errorf("grammar query cannot be empty")
 	}

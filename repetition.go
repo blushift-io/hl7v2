@@ -27,8 +27,8 @@ func (r RawRepetition) String(delims ...*Delimiters) string {
 	return string(r.collect(delims...))
 }
 
-func (r RawRepetition) Value() Value {
-	return NewValue(r.collect())
+func (r RawRepetition) Value(delims ...*Delimiters) Value {
+	return NewValue(r.collect(delims...))
 }
 
 func (r RawRepetition) Query(loc query.Location, delims ...*Delimiters) (*Value, error) {
@@ -82,6 +82,10 @@ func (r *Repetition) Parent() Element {
 
 func (r *Repetition) Children() []Element {
 	return makeElements(r.children...)
+}
+
+func (r *Repetition) Length() int {
+	return len(r.children)
 }
 
 func (r *Repetition) Position() int {

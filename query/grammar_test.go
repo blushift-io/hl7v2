@@ -1,4 +1,4 @@
-package grammar
+package query
 
 import (
 	"reflect"
@@ -30,7 +30,7 @@ func TestParseGrammar(t *testing.T) {
 	}
 
 	for _, tt := range table {
-		got, err := New(tt.q)
+		got, err := ParseGrammars(tt.q)
 		if err != nil {
 			t.Errorf("error parsing grammar %s: %s", tt.q, err)
 		}

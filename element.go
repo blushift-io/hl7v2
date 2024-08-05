@@ -2,9 +2,14 @@ package hl7v2
 
 import "github.com/blushift-io/hl7v2/query"
 
-// ElementType is an enum of valid element types
-//
 //go:generate enumer -type=ElementType --linecomment -output=element_enums.go
+
+type Queryable interface {
+	Delimiters() *Delimiters
+	QueryValue(q string) (*Value, error)
+}
+
+// ElementType is an enum of valid element types
 type ElementType int
 
 const (
@@ -27,10 +32,34 @@ type Element interface {
 	Delimiters() *Delimiters
 	Parent() Element
 	Children() []Element
+	Length() int
 	Position() int
 	Location() query.Location
 	GetLocation(query.Location) (Element, error)
 	Value() Value
+}
+
+type ElementIterator struct {
+	root   Element
+	cursor int
+}
+
+func NewIterator(el Element) *ElementIterator {
+	return &ElementIterator{
+		root: el,
+	}
+}
+
+func (i *ElementIterator) Next() Element {
+	ch := i.root.Children()
+	if i.cursor > len(ch)-1 {
+		return nil
+	}
+
+	el := ch[i.cursor]
+	i.cursor++
+
+	return el
 }
 
 func makeElements[T Element](els ...T) []Element {

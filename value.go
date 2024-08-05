@@ -1,6 +1,8 @@
 package hl7v2
 
 import (
+	"fmt"
+	"reflect"
 	"time"
 
 	"github.com/spf13/cast"
@@ -14,6 +16,29 @@ func NewValue(v []byte) Value {
 	return Value{
 		v: v,
 	}
+}
+
+func MarshalValue(v any) Value {
+	if rv := reflect.ValueOf(v); rv.IsZero() || rv.IsNil() {
+		return Value{}
+	}
+
+	b := cast.ToString(v)
+
+	return Value{
+		v: []byte(b),
+	}
+}
+
+func (v Value) Bind(val any) error {
+	rv := reflect.ValueOf(val)
+	if rv.Kind() != reflect.Ptr {
+		return fmt.Errorf("hl7v2: Bind expects a pointer")
+	}
+
+	rv.Elem().Set(reflect.ValueOf(v.v))
+
+	return nil
 }
 
 func (v Value) String() string {
@@ -33,7 +58,6 @@ func (v Value) Float64() float64 {
 }
 
 func (v Value) Bool() bool {
-
 	return cast.ToBool(string(v.v))
 }
 

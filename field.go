@@ -79,6 +79,10 @@ func (f *Field) Children() []Element {
 	return makeElements(f.children...)
 }
 
+func (f *Field) Length() int {
+	return len(f.children)
+}
+
 func (f *Field) Position() int {
 	return f.pos
 }

@@ -1,0 +1,9 @@
+{
+  "hl7tools.FavouriteRemoteHosts": [
+    {
+      "Description": "Dev Server",
+      "Hostname": "127.0.0.1",
+      "Port": 2525,
+    }
+  ]
+}

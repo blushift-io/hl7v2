@@ -3,8 +3,6 @@ package hl7v2
 import (
 	"fmt"
 	"time"
-
-	"github.com/spf13/cast"
 )
 
 //go:generate enumer -type=HeaderType,TrailerType --linecomment -output=header_enums.go
@@ -109,23 +107,31 @@ func (t MessageType) String() string {
 }
 
 type MessageHeader struct {
-	*header
-	Type                        MessageType
-	ControlID                   string
-	ProcessingID                string
-	VersionID                   Version
-	SequenceNumber              int
-	ContinuationPointer         string
-	AcceptAcknowledgment        string
-	CountryCode                 string
-	CharacterSet                string
-	PrincipalLanguage           string
-	AlternateCharacterSet       string
-	ProfileID                   string
-	SendingResponsibleOrgCode   string
-	ReceivingResponsibleOrgCode string
-	SendingNetworkAddress       string
-	ReceivingNetworkAddress     string
+	Delimiters                    *Delimiters `json:"delimiters" hl7:"MSH.1"`
+	SendingApplication            string      `json:"sending_application" hl7:"MSH.3"`
+	SendingFacility               string      `json:"sending_facility" hl7:"MSH.4"`
+	ReceivingApplication          string      `json:"receiving_application" hl7:"MSH.5"`
+	ReceivingFacility             string      `json:"receiving_facility" hl7:"MSH.6"`
+	MessageDate                   time.Time   `json:"message_date" hl7:"MSH.7"`
+	Security                      string      `json:"security" hl7:"MSH.8"`
+	Type                          string      `json:"type" hl7:"MSH.9.1"`
+	EventTrigger                  string      `json:"event_trigger" hl7:"MSH.9.2"`
+	ControlID                     string      `json:"control_id" hl7:"MSH.10"`
+	ProcessingID                  string      `json:"processing_id" hl7:"MSH.11"`
+	VersionID                     string      `json:"version_id" hl7:"MSH.12"`
+	SequenceNumber                int         `json:"sequence_number" hl7:"MSH.13"`
+	ContinuationPointer           string      `json:"continuation_pointer" hl7:"MSH.14"`
+	AcceptAcknowledgmentType      string      `json:"accept_acknowledgment" hl7:"MSH.15"`
+	ApplicationAcknowledgmentType string      `json:"application_acknowledgment" hl7:"MSH.16"`
+	CountryCode                   string      `json:"country_code" hl7:"MSH.17"`
+	CharacterSet                  string      `json:"character_set" hl7:"MSH.18"`
+	PrincipalLanguage             string      `json:"principal_language" hl7:"MSH.19"`
+	AlternateCharacterSet         string      `json:"alternate_character_set" hl7:"MSH.20"`
+	ProfileID                     string      `json:"profile_id" hl7:"MSH.21"`
+	SendingResponsibleOrgCode     string      `json:"sending_responsible_org_code" hl7:"MSH.22"`
+	ReceivingResponsibleOrgCode   string      `json:"receiving_responsible_org_code" hl7:"MSH.23"`
+	SendingNetworkAddress         string      `json:"sending_network_address" hl7:"MSH.24"`
+	ReceivingNetworkAddress       string      `json:"receiving_network_address" hl7:"MSH.25"`
 }
 
 func newMessageHeader(m *RawMessage) (*MessageHeader, error) {
@@ -138,20 +144,12 @@ func newMessageHeader(m *RawMessage) (*MessageHeader, error) {
 		return nil, fmt.Errorf("multiple MSH segments found")
 	}
 
-	msh := seg[0]
+	//msh := seg[0]
 
-	h := &header{
-		typ:          HeaderTypeMessage,
-		delims:       m.delims,
-		sendingApp:   msh[2].String(),
-		receivingApp: msh[5].String(),
-		sendingFac:   msh[4].String(),
-		receivingFac: msh[6].String(),
-		dateTime:     cast.ToTime(msh[7].String()),
-		security:     msh[8].String(),
+	var h MessageHeader
+	if err := Unmarshal(m, &h); err != nil {
+		return nil, err
 	}
 
-	return &MessageHeader{
-		header: h,
-	}, nil
+	return &h, nil
 }

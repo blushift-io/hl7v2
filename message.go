@@ -14,6 +14,7 @@ type Message struct {
 	pos      int
 	delims   *Delimiters
 	segments []*Segment
+	segCount map[string]int
 	header   *MessageHeader
 }
 
@@ -51,10 +52,12 @@ func newMessage(parent Element, pos int, raw *RawMessage) (*Message, error) {
 		pos:      pos,
 		delims:   raw.delims,
 		segments: make([]*Segment, len(raw.segs)),
+		segCount: make(map[string]int),
 	}
 
 	for i, seg := range raw.segs {
 		msg.segments[i] = newSegment(msg, i+1, seg)
+		msg.segCount[seg.ID()]++
 	}
 
 	h, err := newMessageHeader(raw)
@@ -72,7 +75,7 @@ func (m *Message) Type() ElementType {
 }
 
 func (m *Message) Name() string {
-	return m.header.Type.String()
+	return m.header.Type + "_" + m.header.EventTrigger
 }
 
 func (m *Message) Header() *MessageHeader {
@@ -89,6 +92,20 @@ func (m *Message) Parent() Element {
 
 func (m *Message) Children() []Element {
 	return makeElements(m.segments...)
+}
+
+func (m *Message) SegmentList() []string {
+	var segs []string
+
+	for _, seg := range m.segments {
+		segs = append(segs, seg.Name())
+	}
+
+	return segs
+}
+
+func (m *Message) Length() int {
+	return len(m.segments)
 }
 
 func (m *Message) Position() int {
@@ -112,6 +129,50 @@ func (m *Message) Query(q string) (Element, error) {
 	}
 
 	return m.GetLocation(loc)
+}
+
+func (m *Message) QueryValue(q string) (*Value, error) {
+	el, err := m.Query(q)
+	if err != nil {
+		return nil, err
+	}
+
+	if el == nil {
+		return nil, nil
+	}
+
+	v := el.Value()
+
+	return &v, nil
+}
+
+func (m *Message) Select(q string) ([]Element, error) {
+	g, err := query.ParseGrammars(q)
+	if err != nil {
+		return nil, err
+	}
+
+	return m.doSelect(g)
+}
+
+func (m *Message) doSelect(g query.Grammars) ([]Element, error) {
+	segs := m.SegmentList()
+	if err := g.Validate(segs); err != nil {
+		return nil, err
+	}
+
+	sel, err := g.Select(segs)
+	if err != nil {
+		return nil, err
+	}
+
+	var res []Element
+
+	for _, seg := range sel {
+		res = append(res, makeElements(m.getSegment(seg)...)...)
+	}
+
+	return res, nil
 }
 
 func (m *Message) Location() query.Location {

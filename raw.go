@@ -60,7 +60,12 @@ func (m *RawMessage) hasSegment(id string) bool {
 	return ok
 }
 
-func (m *RawMessage) Query(loc query.Location) (*Value, error) {
+func (m *RawMessage) QueryValue(q string) (*Value, error) {
+	loc, err := query.ParseLocation(q)
+	if err != nil {
+		return nil, fmt.Errorf("error parsing query: %w", err)
+	}
+
 	if loc.Segment == "" {
 		return nil, fmt.Errorf("invalid query: missing segment")
 	}
@@ -79,6 +84,16 @@ func (m *RawMessage) Query(loc query.Location) (*Value, error) {
 	seg := segs[segCnt-1]
 
 	return seg.Query(loc, m.delims)
+}
+
+func (m *RawMessage) Value() Value {
+	var b [][]byte
+
+	for _, seg := range m.segs {
+		b = append(b, seg.Value().Bytes())
+	}
+
+	return NewValue(m.delims.Join(b, SegmentDelimiter))
 }
 
 func (m *RawMessage) append(seg RawSegment) {
