@@ -18,6 +18,14 @@ func NewValue(v []byte) Value {
 	}
 }
 
+func NewValueString(v string) Value {
+	return NewValue([]byte(v))
+}
+
+func NewEmptyValue() Value {
+	return Value{}
+}
+
 func MarshalValue(v any) Value {
 	if rv := reflect.ValueOf(v); rv.IsZero() || rv.IsNil() {
 		return Value{}

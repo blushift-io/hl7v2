@@ -12,7 +12,7 @@ func TestParseRawMessage(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	m, err := NewRawMessageFromBytes(b, FixLineEndings())
+	m, err := ParseRaw(b, FixLineEndings())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -31,7 +31,7 @@ func TestQueryRawMessage(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	m, err := NewRawMessageFromBytes(b, FixLineEndings())
+	m, err := ParseRaw(b, FixLineEndings())
 	if err != nil {
 		t.Fatal(err)
 	}

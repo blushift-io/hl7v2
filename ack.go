@@ -56,7 +56,7 @@ func AckRawMessage(msg []byte) ([]byte, error) {
 
 	parts[0], parts[2] = parts[2], parts[0]
 	parts[1], parts[3] = parts[3], parts[1]
-	parts[6] = []byte("ACK")
+	parts[6] = []byte(msgTypeACK)
 
 	cid := parts[7]
 	var out bytes.Buffer

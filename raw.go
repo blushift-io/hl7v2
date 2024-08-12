@@ -16,17 +16,17 @@ type RawMessage struct {
 	segs   []RawSegment
 }
 
-func NewRawMessage(r io.Reader, opts ...ParserOption) (*RawMessage, error) {
+func ReadRaw(r io.Reader, opts ...ParserOption) (*RawMessage, error) {
 	b, err := io.ReadAll(r)
 	if err != nil {
 		return nil, err
 	}
 
-	return NewRawMessageFromBytes(b, opts...)
+	return ParseRaw(b, opts...)
 
 }
 
-func NewRawMessageFromBytes(b []byte, opts ...ParserOption) (*RawMessage, error) {
+func ParseRaw(b []byte, opts ...ParserOption) (*RawMessage, error) {
 	p, err := newRawParser(b, opts...)
 	if err != nil {
 		return nil, err
@@ -98,11 +98,8 @@ func (m *RawMessage) Value() Value {
 
 func (m *RawMessage) append(seg RawSegment) {
 	id := seg.ID()
-	if _, ok := m.segIdx[id]; ok {
-		m.segIdx[id]++
-	} else {
-		m.segIdx[id] = 1
-	}
+
+	m.segIdx[id] += 1
 
 	m.segs = append(m.segs, seg)
 }
@@ -119,6 +116,10 @@ func (m *RawMessage) JSON(pretty ...bool) ([]byte, error) {
 	}
 
 	return json.Marshal(msg)
+}
+
+func (m *RawMessage) Decode() (*Message, error) {
+	return newMessage(nil, 0, m)
 }
 
 type rawParser struct {

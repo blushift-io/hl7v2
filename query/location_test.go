@@ -12,9 +12,9 @@ func TestParseLocation(t *testing.T) {
 				Segment: "MSH",
 				Field:   1,
 			}},
-		{"OBX[1].1.1", Location{
+		{"OBX[1]-1.1", Location{
 			Segment:    "OBX",
-			SegmentRep: 1,
+			SegmentRep: intPtr(1),
 			Field:      1,
 			Component:  1,
 		}},
@@ -30,4 +30,8 @@ func TestParseLocation(t *testing.T) {
 			t.Errorf("got %v, want %v", got, tt.want)
 		}
 	}
+}
+
+func intPtr(i int) *int {
+	return &i
 }

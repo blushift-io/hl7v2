@@ -64,7 +64,7 @@ func (c *tcpConn) ReadMessage() (*hl7v2.RawMessage, error) {
 		return nil, fmt.Errorf("failed to read message: %w", err)
 	}
 
-	m, err := hl7v2.NewRawMessageFromBytes(b, hl7v2.FixLineEndings())
+	m, err := hl7v2.ParseRaw(b, hl7v2.FixLineEndings())
 	if err != nil {
 		return nil, fmt.Errorf("failed to parse message: %w", err)
 	}

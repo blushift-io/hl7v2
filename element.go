@@ -35,8 +35,11 @@ type Element interface {
 	Length() int
 	Position() int
 	Location() query.Location
-	GetLocation(query.Location) (Element, error)
 	Value() Value
+	GetLocation(query.Location) (Element, error)
+	SetLocation(query.Location, Value) error
+	Append(Element) error
+	Encode() ([]byte, error)
 }
 
 type ElementIterator struct {

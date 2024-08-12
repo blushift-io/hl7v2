@@ -1,7 +1,8 @@
 package hl7v2
 
 type ParserOptions struct {
-	preParse []RawTransform
+	preParse  []RawTransform
+	postparse []RawTransform
 }
 
 type ParserOption func(*ParserOptions)

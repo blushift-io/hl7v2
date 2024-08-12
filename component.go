@@ -66,58 +66,100 @@ func newComponent(parent Element, pos int, raw RawComponent) *Component {
 	return comp
 }
 
-func (el *Component) Type() ElementType {
+func (c *Component) Type() ElementType {
 	return ElementComponent
 }
 
-func (el *Component) Name() string {
+func (c *Component) Name() string {
 	return ""
 }
 
-func (el *Component) Delimiters() *Delimiters {
-	return el.parent.Delimiters()
+func (c *Component) Delimiters() *Delimiters {
+	return c.parent.Delimiters()
 }
 
-func (el *Component) Parent() Element {
-	return el.parent
+func (c *Component) Parent() Element {
+	return c.parent
 }
 
-func (el *Component) Children() []Element {
-	return makeElements(el.children...)
+func (c *Component) Children() []Element {
+	return makeElements(c.children...)
 }
 
-func (el *Component) Length() int {
-	return len(el.children)
+func (c *Component) Length() int {
+	return len(c.children)
 }
 
-func (el *Component) Position() int {
-	return el.pos
+func (c *Component) Position() int {
+	return c.pos
 }
 
-func (el *Component) Value() Value {
+func (c *Component) Location() query.Location {
+	if c.parent == nil {
+		return query.Location{}
+	}
+
+	loc := c.parent.Location()
+	loc.Component = c.pos
+	return loc
+}
+
+func (c *Component) Value() Value {
 	var b [][]byte
 
-	for _, sub := range el.children {
+	for _, sub := range c.children {
 		b = append(b, sub.v.Bytes())
 	}
 
-	return NewValue(el.Delimiters().Join(b, SubcomponentDelimiter))
+	return NewValue(c.Delimiters().Join(b, SubcomponentDelimiter))
 }
 
-func (el *Component) GetLocation(loc query.Location) (Element, error) {
+func (c *Component) GetLocation(loc query.Location) (Element, error) {
 	if loc.Subcomponent == 0 {
-		return el, nil
+		return c.children[0], nil
 	}
 
-	if int(loc.Subcomponent) > len(el.children) {
+	if int(loc.Subcomponent) > len(c.children) {
 		return nil, fmt.Errorf("subcomponent %d not found", loc.Subcomponent)
 	}
 
-	return el.children[loc.Subcomponent-1], nil
+	return c.children[loc.Subcomponent-1], nil
 }
 
-func (el *Component) Location() query.Location {
-	loc := el.parent.Location()
-	loc.Component = el.pos
-	return loc
+func (c *Component) SetLocation(loc query.Location, val Value) error {
+	el, err := c.GetLocation(loc)
+	if err != nil {
+		return err
+	}
+
+	return el.SetLocation(loc, val)
+}
+
+func (c *Component) Append(ne Element) error {
+	if ne.Type() != ElementSubcomponent {
+		return fmt.Errorf("cannot append type %s to component", c.Type())
+	}
+
+	ins, ok := ne.(*Subcomponent)
+	if !ok {
+		return fmt.Errorf("cannot append type %s to component", c.Type())
+	}
+
+	ins.parent = c
+	ins.pos = len(c.children) + 1
+	c.children = append(c.children, ne.(*Subcomponent))
+
+	return nil
+}
+
+func (c *Component) Encode() ([]byte, error) {
+	return c.Value().Bytes(), nil
+}
+
+func (c *Component) Subcomponent(index int) (*Subcomponent, error) {
+	if index < 0 || index > len(c.children) {
+		return nil, fmt.Errorf("subcomponent %d not found", index)
+	}
+
+	return c.children[index-1], nil
 }

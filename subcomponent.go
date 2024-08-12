@@ -22,6 +22,14 @@ type Subcomponent struct {
 	parent Element
 }
 
+func NewSubcomponent(val Value) *Subcomponent {
+	return newSubcomponent(nil, 0, val)
+}
+
+func NewEmptySubcomponent() *Subcomponent {
+	return newSubcomponent(nil, 0, NewEmptyValue())
+}
+
 func newSubcomponent(parent Element, pos int, v Value) *Subcomponent {
 	return &Subcomponent{
 		v:      v,
@@ -39,6 +47,10 @@ func (el *Subcomponent) Name() string {
 }
 
 func (el *Subcomponent) Delimiters() *Delimiters {
+	if el.parent == nil {
+		return DefaultDelimiters()
+	}
+
 	return el.parent.Delimiters()
 }
 
@@ -59,16 +71,34 @@ func (el *Subcomponent) Position() int {
 }
 
 func (el *Subcomponent) Location() query.Location {
+	if el.parent == nil {
+		return query.Location{}
+	}
+
 	loc := el.parent.Location()
 	loc.Subcomponent = el.pos
 
 	return loc
 }
 
+func (el *Subcomponent) Value() Value {
+	return el.v
+}
+
 func (el *Subcomponent) GetLocation(loc query.Location) (Element, error) {
 	return el, nil
 }
 
-func (el *Subcomponent) Value() Value {
-	return el.v
+func (el *Subcomponent) SetLocation(loc query.Location, val Value) error {
+	el.v = val
+
+	return nil
+}
+
+func (el *Subcomponent) Append(_ Element) error {
+	return fmt.Errorf("cannot append to subcomponent")
+}
+
+func (el *Subcomponent) Encode() ([]byte, error) {
+	return el.v.Bytes(), nil
 }

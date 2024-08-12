@@ -12,6 +12,7 @@ const (
 	leftArr  = '['
 	rightArr = ']'
 	itemSep  = '.'
+	fieldSep = '-'
 
 	capLetters  = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	digits      = "0123456789"
@@ -51,6 +52,7 @@ func (i item) String() string {
 }
 
 type stateFn func(*lexer) stateFn
+
 type lexer struct {
 	name  string
 	input string
@@ -100,6 +102,7 @@ func (l *lexer) emit(t itemType) {
 func (l *lexer) next() rune {
 	if l.pos >= len(l.input) {
 		l.width = 0
+
 		return eof
 	}
 
@@ -162,6 +165,9 @@ func lexMain(l *lexer) stateFn {
 		case strings.ContainsRune(capLetters, r):
 			return lexSeg
 		case r == leftArr:
+			l.ignore()
+			return lexIdx
+		case r == fieldSep:
 			l.ignore()
 			return lexIdx
 		case r == itemSep:

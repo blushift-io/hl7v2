@@ -73,6 +73,10 @@ func (r *Repetition) Name() string {
 }
 
 func (r *Repetition) Delimiters() *Delimiters {
+	if r.parent == nil {
+		return DefaultDelimiters()
+	}
+
 	return r.parent.Delimiters()
 }
 
@@ -92,6 +96,17 @@ func (r *Repetition) Position() int {
 	return r.pos
 }
 
+func (r *Repetition) Location() query.Location {
+	if r.parent == nil {
+		return query.Location{}
+	}
+
+	loc := r.parent.Location()
+	loc.FieldRep = &r.pos
+
+	return loc
+}
+
 func (r *Repetition) Value() Value {
 	var b [][]byte
 
@@ -102,16 +117,9 @@ func (r *Repetition) Value() Value {
 	return NewValue(r.Delimiters().Join(b, ComponentDelimiter))
 }
 
-func (r *Repetition) Location() query.Location {
-	loc := r.parent.Location()
-	loc.FieldRep = r.pos
-
-	return loc
-}
-
 func (r *Repetition) GetLocation(loc query.Location) (Element, error) {
 	if loc.Component == 0 {
-		return r, nil
+		return r.children[0].GetLocation(loc)
 	}
 
 	if int(loc.Component) > len(r.children) {
@@ -119,4 +127,34 @@ func (r *Repetition) GetLocation(loc query.Location) (Element, error) {
 	}
 
 	return r.children[loc.Component-1].GetLocation(loc)
+}
+
+func (r *Repetition) SetLocation(loc query.Location, val Value) error {
+	el, err := r.GetLocation(loc)
+	if err != nil {
+		return err
+	}
+
+	return el.SetLocation(loc, val)
+}
+
+func (r *Repetition) Append(el Element) error {
+	if el.Type() != ElementComponent {
+		return fmt.Errorf("cannot append type %s to repetition", el.Type())
+	}
+
+	ins, ok := el.(*Component)
+	if !ok {
+		return fmt.Errorf("cannot append type %s to repetition", el.Type())
+	}
+
+	ins.parent = r
+	ins.pos = len(r.children) + 1
+	r.children = append(r.children, ins)
+
+	return nil
+}
+
+func (r *Repetition) Encode() ([]byte, error) {
+	return r.Value().Bytes(), nil
 }

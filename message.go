@@ -19,7 +19,7 @@ type Message struct {
 }
 
 func NewMessage(r io.Reader, opts ...ParserOption) (*Message, error) {
-	raw, err := NewRawMessage(r, opts...)
+	raw, err := ReadRaw(r, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -28,7 +28,7 @@ func NewMessage(r io.Reader, opts ...ParserOption) (*Message, error) {
 }
 
 func NewMessageFromBytes(b []byte, opts ...ParserOption) (*Message, error) {
-	raw, err := NewRawMessageFromBytes(b, opts...)
+	raw, err := ParseRaw(b, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -45,7 +45,7 @@ func NewMessageFromFile(f string, opts ...ParserOption) (*Message, error) {
 	return NewMessageFromBytes(b, opts...)
 }
 
-func newMessage(parent Element, pos int, raw *RawMessage) (*Message, error) {
+func newMessage(parent Element, pos int, raw *RawMessage, opts ...ParserOption) (*Message, error) {
 	msg := &Message{
 		raw:      raw,
 		parent:   parent,
@@ -55,17 +55,17 @@ func newMessage(parent Element, pos int, raw *RawMessage) (*Message, error) {
 		segCount: make(map[string]int),
 	}
 
-	for i, seg := range raw.segs {
-		msg.segments[i] = newSegment(msg, i+1, seg)
-		msg.segCount[seg.ID()]++
-	}
-
 	h, err := newMessageHeader(raw)
 	if err != nil {
 		return nil, err
 	}
 
 	msg.header = h
+
+	for i, seg := range raw.segs {
+		msg.segments[i] = newSegment(msg, i+1, seg)
+		msg.segCount[seg.ID()]++
+	}
 
 	return msg, nil
 }
@@ -94,22 +94,16 @@ func (m *Message) Children() []Element {
 	return makeElements(m.segments...)
 }
 
-func (m *Message) SegmentList() []string {
-	var segs []string
-
-	for _, seg := range m.segments {
-		segs = append(segs, seg.Name())
-	}
-
-	return segs
-}
-
 func (m *Message) Length() int {
 	return len(m.segments)
 }
 
 func (m *Message) Position() int {
 	return m.pos
+}
+
+func (m *Message) Location() query.Location {
+	return query.Location{}
 }
 
 func (m *Message) Value() Value {
@@ -120,6 +114,63 @@ func (m *Message) Value() Value {
 	}
 
 	return NewValue(m.delims.Join(b, SegmentDelimiter))
+}
+
+func (m *Message) GetLocation(loc query.Location) (Element, error) {
+	if loc.Segment == "" {
+		return nil, fmt.Errorf("invalid message query: missing segment")
+	}
+
+	segs := m.getSegment(loc.Segment)
+	if len(segs) == 0 {
+		return nil, fmt.Errorf("segment '%s' not found", loc.Segment)
+	}
+
+	rep := 0
+	if loc.SegmentRep != nil {
+		rep = *loc.SegmentRep
+	}
+
+	if rep == 0 {
+		return segs[0].GetLocation(loc)
+	}
+
+	if rep > len(segs) {
+		return nil, fmt.Errorf("segment '%s' repetition %d not found", loc.Segment, loc.SegmentRep)
+	}
+
+	return segs[rep-1].GetLocation(loc)
+}
+
+func (m *Message) SetLocation(loc query.Location, val Value) error {
+	el, err := m.GetLocation(loc)
+	if err != nil {
+		return err
+	}
+
+	return el.SetLocation(loc, val)
+}
+
+func (m *Message) Append(el Element) error {
+	if el.Type() != ElementSegment {
+		return fmt.Errorf("cannot append %s to message", el.Type())
+	}
+
+	ins, ok := el.(*Segment)
+	if !ok {
+		return fmt.Errorf("cannot append %s to message", el.Type())
+	}
+
+	m.segments = append(m.segments, ins)
+	m.segCount[ins.Name()]++
+	ins.parent = m
+	ins.pos = len(m.segments) + 1
+
+	return nil
+}
+
+func (m *Message) Encode() ([]byte, error) {
+	return m.Value().Bytes(), nil
 }
 
 func (m *Message) Query(q string) (Element, error) {
@@ -155,6 +206,40 @@ func (m *Message) Select(q string) ([]Element, error) {
 	return m.doSelect(g)
 }
 
+func (m *Message) Segment(name string, idx ...int) (*Segment, error) {
+	setID := 0
+	if len(idx) > 0 {
+		setID = idx[0]
+	}
+
+	segs := m.getSegment(name)
+	if len(segs) == 0 {
+		return nil, fmt.Errorf("segment '%s' not found", name)
+	}
+
+	if setID == 0 {
+		return segs[0], nil
+	}
+
+	for _, seg := range segs {
+		if seg.Position() == setID {
+			return seg, nil
+		}
+	}
+
+	return nil, fmt.Errorf("segment '%s' repetition %d not found", name, setID)
+}
+
+func (m *Message) SegmentList() []string {
+	var segs []string
+
+	for _, seg := range m.segments {
+		segs = append(segs, seg.Name())
+	}
+
+	return segs
+}
+
 func (m *Message) doSelect(g query.Grammars) ([]Element, error) {
 	segs := m.SegmentList()
 	if err := g.Validate(segs); err != nil {
@@ -173,31 +258,6 @@ func (m *Message) doSelect(g query.Grammars) ([]Element, error) {
 	}
 
 	return res, nil
-}
-
-func (m *Message) Location() query.Location {
-	return query.Location{}
-}
-
-func (m *Message) GetLocation(loc query.Location) (Element, error) {
-	if loc.Segment == "" {
-		return nil, fmt.Errorf("invalid message query: missing segment")
-	}
-
-	segs := m.getSegment(loc.Segment)
-	if len(segs) == 0 {
-		return nil, fmt.Errorf("segment '%s' not found", loc.Segment)
-	}
-
-	if loc.SegmentRep == 0 {
-		return segs[0].GetLocation(loc)
-	}
-
-	if loc.SegmentRep > len(segs) {
-		return nil, fmt.Errorf("segment '%s' repetition %d not found", loc.Segment, loc.SegmentRep)
-	}
-
-	return segs[loc.SegmentRep-1].GetLocation(loc)
 }
 
 func (m *Message) getSegment(id string) []*Segment {

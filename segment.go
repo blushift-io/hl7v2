@@ -1,6 +1,7 @@
 package hl7v2
 
 import (
+	"bytes"
 	"fmt"
 
 	"github.com/blushift-io/hl7v2/query"
@@ -79,7 +80,7 @@ func newSegment(parent Element, pos int, raw RawSegment) *Segment {
 	}
 
 	for i, field := range raw {
-		seg.children[i] = newField(seg, i+1, field)
+		seg.children[i] = newField(seg, i, field)
 	}
 
 	return seg
@@ -94,6 +95,10 @@ func (s *Segment) Name() string {
 }
 
 func (s *Segment) Delimiters() *Delimiters {
+	if s.parent == nil {
+		return DefaultDelimiters()
+	}
+
 	return s.parent.Delimiters()
 }
 
@@ -122,12 +127,37 @@ func (s *Segment) Index() int {
 }
 
 func (s *Segment) Location() query.Location {
-	rep := s.children[1].Value().Int()
+	rep := 0
+	if len(s.children) > 1 {
+		rep = s.children[1].Value().Int()
+	}
 
 	return query.Location{
 		Segment:    s.Name(),
-		SegmentRep: rep,
+		SegmentRep: &rep,
 	}
+}
+
+func (s *Segment) Value() Value {
+	var b [][]byte
+
+	start := 0
+	if s.id == "MSH" {
+		start = 3
+		fd := [][]byte{
+			s.children[0].Value().Bytes(),
+			s.children[1].Value().Bytes(),
+			s.children[2].Value().Bytes(),
+		}
+
+		b = append(b, bytes.Join(fd, []byte{}))
+	}
+
+	for i := start; i < len(s.children); i++ {
+		b = append(b, s.children[i].Value().Bytes())
+	}
+
+	return NewValue(s.Delimiters().Join(b, FieldDelimiter))
 }
 
 func (s *Segment) GetLocation(loc query.Location) (Element, error) {
@@ -142,12 +172,81 @@ func (s *Segment) GetLocation(loc query.Location) (Element, error) {
 	return s.children[loc.Field].GetLocation(loc)
 }
 
-func (s *Segment) Value() Value {
-	var b [][]byte
-
-	for _, fld := range s.children {
-		b = append(b, fld.Value().Bytes())
+func (s *Segment) SetLocation(loc query.Location, val Value) error {
+	if loc.Segment != s.id {
+		return fmt.Errorf("segment mismatch: querying %s, got %s", s.id, loc.Segment)
 	}
 
-	return NewValue(s.Delimiters().Join(b, FieldDelimiter))
+	if int(loc.Field) > len(s.children) {
+		return fmt.Errorf("field %d not found", loc.Field)
+	}
+
+	return s.children[loc.Field].SetLocation(loc, val)
+}
+
+func (s *Segment) Encode() ([]byte, error) {
+	return s.Value().Bytes(), nil
+}
+
+func (s *Segment) Append(el Element) error {
+	if el.Type() != ElementField {
+		return fmt.Errorf("cannot append type %s to segment", el.Type())
+	}
+
+	ins, ok := el.(*Field)
+	if !ok {
+		return fmt.Errorf("cannot append type %s to segment", el.Type())
+	}
+
+	ins.parent = s
+	ins.pos = len(s.children) + 1
+	s.children = append(s.children, ins)
+
+	return nil
+}
+
+func (s *Segment) Field(index int) (*Field, error) {
+	if index < 0 || index > len(s.children) {
+		return nil, fmt.Errorf("field %d not found", index)
+	}
+
+	return s.children[index], nil
+}
+
+type SegmentBuilder struct {
+	id     string
+	fields []*Field
+}
+
+func NewSegment(id string, fields ...*Field) *SegmentBuilder {
+	f := []*Field{
+		NewField(NewValueString(id)),
+	}
+
+	f = append(f, fields...)
+
+	return &SegmentBuilder{
+		id:     id,
+		fields: f,
+	}
+}
+
+func (b *SegmentBuilder) Field(f *Field) *SegmentBuilder {
+	b.fields = append(b.fields, f)
+
+	return b
+}
+
+func (b *SegmentBuilder) Build() *Segment {
+	seg := &Segment{
+		id:       b.id,
+		children: b.fields,
+	}
+
+	for i, f := range b.fields {
+		f.parent = seg
+		f.pos = i + 1
+	}
+
+	return seg
 }

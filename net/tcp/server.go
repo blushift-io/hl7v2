@@ -136,7 +136,7 @@ func (s *Server) handleConn(conn Conn) {
 			continue
 		}
 
-		msg, err := hl7v2.NewRawMessageFromBytes(b)
+		msg, err := hl7v2.ParseRaw(b)
 		if err != nil {
 			ctx.Apply(SetError(err))
 

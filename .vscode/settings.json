@@ -5,5 +5,6 @@
       "Hostname": "127.0.0.1",
       "Port": 2525,
     }
-  ]
+  ],
+  "hl7tools.DefaultListenerPort": 5050
 }

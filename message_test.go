@@ -14,7 +14,17 @@ func TestNewMessage(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	spew.Dump(msg.header)
+	pid, err := msg.Segment("PID")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	f, err := pid.Field(3)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	spew.Dump(f.Value().String())
 
 	walkElements(msg)
 
@@ -23,7 +33,7 @@ func TestNewMessage(t *testing.T) {
 func walkElements(root Element) {
 	it := NewIterator(root)
 	for el := it.Next(); el != nil; el = it.Next() {
-		if el.Type() < ElementComponent || len(el.Children()) > 1 {
+		if el.Type() < ElementSubcomponent || len(el.Children()) > 1 {
 			walkElements(el)
 		} else {
 			fmt.Printf("%s - %s\n", el.Location().String(), el.Value().String())

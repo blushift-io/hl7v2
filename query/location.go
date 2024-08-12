@@ -7,9 +7,9 @@ import (
 
 type Location struct {
 	Segment      string
-	SegmentRep   int
+	SegmentRep   *int
 	Field        int
-	FieldRep     int
+	FieldRep     *int
 	Component    int
 	Subcomponent int
 }
@@ -36,11 +36,11 @@ func ParseLocation(q string) (Location, error) {
 
 		switch i.typ {
 		case itemSegIdx:
-			loc.SegmentRep = iv
+			loc.SegmentRep = &iv
 		case itemField:
 			loc.Field = iv
 		case itemRep:
-			loc.FieldRep = iv
+			loc.FieldRep = &iv
 		case itemComp:
 			loc.Component = iv
 		case itemSub:
@@ -56,16 +56,15 @@ func (l Location) String() string {
 	if len(l.Segment) > 0 {
 		str += l.Segment
 	}
-	if l.SegmentRep > 0 {
-		str += fmt.Sprintf("[%d]", l.SegmentRep)
+
+	if l.SegmentRep != nil {
+		str += fmt.Sprintf("[%d]", *l.SegmentRep)
 	}
 
-	if l.Field > 0 {
-		str += fmt.Sprintf(".%d", l.Field)
-	}
+	str += fmt.Sprintf("-%d", l.Field)
 
-	if l.FieldRep > 0 {
-		str += fmt.Sprintf("[%d]", l.FieldRep)
+	if l.FieldRep != nil {
+		str += fmt.Sprintf("[%d]", *l.FieldRep)
 	}
 
 	if l.Component > 0 {
