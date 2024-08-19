@@ -1,5 +1,10 @@
 package schema
 
+import "embed"
+
+//go:embed spec
+var spec embed.FS
+
 type schemaRegistry struct {
 	schemas map[string]*Schema
 }
@@ -12,7 +17,16 @@ func init() {
 	}
 }
 
-func RegisterSchema(s *Schema) {
+func All() []*Schema {
+	s := make([]*Schema, 0, len(reg.schemas))
+	for _, v := range reg.schemas {
+		s = append(s, v)
+	}
+
+	return s
+}
+
+func Register(s *Schema) {
 	reg.schemas[s.Version()] = s
 }
 

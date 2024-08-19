@@ -10,6 +10,20 @@ const (
 	TableTypePreLoaded                  //PreLoaded
 )
 
+type Tables []*Table
+
+func (ts Tables) Len() int {
+	return len(ts)
+}
+
+func (ts Tables) Less(i, j int) bool {
+	return ts[i].ID < ts[j].ID
+}
+
+func (ts Tables) Swap(i, j int) {
+	ts[i], ts[j] = ts[j], ts[i]
+}
+
 type Table struct {
 	s *Schema
 

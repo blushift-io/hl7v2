@@ -6,10 +6,13 @@ import (
 	"os"
 
 	"github.com/blushift-io/hl7v2/query"
+	"github.com/blushift-io/hl7v2/schema"
 )
 
 type Message struct {
-	raw      *RawMessage
+	raw *RawMessage
+	sch *schema.Message
+
 	parent   Element
 	pos      int
 	delims   *Delimiters
@@ -75,15 +78,15 @@ func (m *Message) Type() ElementType {
 }
 
 func (m *Message) Name() string {
-	return m.header.Type + "_" + m.header.EventTrigger
-}
-
-func (m *Message) Header() *MessageHeader {
-	return m.header
+	return m.header.MessageType().String()
 }
 
 func (m *Message) Delimiters() *Delimiters {
 	return m.delims
+}
+
+func (m *Message) Header() *MessageHeader {
+	return m.header
 }
 
 func (m *Message) Parent() Element {
@@ -197,6 +200,21 @@ func (m *Message) QueryValue(q string) (*Value, error) {
 	return &v, nil
 }
 
+func (m *Message) Schema() (*schema.Message, error) {
+	sch := schema.Open(m.header.VersionID)
+	if sch == nil {
+		return nil, fmt.Errorf("schema version %s not found", m.header.VersionID)
+	}
+
+	typ := m.header.MessageType().String()
+	msg := sch.Message(typ)
+	if msg == nil {
+		return nil, fmt.Errorf("schema message %s not found", typ)
+	}
+
+	return msg, nil
+}
+
 func (m *Message) Select(q string) ([]Element, error) {
 	g, err := query.ParseGrammars(q)
 	if err != nil {
@@ -204,6 +222,14 @@ func (m *Message) Select(q string) ([]Element, error) {
 	}
 
 	return m.doSelect(g)
+}
+
+func (m *Message) Segments(id ...string) []*Segment {
+	if len(id) > 0 && id[0] != "" {
+		return m.getSegment(id[0])
+	}
+
+	return m.segments
 }
 
 func (m *Message) Segment(name string, idx ...int) (*Segment, error) {
@@ -228,6 +254,10 @@ func (m *Message) Segment(name string, idx ...int) (*Segment, error) {
 	}
 
 	return nil, fmt.Errorf("segment '%s' repetition %d not found", name, setID)
+}
+
+func (m *Message) HasSegment(id string) bool {
+	return m.segCount[id] > 0
 }
 
 func (m *Message) SegmentList() []string {

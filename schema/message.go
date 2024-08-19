@@ -1,5 +1,21 @@
 package schema
 
+import "github.com/blushift-io/hl7v2/query"
+
+type Messages []*Message
+
+func (m Messages) Len() int {
+	return len(m)
+}
+
+func (m Messages) Less(i int, j int) bool {
+	return m[i].ID < m[j].ID
+}
+
+func (m Messages) Swap(i int, j int) {
+	m[i], m[j] = m[j], m[i]
+}
+
 type Message struct {
 	s           *Schema
 	ID          string            `json:"id"`
@@ -8,6 +24,14 @@ type Message struct {
 	Sample      string            `json:"sample"`
 	Chapters    []string          `json:"chapters"`
 	Segments    []*MessageSegment `json:"segments"`
+}
+
+func (m *Message) Version() string {
+	if m.s == nil {
+		return ""
+	}
+
+	return m.s.version
 }
 
 func (m *Message) GetChapters() []*Chapter {
@@ -19,9 +43,19 @@ func (m *Message) GetChapters() []*Chapter {
 	return cs
 }
 
+func (m *Message) GetSegments() []*MessageSegment {
+	var ss []*MessageSegment
+	for _, s := range m.Segments {
+		s.s = m.s
+		ss = append(ss, s)
+	}
+
+	return ss
+}
+
 func (m *Message) Segment(id string) *MessageSegment {
 	for _, s := range m.Segments {
-		if s.ID == id {
+		if s.ID == id || s.Name == id {
 			s.s = m.s
 
 			return s
@@ -29,6 +63,16 @@ func (m *Message) Segment(id string) *MessageSegment {
 	}
 
 	return nil
+}
+
+func (m *Message) Grammar() query.Grammars {
+	var g query.Grammars
+
+	for _, s := range m.Segments {
+		g = append(g, s.Grammar())
+	}
+
+	return g
 }
 
 type MessageSegment struct {
@@ -62,4 +106,30 @@ func (ms *MessageSegment) Segment() *Segment {
 	}
 
 	return ms.s.Segment(ms.ID)
+}
+
+func (ms *MessageSegment) Grammar() query.Grammar {
+	var g query.Grammar
+
+	if ms.Group {
+		g = query.Grammar{
+			ID:        ms.Name,
+			Optional:  !ms.Required(),
+			Repeating: ms.Repeatable(),
+			Group:     ms.Group,
+		}
+
+		for _, s := range ms.Segments {
+			g.Children = append(g.Children, s.Grammar())
+		}
+
+		return g
+	}
+
+	return query.Grammar{
+		ID:        ms.ID,
+		Optional:  !ms.Required(),
+		Repeating: ms.Repeatable(),
+		Group:     ms.Group,
+	}
 }

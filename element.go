@@ -30,6 +30,7 @@ type Element interface {
 	Type() ElementType
 	Name() string
 	Delimiters() *Delimiters
+	Header() *MessageHeader
 	Parent() Element
 	Children() []Element
 	Length() int

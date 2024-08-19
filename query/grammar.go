@@ -6,6 +6,17 @@ import (
 	"strings"
 )
 
+//TODO: Add support for named groups
+
+const (
+	optBegin = '['
+	optEnd   = ']'
+	rptBegin = '{'
+	rptEnd   = '}'
+	grpBegin = '('
+	grpEnd   = ')'
+)
+
 var (
 	matchSegment = regexp.MustCompile("^([A-Z])([A-Z])([A-Z]|[0-9])$")
 )
@@ -65,6 +76,42 @@ func (g Grammar) Select(msg []string) ([]string, error) {
 	return res, nil
 }
 
+func (g Grammar) String() string {
+	var b strings.Builder
+	if g.Group {
+		b.WriteString(g.ID)
+	}
+
+	if g.Optional {
+		b.WriteByte(optBegin)
+	}
+
+	if g.Repeating {
+		b.WriteByte(rptBegin)
+	}
+
+	if g.Group {
+		j := make([]string, len(g.Children))
+		for i, ch := range g.Children {
+			j[i] = ch.String()
+		}
+
+		b.WriteString(strings.Join(j, " "))
+	} else {
+		b.WriteString(g.ID)
+	}
+
+	if g.Repeating {
+		b.WriteByte(rptEnd)
+	}
+
+	if g.Optional {
+		b.WriteByte(optEnd)
+	}
+
+	return b.String()
+}
+
 type Grammars []Grammar
 
 func (g Grammars) Validate(msg []string) error {
@@ -91,19 +138,21 @@ func (g Grammars) Select(msg []string) ([]string, error) {
 	return res, nil
 }
 
-const (
-	optBegin = '['
-	optEnd   = ']'
-	rptBegin = '{'
-	rptEnd   = '}'
-)
+func (g Grammars) String() string {
+	j := make([]string, len(g))
+	for i, m := range g {
+		j[i] = m.String()
+	}
+
+	return strings.Join(j, " ")
+}
 
 func parseGrammar(expr string) ([]Grammar, error) {
 	idx := 0
 	var res []Grammar
 
-	openers := []byte{optBegin, rptBegin}
-	closers := []byte{optEnd, rptEnd}
+	openers := []byte{optBegin, rptBegin, grpBegin}
+	closers := []byte{optEnd, rptEnd, grpEnd}
 
 	for idx < len(expr) {
 		ch := expr[idx]
@@ -119,6 +168,7 @@ func parseGrammar(expr string) ([]Grammar, error) {
 			idx = adv
 			isOpt := open == optBegin
 			isRep := open == rptBegin
+			//isGrp := open == grpBegin
 
 			if isOpt && iExpr[0] == rptBegin {
 				isRep = true

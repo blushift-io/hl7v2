@@ -7,6 +7,20 @@ const (
 	DataTypeTypeComponent                     //Component
 )
 
+type DataTypes []*DataType
+
+func (ds DataTypes) Len() int {
+	return len(ds)
+}
+
+func (ds DataTypes) Less(i, j int) bool {
+	return ds[i].ID < ds[j].ID
+}
+
+func (ds DataTypes) Swap(i, j int) {
+	ds[i], ds[j] = ds[j], ds[i]
+}
+
 type DataType struct {
 	s *Schema
 

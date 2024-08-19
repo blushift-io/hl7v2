@@ -80,6 +80,14 @@ func (r *Repetition) Delimiters() *Delimiters {
 	return r.parent.Delimiters()
 }
 
+func (r *Repetition) Header() *MessageHeader {
+	if r.parent == nil {
+		return nil
+	}
+
+	return r.parent.Header()
+}
+
 func (r *Repetition) Parent() Element {
 	return r.parent
 }
@@ -157,4 +165,16 @@ func (r *Repetition) Append(el Element) error {
 
 func (r *Repetition) Encode() ([]byte, error) {
 	return r.Value().Bytes(), nil
+}
+
+func (r *Repetition) Components() []*Component {
+	return r.children
+}
+
+func (r *Repetition) Component(idx int) (*Component, error) {
+	if idx < 0 || idx > len(r.children) {
+		return nil, fmt.Errorf("component %d not found", idx)
+	}
+
+	return r.children[idx], nil
 }

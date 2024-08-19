@@ -115,6 +115,14 @@ func (f *Field) Delimiters() *Delimiters {
 	return f.parent.Delimiters()
 }
 
+func (f *Field) Header() *MessageHeader {
+	if f.parent == nil {
+		return nil
+	}
+
+	return f.parent.Header()
+}
+
 func (f *Field) Parent() Element {
 	return f.parent
 }
@@ -205,6 +213,10 @@ func (f *Field) Append(el Element) error {
 
 func (f *Field) Encode() ([]byte, error) {
 	return f.Value().Bytes(), nil
+}
+
+func (f *Field) Repetitions() []*Repetition {
+	return f.children
 }
 
 func (f *Field) Repetition(index int) (*Repetition, error) {

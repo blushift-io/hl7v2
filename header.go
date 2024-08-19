@@ -5,6 +5,8 @@ import (
 	"time"
 )
 
+//TODO: Clean all this mess up
+
 //go:generate enumer -type=HeaderType,TrailerType --linecomment -output=header_enums.go
 
 // HeaderType is an enum type for valid header types
@@ -103,7 +105,19 @@ type MessageType struct {
 }
 
 func (t MessageType) String() string {
-	return t.Code + t.Event + t.Structure
+	if len(t.Structure) > 0 {
+		return t.Structure
+	}
+
+	return fmt.Sprintf("%s_%s", t.Code, t.Event)
+}
+
+func (t MessageType) Encode(delims *Delimiters) []byte {
+	return delims.Join([][]byte{
+		[]byte(t.Code),
+		[]byte(t.Event),
+		[]byte(t.Structure),
+	}, ComponentDelimiter)
 }
 
 type MessageHeader struct {
@@ -114,8 +128,9 @@ type MessageHeader struct {
 	ReceivingFacility             string      `json:"receiving_facility" hl7:"MSH.6"`
 	MessageDate                   time.Time   `json:"message_date" hl7:"MSH.7"`
 	Security                      string      `json:"security" hl7:"MSH.8"`
-	Type                          string      `json:"type" hl7:"MSH.9.1"`
-	EventTrigger                  string      `json:"event_trigger" hl7:"MSH.9.2"`
+	MessageCode                   string      `json:"type" hl7:"MSH.9.1"`
+	TriggerEvent                  string      `json:"event_trigger" hl7:"MSH.9.2"`
+	MessageStructure              string      `json:"message_structure" hl7:"MSH.9.3"`
 	ControlID                     string      `json:"control_id" hl7:"MSH.10"`
 	ProcessingID                  string      `json:"processing_id" hl7:"MSH.11"`
 	VersionID                     string      `json:"version_id" hl7:"MSH.12"`
@@ -152,4 +167,12 @@ func newMessageHeader(m *RawMessage) (*MessageHeader, error) {
 	}
 
 	return &h, nil
+}
+
+func (h *MessageHeader) MessageType() MessageType {
+	return MessageType{
+		Code:      h.MessageCode,
+		Event:     h.TriggerEvent,
+		Structure: h.MessageStructure,
+	}
 }

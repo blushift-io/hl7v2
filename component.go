@@ -78,6 +78,14 @@ func (c *Component) Delimiters() *Delimiters {
 	return c.parent.Delimiters()
 }
 
+func (c *Component) Header() *MessageHeader {
+	if c.parent == nil {
+		return nil
+	}
+
+	return c.parent.Header()
+}
+
 func (c *Component) Parent() Element {
 	return c.parent
 }
@@ -154,6 +162,10 @@ func (c *Component) Append(ne Element) error {
 
 func (c *Component) Encode() ([]byte, error) {
 	return c.Value().Bytes(), nil
+}
+
+func (c *Component) Subcomponents() []*Subcomponent {
+	return c.children
 }
 
 func (c *Component) Subcomponent(index int) (*Subcomponent, error) {

@@ -9,6 +9,10 @@ import (
 	"github.com/fatih/structs"
 )
 
+//TODO: Escape/Unescape HL7 delimiters
+//TODO: Implement MCF delayed acknowledgment
+//TODO: Implement batch and file elements
+
 type Marshaler interface {
 	MarshalHL7(msg *Message) error
 }

@@ -102,6 +102,14 @@ func (s *Segment) Delimiters() *Delimiters {
 	return s.parent.Delimiters()
 }
 
+func (s *Segment) Header() *MessageHeader {
+	if s.parent == nil {
+		return nil
+	}
+
+	return s.parent.Header()
+}
+
 func (s *Segment) Parent() Element {
 	return s.parent
 }
@@ -205,8 +213,12 @@ func (s *Segment) Append(el Element) error {
 	return nil
 }
 
+func (s *Segment) Fields() []*Field {
+	return s.children
+}
+
 func (s *Segment) Field(index int) (*Field, error) {
-	if index < 0 || index > len(s.children) {
+	if index < 0 || index > len(s.children)-1 {
 		return nil, fmt.Errorf("field %d not found", index)
 	}
 

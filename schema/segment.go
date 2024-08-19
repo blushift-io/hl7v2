@@ -1,5 +1,19 @@
 package schema
 
+type Segments []*Segment
+
+func (ss Segments) Len() int {
+	return len(ss)
+}
+
+func (ss Segments) Less(i, j int) bool {
+	return ss[i].ID < ss[j].ID
+}
+
+func (ss Segments) Swap(i, j int) {
+	ss[i], ss[j] = ss[j], ss[i]
+}
+
 type Segment struct {
 	s *Schema
 
@@ -9,6 +23,14 @@ type Segment struct {
 	Sample      string          `json:"sample"`
 	Chapters    []string        `json:"chapters"`
 	Fields      []*SegmentField `json:"fields"`
+}
+
+func (s *Segment) Version() string {
+	if s.s == nil {
+		return ""
+	}
+
+	return s.s.Version()
 }
 
 func (s *Segment) GetChapters() []*Chapter {

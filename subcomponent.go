@@ -54,6 +54,14 @@ func (el *Subcomponent) Delimiters() *Delimiters {
 	return el.parent.Delimiters()
 }
 
+func (el *Subcomponent) Header() *MessageHeader {
+	if el.parent == nil {
+		return nil
+	}
+
+	return el.parent.Header()
+}
+
 func (el *Subcomponent) Parent() Element {
 	return el.parent
 }
