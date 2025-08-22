@@ -6,6 +6,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/blushift-io/hl7v2/query"
 	"github.com/fatih/structs"
 )
 
@@ -14,14 +15,18 @@ import (
 //TODO: Implement batch and file elements
 
 type Marshaler interface {
-	MarshalHL7(msg *Message) error
+	MarshalHL7() ([]byte, error)
 }
 
 type Unmarshaler interface {
-	UnmarshalHL7(msg *Message, v any) error
+	UnmarshalHL7(msg Queryable, v any) error
 }
 
 func Unmarshal(msg Queryable, v any) error {
+	if m, ok := v.(Unmarshaler); ok {
+		return m.UnmarshalHL7(msg, v)
+	}
+
 	if !structs.IsStruct(v) {
 		return fmt.Errorf("hl7v2: Unmarshal expects a struct")
 	}
@@ -50,7 +55,7 @@ func Unmarshal(msg Queryable, v any) error {
 
 			val, err := msg.QueryValue(q)
 			if err != nil {
-				if errors.Is(err, ErrValueNotFound) {
+				if errors.Is(err, ErrValueNotFound) || errors.Is(err, ErrElementNotFound) {
 					continue
 				}
 
@@ -88,4 +93,47 @@ func Unmarshal(msg Queryable, v any) error {
 	}
 
 	return nil
+}
+
+func Marshal(v any) ([]byte, error) {
+	if m, ok := v.(Marshaler); ok {
+		return m.MarshalHL7()
+	}
+
+	if !structs.IsStruct(v) {
+		return nil, errors.New("hl7v2: Marshal expects a struct")
+	}
+
+	m := make(map[string]Value)
+
+	s := structs.New(v)
+	for _, f := range s.Fields() {
+		if !f.IsExported() {
+			continue
+		}
+
+		q := f.Tag("hl7")
+		if len(q) == 0 {
+			continue
+		}
+
+		parts := strings.Split(q, ",")
+		loc := parts[0]
+		val := fmt.Sprintf("%v", f.Value())
+
+		m[loc] = NewStringValue(val)
+	}
+
+	b := NewBuilder()
+
+	for ql, val := range m {
+		loc, err := query.ParseLocation(ql)
+		if err != nil {
+			return nil, err
+		}
+
+		b.SetLocation(loc, val)
+	}
+
+	return b.BuildRaw().Value().Bytes(), nil
 }

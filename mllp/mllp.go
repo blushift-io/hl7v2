@@ -23,11 +23,11 @@ func NewReadWriter(rw io.ReadWriter) *ReadWriter {
 	}
 }
 
-func Wrap(b []byte) []byte {
+func Encode(b []byte) []byte {
 	return append(append([]byte{startByte}, b...), []byte{endByte, carriageReturn}...)
 }
 
-func Unwrap(b []byte) ([]byte, error) {
+func Decode(b []byte) ([]byte, error) {
 	if len(b) < 3 {
 		return nil, fmt.Errorf("unwrap mllp: input too short")
 	}

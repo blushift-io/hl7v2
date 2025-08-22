@@ -54,10 +54,23 @@ func (m *Message) GetSegments() []*MessageSegment {
 }
 
 func (m *Message) Segment(id string) *MessageSegment {
-	for _, s := range m.Segments {
-		if s.ID == id || s.Name == id {
-			s.s = m.s
+	seg := matchSegment(id, m.Segments)
+	if seg != nil {
+		seg.s = m.s
+	}
 
+	return seg
+}
+
+func matchSegment(id string, segs []*MessageSegment) *MessageSegment {
+	for _, s := range segs {
+		if s.Group {
+			if seg := matchSegment(id, s.Segments); seg != nil {
+				return seg
+			}
+		}
+
+		if s.ID == id || s.Name == id {
 			return s
 		}
 	}

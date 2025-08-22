@@ -43,7 +43,7 @@ func (f RawField) Query(loc query.Location, delims ...*Delimiters) (*Value, erro
 
 	rep := int(*loc.FieldRep)
 	if rep > len(f)-1 {
-		return nil, fmt.Errorf("repetition %d not found", loc.FieldRep)
+		return nil, ErrElementNotFound
 	}
 
 	return f[rep].Query(loc, delims...)
@@ -83,9 +83,6 @@ func NewField(vals ...Value) *Field {
 }
 
 func newField(parent Element, pos int, raw RawField) *Field {
-	if len(raw) > 0 {
-		//break
-	}
 	fld := &Field{
 		parent:   parent,
 		children: make([]*Repetition, len(raw)),
@@ -140,11 +137,15 @@ func (f *Field) Position() int {
 }
 
 func (f *Field) Location() query.Location {
-	if f.parent == nil {
-		return query.Location{}
+	loc := query.Location{}
+	if f == nil {
+		return loc
 	}
 
-	loc := f.parent.Location()
+	if f.parent == nil {
+		loc = f.parent.Location()
+	}
+
 	loc.Field = f.pos
 
 	return loc

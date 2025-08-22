@@ -79,11 +79,15 @@ func (el *Subcomponent) Position() int {
 }
 
 func (el *Subcomponent) Location() query.Location {
-	if el.parent == nil {
-		return query.Location{}
+	loc := query.Location{}
+	if el == nil {
+		return loc
 	}
 
-	loc := el.parent.Location()
+	if el.parent != nil {
+		loc = el.parent.Location()
+	}
+
 	loc.Subcomponent = el.pos
 
 	return loc

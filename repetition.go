@@ -38,7 +38,7 @@ func (r RawRepetition) Query(loc query.Location, delims ...*Delimiters) (*Value,
 	}
 
 	if int(loc.Component) > len(r) {
-		return nil, fmt.Errorf("component %d not found", loc.Component)
+		return nil, ErrElementNotFound
 	}
 
 	return r[loc.Component-1].Query(loc, delims...)
@@ -105,11 +105,15 @@ func (r *Repetition) Position() int {
 }
 
 func (r *Repetition) Location() query.Location {
-	if r.parent == nil {
-		return query.Location{}
+	loc := query.Location{}
+	if r == nil {
+		return loc
 	}
 
-	loc := r.parent.Location()
+	if r.parent != nil {
+		loc = r.parent.Location()
+	}
+
 	loc.FieldRep = &r.pos
 
 	return loc

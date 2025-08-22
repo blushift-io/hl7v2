@@ -203,13 +203,13 @@ func (m *Message) QueryValue(q string) (*Value, error) {
 func (m *Message) Schema() (*schema.Message, error) {
 	sch := schema.Open(m.header.VersionID)
 	if sch == nil {
-		return nil, fmt.Errorf("schema version %s not found", m.header.VersionID)
+		return nil, schema.ErrSchemaNotFound
 	}
 
 	typ := m.header.MessageType().String()
 	msg := sch.Message(typ)
 	if msg == nil {
-		return nil, fmt.Errorf("schema message %s not found", typ)
+		return nil, schema.ErrMessageTypeNotFound
 	}
 
 	return msg, nil

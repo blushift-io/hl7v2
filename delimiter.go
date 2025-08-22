@@ -146,6 +146,20 @@ func ParseDelimiters(b []byte) (*Delimiters, error) {
 	return delims, nil
 }
 
+func (d *Delimiters) fieldValue() Value {
+	return NewValue(d.Field.Bytes())
+}
+
+func (d *Delimiters) encodingCharsValue() Value {
+	b := &bytes.Buffer{}
+	b.Write(d.Component.Bytes())
+	b.Write(d.Repetition.Bytes())
+	b.Write(d.Escape.Bytes())
+	b.Write(d.Subcomponent.Bytes())
+
+	return NewValue(b.Bytes())
+}
+
 func (d *Delimiters) Join(b [][]byte, typ DelimiterType) []byte {
 	var delim Delimiter
 	switch typ {

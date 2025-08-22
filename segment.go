@@ -135,15 +135,22 @@ func (s *Segment) Index() int {
 }
 
 func (s *Segment) Location() query.Location {
+	loc := query.Location{}
+	if s == nil {
+		return loc
+	}
+
+	loc.Segment = s.id
+
 	rep := 0
 	if len(s.children) > 1 {
 		rep = s.children[1].Value().Int()
+		if rep > 0 {
+			loc.SegmentRep = &rep
+		}
 	}
 
-	return query.Location{
-		Segment:    s.Name(),
-		SegmentRep: &rep,
-	}
+	return loc
 }
 
 func (s *Segment) Value() Value {
@@ -223,42 +230,4 @@ func (s *Segment) Field(index int) (*Field, error) {
 	}
 
 	return s.children[index], nil
-}
-
-type SegmentBuilder struct {
-	id     string
-	fields []*Field
-}
-
-func NewSegment(id string, fields ...*Field) *SegmentBuilder {
-	f := []*Field{
-		NewField(NewValueString(id)),
-	}
-
-	f = append(f, fields...)
-
-	return &SegmentBuilder{
-		id:     id,
-		fields: f,
-	}
-}
-
-func (b *SegmentBuilder) Field(f *Field) *SegmentBuilder {
-	b.fields = append(b.fields, f)
-
-	return b
-}
-
-func (b *SegmentBuilder) Build() *Segment {
-	seg := &Segment{
-		id:       b.id,
-		children: b.fields,
-	}
-
-	for i, f := range b.fields {
-		f.parent = seg
-		f.pos = i + 1
-	}
-
-	return seg
 }

@@ -38,7 +38,7 @@ func (c RawComponent) Query(loc query.Location, delims ...*Delimiters) (*Value, 
 	}
 
 	if int(loc.Subcomponent) > len(c) {
-		return nil, fmt.Errorf("subcomponent %d not found", loc.Subcomponent)
+		return nil, ErrElementNotFound
 	}
 
 	val := c[loc.Subcomponent-1].Value()
@@ -103,11 +103,15 @@ func (c *Component) Position() int {
 }
 
 func (c *Component) Location() query.Location {
-	if c.parent == nil {
-		return query.Location{}
+	loc := query.Location{}
+	if c == nil {
+		return loc
 	}
 
-	loc := c.parent.Location()
+	if c.parent != nil {
+		loc = c.parent.Location()
+	}
+
 	loc.Component = c.pos
 	return loc
 }
@@ -123,6 +127,10 @@ func (c *Component) Value() Value {
 }
 
 func (c *Component) GetLocation(loc query.Location) (Element, error) {
+	if c == nil {
+		return nil, fmt.Errorf("component is nil")
+	}
+
 	if loc.Subcomponent == 0 {
 		return c.children[0], nil
 	}

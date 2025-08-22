@@ -24,7 +24,7 @@ func Read(r io.Reader) ([]byte, error) {
 		return nil, fmt.Errorf("mllp: %w", err)
 	}
 
-	msg, err := Unwrap(append(b, lb))
+	msg, err := Decode(append(b, lb))
 	if err != nil {
 		return nil, fmt.Errorf("mllp: %w", err)
 	}

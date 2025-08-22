@@ -104,6 +104,38 @@ type MessageType struct {
 	Structure string
 }
 
+func ParseMessageType(s string, delims *Delimiters) (MessageType, error) {
+	parts := delims.Split([]byte(s), ComponentDelimiter)
+	var code string
+	var evt string
+	var str string
+
+	switch len(parts) {
+	case 1:
+		if string(parts[0]) != "ACK" {
+			return MessageType{}, fmt.Errorf("invalid message type: %s", s)
+		}
+
+		code = string(parts[0])
+	case 2:
+		code = string(parts[0])
+		evt = string(parts[1])
+		str = code + "_" + evt
+	case 3:
+		code = string(parts[0])
+		evt = string(parts[1])
+		str = string(parts[2])
+	}
+
+	mt := MessageType{
+		Code:      code,
+		Event:     evt,
+		Structure: str,
+	}
+
+	return mt, nil
+}
+
 func (t MessageType) String() string {
 	if len(t.Structure) > 0 {
 		return t.Structure
@@ -175,4 +207,14 @@ func (h *MessageHeader) MessageType() MessageType {
 		Event:     h.TriggerEvent,
 		Structure: h.MessageStructure,
 	}
+}
+
+func (h *MessageHeader) MarshalHL7() ([]byte, error) {
+	b := NewBuilder().SetHeader(NewHeaderBuilder(h))
+	msg, err := b.Build()
+	if err != nil {
+		return nil, err
+	}
+
+	return msg.Encode()
 }

@@ -6,7 +6,7 @@ import (
 )
 
 func Write(w io.Writer, b []byte) error {
-	if _, err := w.Write(Wrap(b)); err != nil {
+	if _, err := w.Write(Encode(b)); err != nil {
 		return fmt.Errorf("mllp: %w", err)
 	}
 

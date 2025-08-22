@@ -117,7 +117,32 @@ func validateSegmentSchema(seg *Segment, sch *schema.Segment) ValidationResult {
 				return ValidationResult{false, []error{fmt.Errorf("field %s (%d) exceeds max length: %d", sf.ID, len(v), sf.Length)}}
 			}
 		}
+
+		if sf.Table() != nil {
+			if err := validateTableValue(f.Value(), sf.Table()); err != nil {
+				return ValidationResult{false, []error{fmt.Errorf("field %s has invalid table value: %s", sf.ID, err)}}
+			}
+		}
 	}
 
 	return ValidationResult{true, nil}
+}
+
+func validateTableValue(v Value, tbl *schema.Table) error {
+	if tbl == nil {
+		return fmt.Errorf("table is nil")
+	}
+
+	switch tbl.Type {
+	case schema.TableTypeHL7:
+		for _, tv := range tbl.Entries {
+			if v.String() == tv.Value {
+				return nil
+			}
+		}
+	case schema.TableTypeLocal, schema.TableTypeUnknown, schema.TableTypeUser:
+		return nil
+	}
+
+	return fmt.Errorf("invalid table value: %s", v.String())
 }

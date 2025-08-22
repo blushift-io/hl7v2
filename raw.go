@@ -16,6 +16,21 @@ type RawMessage struct {
 	segs   []RawSegment
 }
 
+func newRawMessage(delims *Delimiters, segs ...RawSegment) *RawMessage {
+	msg := &RawMessage{
+		delims: delims,
+		segIdx: make(map[string]int),
+	}
+
+	for _, s := range segs {
+		msg.append(s)
+	}
+
+	msg.v = msg.Value().Bytes()
+
+	return msg
+}
+
 func ReadRaw(r io.Reader, opts ...ParserOption) (*RawMessage, error) {
 	b, err := io.ReadAll(r)
 	if err != nil {
@@ -71,19 +86,24 @@ func (m *RawMessage) QueryValue(q string) (*Value, error) {
 	}
 
 	if !m.hasSegment(loc.Segment) {
-		return nil, fmt.Errorf("segment '%s' not found", loc.Segment)
+		return nil, ErrElementNotFound
 	}
 
 	segs := m.Segments(loc.Segment)
 	segCnt := m.segIdx[loc.Segment]
 
 	if segCnt > len(segs) {
-		return nil, fmt.Errorf("segment '%s' repetition %d not found", loc.Segment, segCnt)
+		return nil, ErrElementNotFound
 	}
 
 	seg := segs[segCnt-1]
 
-	return seg.Query(loc, m.delims)
+	v, err := seg.Query(loc, m.delims)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query location %s: %w", q, err)
+	}
+
+	return v, nil
 }
 
 func (m *RawMessage) Value() Value {

@@ -39,23 +39,21 @@ func TestSegmentBuilder(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	zseg1 := NewSegment("ZXX").
-		Field(NewField(NewValueString("1"))).
-		Field(NewField(NewValueString("2"))).
-		Field(NewField(NewValueString("3"))).
-		Build()
+	zseg1 := BuildSegment("ZXX").
+		AddField(SingleValueField(NewStringValue("1"))).
+		AddField(SingleValueField(NewStringValue("2"))).
+		AddField(SingleValueField(NewStringValue("3")))
 
-	zseg2 := NewSegment("ZXY").
-		Field(NewField(NewValueString("1"))).
-		Field(NewField(NewValueString("2"))).
-		Field(NewField(NewValueString("3"))).
-		Build()
+	zseg2 := BuildSegment("ZXY").
+		AddField(SingleValueField(NewStringValue("1"))).
+		AddField(SingleValueField(NewStringValue("2"))).
+		AddField(SingleValueField(NewStringValue("3")))
 
-	if err := msg.Append(zseg1); err != nil {
+	if err := msg.Append(zseg1.BuildElement(msg, 0)); err != nil {
 		t.Fatal(err)
 	}
 
-	if err := msg.Append(zseg2); err != nil {
+	if err := msg.Append(zseg2.BuildElement(msg, 0)); err != nil {
 		t.Fatal(err)
 	}
 
@@ -73,7 +71,7 @@ func TestSegmentBuilder(t *testing.T) {
 		Field:   2,
 	}
 
-	if err := msg.SetLocation(loc, NewValueString("4")); err != nil {
+	if err := msg.SetLocation(loc, NewStringValue("4")); err != nil {
 		t.Fatal(err)
 	}
 

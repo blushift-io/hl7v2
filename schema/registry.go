@@ -1,9 +1,12 @@
 package schema
 
-import "embed"
+import (
+	"errors"
+)
 
-//go:embed spec
-var spec embed.FS
+var (
+	ErrSchemaNotFound = errors.New("schema not found")
+)
 
 type schemaRegistry struct {
 	schemas map[string]*Schema

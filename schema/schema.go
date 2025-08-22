@@ -2,6 +2,7 @@ package schema
 
 import (
 	"encoding/json"
+	"errors"
 	"sort"
 	"sync"
 )
@@ -9,6 +10,10 @@ import (
 //TODO: Complete GoDoc to explain schema linking via functional getter vs struct field access
 
 //go:generate enumer -type=TableType,DataTypeType -json -text -sql -yaml -linecomment -output=schema_enums.go
+
+var (
+	ErrMessageTypeNotFound = errors.New("message type not found")
+)
 
 type Schema struct {
 	l sync.RWMutex

@@ -3,6 +3,7 @@ package hl7v2
 import (
 	"fmt"
 	"reflect"
+	"strconv"
 	"time"
 
 	"github.com/spf13/cast"
@@ -18,8 +19,12 @@ func NewValue(v []byte) Value {
 	}
 }
 
-func NewValueString(v string) Value {
+func NewStringValue(v string) Value {
 	return NewValue([]byte(v))
+}
+
+func NewIntValue(v int) Value {
+	return NewStringValue(strconv.Itoa(v))
 }
 
 func NewEmptyValue() Value {
