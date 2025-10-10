@@ -1,93 +1,75 @@
 package tcp
 
-type HandlerFunc func(*Context) error
+import (
+	"context"
+	"time"
 
-type Handler interface {
-	OnConnect(*Context) error
-	OnMessage(*Context) error
-	OnError(*Context) error
-	OnClose(*Context) error
+	"github.com/blushift-io/hl7v2"
+)
+
+type SendOptions struct {
+	WaitForAck bool
+	Timeout    time.Duration
 }
 
-type handler struct {
-	onConnect []HandlerFunc
-	onMessage []HandlerFunc
-	onError   []HandlerFunc
-	onClose   []HandlerFunc
-}
+type SendOption func(*SendOptions)
 
-type HandlerOption func(*handler)
-
-func OnConnect(fn HandlerFunc) HandlerOption {
-	return func(h *handler) {
-		h.onConnect = append(h.onConnect, fn)
+func WaitForAck() SendOption {
+	return func(o *SendOptions) {
+		o.WaitForAck = true
 	}
 }
 
-func OnMessage(fn HandlerFunc) HandlerOption {
-	return func(h *handler) {
-		h.onMessage = append(h.onMessage, fn)
+func WithTimeout(d time.Duration) SendOption {
+	return func(o *SendOptions) {
+		o.Timeout = d
 	}
 }
 
-func OnError(fn HandlerFunc) HandlerOption {
-	return func(h *handler) {
-		h.onError = append(h.onError, fn)
+func Send(ctx context.Context, host string, msg *hl7v2.RawMessage, opts ...SendOption) (*hl7v2.RawMessage, error) {
+	options := &SendOptions{
+		WaitForAck: false,
+		Timeout:    30 * time.Second,
 	}
-}
-
-func OnClose(fn HandlerFunc) HandlerOption {
-	return func(h *handler) {
-		h.onClose = append(h.onClose, fn)
-	}
-}
-
-func NewHandler(opts ...HandlerOption) Handler {
-	h := &handler{}
 
 	for _, opt := range opts {
-		opt(h)
+		opt(options)
 	}
 
-	return h
-}
+	conn, err := Dial(ctx, host)
+	if err != nil {
+		return nil, err
+	}
+	defer conn.Close()
 
-func (h *handler) OnConnect(ctx *Context) error {
-	for _, fn := range h.onConnect {
-		if err := fn(ctx); err != nil {
-			return err
+	if err := conn.WriteMessage(msg); err != nil {
+		return nil, err
+	}
+
+	if !options.WaitForAck {
+		return nil, nil
+	}
+
+	ackCh := make(chan *hl7v2.RawMessage, 1)
+	errCh := make(chan error, 1)
+
+	go func() {
+		ack, err := conn.ReadMessage()
+		if err != nil {
+			errCh <- err
+			return
 		}
+		ackCh <- ack
+	}()
+
+	select {
+	case ack := <-ackCh:
+		return ack, nil
+	case err := <-errCh:
+		return nil, err
+	case <-time.After(options.Timeout):
+		return nil, context.DeadlineExceeded
+	case <-ctx.Done():
+		return nil, ctx.Err()
 	}
-
-	return nil
-}
-
-func (h *handler) OnMessage(ctx *Context) error {
-	for _, fn := range h.onMessage {
-		if err := fn(ctx); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (h *handler) OnError(ctx *Context) error {
-	for _, fn := range h.onError {
-		if err := fn(ctx); err != nil {
-			return err
-		}
-	}
-
-	return nil
-}
-
-func (h *handler) OnClose(ctx *Context) error {
-	for _, fn := range h.onClose {
-		if err := fn(ctx); err != nil {
-			return err
-		}
-	}
-
-	return nil
 }

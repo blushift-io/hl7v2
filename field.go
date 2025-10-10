@@ -72,17 +72,7 @@ type Field struct {
 	pos      int
 }
 
-func NewField(vals ...Value) *Field {
-	raw := make(RawField, len(vals))
-
-	for i, val := range vals {
-		raw[i] = RawRepetition{RawComponent{RawSubcomponent(val.Bytes())}}
-	}
-
-	return newField(nil, 0, raw)
-}
-
-func newField(parent Element, pos int, raw RawField) *Field {
+func NewField(parent Element, pos int, raw RawField) *Field {
 	fld := &Field{
 		parent:   parent,
 		children: make([]*Repetition, len(raw)),
@@ -90,7 +80,7 @@ func newField(parent Element, pos int, raw RawField) *Field {
 	}
 
 	for i, rep := range raw {
-		fld.children[i] = newRepetition(fld, i, rep)
+		fld.children[i] = NewRepetition(fld, i, rep)
 	}
 
 	return fld
@@ -151,11 +141,11 @@ func (f *Field) Location() query.Location {
 	return loc
 }
 
-func (f *Field) Value() Value {
+func (f *Field) Value(escape ...bool) Value {
 	var b [][]byte
 
 	for _, comp := range f.children {
-		b = append(b, comp.Value().Bytes())
+		b = append(b, comp.Value(escape...).Bytes())
 	}
 
 	return NewValue(f.Delimiters().Join(b, RepetitionDelimiter))

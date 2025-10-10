@@ -19,6 +19,16 @@ func NewValue(v []byte) Value {
 	}
 }
 
+func UnescapeValue(v []byte, delims *Delimiters) Value {
+	if delims == nil {
+		delims = DefaultDelimiters()
+	}
+
+	v = delims.Escaper().Unescape(v)
+
+	return NewValue(v)
+}
+
 func NewStringValue(v string) Value {
 	return NewValue([]byte(v))
 }
@@ -29,6 +39,22 @@ func NewIntValue(v int) Value {
 
 func NewEmptyValue() Value {
 	return Value{}
+}
+
+func NewDateValue(date time.Time) Value {
+	if date.IsZero() {
+		return NewEmptyValue()
+	}
+
+	return NewStringValue(date.Format("20060102"))
+}
+
+func NewDateTimeValue(date time.Time) Value {
+	if date.IsZero() {
+		return NewEmptyValue()
+	}
+
+	return NewStringValue(date.Format("20060102150405"))
 }
 
 func MarshalValue(v any) Value {
@@ -45,8 +71,9 @@ func MarshalValue(v any) Value {
 
 func (v Value) Bind(val any) error {
 	rv := reflect.ValueOf(val)
-	if rv.Kind() != reflect.Ptr {
-		return fmt.Errorf("hl7v2: Bind expects a pointer")
+
+	if !rv.CanSet() {
+		return fmt.Errorf("hl7v2: Bind expects a settable pointer")
 	}
 
 	rv.Elem().Set(reflect.ValueOf(v.v))
@@ -74,10 +101,31 @@ func (v Value) Bool() bool {
 	return cast.ToBool(string(v.v))
 }
 
+// TODO: support for timezone adjustments
 func (v Value) Date() time.Time {
+	if v.Empty() {
+		return time.Time{}
+	}
+
 	return cast.ToTime(string(v.v))
 }
 
 func (v Value) Empty() bool {
-	return v.v == nil
+	return len(v.v) == 0
+}
+
+func (v Value) Escape(delims *Delimiters) Value {
+	if delims == nil {
+		delims = DefaultDelimiters()
+	}
+
+	return NewValue(delims.Escaper().Escape(v.v))
+}
+
+func (v Value) Unescape(delims *Delimiters) Value {
+	if delims == nil {
+		delims = DefaultDelimiters()
+	}
+
+	return NewValue(delims.Escaper().Unescape(v.v))
 }

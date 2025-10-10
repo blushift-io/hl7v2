@@ -71,7 +71,7 @@ type Segment struct {
 	children []*Field
 }
 
-func newSegment(parent Element, pos int, raw RawSegment) *Segment {
+func NewSegment(parent Element, pos int, raw RawSegment) *Segment {
 	seg := &Segment{
 		id:       raw.ID(),
 		pos:      pos,
@@ -80,7 +80,7 @@ func newSegment(parent Element, pos int, raw RawSegment) *Segment {
 	}
 
 	for i, field := range raw {
-		seg.children[i] = newField(seg, i, field)
+		seg.children[i] = NewField(seg, i, field)
 	}
 
 	return seg
@@ -153,7 +153,7 @@ func (s *Segment) Location() query.Location {
 	return loc
 }
 
-func (s *Segment) Value() Value {
+func (s *Segment) Value(escape ...bool) Value {
 	var b [][]byte
 
 	start := 0
@@ -169,7 +169,8 @@ func (s *Segment) Value() Value {
 	}
 
 	for i := start; i < len(s.children); i++ {
-		b = append(b, s.children[i].Value().Bytes())
+		v := s.children[i].Value(escape...)
+		b = append(b, v.Bytes())
 	}
 
 	return NewValue(s.Delimiters().Join(b, FieldDelimiter))

@@ -210,11 +210,5 @@ func (h *MessageHeader) MessageType() MessageType {
 }
 
 func (h *MessageHeader) MarshalHL7() ([]byte, error) {
-	b := NewBuilder().SetHeader(NewHeaderBuilder(h))
-	msg, err := b.Build()
-	if err != nil {
-		return nil, err
-	}
-
-	return msg.Encode()
+	panic("not implemented")
 }

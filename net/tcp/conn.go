@@ -14,7 +14,7 @@ type Conn interface {
 	net.Conn
 	WriteMessage(*hl7v2.RawMessage) error
 	ReadMessage() (*hl7v2.RawMessage, error)
-	AckMessage(*hl7v2.RawMessage) error
+	AckMessage(*hl7v2.RawMessage) (*hl7v2.RawMessage, error)
 }
 
 func Dial(ctx context.Context, addr string, opts ...ConnOption) (Conn, error) {
@@ -72,19 +72,24 @@ func (c *tcpConn) ReadMessage() (*hl7v2.RawMessage, error) {
 	return m, nil
 }
 
-func (c *tcpConn) AckMessage(m *hl7v2.RawMessage) error {
+func (c *tcpConn) AckMessage(m *hl7v2.RawMessage) (*hl7v2.RawMessage, error) {
 	//TODO: better implement this silly thing
 	v := m.Value().Bytes()
 	ack, err := hl7v2.AckRawMessage(v)
 	if err != nil {
-		return fmt.Errorf("failed to ack message: %w", err)
+		return nil, fmt.Errorf("failed to ack message: %w", err)
+	}
+
+	res, err := hl7v2.ParseRaw(ack, hl7v2.FixLineEndings())
+	if err != nil {
+		return nil, fmt.Errorf("failed to parse ack message: %w", err)
 	}
 
 	if err := mllp.Write(c, ack); err != nil {
-		return fmt.Errorf("failed to write ack: %w", err)
+		return nil, fmt.Errorf("failed to write ack: %w", err)
 	}
 
-	return nil
+	return res, nil
 }
 
 func (c *tcpConn) Close() error {

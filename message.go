@@ -66,7 +66,7 @@ func newMessage(parent Element, pos int, raw *RawMessage, opts ...ParserOption) 
 	msg.header = h
 
 	for i, seg := range raw.segs {
-		msg.segments[i] = newSegment(msg, i+1, seg)
+		msg.segments[i] = NewSegment(msg, i+1, seg)
 		msg.segCount[seg.ID()]++
 	}
 
@@ -109,11 +109,11 @@ func (m *Message) Location() query.Location {
 	return query.Location{}
 }
 
-func (m *Message) Value() Value {
+func (m *Message) Value(escape ...bool) Value {
 	var b [][]byte
 
 	for _, seg := range m.segments {
-		b = append(b, seg.Value().Bytes())
+		b = append(b, seg.Value(escape...).Bytes())
 	}
 
 	return NewValue(m.delims.Join(b, SegmentDelimiter))
@@ -173,7 +173,11 @@ func (m *Message) Append(el Element) error {
 }
 
 func (m *Message) Encode() ([]byte, error) {
-	return m.Value().Bytes(), nil
+	return m.Value(true).Bytes(), nil
+}
+
+func (m *Message) Raw() (*RawMessage, error) {
+	return ParseRaw(m.Value(true).Bytes())
 }
 
 func (m *Message) Query(q string) (Element, error) {

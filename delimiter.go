@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"strings"
 )
 
 var (
@@ -146,20 +147,6 @@ func ParseDelimiters(b []byte) (*Delimiters, error) {
 	return delims, nil
 }
 
-func (d *Delimiters) fieldValue() Value {
-	return NewValue(d.Field.Bytes())
-}
-
-func (d *Delimiters) encodingCharsValue() Value {
-	b := &bytes.Buffer{}
-	b.Write(d.Component.Bytes())
-	b.Write(d.Repetition.Bytes())
-	b.Write(d.Escape.Bytes())
-	b.Write(d.Subcomponent.Bytes())
-
-	return NewValue(b.Bytes())
-}
-
 func (d *Delimiters) Join(b [][]byte, typ DelimiterType) []byte {
 	var delim Delimiter
 	switch typ {
@@ -206,6 +193,66 @@ func (d *Delimiters) Split(b []byte, typ DelimiterType) [][]byte {
 	}
 
 	return bytes.Split(b, delim.Bytes())
+}
+
+func (d *Delimiters) Escaper() *Escaper {
+	return NewEscaper(d)
+}
+
+func (d *Delimiters) FieldSeparatorValue() Value {
+	return NewValue(d.Field.Bytes())
+}
+
+func (d *Delimiters) EncodingCharsValue() Value {
+	b := &bytes.Buffer{}
+	b.Write(d.Component.Bytes())
+	b.Write(d.Repetition.Bytes())
+	b.Write(d.Escape.Bytes())
+	b.Write(d.Subcomponent.Bytes())
+
+	return NewValue(b.Bytes())
+}
+
+type Escaper struct {
+	delims   *Delimiters
+	escape   strings.Replacer
+	unescape strings.Replacer
+}
+
+func NewEscaper(delims *Delimiters) *Escaper {
+	wrap := func(s string) string {
+		return fmt.Sprintf("%s%s%s", delims.Escape.String(), s, delims.Escape.String())
+	}
+	return &Escaper{
+		delims: delims,
+		escape: *strings.NewReplacer(
+			delims.Field.String(), wrap("F"),
+			delims.Repetition.String(), wrap("R"),
+			delims.Component.String(), wrap("S"),
+			delims.Subcomponent.String(), wrap("T"),
+			delims.Escape.String(), wrap("E"),
+			"\n", wrap("X0A"),
+			"\r", wrap("X0D"),
+		),
+		unescape: *strings.NewReplacer(
+			wrap("F"), delims.Field.String(),
+			wrap("R"), delims.Repetition.String(),
+			wrap("S"), delims.Component.String(),
+			wrap("T"), delims.Subcomponent.String(),
+			wrap("E"), delims.Escape.String(),
+			wrap("X0A"), "\n",
+			wrap("X0D"), "\r",
+			wrap(".br"), "\r",
+		),
+	}
+}
+
+func (e *Escaper) Escape(b []byte) []byte {
+	return []byte(e.escape.Replace(string(b)))
+}
+
+func (e *Escaper) Unescape(b []byte) []byte {
+	return []byte(e.unescape.Replace(string(b)))
 }
 
 func getDelimiters(delims ...*Delimiters) *Delimiters {

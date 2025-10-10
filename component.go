@@ -52,7 +52,7 @@ type Component struct {
 	pos      int
 }
 
-func newComponent(parent Element, pos int, raw RawComponent) *Component {
+func NewComponent(parent Element, pos int, raw RawComponent) *Component {
 	comp := &Component{
 		parent:   parent,
 		children: make([]*Subcomponent, len(raw)),
@@ -60,7 +60,7 @@ func newComponent(parent Element, pos int, raw RawComponent) *Component {
 	}
 
 	for i, sub := range raw {
-		comp.children[i] = newSubcomponent(comp, i+1, sub.Value())
+		comp.children[i] = NewSubcomponent(comp, i+1, sub.Value())
 	}
 
 	return comp
@@ -116,11 +116,18 @@ func (c *Component) Location() query.Location {
 	return loc
 }
 
-func (c *Component) Value() Value {
+func (c *Component) Value(escape ...bool) Value {
 	var b [][]byte
 
 	for _, sub := range c.children {
-		b = append(b, sub.v.Bytes())
+		var v []byte
+		if len(escape) > 0 && escape[0] {
+			v = sub.Value().Escape(c.Delimiters()).Bytes()
+		} else {
+			v = sub.Value().Bytes()
+		}
+
+		b = append(b, v)
 	}
 
 	return NewValue(c.Delimiters().Join(b, SubcomponentDelimiter))

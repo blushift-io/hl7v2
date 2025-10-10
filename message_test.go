@@ -27,7 +27,6 @@ func TestNewMessage(t *testing.T) {
 	spew.Dump(f.Value().String())
 
 	walkElements(msg)
-
 }
 
 func walkElements(root Element) {

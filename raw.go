@@ -16,7 +16,7 @@ type RawMessage struct {
 	segs   []RawSegment
 }
 
-func newRawMessage(delims *Delimiters, segs ...RawSegment) *RawMessage {
+func NewRawMessage(delims *Delimiters, segs ...RawSegment) *RawMessage {
 	msg := &RawMessage{
 		delims: delims,
 		segIdx: make(map[string]int),
@@ -52,6 +52,10 @@ func ParseRaw(b []byte, opts ...ParserOption) (*RawMessage, error) {
 
 func (m *RawMessage) Delimiters() *Delimiters {
 	return m.delims
+}
+
+func (m *RawMessage) ToMessage() (*Message, error) {
+	return newMessage(nil, 0, m)
 }
 
 func (m *RawMessage) Segments(id ...string) []RawSegment {
@@ -249,6 +253,8 @@ func (p *rawParser) parseSeg(b []byte) {
 		for _, r := range p.delims.Split(f, RepetitionDelimiter) {
 			for _, c := range p.delims.Split(r, ComponentDelimiter) {
 				for _, s := range p.delims.Split(c, SubcomponentDelimiter) {
+					s = p.delims.Escaper().Unescape(s)
+
 					p.commitBuffer(s)
 					p.commitSub()
 				}

@@ -36,7 +36,7 @@ type Element interface {
 	Length() int
 	Position() int
 	Location() query.Location
-	Value() Value
+	Value(escape ...bool) Value
 	GetLocation(query.Location) (Element, error)
 	SetLocation(query.Location, Value) error
 	Append(Element) error

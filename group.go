@@ -63,7 +63,7 @@ func (g *SegmentGroup) GetLocation(_ query.Location) (Element, error) {
 	panic("not implemented") // TODO: Implement
 }
 
-func (g *SegmentGroup) Value() Value {
+func (g *SegmentGroup) Value(escape ...bool) Value {
 	var b [][]byte
 
 	for _, seg := range g.segments {

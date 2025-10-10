@@ -50,7 +50,7 @@ type Repetition struct {
 	pos      int
 }
 
-func newRepetition(parent Element, pos int, raw RawRepetition) *Repetition {
+func NewRepetition(parent Element, pos int, raw RawRepetition) *Repetition {
 	rep := &Repetition{
 		parent:   parent,
 		children: make([]*Component, len(raw)),
@@ -58,7 +58,7 @@ func newRepetition(parent Element, pos int, raw RawRepetition) *Repetition {
 	}
 
 	for i, comp := range raw {
-		rep.children[i] = newComponent(rep, i+1, comp)
+		rep.children[i] = NewComponent(rep, i+1, comp)
 	}
 
 	return rep
@@ -119,11 +119,11 @@ func (r *Repetition) Location() query.Location {
 	return loc
 }
 
-func (r *Repetition) Value() Value {
+func (r *Repetition) Value(escape ...bool) Value {
 	var b [][]byte
 
 	for _, comp := range r.children {
-		b = append(b, comp.Value().Bytes())
+		b = append(b, comp.Value(escape...).Bytes())
 	}
 
 	return NewValue(r.Delimiters().Join(b, ComponentDelimiter))

@@ -3,10 +3,10 @@ package hl7v2
 import (
 	"errors"
 	"fmt"
+	"reflect"
 	"strings"
 	"time"
 
-	"github.com/blushift-io/hl7v2/query"
 	"github.com/fatih/structs"
 )
 
@@ -96,44 +96,10 @@ func Unmarshal(msg Queryable, v any) error {
 }
 
 func Marshal(v any) ([]byte, error) {
-	if m, ok := v.(Marshaler); ok {
-		return m.MarshalHL7()
-	}
+	panic("not implemented")
+}
 
-	if !structs.IsStruct(v) {
-		return nil, errors.New("hl7v2: Marshal expects a struct")
-	}
-
-	m := make(map[string]Value)
-
-	s := structs.New(v)
-	for _, f := range s.Fields() {
-		if !f.IsExported() {
-			continue
-		}
-
-		q := f.Tag("hl7")
-		if len(q) == 0 {
-			continue
-		}
-
-		parts := strings.Split(q, ",")
-		loc := parts[0]
-		val := fmt.Sprintf("%v", f.Value())
-
-		m[loc] = NewStringValue(val)
-	}
-
-	b := NewBuilder()
-
-	for ql, val := range m {
-		loc, err := query.ParseLocation(ql)
-		if err != nil {
-			return nil, err
-		}
-
-		b.SetLocation(loc, val)
-	}
-
-	return b.BuildRaw().Value().Bytes(), nil
+func isSlice(v any) bool {
+	rv := reflect.ValueOf(v)
+	return rv.Kind() == reflect.Slice || rv.Kind() == reflect.Array
 }

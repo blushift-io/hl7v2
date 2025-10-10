@@ -112,7 +112,7 @@ func (s *Server) Shutdown() error {
 }
 
 func (s *Server) handleConn(conn Conn) {
-	scanner := mllp.NewBufferedScanner(conn, 2048)
+	scanner := mllp.NewBufferedScanner(conn, 1024*1024)
 
 	ctx := NewContext(conn)
 

@@ -22,15 +22,18 @@ type Subcomponent struct {
 	parent Element
 }
 
-func NewSubcomponent(val Value) *Subcomponent {
-	return newSubcomponent(nil, 0, val)
+func NewSubcomponentValue(val Value) *Subcomponent {
+	return NewSubcomponent(nil, 0, val)
 }
 
 func NewEmptySubcomponent() *Subcomponent {
-	return newSubcomponent(nil, 0, NewEmptyValue())
+	return NewSubcomponent(nil, 0, NewEmptyValue())
 }
 
-func newSubcomponent(parent Element, pos int, v Value) *Subcomponent {
+func NewSubcomponent(parent Element, pos int, v Value) *Subcomponent {
+	delims := parent.Delimiters()
+	v = v.Unescape(delims)
+
 	return &Subcomponent{
 		v:      v,
 		pos:    pos,
@@ -93,7 +96,11 @@ func (el *Subcomponent) Location() query.Location {
 	return loc
 }
 
-func (el *Subcomponent) Value() Value {
+func (el *Subcomponent) Value(escape ...bool) Value {
+	if len(escape) > 0 && escape[0] {
+		return el.v.Escape(el.Delimiters())
+	}
+
 	return el.v
 }
 
@@ -102,6 +109,9 @@ func (el *Subcomponent) GetLocation(loc query.Location) (Element, error) {
 }
 
 func (el *Subcomponent) SetLocation(loc query.Location, val Value) error {
+	delims := el.Delimiters()
+	val = val.Unescape(delims)
+
 	el.v = val
 
 	return nil

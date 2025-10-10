@@ -40,8 +40,15 @@ func (h *handler) OnMessage(ctx *tcp.Context) error {
 		return fmt.Errorf("error writing hl7 message to file: %w", err)
 	}
 
-	if err := ctx.Conn.AckMessage(msg); err != nil {
+	ack, err := ctx.Conn.AckMessage(msg)
+	if err != nil {
 		return fmt.Errorf("error sending ack: %w", err)
+	}
+
+	ab := ack.Value().Bytes()
+	afn := filepath.Join(h.savePath, fmt.Sprintf("%s-ACK.hl7", cid.String()))
+	if err := os.WriteFile(afn, ab, 0644); err != nil {
+		return fmt.Errorf("error writing hl7 ack message to file: %w", err)
 	}
 
 	return nil
