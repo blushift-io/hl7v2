@@ -10,6 +10,7 @@ require (
 	github.com/fatih/structs v1.1.0
 	github.com/google/uuid v1.6.0
 	github.com/magefile/mage v1.13.0
+	github.com/oklog/run v1.2.0
 	github.com/spf13/cast v1.5.0
 	golang.org/x/tools v0.6.0
 )
