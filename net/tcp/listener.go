@@ -29,9 +29,10 @@ func (l keepAliveListener) Accept() (net.Conn, error) {
 }
 
 type listener struct {
-	l     []net.Listener
-	close chan struct{}
-	conns chan accepter
+	l      []net.Listener
+	close  chan struct{}
+	closed bool
+	conns  chan accepter
 }
 
 type accepter struct {
@@ -60,7 +61,12 @@ func (l *listener) Addr() net.Addr {
 }
 
 func (l *listener) Close() error {
+	if l.closed {
+		return nil
+	}
+
 	close(l.close)
+	l.closed = true
 
 	var errs []error
 	for i := range l.l {
