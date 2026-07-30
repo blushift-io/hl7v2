@@ -15,6 +15,7 @@ type Conn interface {
 	WriteMessage(*hl7v2.RawMessage) error
 	ReadMessage() (*hl7v2.RawMessage, error)
 	AckMessage(*hl7v2.RawMessage) (*hl7v2.RawMessage, error)
+	NackMessage(msg *hl7v2.RawMessage, code hl7v2.AcknowledgmentCode, errMsg string, cond ...hl7v2.MessageErrorCode) (*hl7v2.RawMessage, error)
 }
 
 func Dial(ctx context.Context, addr string, opts ...ConnOption) (Conn, error) {
@@ -111,6 +112,32 @@ func (c *tcpConn) AckMessage(m *hl7v2.RawMessage) (*hl7v2.RawMessage, error) {
 
 	if err := mllp.Write(c, ack); err != nil {
 		return nil, fmt.Errorf("failed to write ack: %w", err)
+	}
+
+	return res, nil
+}
+
+func (c *tcpConn) NackMessage(m *hl7v2.RawMessage, code hl7v2.AcknowledgmentCode, errMsg string, cond ...hl7v2.MessageErrorCode) (*hl7v2.RawMessage, error) {
+	if c == nil || c.Conn == nil {
+		return nil, fmt.Errorf("connection is nil")
+	}
+	if m == nil {
+		return nil, fmt.Errorf("message is nil")
+	}
+
+	v := m.Value().Bytes()
+	nack, err := hl7v2.NackRawMessage(v, code, errMsg, cond...)
+	if err != nil {
+		return nil, fmt.Errorf("failed to nack message: %w", err)
+	}
+
+	res, err := hl7v2.ParseRaw(nack, hl7v2.FixLineEndings())
+	if err != nil {
+		return nil, fmt.Errorf("failed to parse nack message: %w", err)
+	}
+
+	if err := mllp.Write(c, nack); err != nil {
+		return nil, fmt.Errorf("failed to write nack: %w", err)
 	}
 
 	return res, nil
