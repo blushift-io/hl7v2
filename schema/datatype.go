@@ -56,6 +56,25 @@ func (d *DataType) Table() *Table {
 	return d.s.Table(d.TableID)
 }
 
+func (d *DataType) IsPrimitive() bool {
+	return len(d.Fields) == 0
+}
+
+func (d *DataType) PrimitiveType() string {
+	switch d.DataType {
+	case "ST", "TX", "FT", "ID", "IS", "TN":
+		return "string"
+	case "TM", "DT", "TS":
+		return "time.Time"
+	case "NM":
+		return "float64"
+	case "SI":
+		return "int64"
+	default:
+		return ""
+	}
+}
+
 func (d *DataType) GetDataType() *DataType {
 	if d.s == nil {
 		return nil

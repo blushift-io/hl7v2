@@ -1,5 +1,7 @@
 package hl7v2
 
+import "strings"
+
 //go:generate enumer -type=Version --linecomment -output=version_enums.go
 type Version int
 
@@ -20,3 +22,15 @@ const (
 	Version282                    //2.8.2
 	Version29                     //2.9
 )
+
+func GetVersion(ver string) Version {
+	ver = strings.TrimSpace(ver)
+	ver = strings.TrimPrefix(ver, "v")
+
+	v, err := VersionString(ver)
+	if err != nil {
+		return VersionUnknown
+	}
+
+	return v
+}

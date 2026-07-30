@@ -20,7 +20,7 @@ type Conn interface {
 func Dial(ctx context.Context, addr string, opts ...ConnOption) (Conn, error) {
 	options := NewConnOptions(opts...)
 
-	conn, err := tryConnect(addr, options)
+	conn, err := tryConnect(ctx, addr, options)
 	if err != nil {
 		return nil, err
 	}
@@ -34,21 +34,35 @@ type tcpConn struct {
 }
 
 func newConn(conn net.Conn, opts *ConnOptions) (*tcpConn, error) {
-	nc := conn.(*net.TCPConn)
-	if err := nc.SetKeepAlive(true); err != nil {
-		return nil, err
+	if conn == nil {
+		return nil, fmt.Errorf("conn cannot be nil")
 	}
 
-	if err := nc.SetKeepAlivePeriod(opts.KeepAlivePeriod); err != nil {
-		return nil, err
+	if nc, ok := conn.(*net.TCPConn); ok {
+		if err := nc.SetKeepAlive(true); err != nil {
+			return nil, err
+		}
+
+		if opts.KeepAlivePeriod > 0 {
+			if err := nc.SetKeepAlivePeriod(opts.KeepAlivePeriod); err != nil {
+				return nil, err
+			}
+		}
 	}
 
 	return &tcpConn{
-		Conn: nc,
+		Conn: conn,
 	}, nil
 }
 
 func (c *tcpConn) WriteMessage(m *hl7v2.RawMessage) error {
+	if c == nil || c.Conn == nil {
+		return fmt.Errorf("connection is nil")
+	}
+	if m == nil {
+		return fmt.Errorf("message is nil")
+	}
+
 	b := m.Value().Bytes()
 
 	if err := mllp.Write(c, b); err != nil {
@@ -59,6 +73,10 @@ func (c *tcpConn) WriteMessage(m *hl7v2.RawMessage) error {
 }
 
 func (c *tcpConn) ReadMessage() (*hl7v2.RawMessage, error) {
+	if c == nil || c.Conn == nil {
+		return nil, fmt.Errorf("connection is nil")
+	}
+
 	b, err := mllp.Read(c)
 	if err != nil {
 		return nil, fmt.Errorf("failed to read message: %w", err)
@@ -73,7 +91,13 @@ func (c *tcpConn) ReadMessage() (*hl7v2.RawMessage, error) {
 }
 
 func (c *tcpConn) AckMessage(m *hl7v2.RawMessage) (*hl7v2.RawMessage, error) {
-	//TODO: better implement this silly thing
+	if c == nil || c.Conn == nil {
+		return nil, fmt.Errorf("connection is nil")
+	}
+	if m == nil {
+		return nil, fmt.Errorf("message is nil")
+	}
+
 	v := m.Value().Bytes()
 	ack, err := hl7v2.AckRawMessage(v)
 	if err != nil {
@@ -93,6 +117,10 @@ func (c *tcpConn) AckMessage(m *hl7v2.RawMessage) (*hl7v2.RawMessage, error) {
 }
 
 func (c *tcpConn) Close() error {
+	if c == nil || c.Conn == nil {
+		return nil
+	}
+
 	if c.cancel != nil {
 		c.cancel()
 	}
@@ -100,7 +128,7 @@ func (c *tcpConn) Close() error {
 	return c.Conn.Close()
 }
 
-func tryConnect(addr string, opts *ConnOptions) (net.Conn, error) {
+func tryConnect(ctx context.Context, addr string, opts *ConnOptions) (net.Conn, error) {
 	tries := 0
 	retry := &expBackoffRetry{
 		Count:        opts.DialRetries,
@@ -109,14 +137,31 @@ func tryConnect(addr string, opts *ConnOptions) (net.Conn, error) {
 	}
 
 	for {
+		if ctx != nil {
+			select {
+			case <-ctx.Done():
+				return nil, ctx.Err()
+			default:
+			}
+		}
+
 		conn, err := net.DialTimeout("tcp", addr, opts.DialTimeout)
 		if err != nil {
 			d, ok := retry.Backoff(uint64(tries))
+			tries++
 			if !ok {
 				return nil, err
 			}
 
-			time.Sleep(d)
+			if ctx != nil {
+				select {
+				case <-time.After(d):
+				case <-ctx.Done():
+					return nil, ctx.Err()
+				}
+			} else {
+				time.Sleep(d)
+			}
 			continue
 		}
 

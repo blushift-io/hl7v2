@@ -86,7 +86,11 @@ func (m *RawMessage) QueryValue(q string) (*Value, error) {
 	}
 
 	if loc.Segment == "" {
-		return nil, fmt.Errorf("invalid query: missing segment")
+		if len(m.segs) > 0 {
+			loc.Segment = m.segs[0].ID()
+		} else {
+			return nil, ErrElementNotFound
+		}
 	}
 
 	if !m.hasSegment(loc.Segment) {

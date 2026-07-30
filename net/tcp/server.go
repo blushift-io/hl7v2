@@ -1,6 +1,7 @@
 package tcp
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"net"
@@ -12,20 +13,27 @@ import (
 )
 
 type Server struct {
-	opts  *ServerOptions
-	h     Handler
-	l     net.Listener
-	conns map[net.Conn]Conn
-	connL sync.RWMutex
-	close chan struct{}
+	opts      *ServerOptions
+	h         Handler
+	l         net.Listener
+	conns     map[net.Conn]Conn
+	connL     sync.RWMutex
+	close     chan struct{}
+	closeOnce sync.Once
 }
 
 func NewServer(h Handler, opts ...ServerOption) (*Server, error) {
+	if h == nil {
+		return nil, fmt.Errorf("tcp: handler cannot be nil")
+	}
+
 	o := NewServerOptions(opts...)
 
 	return &Server{
-		opts: o,
-		h:    h,
+		opts:  o,
+		h:     h,
+		conns: make(map[net.Conn]Conn),
+		close: make(chan struct{}),
 	}, nil
 }
 
@@ -51,13 +59,20 @@ func (s *Server) Start() error {
 }
 
 func (s *Server) Serve(l net.Listener) error {
+	s.connL.Lock()
 	s.l = l
-
-	s.conns = make(map[net.Conn]Conn)
-	s.close = make(chan struct{})
+	if s.conns == nil {
+		s.conns = make(map[net.Conn]Conn)
+	}
+	if s.close == nil {
+		s.close = make(chan struct{})
+	}
+	s.connL.Unlock()
 
 	defer func() {
-		s.l.Close()
+		if s.l != nil {
+			s.l.Close()
+		}
 	}()
 
 	for {
@@ -67,6 +82,10 @@ func (s *Server) Serve(l net.Listener) error {
 			case <-s.close:
 				return nil
 			default:
+			}
+
+			if errors.Is(err, net.ErrClosed) {
+				return nil
 			}
 
 			if netErr, ok := err.(net.Error); ok && netErr.Timeout() {
@@ -79,56 +98,80 @@ func (s *Server) Serve(l net.Listener) error {
 
 		nc, err := newConn(conn, DefaultConnOptions())
 		if err != nil {
+			conn.Close()
 			return err
 		}
 
 		ctx := NewContext(nc)
 
-		if err := s.h.OnConnect(ctx); err != nil {
-			return err
+		if s.h != nil {
+			if err := s.h.OnConnect(ctx); err != nil {
+				nc.Close()
+				continue
+			}
 		}
 
 		s.connL.Lock()
 		s.conns[conn] = nc
 		s.connL.Unlock()
 
-		go s.handleConn(nc)
+		go s.handleConn(conn, nc)
 	}
 }
 
 func (s *Server) Shutdown() error {
-	if s.l != nil {
-		if err := s.l.Close(); err != nil {
+	s.closeOnce.Do(func() {
+		if s.close != nil {
+			close(s.close)
+		}
+	})
+
+	s.connL.RLock()
+	l := s.l
+	s.connL.RUnlock()
+
+	if l != nil {
+		if err := l.Close(); err != nil && !errors.Is(err, net.ErrClosed) {
 			return err
 		}
-	}
-
-	select {
-	case s.close <- struct{}{}:
-	default:
 	}
 
 	return s.releaseConns()
 }
 
-func (s *Server) handleConn(conn Conn) {
+func (s *Server) handleConn(rawConn net.Conn, conn Conn) {
+	defer func() {
+		s.connL.Lock()
+		delete(s.conns, rawConn)
+		s.connL.Unlock()
+
+		if conn != nil {
+			conn.Close()
+		}
+
+		if s.h != nil {
+			ctx := NewContext(conn)
+			s.h.OnClose(ctx)
+		}
+	}()
+
 	scanner := mllp.NewBufferedScanner(conn, 1024*1024)
-
 	ctx := NewContext(conn)
-
-	defer s.h.OnClose(ctx)
 
 	for {
 		if !scanner.Scan() {
 			if err := scanner.Err(); err != nil {
 				ctx.Apply(SetError(err))
 
-				if herr := s.h.OnError(ctx); herr != nil {
-					break
+				if s.h != nil {
+					if herr := s.h.OnError(ctx); herr != nil {
+						break
+					}
 				}
 
 				continue
 			}
+			break
 		}
 
 		b := scanner.Bytes()
@@ -140,24 +183,27 @@ func (s *Server) handleConn(conn Conn) {
 		if err != nil {
 			ctx.Apply(SetError(err))
 
-			if herr := s.h.OnError(ctx); herr != nil {
-				break
+			if s.h != nil {
+				if herr := s.h.OnError(ctx); herr != nil {
+					break
+				}
 			}
 
 			continue
 		}
 
 		ctx.Apply(SetData(msg))
-		if err := s.h.OnMessage(ctx); err != nil {
-			ctx.Apply(SetError(err))
-			if herr := s.h.OnError(ctx); herr != nil {
-				break
-			}
+		if s.h != nil {
+			if err := s.h.OnMessage(ctx); err != nil {
+				ctx.Apply(SetError(err))
+				if herr := s.h.OnError(ctx); herr != nil {
+					break
+				}
 
-			continue
+				continue
+			}
 		}
 	}
-
 }
 
 func (s *Server) releaseConns() error {
@@ -166,20 +212,12 @@ func (s *Server) releaseConns() error {
 	s.connL.Lock()
 	defer s.connL.Unlock()
 
-	for _, c := range s.conns {
+	for rawConn, c := range s.conns {
 		if cerr := c.Close(); cerr != nil {
 			errs = append(errs, cerr)
 		}
+		delete(s.conns, rawConn)
 	}
 
-	if len(errs) == 0 {
-		return nil
-	}
-
-	var errMsg string
-	for _, err := range errs {
-		errMsg += err.Error() + "\n"
-	}
-
-	return fmt.Errorf("errors releasing connections: %s", errMsg)
+	return errors.Join(errs...)
 }
