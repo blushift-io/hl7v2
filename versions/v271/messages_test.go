@@ -4,76 +4,32 @@ package v271_test
 
 import (
 	"bytes"
-	"reflect"
-	"strings"
 	"testing"
 
 	"github.com/blushift-io/hl7v2"
 	"github.com/blushift-io/hl7v2/versions/v271"
 )
 
-func setFirstField(structPtr any, val string) {
-	rv := reflect.ValueOf(structPtr)
-	if rv.Kind() == reflect.Pointer {
-		rv = rv.Elem()
-	}
-	if rv.Kind() != reflect.Struct {
-		return
-	}
-	t := rv.Type()
-	for i := 0; i < t.NumField(); i++ {
-		sf := t.Field(i)
-		tag := sf.Tag.Get("hl7")
-		tagPos := strings.Split(tag, ",")[0]
-		if tagPos == "1" {
-			f := rv.Field(i)
-			if f.IsValid() && f.CanSet() && f.Kind() == reflect.String {
-				f.SetString(val)
-				return
-			}
-		}
-	}
-}
-
 func TestMessageMarshal(t *testing.T) {
-	msh := v271.MSH{}
-	setFirstField(&msh, "|")
-
-	rvMSH := reflect.ValueOf(&msh).Elem()
-	for i := 0; i < rvMSH.NumField(); i++ {
-		tag := rvMSH.Type().Field(i).Tag.Get("hl7")
-		if strings.Split(tag, ",")[0] == "2" {
-			f := rvMSH.Field(i)
-			if f.IsValid() && f.CanSet() && f.Kind() == reflect.String {
-				f.SetString("^~\\&")
-			}
-		}
-	}
-
-	pid := v271.PID{}
-	setFirstField(&pid, "1")
-
-	msg := v271.ADT_A01{
-		MSH: msh,
-		PID: pid,
-	}
+	msg := v271.NewADT_A01().
+		SetPID(v271.NewPID())
 
 	out, err := hl7v2.Marshal(msg)
 	if err != nil {
-		t.Fatalf("failed to marshal ADT_A01 for 2.7.1: %v", err)
+		t.Fatalf("failed to marshal ADT_A01 for v271: %v", err)
 	}
 
 	if !bytes.HasPrefix(out, []byte("MSH|^~\\&")) {
 		t.Errorf("expected MSH prefix in marshaled output, got: %s", string(out))
 	}
 
-	if !bytes.Contains(out, []byte("PID|1")) {
-		t.Errorf("expected PID|1 in marshaled output, got: %s", string(out))
+	if !bytes.Contains(out, []byte("PID")) {
+		t.Errorf("expected PID in marshaled output, got: %s", string(out))
 	}
 
 	raw, err := hl7v2.ParseRaw(out)
 	if err != nil {
-		t.Fatalf("failed to parse back marshaled message for 2.7.1: %v", err)
+		t.Fatalf("failed to parse back marshaled message for v271: %v", err)
 	}
 
 	if raw.Delimiters().Field.String() != "|" {

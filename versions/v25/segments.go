@@ -2,136 +2,1020 @@
 
 package v25
 
+import (
+	"fmt"
+	"time"
+
+	"github.com/google/uuid"
+)
+
 // ABS - Abstract
 // This segment was created to communicate patient abstract information used for billing and reimbursement purposes. Abstract is a condensed form of medical history created for analysis, care planning, etc.
 type ABS struct {
-	DischargeCareProvider      XCN `hl7:"1"`
-	TransferMedicalServiceCode CE  `hl7:"2"`
-	SeverityOfIllnessCode      CE  `hl7:"3"`
-	DateTimeOfAttestation      TS  `hl7:"4"`
-	AttestedBy                 XCN `hl7:"5"`
-	TriageCode                 CE  `hl7:"6"`
-	AbstractCompletionDateTime TS  `hl7:"7"`
-	AbstractedBy               XCN `hl7:"8"`
-	CaseCategoryCode           CE  `hl7:"9"`
-	CaesarianSectionIndicator  ID  `hl7:"10"`
-	GestationCategoryCode      CE  `hl7:"11"`
-	GestationPeriodWeeks       NM  `hl7:"12"`
-	NewbornCode                CE  `hl7:"13"`
-	StillbornIndicator         ID  `hl7:"14"`
+	DischargeCareProvider      *XCN `hl7:"1"`
+	TransferMedicalServiceCode *CE  `hl7:"2"`
+	SeverityOfIllnessCode      *CE  `hl7:"3"`
+	DateTimeOfAttestation      *TS  `hl7:"4"`
+	AttestedBy                 *XCN `hl7:"5"`
+	TriageCode                 *CE  `hl7:"6"`
+	AbstractCompletionDateTime *TS  `hl7:"7"`
+	AbstractedBy               *XCN `hl7:"8"`
+	CaseCategoryCode           *CE  `hl7:"9"`
+	CaesarianSectionIndicator  *ID  `hl7:"10"`
+	GestationCategoryCode      *CE  `hl7:"11"`
+	GestationPeriodWeeks       *NM  `hl7:"12"`
+	NewbornCode                *CE  `hl7:"13"`
+	StillbornIndicator         *ID  `hl7:"14"`
+}
+
+func NewABS() *ABS {
+	return &ABS{}
+}
+
+func (s *ABS) Validate() error {
+
+	if s.DischargeCareProvider != nil {
+		if err := s.DischargeCareProvider.Validate(); err != nil {
+			return fmt.Errorf("ABS.DischargeCareProvider: %w", err)
+		}
+	}
+
+	if s.TransferMedicalServiceCode != nil {
+		if err := s.TransferMedicalServiceCode.Validate(); err != nil {
+			return fmt.Errorf("ABS.TransferMedicalServiceCode: %w", err)
+		}
+	}
+
+	if s.SeverityOfIllnessCode != nil {
+		if err := s.SeverityOfIllnessCode.Validate(); err != nil {
+			return fmt.Errorf("ABS.SeverityOfIllnessCode: %w", err)
+		}
+	}
+
+	if s.DateTimeOfAttestation != nil {
+		if err := s.DateTimeOfAttestation.Validate(); err != nil {
+			return fmt.Errorf("ABS.DateTimeOfAttestation: %w", err)
+		}
+	}
+
+	if s.AttestedBy != nil {
+		if err := s.AttestedBy.Validate(); err != nil {
+			return fmt.Errorf("ABS.AttestedBy: %w", err)
+		}
+	}
+
+	if s.TriageCode != nil {
+		if err := s.TriageCode.Validate(); err != nil {
+			return fmt.Errorf("ABS.TriageCode: %w", err)
+		}
+	}
+
+	if s.AbstractCompletionDateTime != nil {
+		if err := s.AbstractCompletionDateTime.Validate(); err != nil {
+			return fmt.Errorf("ABS.AbstractCompletionDateTime: %w", err)
+		}
+	}
+
+	if s.AbstractedBy != nil {
+		if err := s.AbstractedBy.Validate(); err != nil {
+			return fmt.Errorf("ABS.AbstractedBy: %w", err)
+		}
+	}
+
+	if s.CaseCategoryCode != nil {
+		if err := s.CaseCategoryCode.Validate(); err != nil {
+			return fmt.Errorf("ABS.CaseCategoryCode: %w", err)
+		}
+	}
+
+	if s.GestationCategoryCode != nil {
+		if err := s.GestationCategoryCode.Validate(); err != nil {
+			return fmt.Errorf("ABS.GestationCategoryCode: %w", err)
+		}
+	}
+
+	if s.NewbornCode != nil {
+		if err := s.NewbornCode.Validate(); err != nil {
+			return fmt.Errorf("ABS.NewbornCode: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *ABS) SetDischargeCareProvider(v *XCN) *ABS {
+	s.DischargeCareProvider = v
+	return s
+}
+
+func (s *ABS) SetTransferMedicalServiceCode(v *CE) *ABS {
+	s.TransferMedicalServiceCode = v
+	return s
+}
+
+func (s *ABS) SetSeverityOfIllnessCode(v *CE) *ABS {
+	s.SeverityOfIllnessCode = v
+	return s
+}
+
+func (s *ABS) SetDateTimeOfAttestation(v *TS) *ABS {
+	s.DateTimeOfAttestation = v
+	return s
+}
+
+func (s *ABS) SetAttestedBy(v *XCN) *ABS {
+	s.AttestedBy = v
+	return s
+}
+
+func (s *ABS) SetTriageCode(v *CE) *ABS {
+	s.TriageCode = v
+	return s
+}
+
+func (s *ABS) SetAbstractCompletionDateTime(v *TS) *ABS {
+	s.AbstractCompletionDateTime = v
+	return s
+}
+
+func (s *ABS) SetAbstractedBy(v *XCN) *ABS {
+	s.AbstractedBy = v
+	return s
+}
+
+func (s *ABS) SetCaseCategoryCode(v *CE) *ABS {
+	s.CaseCategoryCode = v
+	return s
+}
+
+func (s *ABS) SetCaesarianSectionIndicator(v *ID) *ABS {
+	s.CaesarianSectionIndicator = v
+	return s
+}
+
+func (s *ABS) SetGestationCategoryCode(v *CE) *ABS {
+	s.GestationCategoryCode = v
+	return s
+}
+
+func (s *ABS) SetGestationPeriodWeeks(v *NM) *ABS {
+	s.GestationPeriodWeeks = v
+	return s
+}
+
+func (s *ABS) SetNewbornCode(v *CE) *ABS {
+	s.NewbornCode = v
+	return s
+}
+
+func (s *ABS) SetStillbornIndicator(v *ID) *ABS {
+	s.StillbornIndicator = v
+	return s
 }
 
 // ACC - Accident
 // The ACC segment contains patient information relative to an accident in which the patient has been involved.
 type ACC struct {
-	AccidentDateTime            TS  `hl7:"1"`
-	AccidentCode                CE  `hl7:"2"`
-	AccidentLocation            ST  `hl7:"3"`
-	AutoAccidentState           CE  `hl7:"4"`
-	AccidentJobRelatedIndicator ID  `hl7:"5"`
-	AccidentDeathIndicator      ID  `hl7:"6"`
-	EnteredBy                   XCN `hl7:"7"`
-	AccidentDescription         ST  `hl7:"8"`
-	BroughtInBy                 ST  `hl7:"9"`
-	PoliceNotifiedIndicator     ID  `hl7:"10"`
-	AccidentAddress             XAD `hl7:"11"`
+	AccidentDateTime            *TS  `hl7:"1"`
+	AccidentCode                *CE  `hl7:"2"`
+	AccidentLocation            *ST  `hl7:"3"`
+	AutoAccidentState           *CE  `hl7:"4"`
+	AccidentJobRelatedIndicator *ID  `hl7:"5"`
+	AccidentDeathIndicator      *ID  `hl7:"6"`
+	EnteredBy                   *XCN `hl7:"7"`
+	AccidentDescription         *ST  `hl7:"8"`
+	BroughtInBy                 *ST  `hl7:"9"`
+	PoliceNotifiedIndicator     *ID  `hl7:"10"`
+	AccidentAddress             *XAD `hl7:"11"`
+}
+
+func NewACC() *ACC {
+	return &ACC{}
+}
+
+func (s *ACC) Validate() error {
+
+	if s.AccidentDateTime != nil {
+		if err := s.AccidentDateTime.Validate(); err != nil {
+			return fmt.Errorf("ACC.AccidentDateTime: %w", err)
+		}
+	}
+
+	if s.AccidentCode != nil {
+		if err := s.AccidentCode.Validate(); err != nil {
+			return fmt.Errorf("ACC.AccidentCode: %w", err)
+		}
+	}
+
+	if s.AutoAccidentState != nil {
+		if err := s.AutoAccidentState.Validate(); err != nil {
+			return fmt.Errorf("ACC.AutoAccidentState: %w", err)
+		}
+	}
+
+	if s.EnteredBy != nil {
+		if err := s.EnteredBy.Validate(); err != nil {
+			return fmt.Errorf("ACC.EnteredBy: %w", err)
+		}
+	}
+
+	if s.AccidentAddress != nil {
+		if err := s.AccidentAddress.Validate(); err != nil {
+			return fmt.Errorf("ACC.AccidentAddress: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *ACC) SetAccidentDateTime(v *TS) *ACC {
+	s.AccidentDateTime = v
+	return s
+}
+
+func (s *ACC) SetAccidentCode(v *CE) *ACC {
+	s.AccidentCode = v
+	return s
+}
+
+func (s *ACC) SetAccidentLocation(v *ST) *ACC {
+	s.AccidentLocation = v
+	return s
+}
+
+func (s *ACC) SetAutoAccidentState(v *CE) *ACC {
+	s.AutoAccidentState = v
+	return s
+}
+
+func (s *ACC) SetAccidentJobRelatedIndicator(v *ID) *ACC {
+	s.AccidentJobRelatedIndicator = v
+	return s
+}
+
+func (s *ACC) SetAccidentDeathIndicator(v *ID) *ACC {
+	s.AccidentDeathIndicator = v
+	return s
+}
+
+func (s *ACC) SetEnteredBy(v *XCN) *ACC {
+	s.EnteredBy = v
+	return s
+}
+
+func (s *ACC) SetAccidentDescription(v *ST) *ACC {
+	s.AccidentDescription = v
+	return s
+}
+
+func (s *ACC) SetBroughtInBy(v *ST) *ACC {
+	s.BroughtInBy = v
+	return s
+}
+
+func (s *ACC) SetPoliceNotifiedIndicator(v *ID) *ACC {
+	s.PoliceNotifiedIndicator = v
+	return s
+}
+
+func (s *ACC) SetAccidentAddress(v *XAD) *ACC {
+	s.AccidentAddress = v
+	return s
 }
 
 // ADD - Addendum
 // The ADD segment is used to define the continuation of the prior segment in a continuation message.
 type ADD struct {
-	AddendumContinuationPointer ST `hl7:"1"`
+	AddendumContinuationPointer *ST `hl7:"1"`
+}
+
+func NewADD() *ADD {
+	return &ADD{}
+}
+
+func (s *ADD) Validate() error {
+
+	return nil
+}
+
+func (s *ADD) SetAddendumContinuationPointer(v *ST) *ADD {
+	s.AddendumContinuationPointer = v
+	return s
 }
 
 // AFF - Professional Affiliation
 // The AFF segment adds detailed information regarding professional affiliations with which the staff member identified by the STF segment is/was associated.
 type AFF struct {
-	SetIDAFF                                     SI   `hl7:"1,required"`
-	ProfessionalOrganization                     XON  `hl7:"2,required"`
-	ProfessionalOrganizationAddress              XAD  `hl7:"3"`
+	SetIDAFF                                     *SI  `hl7:"1,required"`
+	ProfessionalOrganization                     *XON `hl7:"2,required"`
+	ProfessionalOrganizationAddress              *XAD `hl7:"3"`
 	ProfessionalOrganizationAffiliationDateRange []DR `hl7:"4"`
-	ProfessionalAffiliationAdditionalInformation ST   `hl7:"5"`
+	ProfessionalAffiliationAdditionalInformation *ST  `hl7:"5"`
+}
+
+func NewAFF() *AFF {
+	return &AFF{}
+}
+
+func (s *AFF) Validate() error {
+
+	if s.SetIDAFF == nil {
+		return fmt.Errorf("AFF.SetIDAFF is required")
+	}
+	if string(*s.SetIDAFF) == "" {
+		return fmt.Errorf("AFF.SetIDAFF is empty")
+	}
+
+	if s.ProfessionalOrganization == nil {
+		return fmt.Errorf("AFF.ProfessionalOrganization is required")
+	}
+	if s.ProfessionalOrganization != nil {
+		if err := s.ProfessionalOrganization.Validate(); err != nil {
+			return fmt.Errorf("AFF.ProfessionalOrganization: %w", err)
+		}
+	}
+
+	if s.ProfessionalOrganizationAddress != nil {
+		if err := s.ProfessionalOrganizationAddress.Validate(); err != nil {
+			return fmt.Errorf("AFF.ProfessionalOrganizationAddress: %w", err)
+		}
+	}
+
+	for _, item := range s.ProfessionalOrganizationAffiliationDateRange {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("AFF.ProfessionalOrganizationAffiliationDateRange: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *AFF) SetSetIDAFF(v *SI) *AFF {
+	s.SetIDAFF = v
+	return s
+}
+
+func (s *AFF) SetProfessionalOrganization(v *XON) *AFF {
+	s.ProfessionalOrganization = v
+	return s
+}
+
+func (s *AFF) SetProfessionalOrganizationAddress(v *XAD) *AFF {
+	s.ProfessionalOrganizationAddress = v
+	return s
+}
+
+func (s *AFF) AddProfessionalOrganizationAffiliationDateRange(v DR) *AFF {
+	s.ProfessionalOrganizationAffiliationDateRange = append(s.ProfessionalOrganizationAffiliationDateRange, v)
+	return s
+}
+
+func (s *AFF) SetProfessionalAffiliationAdditionalInformation(v *ST) *AFF {
+	s.ProfessionalAffiliationAdditionalInformation = v
+	return s
 }
 
 // AIG - Appointment Information - General Resource
 // The AIG segment contains information about various kinds of resources (other than those with specifically defined segments in this chapter) that can be scheduled. Resources included in a transaction using this segment are assumed to be controlled by a schedule on a schedule filler application. Resources not controlled by a schedule are not identified on a schedule request using this segment. Resources described by this segment are general kinds of resources, such as equipment, that are identified with a simple identification code.
 type AIG struct {
-	SetIDAIG                 SI   `hl7:"1,required"`
-	SegmentActionCode        ID   `hl7:"2"`
-	ResourceID               CE   `hl7:"3"`
-	ResourceType             CE   `hl7:"4,required"`
+	SetIDAIG                 *SI  `hl7:"1,required"`
+	SegmentActionCode        *ID  `hl7:"2"`
+	ResourceID               *CE  `hl7:"3"`
+	ResourceType             *CE  `hl7:"4,required"`
 	ResourceGroup            []CE `hl7:"5"`
-	ResourceQuantity         NM   `hl7:"6"`
-	ResourceQuantityUnits    CE   `hl7:"7"`
-	StartDateTime            TS   `hl7:"8"`
-	StartDateTimeOffset      NM   `hl7:"9"`
-	StartDateTimeOffsetUnits CE   `hl7:"10"`
-	Duration                 NM   `hl7:"11"`
-	DurationUnits            CE   `hl7:"12"`
-	AllowSubstitutionCode    IS   `hl7:"13"`
-	FillerStatusCode         CE   `hl7:"14"`
+	ResourceQuantity         *NM  `hl7:"6"`
+	ResourceQuantityUnits    *CE  `hl7:"7"`
+	StartDateTime            *TS  `hl7:"8"`
+	StartDateTimeOffset      *NM  `hl7:"9"`
+	StartDateTimeOffsetUnits *CE  `hl7:"10"`
+	Duration                 *NM  `hl7:"11"`
+	DurationUnits            *CE  `hl7:"12"`
+	AllowSubstitutionCode    *IS  `hl7:"13"`
+	FillerStatusCode         *CE  `hl7:"14"`
+}
+
+func NewAIG() *AIG {
+	return &AIG{}
+}
+
+func (s *AIG) Validate() error {
+
+	if s.SetIDAIG == nil {
+		return fmt.Errorf("AIG.SetIDAIG is required")
+	}
+	if string(*s.SetIDAIG) == "" {
+		return fmt.Errorf("AIG.SetIDAIG is empty")
+	}
+
+	if s.ResourceID != nil {
+		if err := s.ResourceID.Validate(); err != nil {
+			return fmt.Errorf("AIG.ResourceID: %w", err)
+		}
+	}
+
+	if s.ResourceType == nil {
+		return fmt.Errorf("AIG.ResourceType is required")
+	}
+	if s.ResourceType != nil {
+		if err := s.ResourceType.Validate(); err != nil {
+			return fmt.Errorf("AIG.ResourceType: %w", err)
+		}
+	}
+
+	for _, item := range s.ResourceGroup {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("AIG.ResourceGroup: %w", err)
+		}
+	}
+
+	if s.ResourceQuantityUnits != nil {
+		if err := s.ResourceQuantityUnits.Validate(); err != nil {
+			return fmt.Errorf("AIG.ResourceQuantityUnits: %w", err)
+		}
+	}
+
+	if s.StartDateTime != nil {
+		if err := s.StartDateTime.Validate(); err != nil {
+			return fmt.Errorf("AIG.StartDateTime: %w", err)
+		}
+	}
+
+	if s.StartDateTimeOffsetUnits != nil {
+		if err := s.StartDateTimeOffsetUnits.Validate(); err != nil {
+			return fmt.Errorf("AIG.StartDateTimeOffsetUnits: %w", err)
+		}
+	}
+
+	if s.DurationUnits != nil {
+		if err := s.DurationUnits.Validate(); err != nil {
+			return fmt.Errorf("AIG.DurationUnits: %w", err)
+		}
+	}
+
+	if s.FillerStatusCode != nil {
+		if err := s.FillerStatusCode.Validate(); err != nil {
+			return fmt.Errorf("AIG.FillerStatusCode: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *AIG) SetSetIDAIG(v *SI) *AIG {
+	s.SetIDAIG = v
+	return s
+}
+
+func (s *AIG) SetSegmentActionCode(v *ID) *AIG {
+	s.SegmentActionCode = v
+	return s
+}
+
+func (s *AIG) SetResourceID(v *CE) *AIG {
+	s.ResourceID = v
+	return s
+}
+
+func (s *AIG) SetResourceType(v *CE) *AIG {
+	s.ResourceType = v
+	return s
+}
+
+func (s *AIG) AddResourceGroup(v CE) *AIG {
+	s.ResourceGroup = append(s.ResourceGroup, v)
+	return s
+}
+
+func (s *AIG) SetResourceQuantity(v *NM) *AIG {
+	s.ResourceQuantity = v
+	return s
+}
+
+func (s *AIG) SetResourceQuantityUnits(v *CE) *AIG {
+	s.ResourceQuantityUnits = v
+	return s
+}
+
+func (s *AIG) SetStartDateTime(v *TS) *AIG {
+	s.StartDateTime = v
+	return s
+}
+
+func (s *AIG) SetStartDateTimeOffset(v *NM) *AIG {
+	s.StartDateTimeOffset = v
+	return s
+}
+
+func (s *AIG) SetStartDateTimeOffsetUnits(v *CE) *AIG {
+	s.StartDateTimeOffsetUnits = v
+	return s
+}
+
+func (s *AIG) SetDuration(v *NM) *AIG {
+	s.Duration = v
+	return s
+}
+
+func (s *AIG) SetDurationUnits(v *CE) *AIG {
+	s.DurationUnits = v
+	return s
+}
+
+func (s *AIG) SetAllowSubstitutionCode(v *IS) *AIG {
+	s.AllowSubstitutionCode = v
+	return s
+}
+
+func (s *AIG) SetFillerStatusCode(v *CE) *AIG {
+	s.FillerStatusCode = v
+	return s
 }
 
 // AIL - Appointment Information - Location Resource
 // The AIL segment contains information about location resources (meeting rooms, operating rooms, examination rooms, or other locations) that can be scheduled. Resources included in a transaction using this segment are assumed to be controlled by a schedule on a schedule filler application. Resources not controlled by a schedule are not identified on a schedule request using this segment. Location resources are identified with this specific segment because of the specific encoding of locations used by the HL7 specification.
 type AIL struct {
-	SetIDAIL                 SI   `hl7:"1,required"`
-	SegmentActionCode        ID   `hl7:"2"`
+	SetIDAIL                 *SI  `hl7:"1,required"`
+	SegmentActionCode        *ID  `hl7:"2"`
 	LocationResourceID       []PL `hl7:"3"`
-	LocationTypeAIL          CE   `hl7:"4"`
-	LocationGroup            CE   `hl7:"5"`
-	StartDateTime            TS   `hl7:"6"`
-	StartDateTimeOffset      NM   `hl7:"7"`
-	StartDateTimeOffsetUnits CE   `hl7:"8"`
-	Duration                 NM   `hl7:"9"`
-	DurationUnits            CE   `hl7:"10"`
-	AllowSubstitutionCode    IS   `hl7:"11"`
-	FillerStatusCode         CE   `hl7:"12"`
+	LocationTypeAIL          *CE  `hl7:"4"`
+	LocationGroup            *CE  `hl7:"5"`
+	StartDateTime            *TS  `hl7:"6"`
+	StartDateTimeOffset      *NM  `hl7:"7"`
+	StartDateTimeOffsetUnits *CE  `hl7:"8"`
+	Duration                 *NM  `hl7:"9"`
+	DurationUnits            *CE  `hl7:"10"`
+	AllowSubstitutionCode    *IS  `hl7:"11"`
+	FillerStatusCode         *CE  `hl7:"12"`
+}
+
+func NewAIL() *AIL {
+	return &AIL{}
+}
+
+func (s *AIL) Validate() error {
+
+	if s.SetIDAIL == nil {
+		return fmt.Errorf("AIL.SetIDAIL is required")
+	}
+	if string(*s.SetIDAIL) == "" {
+		return fmt.Errorf("AIL.SetIDAIL is empty")
+	}
+
+	for _, item := range s.LocationResourceID {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("AIL.LocationResourceID: %w", err)
+		}
+	}
+
+	if s.LocationTypeAIL != nil {
+		if err := s.LocationTypeAIL.Validate(); err != nil {
+			return fmt.Errorf("AIL.LocationTypeAIL: %w", err)
+		}
+	}
+
+	if s.LocationGroup != nil {
+		if err := s.LocationGroup.Validate(); err != nil {
+			return fmt.Errorf("AIL.LocationGroup: %w", err)
+		}
+	}
+
+	if s.StartDateTime != nil {
+		if err := s.StartDateTime.Validate(); err != nil {
+			return fmt.Errorf("AIL.StartDateTime: %w", err)
+		}
+	}
+
+	if s.StartDateTimeOffsetUnits != nil {
+		if err := s.StartDateTimeOffsetUnits.Validate(); err != nil {
+			return fmt.Errorf("AIL.StartDateTimeOffsetUnits: %w", err)
+		}
+	}
+
+	if s.DurationUnits != nil {
+		if err := s.DurationUnits.Validate(); err != nil {
+			return fmt.Errorf("AIL.DurationUnits: %w", err)
+		}
+	}
+
+	if s.FillerStatusCode != nil {
+		if err := s.FillerStatusCode.Validate(); err != nil {
+			return fmt.Errorf("AIL.FillerStatusCode: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *AIL) SetSetIDAIL(v *SI) *AIL {
+	s.SetIDAIL = v
+	return s
+}
+
+func (s *AIL) SetSegmentActionCode(v *ID) *AIL {
+	s.SegmentActionCode = v
+	return s
+}
+
+func (s *AIL) AddLocationResourceID(v PL) *AIL {
+	s.LocationResourceID = append(s.LocationResourceID, v)
+	return s
+}
+
+func (s *AIL) SetLocationTypeAIL(v *CE) *AIL {
+	s.LocationTypeAIL = v
+	return s
+}
+
+func (s *AIL) SetLocationGroup(v *CE) *AIL {
+	s.LocationGroup = v
+	return s
+}
+
+func (s *AIL) SetStartDateTime(v *TS) *AIL {
+	s.StartDateTime = v
+	return s
+}
+
+func (s *AIL) SetStartDateTimeOffset(v *NM) *AIL {
+	s.StartDateTimeOffset = v
+	return s
+}
+
+func (s *AIL) SetStartDateTimeOffsetUnits(v *CE) *AIL {
+	s.StartDateTimeOffsetUnits = v
+	return s
+}
+
+func (s *AIL) SetDuration(v *NM) *AIL {
+	s.Duration = v
+	return s
+}
+
+func (s *AIL) SetDurationUnits(v *CE) *AIL {
+	s.DurationUnits = v
+	return s
+}
+
+func (s *AIL) SetAllowSubstitutionCode(v *IS) *AIL {
+	s.AllowSubstitutionCode = v
+	return s
+}
+
+func (s *AIL) SetFillerStatusCode(v *CE) *AIL {
+	s.FillerStatusCode = v
+	return s
 }
 
 // AIP - Appointment Information - Personnel Resource
 // The AIP segment contains information about the personnel types that can be scheduled. Personnel included in a transaction using this segment are assumed to be controlled by a schedule on a schedule filler application. Personnel not controlled by a schedule are not identified on a schedule request using this segment. The kinds of personnel described on this segment include any healthcare provider in the institution controlled by a schedule (for example: technicians, physicians, nurses, surgeons, anesthesiologists, or CRNAs).
 type AIP struct {
-	SetIDAIP                 SI    `hl7:"1,required"`
-	SegmentActionCode        ID    `hl7:"2"`
+	SetIDAIP                 *SI   `hl7:"1,required"`
+	SegmentActionCode        *ID   `hl7:"2"`
 	PersonnelResourceID      []XCN `hl7:"3"`
-	ResourceType             CE    `hl7:"4"`
-	ResourceGroup            CE    `hl7:"5"`
-	StartDateTime            TS    `hl7:"6"`
-	StartDateTimeOffset      NM    `hl7:"7"`
-	StartDateTimeOffsetUnits CE    `hl7:"8"`
-	Duration                 NM    `hl7:"9"`
-	DurationUnits            CE    `hl7:"10"`
-	AllowSubstitutionCode    IS    `hl7:"11"`
-	FillerStatusCode         CE    `hl7:"12"`
+	ResourceType             *CE   `hl7:"4"`
+	ResourceGroup            *CE   `hl7:"5"`
+	StartDateTime            *TS   `hl7:"6"`
+	StartDateTimeOffset      *NM   `hl7:"7"`
+	StartDateTimeOffsetUnits *CE   `hl7:"8"`
+	Duration                 *NM   `hl7:"9"`
+	DurationUnits            *CE   `hl7:"10"`
+	AllowSubstitutionCode    *IS   `hl7:"11"`
+	FillerStatusCode         *CE   `hl7:"12"`
+}
+
+func NewAIP() *AIP {
+	return &AIP{}
+}
+
+func (s *AIP) Validate() error {
+
+	if s.SetIDAIP == nil {
+		return fmt.Errorf("AIP.SetIDAIP is required")
+	}
+	if string(*s.SetIDAIP) == "" {
+		return fmt.Errorf("AIP.SetIDAIP is empty")
+	}
+
+	for _, item := range s.PersonnelResourceID {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("AIP.PersonnelResourceID: %w", err)
+		}
+	}
+
+	if s.ResourceType != nil {
+		if err := s.ResourceType.Validate(); err != nil {
+			return fmt.Errorf("AIP.ResourceType: %w", err)
+		}
+	}
+
+	if s.ResourceGroup != nil {
+		if err := s.ResourceGroup.Validate(); err != nil {
+			return fmt.Errorf("AIP.ResourceGroup: %w", err)
+		}
+	}
+
+	if s.StartDateTime != nil {
+		if err := s.StartDateTime.Validate(); err != nil {
+			return fmt.Errorf("AIP.StartDateTime: %w", err)
+		}
+	}
+
+	if s.StartDateTimeOffsetUnits != nil {
+		if err := s.StartDateTimeOffsetUnits.Validate(); err != nil {
+			return fmt.Errorf("AIP.StartDateTimeOffsetUnits: %w", err)
+		}
+	}
+
+	if s.DurationUnits != nil {
+		if err := s.DurationUnits.Validate(); err != nil {
+			return fmt.Errorf("AIP.DurationUnits: %w", err)
+		}
+	}
+
+	if s.FillerStatusCode != nil {
+		if err := s.FillerStatusCode.Validate(); err != nil {
+			return fmt.Errorf("AIP.FillerStatusCode: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *AIP) SetSetIDAIP(v *SI) *AIP {
+	s.SetIDAIP = v
+	return s
+}
+
+func (s *AIP) SetSegmentActionCode(v *ID) *AIP {
+	s.SegmentActionCode = v
+	return s
+}
+
+func (s *AIP) AddPersonnelResourceID(v XCN) *AIP {
+	s.PersonnelResourceID = append(s.PersonnelResourceID, v)
+	return s
+}
+
+func (s *AIP) SetResourceType(v *CE) *AIP {
+	s.ResourceType = v
+	return s
+}
+
+func (s *AIP) SetResourceGroup(v *CE) *AIP {
+	s.ResourceGroup = v
+	return s
+}
+
+func (s *AIP) SetStartDateTime(v *TS) *AIP {
+	s.StartDateTime = v
+	return s
+}
+
+func (s *AIP) SetStartDateTimeOffset(v *NM) *AIP {
+	s.StartDateTimeOffset = v
+	return s
+}
+
+func (s *AIP) SetStartDateTimeOffsetUnits(v *CE) *AIP {
+	s.StartDateTimeOffsetUnits = v
+	return s
+}
+
+func (s *AIP) SetDuration(v *NM) *AIP {
+	s.Duration = v
+	return s
+}
+
+func (s *AIP) SetDurationUnits(v *CE) *AIP {
+	s.DurationUnits = v
+	return s
+}
+
+func (s *AIP) SetAllowSubstitutionCode(v *IS) *AIP {
+	s.AllowSubstitutionCode = v
+	return s
+}
+
+func (s *AIP) SetFillerStatusCode(v *CE) *AIP {
+	s.FillerStatusCode = v
+	return s
 }
 
 // AIS - Appointment Information
 // The AIS segment contains information about various kinds of services that can be scheduled. Services included in a transaction using this segment are assumed to be controlled by a schedule on a schedule filler application. Services not controlled by a schedule are not identified on a schedule request using this segment.
 type AIS struct {
-	SetIDAIS                             SI   `hl7:"1,required"`
-	SegmentActionCode                    ID   `hl7:"2"`
-	UniversalServiceIdentifier           CE   `hl7:"3,required"`
-	StartDateTime                        TS   `hl7:"4"`
-	StartDateTimeOffset                  NM   `hl7:"5"`
-	StartDateTimeOffsetUnits             CE   `hl7:"6"`
-	Duration                             NM   `hl7:"7"`
-	DurationUnits                        CE   `hl7:"8"`
-	AllowSubstitutionCode                IS   `hl7:"9"`
-	FillerStatusCode                     CE   `hl7:"10"`
+	SetIDAIS                             *SI  `hl7:"1,required"`
+	SegmentActionCode                    *ID  `hl7:"2"`
+	UniversalServiceIdentifier           *CE  `hl7:"3,required"`
+	StartDateTime                        *TS  `hl7:"4"`
+	StartDateTimeOffset                  *NM  `hl7:"5"`
+	StartDateTimeOffsetUnits             *CE  `hl7:"6"`
+	Duration                             *NM  `hl7:"7"`
+	DurationUnits                        *CE  `hl7:"8"`
+	AllowSubstitutionCode                *IS  `hl7:"9"`
+	FillerStatusCode                     *CE  `hl7:"10"`
 	PlacerSupplementalServiceInformation []CE `hl7:"11"`
 	FillerSupplementalServiceInformation []CE `hl7:"12"`
+}
+
+func NewAIS() *AIS {
+	return &AIS{}
+}
+
+func (s *AIS) Validate() error {
+
+	if s.SetIDAIS == nil {
+		return fmt.Errorf("AIS.SetIDAIS is required")
+	}
+	if string(*s.SetIDAIS) == "" {
+		return fmt.Errorf("AIS.SetIDAIS is empty")
+	}
+
+	if s.UniversalServiceIdentifier == nil {
+		return fmt.Errorf("AIS.UniversalServiceIdentifier is required")
+	}
+	if s.UniversalServiceIdentifier != nil {
+		if err := s.UniversalServiceIdentifier.Validate(); err != nil {
+			return fmt.Errorf("AIS.UniversalServiceIdentifier: %w", err)
+		}
+	}
+
+	if s.StartDateTime != nil {
+		if err := s.StartDateTime.Validate(); err != nil {
+			return fmt.Errorf("AIS.StartDateTime: %w", err)
+		}
+	}
+
+	if s.StartDateTimeOffsetUnits != nil {
+		if err := s.StartDateTimeOffsetUnits.Validate(); err != nil {
+			return fmt.Errorf("AIS.StartDateTimeOffsetUnits: %w", err)
+		}
+	}
+
+	if s.DurationUnits != nil {
+		if err := s.DurationUnits.Validate(); err != nil {
+			return fmt.Errorf("AIS.DurationUnits: %w", err)
+		}
+	}
+
+	if s.FillerStatusCode != nil {
+		if err := s.FillerStatusCode.Validate(); err != nil {
+			return fmt.Errorf("AIS.FillerStatusCode: %w", err)
+		}
+	}
+
+	for _, item := range s.PlacerSupplementalServiceInformation {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("AIS.PlacerSupplementalServiceInformation: %w", err)
+		}
+	}
+
+	for _, item := range s.FillerSupplementalServiceInformation {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("AIS.FillerSupplementalServiceInformation: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *AIS) SetSetIDAIS(v *SI) *AIS {
+	s.SetIDAIS = v
+	return s
+}
+
+func (s *AIS) SetSegmentActionCode(v *ID) *AIS {
+	s.SegmentActionCode = v
+	return s
+}
+
+func (s *AIS) SetUniversalServiceIdentifier(v *CE) *AIS {
+	s.UniversalServiceIdentifier = v
+	return s
+}
+
+func (s *AIS) SetStartDateTime(v *TS) *AIS {
+	s.StartDateTime = v
+	return s
+}
+
+func (s *AIS) SetStartDateTimeOffset(v *NM) *AIS {
+	s.StartDateTimeOffset = v
+	return s
+}
+
+func (s *AIS) SetStartDateTimeOffsetUnits(v *CE) *AIS {
+	s.StartDateTimeOffsetUnits = v
+	return s
+}
+
+func (s *AIS) SetDuration(v *NM) *AIS {
+	s.Duration = v
+	return s
+}
+
+func (s *AIS) SetDurationUnits(v *CE) *AIS {
+	s.DurationUnits = v
+	return s
+}
+
+func (s *AIS) SetAllowSubstitutionCode(v *IS) *AIS {
+	s.AllowSubstitutionCode = v
+	return s
+}
+
+func (s *AIS) SetFillerStatusCode(v *CE) *AIS {
+	s.FillerStatusCode = v
+	return s
+}
+
+func (s *AIS) AddPlacerSupplementalServiceInformation(v CE) *AIS {
+	s.PlacerSupplementalServiceInformation = append(s.PlacerSupplementalServiceInformation, v)
+	return s
+}
+
+func (s *AIS) AddFillerSupplementalServiceInformation(v CE) *AIS {
+	s.FillerSupplementalServiceInformation = append(s.FillerSupplementalServiceInformation, v)
+	return s
 }
 
 // AL1 - Patient Allergy Information
 // The AL1 segment contains patient allergy information of various types. Most of this information will be derived from user-defined tables. Each AL1 segment describes a single patient allergy.
 type AL1 struct {
-	SetIDAL1                        SI   `hl7:"1,required"`
-	AllergenTypeCode                CE   `hl7:"2"`
-	AllergenCodeMnemonicDescription CE   `hl7:"3,required"`
-	AllergySeverityCode             CE   `hl7:"4"`
+	SetIDAL1                        *SI  `hl7:"1,required"`
+	AllergenTypeCode                *CE  `hl7:"2"`
+	AllergenCodeMnemonicDescription *CE  `hl7:"3,required"`
+	AllergySeverityCode             *CE  `hl7:"4"`
 	AllergyReactionCode             []ST `hl7:"5"`
-	IdentificationDate              DT   `hl7:"6"`
+	IdentificationDate              *DT  `hl7:"6"`
+}
+
+func NewAL1() *AL1 {
+	return &AL1{}
+}
+
+func (s *AL1) Validate() error {
+
+	if s.SetIDAL1 == nil {
+		return fmt.Errorf("AL1.SetIDAL1 is required")
+	}
+	if string(*s.SetIDAL1) == "" {
+		return fmt.Errorf("AL1.SetIDAL1 is empty")
+	}
+
+	if s.AllergenTypeCode != nil {
+		if err := s.AllergenTypeCode.Validate(); err != nil {
+			return fmt.Errorf("AL1.AllergenTypeCode: %w", err)
+		}
+	}
+
+	if s.AllergenCodeMnemonicDescription == nil {
+		return fmt.Errorf("AL1.AllergenCodeMnemonicDescription is required")
+	}
+	if s.AllergenCodeMnemonicDescription != nil {
+		if err := s.AllergenCodeMnemonicDescription.Validate(); err != nil {
+			return fmt.Errorf("AL1.AllergenCodeMnemonicDescription: %w", err)
+		}
+	}
+
+	if s.AllergySeverityCode != nil {
+		if err := s.AllergySeverityCode.Validate(); err != nil {
+			return fmt.Errorf("AL1.AllergySeverityCode: %w", err)
+		}
+	}
+
+	for _, item := range s.AllergyReactionCode {
+		if string(item) == "" {
+			return fmt.Errorf("AL1.AllergyReactionCode item is empty")
+		}
+	}
+
+	return nil
+}
+
+func (s *AL1) SetSetIDAL1(v *SI) *AL1 {
+	s.SetIDAL1 = v
+	return s
+}
+
+func (s *AL1) SetAllergenTypeCode(v *CE) *AL1 {
+	s.AllergenTypeCode = v
+	return s
+}
+
+func (s *AL1) SetAllergenCodeMnemonicDescription(v *CE) *AL1 {
+	s.AllergenCodeMnemonicDescription = v
+	return s
+}
+
+func (s *AL1) SetAllergySeverityCode(v *CE) *AL1 {
+	s.AllergySeverityCode = v
+	return s
+}
+
+func (s *AL1) AddAllergyReactionCode(v ST) *AL1 {
+	s.AllergyReactionCode = append(s.AllergyReactionCode, v)
+	return s
+}
+
+func (s *AL1) SetIdentificationDate(v *DT) *AL1 {
+	s.IdentificationDate = v
+	return s
 }
 
 // APR - Appointment Preferences
@@ -140,162 +1024,1426 @@ type APR struct {
 	TimeSelectionCriteria     []SCV `hl7:"1"`
 	ResourceSelectionCriteria []SCV `hl7:"2"`
 	LocationSelectionCriteria []SCV `hl7:"3"`
-	SlotSpacingCriteria       NM    `hl7:"4"`
+	SlotSpacingCriteria       *NM   `hl7:"4"`
 	FillerOverrideCriteria    []SCV `hl7:"5"`
+}
+
+func NewAPR() *APR {
+	return &APR{}
+}
+
+func (s *APR) Validate() error {
+
+	for _, item := range s.TimeSelectionCriteria {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("APR.TimeSelectionCriteria: %w", err)
+		}
+	}
+
+	for _, item := range s.ResourceSelectionCriteria {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("APR.ResourceSelectionCriteria: %w", err)
+		}
+	}
+
+	for _, item := range s.LocationSelectionCriteria {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("APR.LocationSelectionCriteria: %w", err)
+		}
+	}
+
+	for _, item := range s.FillerOverrideCriteria {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("APR.FillerOverrideCriteria: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *APR) AddTimeSelectionCriteria(v SCV) *APR {
+	s.TimeSelectionCriteria = append(s.TimeSelectionCriteria, v)
+	return s
+}
+
+func (s *APR) AddResourceSelectionCriteria(v SCV) *APR {
+	s.ResourceSelectionCriteria = append(s.ResourceSelectionCriteria, v)
+	return s
+}
+
+func (s *APR) AddLocationSelectionCriteria(v SCV) *APR {
+	s.LocationSelectionCriteria = append(s.LocationSelectionCriteria, v)
+	return s
+}
+
+func (s *APR) SetSlotSpacingCriteria(v *NM) *APR {
+	s.SlotSpacingCriteria = v
+	return s
+}
+
+func (s *APR) AddFillerOverrideCriteria(v SCV) *APR {
+	s.FillerOverrideCriteria = append(s.FillerOverrideCriteria, v)
+	return s
 }
 
 // ARQ - Appointment Request
 // The ARQ segment defines a request for the booking of an appointment. It is used in transactions sent from an application acting in the role of a placer.
 type ARQ struct {
-	PlacerAppointmentID         EI    `hl7:"1,required"`
-	FillerAppointmentID         EI    `hl7:"2"`
-	OccurrenceNumber            NM    `hl7:"3"`
-	PlacerGroupNumber           EI    `hl7:"4"`
-	ScheduleID                  CE    `hl7:"5"`
-	RequestEventReason          CE    `hl7:"6"`
-	AppointmentReason           CE    `hl7:"7"`
-	AppointmentType             CE    `hl7:"8"`
-	AppointmentDuration         NM    `hl7:"9"`
-	AppointmentDurationUnits    CE    `hl7:"10"`
+	PlacerAppointmentID         *EI   `hl7:"1,required"`
+	FillerAppointmentID         *EI   `hl7:"2"`
+	OccurrenceNumber            *NM   `hl7:"3"`
+	PlacerGroupNumber           *EI   `hl7:"4"`
+	ScheduleID                  *CE   `hl7:"5"`
+	RequestEventReason          *CE   `hl7:"6"`
+	AppointmentReason           *CE   `hl7:"7"`
+	AppointmentType             *CE   `hl7:"8"`
+	AppointmentDuration         *NM   `hl7:"9"`
+	AppointmentDurationUnits    *CE   `hl7:"10"`
 	RequestedStartDateTimeRange []DR  `hl7:"11"`
-	PriorityARQ                 ST    `hl7:"12"`
-	RepeatingInterval           RI    `hl7:"13"`
-	RepeatingIntervalDuration   ST    `hl7:"14"`
+	PriorityARQ                 *ST   `hl7:"12"`
+	RepeatingInterval           *RI   `hl7:"13"`
+	RepeatingIntervalDuration   *ST   `hl7:"14"`
 	PlacerContactPerson         []XCN `hl7:"15,required"`
 	PlacerContactPhoneNumber    []XTN `hl7:"16"`
 	PlacerContactAddress        []XAD `hl7:"17"`
-	PlacerContactLocation       PL    `hl7:"18"`
+	PlacerContactLocation       *PL   `hl7:"18"`
 	EnteredByPerson             []XCN `hl7:"19,required"`
 	EnteredByPhoneNumber        []XTN `hl7:"20"`
-	EnteredByLocation           PL    `hl7:"21"`
-	ParentPlacerAppointmentID   EI    `hl7:"22"`
-	ParentFillerAppointmentID   EI    `hl7:"23"`
+	EnteredByLocation           *PL   `hl7:"21"`
+	ParentPlacerAppointmentID   *EI   `hl7:"22"`
+	ParentFillerAppointmentID   *EI   `hl7:"23"`
 	PlacerOrderNumber           []EI  `hl7:"24"`
 	FillerOrderNumber           []EI  `hl7:"25"`
+}
+
+func NewARQ() *ARQ {
+	return &ARQ{}
+}
+
+func (s *ARQ) Validate() error {
+
+	if s.PlacerAppointmentID == nil {
+		return fmt.Errorf("ARQ.PlacerAppointmentID is required")
+	}
+	if s.PlacerAppointmentID != nil {
+		if err := s.PlacerAppointmentID.Validate(); err != nil {
+			return fmt.Errorf("ARQ.PlacerAppointmentID: %w", err)
+		}
+	}
+
+	if s.FillerAppointmentID != nil {
+		if err := s.FillerAppointmentID.Validate(); err != nil {
+			return fmt.Errorf("ARQ.FillerAppointmentID: %w", err)
+		}
+	}
+
+	if s.PlacerGroupNumber != nil {
+		if err := s.PlacerGroupNumber.Validate(); err != nil {
+			return fmt.Errorf("ARQ.PlacerGroupNumber: %w", err)
+		}
+	}
+
+	if s.ScheduleID != nil {
+		if err := s.ScheduleID.Validate(); err != nil {
+			return fmt.Errorf("ARQ.ScheduleID: %w", err)
+		}
+	}
+
+	if s.RequestEventReason != nil {
+		if err := s.RequestEventReason.Validate(); err != nil {
+			return fmt.Errorf("ARQ.RequestEventReason: %w", err)
+		}
+	}
+
+	if s.AppointmentReason != nil {
+		if err := s.AppointmentReason.Validate(); err != nil {
+			return fmt.Errorf("ARQ.AppointmentReason: %w", err)
+		}
+	}
+
+	if s.AppointmentType != nil {
+		if err := s.AppointmentType.Validate(); err != nil {
+			return fmt.Errorf("ARQ.AppointmentType: %w", err)
+		}
+	}
+
+	if s.AppointmentDurationUnits != nil {
+		if err := s.AppointmentDurationUnits.Validate(); err != nil {
+			return fmt.Errorf("ARQ.AppointmentDurationUnits: %w", err)
+		}
+	}
+
+	for _, item := range s.RequestedStartDateTimeRange {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("ARQ.RequestedStartDateTimeRange: %w", err)
+		}
+	}
+
+	if s.RepeatingInterval != nil {
+		if err := s.RepeatingInterval.Validate(); err != nil {
+			return fmt.Errorf("ARQ.RepeatingInterval: %w", err)
+		}
+	}
+
+	if len(s.PlacerContactPerson) == 0 {
+		return fmt.Errorf("ARQ.PlacerContactPerson is required")
+	}
+	for _, item := range s.PlacerContactPerson {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("ARQ.PlacerContactPerson: %w", err)
+		}
+	}
+
+	for _, item := range s.PlacerContactPhoneNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("ARQ.PlacerContactPhoneNumber: %w", err)
+		}
+	}
+
+	for _, item := range s.PlacerContactAddress {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("ARQ.PlacerContactAddress: %w", err)
+		}
+	}
+
+	if s.PlacerContactLocation != nil {
+		if err := s.PlacerContactLocation.Validate(); err != nil {
+			return fmt.Errorf("ARQ.PlacerContactLocation: %w", err)
+		}
+	}
+
+	if len(s.EnteredByPerson) == 0 {
+		return fmt.Errorf("ARQ.EnteredByPerson is required")
+	}
+	for _, item := range s.EnteredByPerson {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("ARQ.EnteredByPerson: %w", err)
+		}
+	}
+
+	for _, item := range s.EnteredByPhoneNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("ARQ.EnteredByPhoneNumber: %w", err)
+		}
+	}
+
+	if s.EnteredByLocation != nil {
+		if err := s.EnteredByLocation.Validate(); err != nil {
+			return fmt.Errorf("ARQ.EnteredByLocation: %w", err)
+		}
+	}
+
+	if s.ParentPlacerAppointmentID != nil {
+		if err := s.ParentPlacerAppointmentID.Validate(); err != nil {
+			return fmt.Errorf("ARQ.ParentPlacerAppointmentID: %w", err)
+		}
+	}
+
+	if s.ParentFillerAppointmentID != nil {
+		if err := s.ParentFillerAppointmentID.Validate(); err != nil {
+			return fmt.Errorf("ARQ.ParentFillerAppointmentID: %w", err)
+		}
+	}
+
+	for _, item := range s.PlacerOrderNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("ARQ.PlacerOrderNumber: %w", err)
+		}
+	}
+
+	for _, item := range s.FillerOrderNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("ARQ.FillerOrderNumber: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *ARQ) SetPlacerAppointmentID(v *EI) *ARQ {
+	s.PlacerAppointmentID = v
+	return s
+}
+
+func (s *ARQ) SetFillerAppointmentID(v *EI) *ARQ {
+	s.FillerAppointmentID = v
+	return s
+}
+
+func (s *ARQ) SetOccurrenceNumber(v *NM) *ARQ {
+	s.OccurrenceNumber = v
+	return s
+}
+
+func (s *ARQ) SetPlacerGroupNumber(v *EI) *ARQ {
+	s.PlacerGroupNumber = v
+	return s
+}
+
+func (s *ARQ) SetScheduleID(v *CE) *ARQ {
+	s.ScheduleID = v
+	return s
+}
+
+func (s *ARQ) SetRequestEventReason(v *CE) *ARQ {
+	s.RequestEventReason = v
+	return s
+}
+
+func (s *ARQ) SetAppointmentReason(v *CE) *ARQ {
+	s.AppointmentReason = v
+	return s
+}
+
+func (s *ARQ) SetAppointmentType(v *CE) *ARQ {
+	s.AppointmentType = v
+	return s
+}
+
+func (s *ARQ) SetAppointmentDuration(v *NM) *ARQ {
+	s.AppointmentDuration = v
+	return s
+}
+
+func (s *ARQ) SetAppointmentDurationUnits(v *CE) *ARQ {
+	s.AppointmentDurationUnits = v
+	return s
+}
+
+func (s *ARQ) AddRequestedStartDateTimeRange(v DR) *ARQ {
+	s.RequestedStartDateTimeRange = append(s.RequestedStartDateTimeRange, v)
+	return s
+}
+
+func (s *ARQ) SetPriorityARQ(v *ST) *ARQ {
+	s.PriorityARQ = v
+	return s
+}
+
+func (s *ARQ) SetRepeatingInterval(v *RI) *ARQ {
+	s.RepeatingInterval = v
+	return s
+}
+
+func (s *ARQ) SetRepeatingIntervalDuration(v *ST) *ARQ {
+	s.RepeatingIntervalDuration = v
+	return s
+}
+
+func (s *ARQ) AddPlacerContactPerson(v XCN) *ARQ {
+	s.PlacerContactPerson = append(s.PlacerContactPerson, v)
+	return s
+}
+
+func (s *ARQ) AddPlacerContactPhoneNumber(v XTN) *ARQ {
+	s.PlacerContactPhoneNumber = append(s.PlacerContactPhoneNumber, v)
+	return s
+}
+
+func (s *ARQ) AddPlacerContactAddress(v XAD) *ARQ {
+	s.PlacerContactAddress = append(s.PlacerContactAddress, v)
+	return s
+}
+
+func (s *ARQ) SetPlacerContactLocation(v *PL) *ARQ {
+	s.PlacerContactLocation = v
+	return s
+}
+
+func (s *ARQ) AddEnteredByPerson(v XCN) *ARQ {
+	s.EnteredByPerson = append(s.EnteredByPerson, v)
+	return s
+}
+
+func (s *ARQ) AddEnteredByPhoneNumber(v XTN) *ARQ {
+	s.EnteredByPhoneNumber = append(s.EnteredByPhoneNumber, v)
+	return s
+}
+
+func (s *ARQ) SetEnteredByLocation(v *PL) *ARQ {
+	s.EnteredByLocation = v
+	return s
+}
+
+func (s *ARQ) SetParentPlacerAppointmentID(v *EI) *ARQ {
+	s.ParentPlacerAppointmentID = v
+	return s
+}
+
+func (s *ARQ) SetParentFillerAppointmentID(v *EI) *ARQ {
+	s.ParentFillerAppointmentID = v
+	return s
+}
+
+func (s *ARQ) AddPlacerOrderNumber(v EI) *ARQ {
+	s.PlacerOrderNumber = append(s.PlacerOrderNumber, v)
+	return s
+}
+
+func (s *ARQ) AddFillerOrderNumber(v EI) *ARQ {
+	s.FillerOrderNumber = append(s.FillerOrderNumber, v)
+	return s
 }
 
 // AUT - Authorization Information
 // This segment represents an authorization or a pre-authorization for a referred procedure or requested service by the payor covering the patients health care.
 type AUT struct {
-	AuthorizingPayorPlanID       CE `hl7:"1"`
-	AuthorizingPayorCompanyID    CE `hl7:"2,required"`
-	AuthorizingPayorCompanyName  ST `hl7:"3"`
-	AuthorizationEffectiveDate   TS `hl7:"4"`
-	AuthorizationExpirationDate  TS `hl7:"5"`
-	AuthorizationIdentifier      EI `hl7:"6"`
-	ReimbursementLimit           CP `hl7:"7"`
-	RequestedNumberOfTreatments  NM `hl7:"8"`
-	AuthorizedNumberOfTreatments NM `hl7:"9"`
-	ProcessDate                  TS `hl7:"10"`
+	AuthorizingPayorPlanID       *CE `hl7:"1"`
+	AuthorizingPayorCompanyID    *CE `hl7:"2,required"`
+	AuthorizingPayorCompanyName  *ST `hl7:"3"`
+	AuthorizationEffectiveDate   *TS `hl7:"4"`
+	AuthorizationExpirationDate  *TS `hl7:"5"`
+	AuthorizationIdentifier      *EI `hl7:"6"`
+	ReimbursementLimit           *CP `hl7:"7"`
+	RequestedNumberOfTreatments  *NM `hl7:"8"`
+	AuthorizedNumberOfTreatments *NM `hl7:"9"`
+	ProcessDate                  *TS `hl7:"10"`
+}
+
+func NewAUT() *AUT {
+	return &AUT{}
+}
+
+func (s *AUT) Validate() error {
+
+	if s.AuthorizingPayorPlanID != nil {
+		if err := s.AuthorizingPayorPlanID.Validate(); err != nil {
+			return fmt.Errorf("AUT.AuthorizingPayorPlanID: %w", err)
+		}
+	}
+
+	if s.AuthorizingPayorCompanyID == nil {
+		return fmt.Errorf("AUT.AuthorizingPayorCompanyID is required")
+	}
+	if s.AuthorizingPayorCompanyID != nil {
+		if err := s.AuthorizingPayorCompanyID.Validate(); err != nil {
+			return fmt.Errorf("AUT.AuthorizingPayorCompanyID: %w", err)
+		}
+	}
+
+	if s.AuthorizationEffectiveDate != nil {
+		if err := s.AuthorizationEffectiveDate.Validate(); err != nil {
+			return fmt.Errorf("AUT.AuthorizationEffectiveDate: %w", err)
+		}
+	}
+
+	if s.AuthorizationExpirationDate != nil {
+		if err := s.AuthorizationExpirationDate.Validate(); err != nil {
+			return fmt.Errorf("AUT.AuthorizationExpirationDate: %w", err)
+		}
+	}
+
+	if s.AuthorizationIdentifier != nil {
+		if err := s.AuthorizationIdentifier.Validate(); err != nil {
+			return fmt.Errorf("AUT.AuthorizationIdentifier: %w", err)
+		}
+	}
+
+	if s.ReimbursementLimit != nil {
+		if err := s.ReimbursementLimit.Validate(); err != nil {
+			return fmt.Errorf("AUT.ReimbursementLimit: %w", err)
+		}
+	}
+
+	if s.ProcessDate != nil {
+		if err := s.ProcessDate.Validate(); err != nil {
+			return fmt.Errorf("AUT.ProcessDate: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *AUT) SetAuthorizingPayorPlanID(v *CE) *AUT {
+	s.AuthorizingPayorPlanID = v
+	return s
+}
+
+func (s *AUT) SetAuthorizingPayorCompanyID(v *CE) *AUT {
+	s.AuthorizingPayorCompanyID = v
+	return s
+}
+
+func (s *AUT) SetAuthorizingPayorCompanyName(v *ST) *AUT {
+	s.AuthorizingPayorCompanyName = v
+	return s
+}
+
+func (s *AUT) SetAuthorizationEffectiveDate(v *TS) *AUT {
+	s.AuthorizationEffectiveDate = v
+	return s
+}
+
+func (s *AUT) SetAuthorizationExpirationDate(v *TS) *AUT {
+	s.AuthorizationExpirationDate = v
+	return s
+}
+
+func (s *AUT) SetAuthorizationIdentifier(v *EI) *AUT {
+	s.AuthorizationIdentifier = v
+	return s
+}
+
+func (s *AUT) SetReimbursementLimit(v *CP) *AUT {
+	s.ReimbursementLimit = v
+	return s
+}
+
+func (s *AUT) SetRequestedNumberOfTreatments(v *NM) *AUT {
+	s.RequestedNumberOfTreatments = v
+	return s
+}
+
+func (s *AUT) SetAuthorizedNumberOfTreatments(v *NM) *AUT {
+	s.AuthorizedNumberOfTreatments = v
+	return s
+}
+
+func (s *AUT) SetProcessDate(v *TS) *AUT {
+	s.ProcessDate = v
+	return s
 }
 
 // BHS - Batch Header Segment
 // The BHS segment defines the start of a batch.
 type BHS struct {
-	BatchFieldSeparator       ST `hl7:"1,required"`
-	BatchEncodingCharacters   ST `hl7:"2,required"`
-	BatchSendingApplication   HD `hl7:"3"`
-	BatchSendingFacility      HD `hl7:"4"`
-	BatchReceivingApplication HD `hl7:"5"`
-	BatchReceivingFacility    HD `hl7:"6"`
-	BatchCreationDateTime     TS `hl7:"7"`
-	BatchSecurity             ST `hl7:"8"`
-	BatchNameIDType           ST `hl7:"9"`
-	BatchComment              ST `hl7:"10"`
-	BatchControlID            ST `hl7:"11"`
-	ReferenceBatchControlID   ST `hl7:"12"`
+	BatchFieldSeparator       *ST `hl7:"1,required"`
+	BatchEncodingCharacters   *ST `hl7:"2,required"`
+	BatchSendingApplication   *HD `hl7:"3"`
+	BatchSendingFacility      *HD `hl7:"4"`
+	BatchReceivingApplication *HD `hl7:"5"`
+	BatchReceivingFacility    *HD `hl7:"6"`
+	BatchCreationDateTime     *TS `hl7:"7"`
+	BatchSecurity             *ST `hl7:"8"`
+	BatchNameIDType           *ST `hl7:"9"`
+	BatchComment              *ST `hl7:"10"`
+	BatchControlID            *ST `hl7:"11"`
+	ReferenceBatchControlID   *ST `hl7:"12"`
+}
+
+func NewBHS() *BHS {
+	return &BHS{}
+}
+
+func (s *BHS) Validate() error {
+
+	if s.BatchFieldSeparator == nil {
+		return fmt.Errorf("BHS.BatchFieldSeparator is required")
+	}
+	if string(*s.BatchFieldSeparator) == "" {
+		return fmt.Errorf("BHS.BatchFieldSeparator is empty")
+	}
+
+	if s.BatchEncodingCharacters == nil {
+		return fmt.Errorf("BHS.BatchEncodingCharacters is required")
+	}
+	if string(*s.BatchEncodingCharacters) == "" {
+		return fmt.Errorf("BHS.BatchEncodingCharacters is empty")
+	}
+
+	if s.BatchSendingApplication != nil {
+		if err := s.BatchSendingApplication.Validate(); err != nil {
+			return fmt.Errorf("BHS.BatchSendingApplication: %w", err)
+		}
+	}
+
+	if s.BatchSendingFacility != nil {
+		if err := s.BatchSendingFacility.Validate(); err != nil {
+			return fmt.Errorf("BHS.BatchSendingFacility: %w", err)
+		}
+	}
+
+	if s.BatchReceivingApplication != nil {
+		if err := s.BatchReceivingApplication.Validate(); err != nil {
+			return fmt.Errorf("BHS.BatchReceivingApplication: %w", err)
+		}
+	}
+
+	if s.BatchReceivingFacility != nil {
+		if err := s.BatchReceivingFacility.Validate(); err != nil {
+			return fmt.Errorf("BHS.BatchReceivingFacility: %w", err)
+		}
+	}
+
+	if s.BatchCreationDateTime != nil {
+		if err := s.BatchCreationDateTime.Validate(); err != nil {
+			return fmt.Errorf("BHS.BatchCreationDateTime: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *BHS) SetBatchFieldSeparator(v *ST) *BHS {
+	s.BatchFieldSeparator = v
+	return s
+}
+
+func (s *BHS) SetBatchEncodingCharacters(v *ST) *BHS {
+	s.BatchEncodingCharacters = v
+	return s
+}
+
+func (s *BHS) SetBatchSendingApplication(v *HD) *BHS {
+	s.BatchSendingApplication = v
+	return s
+}
+
+func (s *BHS) SetBatchSendingFacility(v *HD) *BHS {
+	s.BatchSendingFacility = v
+	return s
+}
+
+func (s *BHS) SetBatchReceivingApplication(v *HD) *BHS {
+	s.BatchReceivingApplication = v
+	return s
+}
+
+func (s *BHS) SetBatchReceivingFacility(v *HD) *BHS {
+	s.BatchReceivingFacility = v
+	return s
+}
+
+func (s *BHS) SetBatchCreationDateTime(v *TS) *BHS {
+	s.BatchCreationDateTime = v
+	return s
+}
+
+func (s *BHS) SetBatchSecurity(v *ST) *BHS {
+	s.BatchSecurity = v
+	return s
+}
+
+func (s *BHS) SetBatchNameIDType(v *ST) *BHS {
+	s.BatchNameIDType = v
+	return s
+}
+
+func (s *BHS) SetBatchComment(v *ST) *BHS {
+	s.BatchComment = v
+	return s
+}
+
+func (s *BHS) SetBatchControlID(v *ST) *BHS {
+	s.BatchControlID = v
+	return s
+}
+
+func (s *BHS) SetReferenceBatchControlID(v *ST) *BHS {
+	s.ReferenceBatchControlID = v
+	return s
 }
 
 // BLC - Blood Code
 // The BLC segment contains data necessary to communicate patient abstract blood information used for billing and reimbursement purposes. This segment is repeating to report blood product codes and the associated blood units.
 type BLC struct {
-	BloodProductCode CE `hl7:"1"`
-	BloodAmount      CQ `hl7:"2"`
+	BloodProductCode *CE `hl7:"1"`
+	BloodAmount      *CQ `hl7:"2"`
+}
+
+func NewBLC() *BLC {
+	return &BLC{}
+}
+
+func (s *BLC) Validate() error {
+
+	if s.BloodProductCode != nil {
+		if err := s.BloodProductCode.Validate(); err != nil {
+			return fmt.Errorf("BLC.BloodProductCode: %w", err)
+		}
+	}
+
+	if s.BloodAmount != nil {
+		if err := s.BloodAmount.Validate(); err != nil {
+			return fmt.Errorf("BLC.BloodAmount: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *BLC) SetBloodProductCode(v *CE) *BLC {
+	s.BloodProductCode = v
+	return s
+}
+
+func (s *BLC) SetBloodAmount(v *CQ) *BLC {
+	s.BloodAmount = v
+	return s
 }
 
 // BLG - Billing
 // The BLG segment is used to provide billing information, on the ordered service, to the filling application.
 type BLG struct {
-	WhenToCharge     CCD `hl7:"1"`
-	ChargeType       ID  `hl7:"2"`
-	AccountID        CX  `hl7:"3"`
-	ChargeTypeReason CWE `hl7:"4"`
+	WhenToCharge     *CCD `hl7:"1"`
+	ChargeType       *ID  `hl7:"2"`
+	AccountID        *CX  `hl7:"3"`
+	ChargeTypeReason *CWE `hl7:"4"`
+}
+
+func NewBLG() *BLG {
+	return &BLG{}
+}
+
+func (s *BLG) Validate() error {
+
+	if s.WhenToCharge != nil {
+		if err := s.WhenToCharge.Validate(); err != nil {
+			return fmt.Errorf("BLG.WhenToCharge: %w", err)
+		}
+	}
+
+	if s.AccountID != nil {
+		if err := s.AccountID.Validate(); err != nil {
+			return fmt.Errorf("BLG.AccountID: %w", err)
+		}
+	}
+
+	if s.ChargeTypeReason != nil {
+		if err := s.ChargeTypeReason.Validate(); err != nil {
+			return fmt.Errorf("BLG.ChargeTypeReason: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *BLG) SetWhenToCharge(v *CCD) *BLG {
+	s.WhenToCharge = v
+	return s
+}
+
+func (s *BLG) SetChargeType(v *ID) *BLG {
+	s.ChargeType = v
+	return s
+}
+
+func (s *BLG) SetAccountID(v *CX) *BLG {
+	s.AccountID = v
+	return s
+}
+
+func (s *BLG) SetChargeTypeReason(v *CWE) *BLG {
+	s.ChargeTypeReason = v
+	return s
 }
 
 // BPO - Blood product order
 // Blood product order messages require additional information that is not available in other standard HL7 order messages.  Blood product order messages need to contain accompanying details regarding the blood product component, such as special processing requirements (e.g. irradiation and leukoreduction) and the amount of the blood product to be administered.
 type BPO struct {
-	SetIDBPO                       SI    `hl7:"1,required"`
-	BPUniversalServiceID           CWE   `hl7:"2,required"`
+	SetIDBPO                       *SI   `hl7:"1,required"`
+	BPUniversalServiceID           *CWE  `hl7:"2,required"`
 	BPProcessingRequirements       []CWE `hl7:"3"`
-	BPQuantity                     NM    `hl7:"4,required"`
-	BPAmount                       NM    `hl7:"5"`
-	BPUnits                        CE    `hl7:"6"`
-	BPIntendedUseDateTime          TS    `hl7:"7"`
-	BPIntendedDispenseFromLocation PL    `hl7:"8"`
-	BPIntendedDispenseFromAddress  XAD   `hl7:"9"`
-	BPRequestedDispenseDateTime    TS    `hl7:"10"`
-	BPRequestedDispenseToLocation  PL    `hl7:"11"`
-	BPRequestedDispenseToAddress   XAD   `hl7:"12"`
+	BPQuantity                     *NM   `hl7:"4,required"`
+	BPAmount                       *NM   `hl7:"5"`
+	BPUnits                        *CE   `hl7:"6"`
+	BPIntendedUseDateTime          *TS   `hl7:"7"`
+	BPIntendedDispenseFromLocation *PL   `hl7:"8"`
+	BPIntendedDispenseFromAddress  *XAD  `hl7:"9"`
+	BPRequestedDispenseDateTime    *TS   `hl7:"10"`
+	BPRequestedDispenseToLocation  *PL   `hl7:"11"`
+	BPRequestedDispenseToAddress   *XAD  `hl7:"12"`
 	BPIndicationForUse             []CWE `hl7:"13"`
-	BPInformedConsentIndicator     ID    `hl7:"14"`
+	BPInformedConsentIndicator     *ID   `hl7:"14"`
+}
+
+func NewBPO() *BPO {
+	return &BPO{}
+}
+
+func (s *BPO) Validate() error {
+
+	if s.SetIDBPO == nil {
+		return fmt.Errorf("BPO.SetIDBPO is required")
+	}
+	if string(*s.SetIDBPO) == "" {
+		return fmt.Errorf("BPO.SetIDBPO is empty")
+	}
+
+	if s.BPUniversalServiceID == nil {
+		return fmt.Errorf("BPO.BPUniversalServiceID is required")
+	}
+	if s.BPUniversalServiceID != nil {
+		if err := s.BPUniversalServiceID.Validate(); err != nil {
+			return fmt.Errorf("BPO.BPUniversalServiceID: %w", err)
+		}
+	}
+
+	for _, item := range s.BPProcessingRequirements {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("BPO.BPProcessingRequirements: %w", err)
+		}
+	}
+
+	if s.BPQuantity == nil {
+		return fmt.Errorf("BPO.BPQuantity is required")
+	}
+	if string(*s.BPQuantity) == "" {
+		return fmt.Errorf("BPO.BPQuantity is empty")
+	}
+
+	if s.BPUnits != nil {
+		if err := s.BPUnits.Validate(); err != nil {
+			return fmt.Errorf("BPO.BPUnits: %w", err)
+		}
+	}
+
+	if s.BPIntendedUseDateTime != nil {
+		if err := s.BPIntendedUseDateTime.Validate(); err != nil {
+			return fmt.Errorf("BPO.BPIntendedUseDateTime: %w", err)
+		}
+	}
+
+	if s.BPIntendedDispenseFromLocation != nil {
+		if err := s.BPIntendedDispenseFromLocation.Validate(); err != nil {
+			return fmt.Errorf("BPO.BPIntendedDispenseFromLocation: %w", err)
+		}
+	}
+
+	if s.BPIntendedDispenseFromAddress != nil {
+		if err := s.BPIntendedDispenseFromAddress.Validate(); err != nil {
+			return fmt.Errorf("BPO.BPIntendedDispenseFromAddress: %w", err)
+		}
+	}
+
+	if s.BPRequestedDispenseDateTime != nil {
+		if err := s.BPRequestedDispenseDateTime.Validate(); err != nil {
+			return fmt.Errorf("BPO.BPRequestedDispenseDateTime: %w", err)
+		}
+	}
+
+	if s.BPRequestedDispenseToLocation != nil {
+		if err := s.BPRequestedDispenseToLocation.Validate(); err != nil {
+			return fmt.Errorf("BPO.BPRequestedDispenseToLocation: %w", err)
+		}
+	}
+
+	if s.BPRequestedDispenseToAddress != nil {
+		if err := s.BPRequestedDispenseToAddress.Validate(); err != nil {
+			return fmt.Errorf("BPO.BPRequestedDispenseToAddress: %w", err)
+		}
+	}
+
+	for _, item := range s.BPIndicationForUse {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("BPO.BPIndicationForUse: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *BPO) SetSetIDBPO(v *SI) *BPO {
+	s.SetIDBPO = v
+	return s
+}
+
+func (s *BPO) SetBPUniversalServiceID(v *CWE) *BPO {
+	s.BPUniversalServiceID = v
+	return s
+}
+
+func (s *BPO) AddBPProcessingRequirements(v CWE) *BPO {
+	s.BPProcessingRequirements = append(s.BPProcessingRequirements, v)
+	return s
+}
+
+func (s *BPO) SetBPQuantity(v *NM) *BPO {
+	s.BPQuantity = v
+	return s
+}
+
+func (s *BPO) SetBPAmount(v *NM) *BPO {
+	s.BPAmount = v
+	return s
+}
+
+func (s *BPO) SetBPUnits(v *CE) *BPO {
+	s.BPUnits = v
+	return s
+}
+
+func (s *BPO) SetBPIntendedUseDateTime(v *TS) *BPO {
+	s.BPIntendedUseDateTime = v
+	return s
+}
+
+func (s *BPO) SetBPIntendedDispenseFromLocation(v *PL) *BPO {
+	s.BPIntendedDispenseFromLocation = v
+	return s
+}
+
+func (s *BPO) SetBPIntendedDispenseFromAddress(v *XAD) *BPO {
+	s.BPIntendedDispenseFromAddress = v
+	return s
+}
+
+func (s *BPO) SetBPRequestedDispenseDateTime(v *TS) *BPO {
+	s.BPRequestedDispenseDateTime = v
+	return s
+}
+
+func (s *BPO) SetBPRequestedDispenseToLocation(v *PL) *BPO {
+	s.BPRequestedDispenseToLocation = v
+	return s
+}
+
+func (s *BPO) SetBPRequestedDispenseToAddress(v *XAD) *BPO {
+	s.BPRequestedDispenseToAddress = v
+	return s
+}
+
+func (s *BPO) AddBPIndicationForUse(v CWE) *BPO {
+	s.BPIndicationForUse = append(s.BPIndicationForUse, v)
+	return s
+}
+
+func (s *BPO) SetBPInformedConsentIndicator(v *ID) *BPO {
+	s.BPInformedConsentIndicator = v
+	return s
 }
 
 // BPX - Blood product dispense status
 // In the processing of blood products, it is necessary for the transfusion service and the placer system to communicate information. The status messages need to contain additional information regarding the blood products requested, such as the unique donation ID, product code, blood type, expiration date/time of the blood product, and current status of the product. This segment is similar to an OBX segment, but contains additional attributes.
 type BPX struct {
-	SetIDBPX                    SI    `hl7:"1,required"`
-	BPDispenseStatus            CWE   `hl7:"2,required"`
-	BPStatus                    ID    `hl7:"3,required"`
-	BPDateTimeOfStatus          TS    `hl7:"4,required"`
-	BCDonationID                EI    `hl7:"5"`
-	BCComponent                 CNE   `hl7:"6"`
-	BCDonationTypeIntendedUse   CNE   `hl7:"7"`
-	CPCommercialProduct         CWE   `hl7:"8"`
-	CPManufacturer              XON   `hl7:"9"`
-	CPLotNumber                 EI    `hl7:"10"`
-	BPBloodGroup                CNE   `hl7:"11"`
+	SetIDBPX                    *SI   `hl7:"1,required"`
+	BPDispenseStatus            *CWE  `hl7:"2,required"`
+	BPStatus                    *ID   `hl7:"3,required"`
+	BPDateTimeOfStatus          *TS   `hl7:"4,required"`
+	BCDonationID                *EI   `hl7:"5"`
+	BCComponent                 *CNE  `hl7:"6"`
+	BCDonationTypeIntendedUse   *CNE  `hl7:"7"`
+	CPCommercialProduct         *CWE  `hl7:"8"`
+	CPManufacturer              *XON  `hl7:"9"`
+	CPLotNumber                 *EI   `hl7:"10"`
+	BPBloodGroup                *CNE  `hl7:"11"`
 	BCSpecialTesting            []CNE `hl7:"12"`
-	BPExpirationDateTime        TS    `hl7:"13"`
-	BPQuantity                  NM    `hl7:"14,required"`
-	BPAmount                    NM    `hl7:"15"`
-	BPUnits                     CE    `hl7:"16"`
-	BPUniqueID                  EI    `hl7:"17"`
-	BPActualDispensedToLocation PL    `hl7:"18"`
-	BPActualDispensedToAddress  XAD   `hl7:"19"`
-	BPDispensedToReceiver       XCN   `hl7:"20"`
-	BPDispensingIndividual      XCN   `hl7:"21"`
+	BPExpirationDateTime        *TS   `hl7:"13"`
+	BPQuantity                  *NM   `hl7:"14,required"`
+	BPAmount                    *NM   `hl7:"15"`
+	BPUnits                     *CE   `hl7:"16"`
+	BPUniqueID                  *EI   `hl7:"17"`
+	BPActualDispensedToLocation *PL   `hl7:"18"`
+	BPActualDispensedToAddress  *XAD  `hl7:"19"`
+	BPDispensedToReceiver       *XCN  `hl7:"20"`
+	BPDispensingIndividual      *XCN  `hl7:"21"`
+}
+
+func NewBPX() *BPX {
+	return &BPX{}
+}
+
+func (s *BPX) Validate() error {
+
+	if s.SetIDBPX == nil {
+		return fmt.Errorf("BPX.SetIDBPX is required")
+	}
+	if string(*s.SetIDBPX) == "" {
+		return fmt.Errorf("BPX.SetIDBPX is empty")
+	}
+
+	if s.BPDispenseStatus == nil {
+		return fmt.Errorf("BPX.BPDispenseStatus is required")
+	}
+	if s.BPDispenseStatus != nil {
+		if err := s.BPDispenseStatus.Validate(); err != nil {
+			return fmt.Errorf("BPX.BPDispenseStatus: %w", err)
+		}
+	}
+
+	if s.BPStatus == nil {
+		return fmt.Errorf("BPX.BPStatus is required")
+	}
+	if string(*s.BPStatus) == "" {
+		return fmt.Errorf("BPX.BPStatus is empty")
+	}
+
+	if s.BPDateTimeOfStatus == nil {
+		return fmt.Errorf("BPX.BPDateTimeOfStatus is required")
+	}
+	if s.BPDateTimeOfStatus != nil {
+		if err := s.BPDateTimeOfStatus.Validate(); err != nil {
+			return fmt.Errorf("BPX.BPDateTimeOfStatus: %w", err)
+		}
+	}
+
+	if s.BCDonationID != nil {
+		if err := s.BCDonationID.Validate(); err != nil {
+			return fmt.Errorf("BPX.BCDonationID: %w", err)
+		}
+	}
+
+	if s.BCComponent != nil {
+		if err := s.BCComponent.Validate(); err != nil {
+			return fmt.Errorf("BPX.BCComponent: %w", err)
+		}
+	}
+
+	if s.BCDonationTypeIntendedUse != nil {
+		if err := s.BCDonationTypeIntendedUse.Validate(); err != nil {
+			return fmt.Errorf("BPX.BCDonationTypeIntendedUse: %w", err)
+		}
+	}
+
+	if s.CPCommercialProduct != nil {
+		if err := s.CPCommercialProduct.Validate(); err != nil {
+			return fmt.Errorf("BPX.CPCommercialProduct: %w", err)
+		}
+	}
+
+	if s.CPManufacturer != nil {
+		if err := s.CPManufacturer.Validate(); err != nil {
+			return fmt.Errorf("BPX.CPManufacturer: %w", err)
+		}
+	}
+
+	if s.CPLotNumber != nil {
+		if err := s.CPLotNumber.Validate(); err != nil {
+			return fmt.Errorf("BPX.CPLotNumber: %w", err)
+		}
+	}
+
+	if s.BPBloodGroup != nil {
+		if err := s.BPBloodGroup.Validate(); err != nil {
+			return fmt.Errorf("BPX.BPBloodGroup: %w", err)
+		}
+	}
+
+	for _, item := range s.BCSpecialTesting {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("BPX.BCSpecialTesting: %w", err)
+		}
+	}
+
+	if s.BPExpirationDateTime != nil {
+		if err := s.BPExpirationDateTime.Validate(); err != nil {
+			return fmt.Errorf("BPX.BPExpirationDateTime: %w", err)
+		}
+	}
+
+	if s.BPQuantity == nil {
+		return fmt.Errorf("BPX.BPQuantity is required")
+	}
+	if string(*s.BPQuantity) == "" {
+		return fmt.Errorf("BPX.BPQuantity is empty")
+	}
+
+	if s.BPUnits != nil {
+		if err := s.BPUnits.Validate(); err != nil {
+			return fmt.Errorf("BPX.BPUnits: %w", err)
+		}
+	}
+
+	if s.BPUniqueID != nil {
+		if err := s.BPUniqueID.Validate(); err != nil {
+			return fmt.Errorf("BPX.BPUniqueID: %w", err)
+		}
+	}
+
+	if s.BPActualDispensedToLocation != nil {
+		if err := s.BPActualDispensedToLocation.Validate(); err != nil {
+			return fmt.Errorf("BPX.BPActualDispensedToLocation: %w", err)
+		}
+	}
+
+	if s.BPActualDispensedToAddress != nil {
+		if err := s.BPActualDispensedToAddress.Validate(); err != nil {
+			return fmt.Errorf("BPX.BPActualDispensedToAddress: %w", err)
+		}
+	}
+
+	if s.BPDispensedToReceiver != nil {
+		if err := s.BPDispensedToReceiver.Validate(); err != nil {
+			return fmt.Errorf("BPX.BPDispensedToReceiver: %w", err)
+		}
+	}
+
+	if s.BPDispensingIndividual != nil {
+		if err := s.BPDispensingIndividual.Validate(); err != nil {
+			return fmt.Errorf("BPX.BPDispensingIndividual: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *BPX) SetSetIDBPX(v *SI) *BPX {
+	s.SetIDBPX = v
+	return s
+}
+
+func (s *BPX) SetBPDispenseStatus(v *CWE) *BPX {
+	s.BPDispenseStatus = v
+	return s
+}
+
+func (s *BPX) SetBPStatus(v *ID) *BPX {
+	s.BPStatus = v
+	return s
+}
+
+func (s *BPX) SetBPDateTimeOfStatus(v *TS) *BPX {
+	s.BPDateTimeOfStatus = v
+	return s
+}
+
+func (s *BPX) SetBCDonationID(v *EI) *BPX {
+	s.BCDonationID = v
+	return s
+}
+
+func (s *BPX) SetBCComponent(v *CNE) *BPX {
+	s.BCComponent = v
+	return s
+}
+
+func (s *BPX) SetBCDonationTypeIntendedUse(v *CNE) *BPX {
+	s.BCDonationTypeIntendedUse = v
+	return s
+}
+
+func (s *BPX) SetCPCommercialProduct(v *CWE) *BPX {
+	s.CPCommercialProduct = v
+	return s
+}
+
+func (s *BPX) SetCPManufacturer(v *XON) *BPX {
+	s.CPManufacturer = v
+	return s
+}
+
+func (s *BPX) SetCPLotNumber(v *EI) *BPX {
+	s.CPLotNumber = v
+	return s
+}
+
+func (s *BPX) SetBPBloodGroup(v *CNE) *BPX {
+	s.BPBloodGroup = v
+	return s
+}
+
+func (s *BPX) AddBCSpecialTesting(v CNE) *BPX {
+	s.BCSpecialTesting = append(s.BCSpecialTesting, v)
+	return s
+}
+
+func (s *BPX) SetBPExpirationDateTime(v *TS) *BPX {
+	s.BPExpirationDateTime = v
+	return s
+}
+
+func (s *BPX) SetBPQuantity(v *NM) *BPX {
+	s.BPQuantity = v
+	return s
+}
+
+func (s *BPX) SetBPAmount(v *NM) *BPX {
+	s.BPAmount = v
+	return s
+}
+
+func (s *BPX) SetBPUnits(v *CE) *BPX {
+	s.BPUnits = v
+	return s
+}
+
+func (s *BPX) SetBPUniqueID(v *EI) *BPX {
+	s.BPUniqueID = v
+	return s
+}
+
+func (s *BPX) SetBPActualDispensedToLocation(v *PL) *BPX {
+	s.BPActualDispensedToLocation = v
+	return s
+}
+
+func (s *BPX) SetBPActualDispensedToAddress(v *XAD) *BPX {
+	s.BPActualDispensedToAddress = v
+	return s
+}
+
+func (s *BPX) SetBPDispensedToReceiver(v *XCN) *BPX {
+	s.BPDispensedToReceiver = v
+	return s
+}
+
+func (s *BPX) SetBPDispensingIndividual(v *XCN) *BPX {
+	s.BPDispensingIndividual = v
+	return s
 }
 
 // BTS - Batch Trailer Segment
 // The BTS segment defines the end of a batch.
 type BTS struct {
-	BatchMessageCount ST   `hl7:"1"`
-	BatchComment      ST   `hl7:"2"`
+	BatchMessageCount *ST  `hl7:"1"`
+	BatchComment      *ST  `hl7:"2"`
 	BatchTotals       []NM `hl7:"3"`
+}
+
+func NewBTS() *BTS {
+	return &BTS{}
+}
+
+func (s *BTS) Validate() error {
+
+	for _, item := range s.BatchTotals {
+		if string(item) == "" {
+			return fmt.Errorf("BTS.BatchTotals item is empty")
+		}
+	}
+	return nil
+}
+
+func (s *BTS) SetBatchMessageCount(v *ST) *BTS {
+	s.BatchMessageCount = v
+	return s
+}
+
+func (s *BTS) SetBatchComment(v *ST) *BTS {
+	s.BatchComment = v
+	return s
+}
+
+func (s *BTS) AddBatchTotals(v NM) *BTS {
+	s.BatchTotals = append(s.BatchTotals, v)
+	return s
 }
 
 // BTX - Blood Product Transfusion/Disposition
 type BTX struct {
-	SetIDBTX                           SI    `hl7:"1,required"`
-	BCDonationID                       EI    `hl7:"2"`
-	BCComponent                        CNE   `hl7:"3"`
-	BCBloodGroup                       CNE   `hl7:"4"`
-	CPCommercialProduct                CWE   `hl7:"5"`
-	CPManufacturer                     XON   `hl7:"6"`
-	CPLotNumber                        EI    `hl7:"7"`
-	BPQuantity                         NM    `hl7:"8,required"`
-	BPAmount                           NM    `hl7:"9"`
-	BPUnits                            CE    `hl7:"10"`
-	BPTransfusionDispositionStatus     CWE   `hl7:"11,required"`
-	BPMessageStatus                    ID    `hl7:"12,required"`
-	BPDateTimeOfStatus                 TS    `hl7:"13,required"`
-	BPAdministrator                    XCN   `hl7:"14"`
-	BPVerifier                         XCN   `hl7:"15"`
-	BPTransfusionStartDateTimeOfStatus TS    `hl7:"16"`
-	BPTransfusionEndDateTimeOfStatus   TS    `hl7:"17"`
+	SetIDBTX                           *SI   `hl7:"1,required"`
+	BCDonationID                       *EI   `hl7:"2"`
+	BCComponent                        *CNE  `hl7:"3"`
+	BCBloodGroup                       *CNE  `hl7:"4"`
+	CPCommercialProduct                *CWE  `hl7:"5"`
+	CPManufacturer                     *XON  `hl7:"6"`
+	CPLotNumber                        *EI   `hl7:"7"`
+	BPQuantity                         *NM   `hl7:"8,required"`
+	BPAmount                           *NM   `hl7:"9"`
+	BPUnits                            *CE   `hl7:"10"`
+	BPTransfusionDispositionStatus     *CWE  `hl7:"11,required"`
+	BPMessageStatus                    *ID   `hl7:"12,required"`
+	BPDateTimeOfStatus                 *TS   `hl7:"13,required"`
+	BPAdministrator                    *XCN  `hl7:"14"`
+	BPVerifier                         *XCN  `hl7:"15"`
+	BPTransfusionStartDateTimeOfStatus *TS   `hl7:"16"`
+	BPTransfusionEndDateTimeOfStatus   *TS   `hl7:"17"`
 	BPAdverseReactionType              []CWE `hl7:"18"`
-	BPTransfusionInterruptedReason     CWE   `hl7:"19"`
+	BPTransfusionInterruptedReason     *CWE  `hl7:"19"`
+}
+
+func NewBTX() *BTX {
+	return &BTX{}
+}
+
+func (s *BTX) Validate() error {
+
+	if s.SetIDBTX == nil {
+		return fmt.Errorf("BTX.SetIDBTX is required")
+	}
+	if string(*s.SetIDBTX) == "" {
+		return fmt.Errorf("BTX.SetIDBTX is empty")
+	}
+
+	if s.BCDonationID != nil {
+		if err := s.BCDonationID.Validate(); err != nil {
+			return fmt.Errorf("BTX.BCDonationID: %w", err)
+		}
+	}
+
+	if s.BCComponent != nil {
+		if err := s.BCComponent.Validate(); err != nil {
+			return fmt.Errorf("BTX.BCComponent: %w", err)
+		}
+	}
+
+	if s.BCBloodGroup != nil {
+		if err := s.BCBloodGroup.Validate(); err != nil {
+			return fmt.Errorf("BTX.BCBloodGroup: %w", err)
+		}
+	}
+
+	if s.CPCommercialProduct != nil {
+		if err := s.CPCommercialProduct.Validate(); err != nil {
+			return fmt.Errorf("BTX.CPCommercialProduct: %w", err)
+		}
+	}
+
+	if s.CPManufacturer != nil {
+		if err := s.CPManufacturer.Validate(); err != nil {
+			return fmt.Errorf("BTX.CPManufacturer: %w", err)
+		}
+	}
+
+	if s.CPLotNumber != nil {
+		if err := s.CPLotNumber.Validate(); err != nil {
+			return fmt.Errorf("BTX.CPLotNumber: %w", err)
+		}
+	}
+
+	if s.BPQuantity == nil {
+		return fmt.Errorf("BTX.BPQuantity is required")
+	}
+	if string(*s.BPQuantity) == "" {
+		return fmt.Errorf("BTX.BPQuantity is empty")
+	}
+
+	if s.BPUnits != nil {
+		if err := s.BPUnits.Validate(); err != nil {
+			return fmt.Errorf("BTX.BPUnits: %w", err)
+		}
+	}
+
+	if s.BPTransfusionDispositionStatus == nil {
+		return fmt.Errorf("BTX.BPTransfusionDispositionStatus is required")
+	}
+	if s.BPTransfusionDispositionStatus != nil {
+		if err := s.BPTransfusionDispositionStatus.Validate(); err != nil {
+			return fmt.Errorf("BTX.BPTransfusionDispositionStatus: %w", err)
+		}
+	}
+
+	if s.BPMessageStatus == nil {
+		return fmt.Errorf("BTX.BPMessageStatus is required")
+	}
+	if string(*s.BPMessageStatus) == "" {
+		return fmt.Errorf("BTX.BPMessageStatus is empty")
+	}
+
+	if s.BPDateTimeOfStatus == nil {
+		return fmt.Errorf("BTX.BPDateTimeOfStatus is required")
+	}
+	if s.BPDateTimeOfStatus != nil {
+		if err := s.BPDateTimeOfStatus.Validate(); err != nil {
+			return fmt.Errorf("BTX.BPDateTimeOfStatus: %w", err)
+		}
+	}
+
+	if s.BPAdministrator != nil {
+		if err := s.BPAdministrator.Validate(); err != nil {
+			return fmt.Errorf("BTX.BPAdministrator: %w", err)
+		}
+	}
+
+	if s.BPVerifier != nil {
+		if err := s.BPVerifier.Validate(); err != nil {
+			return fmt.Errorf("BTX.BPVerifier: %w", err)
+		}
+	}
+
+	if s.BPTransfusionStartDateTimeOfStatus != nil {
+		if err := s.BPTransfusionStartDateTimeOfStatus.Validate(); err != nil {
+			return fmt.Errorf("BTX.BPTransfusionStartDateTimeOfStatus: %w", err)
+		}
+	}
+
+	if s.BPTransfusionEndDateTimeOfStatus != nil {
+		if err := s.BPTransfusionEndDateTimeOfStatus.Validate(); err != nil {
+			return fmt.Errorf("BTX.BPTransfusionEndDateTimeOfStatus: %w", err)
+		}
+	}
+
+	for _, item := range s.BPAdverseReactionType {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("BTX.BPAdverseReactionType: %w", err)
+		}
+	}
+
+	if s.BPTransfusionInterruptedReason != nil {
+		if err := s.BPTransfusionInterruptedReason.Validate(); err != nil {
+			return fmt.Errorf("BTX.BPTransfusionInterruptedReason: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *BTX) SetSetIDBTX(v *SI) *BTX {
+	s.SetIDBTX = v
+	return s
+}
+
+func (s *BTX) SetBCDonationID(v *EI) *BTX {
+	s.BCDonationID = v
+	return s
+}
+
+func (s *BTX) SetBCComponent(v *CNE) *BTX {
+	s.BCComponent = v
+	return s
+}
+
+func (s *BTX) SetBCBloodGroup(v *CNE) *BTX {
+	s.BCBloodGroup = v
+	return s
+}
+
+func (s *BTX) SetCPCommercialProduct(v *CWE) *BTX {
+	s.CPCommercialProduct = v
+	return s
+}
+
+func (s *BTX) SetCPManufacturer(v *XON) *BTX {
+	s.CPManufacturer = v
+	return s
+}
+
+func (s *BTX) SetCPLotNumber(v *EI) *BTX {
+	s.CPLotNumber = v
+	return s
+}
+
+func (s *BTX) SetBPQuantity(v *NM) *BTX {
+	s.BPQuantity = v
+	return s
+}
+
+func (s *BTX) SetBPAmount(v *NM) *BTX {
+	s.BPAmount = v
+	return s
+}
+
+func (s *BTX) SetBPUnits(v *CE) *BTX {
+	s.BPUnits = v
+	return s
+}
+
+func (s *BTX) SetBPTransfusionDispositionStatus(v *CWE) *BTX {
+	s.BPTransfusionDispositionStatus = v
+	return s
+}
+
+func (s *BTX) SetBPMessageStatus(v *ID) *BTX {
+	s.BPMessageStatus = v
+	return s
+}
+
+func (s *BTX) SetBPDateTimeOfStatus(v *TS) *BTX {
+	s.BPDateTimeOfStatus = v
+	return s
+}
+
+func (s *BTX) SetBPAdministrator(v *XCN) *BTX {
+	s.BPAdministrator = v
+	return s
+}
+
+func (s *BTX) SetBPVerifier(v *XCN) *BTX {
+	s.BPVerifier = v
+	return s
+}
+
+func (s *BTX) SetBPTransfusionStartDateTimeOfStatus(v *TS) *BTX {
+	s.BPTransfusionStartDateTimeOfStatus = v
+	return s
+}
+
+func (s *BTX) SetBPTransfusionEndDateTimeOfStatus(v *TS) *BTX {
+	s.BPTransfusionEndDateTimeOfStatus = v
+	return s
+}
+
+func (s *BTX) AddBPAdverseReactionType(v CWE) *BTX {
+	s.BPAdverseReactionType = append(s.BPAdverseReactionType, v)
+	return s
+}
+
+func (s *BTX) SetBPTransfusionInterruptedReason(v *CWE) *BTX {
+	s.BPTransfusionInterruptedReason = v
+	return s
 }
 
 // CDM - Charge Description Master
@@ -303,167 +2451,1427 @@ type BTX struct {
 //
 // The CDM segment contains the fields which, for one chargeable item, remain the same across facilities, departments, and patient types.  The following PRC segment contains the fields which, for the same chargeable item, vary depending upon facility or department or patient type.
 type CDM struct {
-	PrimaryKeyValueCDM           CE    `hl7:"1,required"`
+	PrimaryKeyValueCDM           *CE   `hl7:"1,required"`
 	ChargeCodeAlias              []CE  `hl7:"2"`
-	ChargeDescriptionShort       ST    `hl7:"3,required"`
-	ChargeDescriptionLong        ST    `hl7:"4"`
-	DescriptionOverrideIndicator IS    `hl7:"5"`
+	ChargeDescriptionShort       *ST   `hl7:"3,required"`
+	ChargeDescriptionLong        *ST   `hl7:"4"`
+	DescriptionOverrideIndicator *IS   `hl7:"5"`
 	ExplodingCharges             []CE  `hl7:"6"`
 	ProcedureCode                []CE  `hl7:"7"`
-	ActiveInactiveFlag           ID    `hl7:"8"`
+	ActiveInactiveFlag           *ID   `hl7:"8"`
 	InventoryNumber              []CE  `hl7:"9"`
-	ResourceLoad                 NM    `hl7:"10"`
+	ResourceLoad                 *NM   `hl7:"10"`
 	ContractNumber               []CX  `hl7:"11"`
 	ContractOrganization         []XON `hl7:"12"`
-	RoomFeeIndicator             ID    `hl7:"13"`
+	RoomFeeIndicator             *ID   `hl7:"13"`
+}
+
+func NewCDM() *CDM {
+	return &CDM{}
+}
+
+func (s *CDM) Validate() error {
+
+	if s.PrimaryKeyValueCDM == nil {
+		return fmt.Errorf("CDM.PrimaryKeyValueCDM is required")
+	}
+	if s.PrimaryKeyValueCDM != nil {
+		if err := s.PrimaryKeyValueCDM.Validate(); err != nil {
+			return fmt.Errorf("CDM.PrimaryKeyValueCDM: %w", err)
+		}
+	}
+
+	for _, item := range s.ChargeCodeAlias {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("CDM.ChargeCodeAlias: %w", err)
+		}
+	}
+
+	if s.ChargeDescriptionShort == nil {
+		return fmt.Errorf("CDM.ChargeDescriptionShort is required")
+	}
+	if string(*s.ChargeDescriptionShort) == "" {
+		return fmt.Errorf("CDM.ChargeDescriptionShort is empty")
+	}
+
+	for _, item := range s.ExplodingCharges {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("CDM.ExplodingCharges: %w", err)
+		}
+	}
+
+	for _, item := range s.ProcedureCode {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("CDM.ProcedureCode: %w", err)
+		}
+	}
+
+	for _, item := range s.InventoryNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("CDM.InventoryNumber: %w", err)
+		}
+	}
+
+	for _, item := range s.ContractNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("CDM.ContractNumber: %w", err)
+		}
+	}
+
+	for _, item := range s.ContractOrganization {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("CDM.ContractOrganization: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *CDM) SetPrimaryKeyValueCDM(v *CE) *CDM {
+	s.PrimaryKeyValueCDM = v
+	return s
+}
+
+func (s *CDM) AddChargeCodeAlias(v CE) *CDM {
+	s.ChargeCodeAlias = append(s.ChargeCodeAlias, v)
+	return s
+}
+
+func (s *CDM) SetChargeDescriptionShort(v *ST) *CDM {
+	s.ChargeDescriptionShort = v
+	return s
+}
+
+func (s *CDM) SetChargeDescriptionLong(v *ST) *CDM {
+	s.ChargeDescriptionLong = v
+	return s
+}
+
+func (s *CDM) SetDescriptionOverrideIndicator(v *IS) *CDM {
+	s.DescriptionOverrideIndicator = v
+	return s
+}
+
+func (s *CDM) AddExplodingCharges(v CE) *CDM {
+	s.ExplodingCharges = append(s.ExplodingCharges, v)
+	return s
+}
+
+func (s *CDM) AddProcedureCode(v CE) *CDM {
+	s.ProcedureCode = append(s.ProcedureCode, v)
+	return s
+}
+
+func (s *CDM) SetActiveInactiveFlag(v *ID) *CDM {
+	s.ActiveInactiveFlag = v
+	return s
+}
+
+func (s *CDM) AddInventoryNumber(v CE) *CDM {
+	s.InventoryNumber = append(s.InventoryNumber, v)
+	return s
+}
+
+func (s *CDM) SetResourceLoad(v *NM) *CDM {
+	s.ResourceLoad = v
+	return s
+}
+
+func (s *CDM) AddContractNumber(v CX) *CDM {
+	s.ContractNumber = append(s.ContractNumber, v)
+	return s
+}
+
+func (s *CDM) AddContractOrganization(v XON) *CDM {
+	s.ContractOrganization = append(s.ContractOrganization, v)
+	return s
+}
+
+func (s *CDM) SetRoomFeeIndicator(v *ID) *CDM {
+	s.RoomFeeIndicator = v
+	return s
 }
 
 // CER - Certificate Detail
 // The CER segment adds detailed information regarding the formal authorizations to provide a service (e.g. licenses, certificates) held by the health professional identified by the STF segment.
 type CER struct {
-	SetIDCER                                                 SI    `hl7:"1,required"`
-	SerialNumber                                             ST    `hl7:"2"`
-	Version                                                  ST    `hl7:"3"`
-	GrantingAuthority                                        XON   `hl7:"4"`
-	IssuingAuthority                                         XCN   `hl7:"5"`
-	SignatureOfIssuingAuthority                              ED    `hl7:"6"`
-	GrantingCountry                                          ID    `hl7:"7"`
-	GrantingStateProvince                                    CWE   `hl7:"8"`
-	GrantingCountyParish                                     CWE   `hl7:"9"`
-	CertificateType                                          CWE   `hl7:"10"`
-	CertificateDomain                                        CWE   `hl7:"11"`
-	SubjectID                                                ID    `hl7:"12"`
-	SubjectName                                              ST    `hl7:"13,required"`
+	SetIDCER                                                 *SI   `hl7:"1,required"`
+	SerialNumber                                             *ST   `hl7:"2"`
+	Version                                                  *ST   `hl7:"3"`
+	GrantingAuthority                                        *XON  `hl7:"4"`
+	IssuingAuthority                                         *XCN  `hl7:"5"`
+	SignatureOfIssuingAuthority                              *ED   `hl7:"6"`
+	GrantingCountry                                          *ID   `hl7:"7"`
+	GrantingStateProvince                                    *CWE  `hl7:"8"`
+	GrantingCountyParish                                     *CWE  `hl7:"9"`
+	CertificateType                                          *CWE  `hl7:"10"`
+	CertificateDomain                                        *CWE  `hl7:"11"`
+	SubjectID                                                *ID   `hl7:"12"`
+	SubjectName                                              *ST   `hl7:"13,required"`
 	SubjectDirectoryAttributeExtensionHealthProfessionalData []CWE `hl7:"14"`
-	SubjectPublicKeyInfo                                     CWE   `hl7:"15"`
-	AuthorityKeyIdentifier                                   CWE   `hl7:"16"`
-	BasicConstraint                                          ID    `hl7:"17"`
+	SubjectPublicKeyInfo                                     *CWE  `hl7:"15"`
+	AuthorityKeyIdentifier                                   *CWE  `hl7:"16"`
+	BasicConstraint                                          *ID   `hl7:"17"`
 	CRLDistributionPoint                                     []CWE `hl7:"18"`
-	JurisdictionCountry                                      ID    `hl7:"19"`
-	JurisdictionStateProvince                                CWE   `hl7:"20"`
-	JurisdictionCountyParish                                 CWE   `hl7:"21"`
+	JurisdictionCountry                                      *ID   `hl7:"19"`
+	JurisdictionStateProvince                                *CWE  `hl7:"20"`
+	JurisdictionCountyParish                                 *CWE  `hl7:"21"`
 	JurisdictionBreadth                                      []CWE `hl7:"22"`
-	GrantingDate                                             TS    `hl7:"23"`
-	IssuingDate                                              TS    `hl7:"24"`
-	ActivationDate                                           TS    `hl7:"25"`
-	InactivationDate                                         TS    `hl7:"26"`
-	ExpirationDate                                           TS    `hl7:"27"`
-	RenewalDate                                              TS    `hl7:"28"`
-	RevocationDate                                           TS    `hl7:"29"`
-	RevocationReasonCode                                     CE    `hl7:"30"`
-	CertificateStatus                                        CWE   `hl7:"31"`
+	GrantingDate                                             *TS   `hl7:"23"`
+	IssuingDate                                              *TS   `hl7:"24"`
+	ActivationDate                                           *TS   `hl7:"25"`
+	InactivationDate                                         *TS   `hl7:"26"`
+	ExpirationDate                                           *TS   `hl7:"27"`
+	RenewalDate                                              *TS   `hl7:"28"`
+	RevocationDate                                           *TS   `hl7:"29"`
+	RevocationReasonCode                                     *CE   `hl7:"30"`
+	CertificateStatus                                        *CWE  `hl7:"31"`
+}
+
+func NewCER() *CER {
+	return &CER{}
+}
+
+func (s *CER) Validate() error {
+
+	if s.SetIDCER == nil {
+		return fmt.Errorf("CER.SetIDCER is required")
+	}
+	if string(*s.SetIDCER) == "" {
+		return fmt.Errorf("CER.SetIDCER is empty")
+	}
+
+	if s.GrantingAuthority != nil {
+		if err := s.GrantingAuthority.Validate(); err != nil {
+			return fmt.Errorf("CER.GrantingAuthority: %w", err)
+		}
+	}
+
+	if s.IssuingAuthority != nil {
+		if err := s.IssuingAuthority.Validate(); err != nil {
+			return fmt.Errorf("CER.IssuingAuthority: %w", err)
+		}
+	}
+
+	if s.SignatureOfIssuingAuthority != nil {
+		if err := s.SignatureOfIssuingAuthority.Validate(); err != nil {
+			return fmt.Errorf("CER.SignatureOfIssuingAuthority: %w", err)
+		}
+	}
+
+	if s.GrantingStateProvince != nil {
+		if err := s.GrantingStateProvince.Validate(); err != nil {
+			return fmt.Errorf("CER.GrantingStateProvince: %w", err)
+		}
+	}
+
+	if s.GrantingCountyParish != nil {
+		if err := s.GrantingCountyParish.Validate(); err != nil {
+			return fmt.Errorf("CER.GrantingCountyParish: %w", err)
+		}
+	}
+
+	if s.CertificateType != nil {
+		if err := s.CertificateType.Validate(); err != nil {
+			return fmt.Errorf("CER.CertificateType: %w", err)
+		}
+	}
+
+	if s.CertificateDomain != nil {
+		if err := s.CertificateDomain.Validate(); err != nil {
+			return fmt.Errorf("CER.CertificateDomain: %w", err)
+		}
+	}
+
+	if s.SubjectName == nil {
+		return fmt.Errorf("CER.SubjectName is required")
+	}
+	if string(*s.SubjectName) == "" {
+		return fmt.Errorf("CER.SubjectName is empty")
+	}
+
+	for _, item := range s.SubjectDirectoryAttributeExtensionHealthProfessionalData {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("CER.SubjectDirectoryAttributeExtensionHealthProfessionalData: %w", err)
+		}
+	}
+
+	if s.SubjectPublicKeyInfo != nil {
+		if err := s.SubjectPublicKeyInfo.Validate(); err != nil {
+			return fmt.Errorf("CER.SubjectPublicKeyInfo: %w", err)
+		}
+	}
+
+	if s.AuthorityKeyIdentifier != nil {
+		if err := s.AuthorityKeyIdentifier.Validate(); err != nil {
+			return fmt.Errorf("CER.AuthorityKeyIdentifier: %w", err)
+		}
+	}
+
+	for _, item := range s.CRLDistributionPoint {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("CER.CRLDistributionPoint: %w", err)
+		}
+	}
+
+	if s.JurisdictionStateProvince != nil {
+		if err := s.JurisdictionStateProvince.Validate(); err != nil {
+			return fmt.Errorf("CER.JurisdictionStateProvince: %w", err)
+		}
+	}
+
+	if s.JurisdictionCountyParish != nil {
+		if err := s.JurisdictionCountyParish.Validate(); err != nil {
+			return fmt.Errorf("CER.JurisdictionCountyParish: %w", err)
+		}
+	}
+
+	for _, item := range s.JurisdictionBreadth {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("CER.JurisdictionBreadth: %w", err)
+		}
+	}
+
+	if s.GrantingDate != nil {
+		if err := s.GrantingDate.Validate(); err != nil {
+			return fmt.Errorf("CER.GrantingDate: %w", err)
+		}
+	}
+
+	if s.IssuingDate != nil {
+		if err := s.IssuingDate.Validate(); err != nil {
+			return fmt.Errorf("CER.IssuingDate: %w", err)
+		}
+	}
+
+	if s.ActivationDate != nil {
+		if err := s.ActivationDate.Validate(); err != nil {
+			return fmt.Errorf("CER.ActivationDate: %w", err)
+		}
+	}
+
+	if s.InactivationDate != nil {
+		if err := s.InactivationDate.Validate(); err != nil {
+			return fmt.Errorf("CER.InactivationDate: %w", err)
+		}
+	}
+
+	if s.ExpirationDate != nil {
+		if err := s.ExpirationDate.Validate(); err != nil {
+			return fmt.Errorf("CER.ExpirationDate: %w", err)
+		}
+	}
+
+	if s.RenewalDate != nil {
+		if err := s.RenewalDate.Validate(); err != nil {
+			return fmt.Errorf("CER.RenewalDate: %w", err)
+		}
+	}
+
+	if s.RevocationDate != nil {
+		if err := s.RevocationDate.Validate(); err != nil {
+			return fmt.Errorf("CER.RevocationDate: %w", err)
+		}
+	}
+
+	if s.RevocationReasonCode != nil {
+		if err := s.RevocationReasonCode.Validate(); err != nil {
+			return fmt.Errorf("CER.RevocationReasonCode: %w", err)
+		}
+	}
+
+	if s.CertificateStatus != nil {
+		if err := s.CertificateStatus.Validate(); err != nil {
+			return fmt.Errorf("CER.CertificateStatus: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *CER) SetSetIDCER(v *SI) *CER {
+	s.SetIDCER = v
+	return s
+}
+
+func (s *CER) SetSerialNumber(v *ST) *CER {
+	s.SerialNumber = v
+	return s
+}
+
+func (s *CER) SetVersion(v *ST) *CER {
+	s.Version = v
+	return s
+}
+
+func (s *CER) SetGrantingAuthority(v *XON) *CER {
+	s.GrantingAuthority = v
+	return s
+}
+
+func (s *CER) SetIssuingAuthority(v *XCN) *CER {
+	s.IssuingAuthority = v
+	return s
+}
+
+func (s *CER) SetSignatureOfIssuingAuthority(v *ED) *CER {
+	s.SignatureOfIssuingAuthority = v
+	return s
+}
+
+func (s *CER) SetGrantingCountry(v *ID) *CER {
+	s.GrantingCountry = v
+	return s
+}
+
+func (s *CER) SetGrantingStateProvince(v *CWE) *CER {
+	s.GrantingStateProvince = v
+	return s
+}
+
+func (s *CER) SetGrantingCountyParish(v *CWE) *CER {
+	s.GrantingCountyParish = v
+	return s
+}
+
+func (s *CER) SetCertificateType(v *CWE) *CER {
+	s.CertificateType = v
+	return s
+}
+
+func (s *CER) SetCertificateDomain(v *CWE) *CER {
+	s.CertificateDomain = v
+	return s
+}
+
+func (s *CER) SetSubjectID(v *ID) *CER {
+	s.SubjectID = v
+	return s
+}
+
+func (s *CER) SetSubjectName(v *ST) *CER {
+	s.SubjectName = v
+	return s
+}
+
+func (s *CER) AddSubjectDirectoryAttributeExtensionHealthProfessionalData(v CWE) *CER {
+	s.SubjectDirectoryAttributeExtensionHealthProfessionalData = append(s.SubjectDirectoryAttributeExtensionHealthProfessionalData, v)
+	return s
+}
+
+func (s *CER) SetSubjectPublicKeyInfo(v *CWE) *CER {
+	s.SubjectPublicKeyInfo = v
+	return s
+}
+
+func (s *CER) SetAuthorityKeyIdentifier(v *CWE) *CER {
+	s.AuthorityKeyIdentifier = v
+	return s
+}
+
+func (s *CER) SetBasicConstraint(v *ID) *CER {
+	s.BasicConstraint = v
+	return s
+}
+
+func (s *CER) AddCRLDistributionPoint(v CWE) *CER {
+	s.CRLDistributionPoint = append(s.CRLDistributionPoint, v)
+	return s
+}
+
+func (s *CER) SetJurisdictionCountry(v *ID) *CER {
+	s.JurisdictionCountry = v
+	return s
+}
+
+func (s *CER) SetJurisdictionStateProvince(v *CWE) *CER {
+	s.JurisdictionStateProvince = v
+	return s
+}
+
+func (s *CER) SetJurisdictionCountyParish(v *CWE) *CER {
+	s.JurisdictionCountyParish = v
+	return s
+}
+
+func (s *CER) AddJurisdictionBreadth(v CWE) *CER {
+	s.JurisdictionBreadth = append(s.JurisdictionBreadth, v)
+	return s
+}
+
+func (s *CER) SetGrantingDate(v *TS) *CER {
+	s.GrantingDate = v
+	return s
+}
+
+func (s *CER) SetIssuingDate(v *TS) *CER {
+	s.IssuingDate = v
+	return s
+}
+
+func (s *CER) SetActivationDate(v *TS) *CER {
+	s.ActivationDate = v
+	return s
+}
+
+func (s *CER) SetInactivationDate(v *TS) *CER {
+	s.InactivationDate = v
+	return s
+}
+
+func (s *CER) SetExpirationDate(v *TS) *CER {
+	s.ExpirationDate = v
+	return s
+}
+
+func (s *CER) SetRenewalDate(v *TS) *CER {
+	s.RenewalDate = v
+	return s
+}
+
+func (s *CER) SetRevocationDate(v *TS) *CER {
+	s.RevocationDate = v
+	return s
+}
+
+func (s *CER) SetRevocationReasonCode(v *CE) *CER {
+	s.RevocationReasonCode = v
+	return s
+}
+
+func (s *CER) SetCertificateStatus(v *CWE) *CER {
+	s.CertificateStatus = v
+	return s
 }
 
 // CM0 - Clinical Study Master
 // The Clinical Study Master (CM0) segment contains the information about the study itself.  The sending application study number for each patient is sent in the CSR segment.  The optional CM0 enables information about the study at the sending application that may be useful to the receiving systems.  All of the fields in the segment describe the study status at the sending facility unless otherwise agreed upon.
 type CM0 struct {
-	SetIDCM0                SI    `hl7:"1"`
-	SponsorStudyID          EI    `hl7:"2,required"`
+	SetIDCM0                *SI   `hl7:"1"`
+	SponsorStudyID          *EI   `hl7:"2,required"`
 	AlternateStudyID        []EI  `hl7:"3"`
-	TitleOfStudy            ST    `hl7:"4,required"`
+	TitleOfStudy            *ST   `hl7:"4,required"`
 	ChairmanOfStudy         []XCN `hl7:"5"`
-	LastIRBApprovalDate     DT    `hl7:"6"`
-	TotalAccrualToDate      NM    `hl7:"7"`
-	LastAccrualDate         DT    `hl7:"8"`
+	LastIRBApprovalDate     *DT   `hl7:"6"`
+	TotalAccrualToDate      *NM   `hl7:"7"`
+	LastAccrualDate         *DT   `hl7:"8"`
 	ContactForStudy         []XCN `hl7:"9"`
-	ContactSTelephoneNumber XTN   `hl7:"10"`
+	ContactSTelephoneNumber *XTN  `hl7:"10"`
 	ContactSAddress         []XAD `hl7:"11"`
+}
+
+func NewCM0() *CM0 {
+	return &CM0{}
+}
+
+func (s *CM0) Validate() error {
+
+	if s.SponsorStudyID == nil {
+		return fmt.Errorf("CM0.SponsorStudyID is required")
+	}
+	if s.SponsorStudyID != nil {
+		if err := s.SponsorStudyID.Validate(); err != nil {
+			return fmt.Errorf("CM0.SponsorStudyID: %w", err)
+		}
+	}
+
+	for _, item := range s.AlternateStudyID {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("CM0.AlternateStudyID: %w", err)
+		}
+	}
+
+	if s.TitleOfStudy == nil {
+		return fmt.Errorf("CM0.TitleOfStudy is required")
+	}
+	if string(*s.TitleOfStudy) == "" {
+		return fmt.Errorf("CM0.TitleOfStudy is empty")
+	}
+
+	for _, item := range s.ChairmanOfStudy {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("CM0.ChairmanOfStudy: %w", err)
+		}
+	}
+
+	for _, item := range s.ContactForStudy {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("CM0.ContactForStudy: %w", err)
+		}
+	}
+
+	if s.ContactSTelephoneNumber != nil {
+		if err := s.ContactSTelephoneNumber.Validate(); err != nil {
+			return fmt.Errorf("CM0.ContactSTelephoneNumber: %w", err)
+		}
+	}
+
+	for _, item := range s.ContactSAddress {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("CM0.ContactSAddress: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *CM0) SetSetIDCM0(v *SI) *CM0 {
+	s.SetIDCM0 = v
+	return s
+}
+
+func (s *CM0) SetSponsorStudyID(v *EI) *CM0 {
+	s.SponsorStudyID = v
+	return s
+}
+
+func (s *CM0) AddAlternateStudyID(v EI) *CM0 {
+	s.AlternateStudyID = append(s.AlternateStudyID, v)
+	return s
+}
+
+func (s *CM0) SetTitleOfStudy(v *ST) *CM0 {
+	s.TitleOfStudy = v
+	return s
+}
+
+func (s *CM0) AddChairmanOfStudy(v XCN) *CM0 {
+	s.ChairmanOfStudy = append(s.ChairmanOfStudy, v)
+	return s
+}
+
+func (s *CM0) SetLastIRBApprovalDate(v *DT) *CM0 {
+	s.LastIRBApprovalDate = v
+	return s
+}
+
+func (s *CM0) SetTotalAccrualToDate(v *NM) *CM0 {
+	s.TotalAccrualToDate = v
+	return s
+}
+
+func (s *CM0) SetLastAccrualDate(v *DT) *CM0 {
+	s.LastAccrualDate = v
+	return s
+}
+
+func (s *CM0) AddContactForStudy(v XCN) *CM0 {
+	s.ContactForStudy = append(s.ContactForStudy, v)
+	return s
+}
+
+func (s *CM0) SetContactSTelephoneNumber(v *XTN) *CM0 {
+	s.ContactSTelephoneNumber = v
+	return s
+}
+
+func (s *CM0) AddContactSAddress(v XAD) *CM0 {
+	s.ContactSAddress = append(s.ContactSAddress, v)
+	return s
 }
 
 // CM1 - Clinical Study Phase Master
 // Each Clinical Study Phase Master (CM1) segment contains the information about one phase of a study identified in the preceding CM0.  This is an optional structure to be used if the study has more than one treatment or evaluation phase within it.  The identification of study phases that the patient enters are sent in the CSP segment: sequence 2.  The CM1 segment describes the phase in general for the receiving system.
 type CM1 struct {
-	SetIDCM1                SI `hl7:"1,required"`
-	StudyPhaseIdentifier    CE `hl7:"2,required"`
-	DescriptionOfStudyPhase ST `hl7:"3,required"`
+	SetIDCM1                *SI `hl7:"1,required"`
+	StudyPhaseIdentifier    *CE `hl7:"2,required"`
+	DescriptionOfStudyPhase *ST `hl7:"3,required"`
+}
+
+func NewCM1() *CM1 {
+	return &CM1{}
+}
+
+func (s *CM1) Validate() error {
+
+	if s.SetIDCM1 == nil {
+		return fmt.Errorf("CM1.SetIDCM1 is required")
+	}
+	if string(*s.SetIDCM1) == "" {
+		return fmt.Errorf("CM1.SetIDCM1 is empty")
+	}
+
+	if s.StudyPhaseIdentifier == nil {
+		return fmt.Errorf("CM1.StudyPhaseIdentifier is required")
+	}
+	if s.StudyPhaseIdentifier != nil {
+		if err := s.StudyPhaseIdentifier.Validate(); err != nil {
+			return fmt.Errorf("CM1.StudyPhaseIdentifier: %w", err)
+		}
+	}
+
+	if s.DescriptionOfStudyPhase == nil {
+		return fmt.Errorf("CM1.DescriptionOfStudyPhase is required")
+	}
+	if string(*s.DescriptionOfStudyPhase) == "" {
+		return fmt.Errorf("CM1.DescriptionOfStudyPhase is empty")
+	}
+
+	return nil
+}
+
+func (s *CM1) SetSetIDCM1(v *SI) *CM1 {
+	s.SetIDCM1 = v
+	return s
+}
+
+func (s *CM1) SetStudyPhaseIdentifier(v *CE) *CM1 {
+	s.StudyPhaseIdentifier = v
+	return s
+}
+
+func (s *CM1) SetDescriptionOfStudyPhase(v *ST) *CM1 {
+	s.DescriptionOfStudyPhase = v
+	return s
 }
 
 // CM2 - Clinical Study Schedule Master
 // The Clinical Study Schedule Master (CM2) contains the information about the scheduled time points for study or phase-related treatment or evaluation events.  The fact that a patient has data satisfying a scheduled time point is sent in the CSS segment, sequence 2.  The CM2 segment describes the scheduled time points in general.
 type CM2 struct {
-	SetIDCM2                     SI   `hl7:"1"`
-	ScheduledTimePoint           CE   `hl7:"2,required"`
-	DescriptionOfTimePoint       ST   `hl7:"3"`
+	SetIDCM2                     *SI  `hl7:"1"`
+	ScheduledTimePoint           *CE  `hl7:"2,required"`
+	DescriptionOfTimePoint       *ST  `hl7:"3"`
 	EventsScheduledThisTimePoint []CE `hl7:"4,required"`
+}
+
+func NewCM2() *CM2 {
+	return &CM2{}
+}
+
+func (s *CM2) Validate() error {
+
+	if s.ScheduledTimePoint == nil {
+		return fmt.Errorf("CM2.ScheduledTimePoint is required")
+	}
+	if s.ScheduledTimePoint != nil {
+		if err := s.ScheduledTimePoint.Validate(); err != nil {
+			return fmt.Errorf("CM2.ScheduledTimePoint: %w", err)
+		}
+	}
+
+	if len(s.EventsScheduledThisTimePoint) == 0 {
+		return fmt.Errorf("CM2.EventsScheduledThisTimePoint is required")
+	}
+	for _, item := range s.EventsScheduledThisTimePoint {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("CM2.EventsScheduledThisTimePoint: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *CM2) SetSetIDCM2(v *SI) *CM2 {
+	s.SetIDCM2 = v
+	return s
+}
+
+func (s *CM2) SetScheduledTimePoint(v *CE) *CM2 {
+	s.ScheduledTimePoint = v
+	return s
+}
+
+func (s *CM2) SetDescriptionOfTimePoint(v *ST) *CM2 {
+	s.DescriptionOfTimePoint = v
+	return s
+}
+
+func (s *CM2) AddEventsScheduledThisTimePoint(v CE) *CM2 {
+	s.EventsScheduledThisTimePoint = append(s.EventsScheduledThisTimePoint, v)
+	return s
 }
 
 // CNS - Clear Notification
 // The clear equipment notification segment contains the data necessary to allow the receiving equipment to clear any associated notifications.
 type CNS struct {
-	StartingNotificationReferenceNumber NM `hl7:"1"`
-	EndingNotificationReferenceNumber   NM `hl7:"2"`
-	StartingNotificationDateTime        TS `hl7:"3"`
-	EndingNotificationDateTime          TS `hl7:"4"`
-	StartingNotificationCode            CE `hl7:"5"`
-	EndingNotificationCode              CE `hl7:"6"`
+	StartingNotificationReferenceNumber *NM `hl7:"1"`
+	EndingNotificationReferenceNumber   *NM `hl7:"2"`
+	StartingNotificationDateTime        *TS `hl7:"3"`
+	EndingNotificationDateTime          *TS `hl7:"4"`
+	StartingNotificationCode            *CE `hl7:"5"`
+	EndingNotificationCode              *CE `hl7:"6"`
+}
+
+func NewCNS() *CNS {
+	return &CNS{}
+}
+
+func (s *CNS) Validate() error {
+
+	if s.StartingNotificationDateTime != nil {
+		if err := s.StartingNotificationDateTime.Validate(); err != nil {
+			return fmt.Errorf("CNS.StartingNotificationDateTime: %w", err)
+		}
+	}
+
+	if s.EndingNotificationDateTime != nil {
+		if err := s.EndingNotificationDateTime.Validate(); err != nil {
+			return fmt.Errorf("CNS.EndingNotificationDateTime: %w", err)
+		}
+	}
+
+	if s.StartingNotificationCode != nil {
+		if err := s.StartingNotificationCode.Validate(); err != nil {
+			return fmt.Errorf("CNS.StartingNotificationCode: %w", err)
+		}
+	}
+
+	if s.EndingNotificationCode != nil {
+		if err := s.EndingNotificationCode.Validate(); err != nil {
+			return fmt.Errorf("CNS.EndingNotificationCode: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *CNS) SetStartingNotificationReferenceNumber(v *NM) *CNS {
+	s.StartingNotificationReferenceNumber = v
+	return s
+}
+
+func (s *CNS) SetEndingNotificationReferenceNumber(v *NM) *CNS {
+	s.EndingNotificationReferenceNumber = v
+	return s
+}
+
+func (s *CNS) SetStartingNotificationDateTime(v *TS) *CNS {
+	s.StartingNotificationDateTime = v
+	return s
+}
+
+func (s *CNS) SetEndingNotificationDateTime(v *TS) *CNS {
+	s.EndingNotificationDateTime = v
+	return s
+}
+
+func (s *CNS) SetStartingNotificationCode(v *CE) *CNS {
+	s.StartingNotificationCode = v
+	return s
+}
+
+func (s *CNS) SetEndingNotificationCode(v *CE) *CNS {
+	s.EndingNotificationCode = v
+	return s
 }
 
 // CON - Consent
 // The consent segment provides details about a specific consent by a patient or staff member
 type CON struct {
-	SetIDCON                               SI    `hl7:"1,required"`
-	ConsentType                            CWE   `hl7:"2"`
-	ConsentFormID                          ST    `hl7:"3"`
-	ConsentFormNumber                      EI    `hl7:"4"`
+	SetIDCON                               *SI   `hl7:"1,required"`
+	ConsentType                            *CWE  `hl7:"2"`
+	ConsentFormID                          *ST   `hl7:"3"`
+	ConsentFormNumber                      *EI   `hl7:"4"`
 	ConsentText                            []FT  `hl7:"5"`
 	SubjectSpecificConsentText             []FT  `hl7:"6"`
 	ConsentBackground                      []FT  `hl7:"7"`
 	SubjectSpecificConsentBackground       []FT  `hl7:"8"`
 	ConsenterImposedLimitations            []FT  `hl7:"9"`
-	ConsentMode                            CNE   `hl7:"10"`
-	ConsentStatus                          CNE   `hl7:"11,required"`
-	ConsentDiscussionDateTime              TS    `hl7:"12"`
-	ConsentDecisionDateTime                TS    `hl7:"13"`
-	ConsentEffectiveDateTime               TS    `hl7:"14"`
-	ConsentEndDateTime                     TS    `hl7:"15"`
-	SubjectCompetenceIndicator             ID    `hl7:"16"`
-	TranslatorAssistanceIndicator          ID    `hl7:"17"`
-	LanguageTranslatedTo                   ID    `hl7:"18"`
-	InformationalMaterialSuppliedIndicator ID    `hl7:"19"`
-	ConsentBypassReason                    CWE   `hl7:"20"`
-	ConsentDisclosureLevel                 ID    `hl7:"21"`
-	ConsentNonDisclosureReason             CWE   `hl7:"22"`
-	NonSubjectConsenterReason              CWE   `hl7:"23"`
+	ConsentMode                            *CNE  `hl7:"10"`
+	ConsentStatus                          *CNE  `hl7:"11,required"`
+	ConsentDiscussionDateTime              *TS   `hl7:"12"`
+	ConsentDecisionDateTime                *TS   `hl7:"13"`
+	ConsentEffectiveDateTime               *TS   `hl7:"14"`
+	ConsentEndDateTime                     *TS   `hl7:"15"`
+	SubjectCompetenceIndicator             *ID   `hl7:"16"`
+	TranslatorAssistanceIndicator          *ID   `hl7:"17"`
+	LanguageTranslatedTo                   *ID   `hl7:"18"`
+	InformationalMaterialSuppliedIndicator *ID   `hl7:"19"`
+	ConsentBypassReason                    *CWE  `hl7:"20"`
+	ConsentDisclosureLevel                 *ID   `hl7:"21"`
+	ConsentNonDisclosureReason             *CWE  `hl7:"22"`
+	NonSubjectConsenterReason              *CWE  `hl7:"23"`
 	ConsenterID                            []XPN `hl7:"24,required"`
 	RelationshipToSubjectTable             []IS  `hl7:"25,required"`
+}
+
+func NewCON() *CON {
+	return &CON{}
+}
+
+func (s *CON) Validate() error {
+
+	if s.SetIDCON == nil {
+		return fmt.Errorf("CON.SetIDCON is required")
+	}
+	if string(*s.SetIDCON) == "" {
+		return fmt.Errorf("CON.SetIDCON is empty")
+	}
+
+	if s.ConsentType != nil {
+		if err := s.ConsentType.Validate(); err != nil {
+			return fmt.Errorf("CON.ConsentType: %w", err)
+		}
+	}
+
+	if s.ConsentFormNumber != nil {
+		if err := s.ConsentFormNumber.Validate(); err != nil {
+			return fmt.Errorf("CON.ConsentFormNumber: %w", err)
+		}
+	}
+
+	for _, item := range s.ConsentText {
+		if string(item) == "" {
+			return fmt.Errorf("CON.ConsentText item is empty")
+		}
+	}
+
+	for _, item := range s.SubjectSpecificConsentText {
+		if string(item) == "" {
+			return fmt.Errorf("CON.SubjectSpecificConsentText item is empty")
+		}
+	}
+
+	for _, item := range s.ConsentBackground {
+		if string(item) == "" {
+			return fmt.Errorf("CON.ConsentBackground item is empty")
+		}
+	}
+
+	for _, item := range s.SubjectSpecificConsentBackground {
+		if string(item) == "" {
+			return fmt.Errorf("CON.SubjectSpecificConsentBackground item is empty")
+		}
+	}
+
+	for _, item := range s.ConsenterImposedLimitations {
+		if string(item) == "" {
+			return fmt.Errorf("CON.ConsenterImposedLimitations item is empty")
+		}
+	}
+
+	if s.ConsentMode != nil {
+		if err := s.ConsentMode.Validate(); err != nil {
+			return fmt.Errorf("CON.ConsentMode: %w", err)
+		}
+	}
+
+	if s.ConsentStatus == nil {
+		return fmt.Errorf("CON.ConsentStatus is required")
+	}
+	if s.ConsentStatus != nil {
+		if err := s.ConsentStatus.Validate(); err != nil {
+			return fmt.Errorf("CON.ConsentStatus: %w", err)
+		}
+	}
+
+	if s.ConsentDiscussionDateTime != nil {
+		if err := s.ConsentDiscussionDateTime.Validate(); err != nil {
+			return fmt.Errorf("CON.ConsentDiscussionDateTime: %w", err)
+		}
+	}
+
+	if s.ConsentDecisionDateTime != nil {
+		if err := s.ConsentDecisionDateTime.Validate(); err != nil {
+			return fmt.Errorf("CON.ConsentDecisionDateTime: %w", err)
+		}
+	}
+
+	if s.ConsentEffectiveDateTime != nil {
+		if err := s.ConsentEffectiveDateTime.Validate(); err != nil {
+			return fmt.Errorf("CON.ConsentEffectiveDateTime: %w", err)
+		}
+	}
+
+	if s.ConsentEndDateTime != nil {
+		if err := s.ConsentEndDateTime.Validate(); err != nil {
+			return fmt.Errorf("CON.ConsentEndDateTime: %w", err)
+		}
+	}
+
+	if s.ConsentBypassReason != nil {
+		if err := s.ConsentBypassReason.Validate(); err != nil {
+			return fmt.Errorf("CON.ConsentBypassReason: %w", err)
+		}
+	}
+
+	if s.ConsentNonDisclosureReason != nil {
+		if err := s.ConsentNonDisclosureReason.Validate(); err != nil {
+			return fmt.Errorf("CON.ConsentNonDisclosureReason: %w", err)
+		}
+	}
+
+	if s.NonSubjectConsenterReason != nil {
+		if err := s.NonSubjectConsenterReason.Validate(); err != nil {
+			return fmt.Errorf("CON.NonSubjectConsenterReason: %w", err)
+		}
+	}
+
+	if len(s.ConsenterID) == 0 {
+		return fmt.Errorf("CON.ConsenterID is required")
+	}
+	for _, item := range s.ConsenterID {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("CON.ConsenterID: %w", err)
+		}
+	}
+
+	if len(s.RelationshipToSubjectTable) == 0 {
+		return fmt.Errorf("CON.RelationshipToSubjectTable is required")
+	}
+	for _, item := range s.RelationshipToSubjectTable {
+		if string(item) == "" {
+			return fmt.Errorf("CON.RelationshipToSubjectTable item is empty")
+		}
+	}
+	return nil
+}
+
+func (s *CON) SetSetIDCON(v *SI) *CON {
+	s.SetIDCON = v
+	return s
+}
+
+func (s *CON) SetConsentType(v *CWE) *CON {
+	s.ConsentType = v
+	return s
+}
+
+func (s *CON) SetConsentFormID(v *ST) *CON {
+	s.ConsentFormID = v
+	return s
+}
+
+func (s *CON) SetConsentFormNumber(v *EI) *CON {
+	s.ConsentFormNumber = v
+	return s
+}
+
+func (s *CON) AddConsentText(v FT) *CON {
+	s.ConsentText = append(s.ConsentText, v)
+	return s
+}
+
+func (s *CON) AddSubjectSpecificConsentText(v FT) *CON {
+	s.SubjectSpecificConsentText = append(s.SubjectSpecificConsentText, v)
+	return s
+}
+
+func (s *CON) AddConsentBackground(v FT) *CON {
+	s.ConsentBackground = append(s.ConsentBackground, v)
+	return s
+}
+
+func (s *CON) AddSubjectSpecificConsentBackground(v FT) *CON {
+	s.SubjectSpecificConsentBackground = append(s.SubjectSpecificConsentBackground, v)
+	return s
+}
+
+func (s *CON) AddConsenterImposedLimitations(v FT) *CON {
+	s.ConsenterImposedLimitations = append(s.ConsenterImposedLimitations, v)
+	return s
+}
+
+func (s *CON) SetConsentMode(v *CNE) *CON {
+	s.ConsentMode = v
+	return s
+}
+
+func (s *CON) SetConsentStatus(v *CNE) *CON {
+	s.ConsentStatus = v
+	return s
+}
+
+func (s *CON) SetConsentDiscussionDateTime(v *TS) *CON {
+	s.ConsentDiscussionDateTime = v
+	return s
+}
+
+func (s *CON) SetConsentDecisionDateTime(v *TS) *CON {
+	s.ConsentDecisionDateTime = v
+	return s
+}
+
+func (s *CON) SetConsentEffectiveDateTime(v *TS) *CON {
+	s.ConsentEffectiveDateTime = v
+	return s
+}
+
+func (s *CON) SetConsentEndDateTime(v *TS) *CON {
+	s.ConsentEndDateTime = v
+	return s
+}
+
+func (s *CON) SetSubjectCompetenceIndicator(v *ID) *CON {
+	s.SubjectCompetenceIndicator = v
+	return s
+}
+
+func (s *CON) SetTranslatorAssistanceIndicator(v *ID) *CON {
+	s.TranslatorAssistanceIndicator = v
+	return s
+}
+
+func (s *CON) SetLanguageTranslatedTo(v *ID) *CON {
+	s.LanguageTranslatedTo = v
+	return s
+}
+
+func (s *CON) SetInformationalMaterialSuppliedIndicator(v *ID) *CON {
+	s.InformationalMaterialSuppliedIndicator = v
+	return s
+}
+
+func (s *CON) SetConsentBypassReason(v *CWE) *CON {
+	s.ConsentBypassReason = v
+	return s
+}
+
+func (s *CON) SetConsentDisclosureLevel(v *ID) *CON {
+	s.ConsentDisclosureLevel = v
+	return s
+}
+
+func (s *CON) SetConsentNonDisclosureReason(v *CWE) *CON {
+	s.ConsentNonDisclosureReason = v
+	return s
+}
+
+func (s *CON) SetNonSubjectConsenterReason(v *CWE) *CON {
+	s.NonSubjectConsenterReason = v
+	return s
+}
+
+func (s *CON) AddConsenterID(v XPN) *CON {
+	s.ConsenterID = append(s.ConsenterID, v)
+	return s
+}
+
+func (s *CON) AddRelationshipToSubjectTable(v IS) *CON {
+	s.RelationshipToSubjectTable = append(s.RelationshipToSubjectTable, v)
+	return s
 }
 
 // CSP - Clinical Study Phase
 // The CSP segment contains information on a patients status for a particular phase of the study. This segment is optional and is useful when a study has different evaluation intervals within it. (See Section 0, HL7 Attribute Table - CSR - Clinical Study RegistrationPhase of a Clinical Trial. The CSP segment is implemented on a study-specific basis for messaging purposes. The fact that the patient has entered a phase of the study that represents a certain treatment approach may need to be messaged to other systems, like pharmacy, nursing, or order entry. It is also important to sponsors and data management centers for tracking patient progress through the study and monitoring the data schedule defined for each phase. It may subsume OBR and OBX segments that follow it to indicate that these data describe the phase.
 type CSP struct {
-	StudyPhaseIdentifier    CE `hl7:"1,required"`
-	DateTimeStudyPhaseBegan TS `hl7:"2,required"`
-	DateTimeStudyPhaseEnded TS `hl7:"3"`
-	StudyPhaseEvaluability  CE `hl7:"4"`
+	StudyPhaseIdentifier    *CE `hl7:"1,required"`
+	DateTimeStudyPhaseBegan *TS `hl7:"2,required"`
+	DateTimeStudyPhaseEnded *TS `hl7:"3"`
+	StudyPhaseEvaluability  *CE `hl7:"4"`
+}
+
+func NewCSP() *CSP {
+	return &CSP{}
+}
+
+func (s *CSP) Validate() error {
+
+	if s.StudyPhaseIdentifier == nil {
+		return fmt.Errorf("CSP.StudyPhaseIdentifier is required")
+	}
+	if s.StudyPhaseIdentifier != nil {
+		if err := s.StudyPhaseIdentifier.Validate(); err != nil {
+			return fmt.Errorf("CSP.StudyPhaseIdentifier: %w", err)
+		}
+	}
+
+	if s.DateTimeStudyPhaseBegan == nil {
+		return fmt.Errorf("CSP.DateTimeStudyPhaseBegan is required")
+	}
+	if s.DateTimeStudyPhaseBegan != nil {
+		if err := s.DateTimeStudyPhaseBegan.Validate(); err != nil {
+			return fmt.Errorf("CSP.DateTimeStudyPhaseBegan: %w", err)
+		}
+	}
+
+	if s.DateTimeStudyPhaseEnded != nil {
+		if err := s.DateTimeStudyPhaseEnded.Validate(); err != nil {
+			return fmt.Errorf("CSP.DateTimeStudyPhaseEnded: %w", err)
+		}
+	}
+
+	if s.StudyPhaseEvaluability != nil {
+		if err := s.StudyPhaseEvaluability.Validate(); err != nil {
+			return fmt.Errorf("CSP.StudyPhaseEvaluability: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *CSP) SetStudyPhaseIdentifier(v *CE) *CSP {
+	s.StudyPhaseIdentifier = v
+	return s
+}
+
+func (s *CSP) SetDateTimeStudyPhaseBegan(v *TS) *CSP {
+	s.DateTimeStudyPhaseBegan = v
+	return s
+}
+
+func (s *CSP) SetDateTimeStudyPhaseEnded(v *TS) *CSP {
+	s.DateTimeStudyPhaseEnded = v
+	return s
+}
+
+func (s *CSP) SetStudyPhaseEvaluability(v *CE) *CSP {
+	s.StudyPhaseEvaluability = v
+	return s
 }
 
 // CSR - Clinical Study Registration
 // The CSR segment will contain fundamental administrative and regulatory information required to document a patients enrollment on a clinical trial. This segment is all that is required if one needs to message another system that an enrollment has taken place, i.e., from clinical trials to pharmacy, accounting, or order entry systems. The CSR segment may also be used to identify that OBR, OBX, RXA, and RXR segments that follow represent data applicable to the identified study.
 type CSR struct {
-	SponsorStudyID                     EI    `hl7:"1,required"`
-	AlternateStudyID                   EI    `hl7:"2"`
-	InstitutionRegisteringThePatient   CE    `hl7:"3"`
-	SponsorPatientID                   CX    `hl7:"4,required"`
-	AlternatePatientIDCSR              CX    `hl7:"5"`
-	DateTimeOfPatientStudyRegistration TS    `hl7:"6,required"`
+	SponsorStudyID                     *EI   `hl7:"1,required"`
+	AlternateStudyID                   *EI   `hl7:"2"`
+	InstitutionRegisteringThePatient   *CE   `hl7:"3"`
+	SponsorPatientID                   *CX   `hl7:"4,required"`
+	AlternatePatientIDCSR              *CX   `hl7:"5"`
+	DateTimeOfPatientStudyRegistration *TS   `hl7:"6,required"`
 	PersonPerformingStudyRegistration  []XCN `hl7:"7"`
 	StudyAuthorizingProvider           []XCN `hl7:"8,required"`
-	DateTimePatientStudyConsentSigned  TS    `hl7:"9"`
-	PatientStudyEligibilityStatus      CE    `hl7:"10"`
+	DateTimePatientStudyConsentSigned  *TS   `hl7:"9"`
+	PatientStudyEligibilityStatus      *CE   `hl7:"10"`
 	StudyRandomizationDateTime         []TS  `hl7:"11"`
 	RandomizedStudyArm                 []CE  `hl7:"12"`
 	StratumForStudyRandomization       []CE  `hl7:"13"`
-	PatientEvaluabilityStatus          CE    `hl7:"14"`
-	DateTimeEndedStudy                 TS    `hl7:"15"`
-	ReasonEndedStudy                   CE    `hl7:"16"`
+	PatientEvaluabilityStatus          *CE   `hl7:"14"`
+	DateTimeEndedStudy                 *TS   `hl7:"15"`
+	ReasonEndedStudy                   *CE   `hl7:"16"`
+}
+
+func NewCSR() *CSR {
+	return &CSR{}
+}
+
+func (s *CSR) Validate() error {
+
+	if s.SponsorStudyID == nil {
+		return fmt.Errorf("CSR.SponsorStudyID is required")
+	}
+	if s.SponsorStudyID != nil {
+		if err := s.SponsorStudyID.Validate(); err != nil {
+			return fmt.Errorf("CSR.SponsorStudyID: %w", err)
+		}
+	}
+
+	if s.AlternateStudyID != nil {
+		if err := s.AlternateStudyID.Validate(); err != nil {
+			return fmt.Errorf("CSR.AlternateStudyID: %w", err)
+		}
+	}
+
+	if s.InstitutionRegisteringThePatient != nil {
+		if err := s.InstitutionRegisteringThePatient.Validate(); err != nil {
+			return fmt.Errorf("CSR.InstitutionRegisteringThePatient: %w", err)
+		}
+	}
+
+	if s.SponsorPatientID == nil {
+		return fmt.Errorf("CSR.SponsorPatientID is required")
+	}
+	if s.SponsorPatientID != nil {
+		if err := s.SponsorPatientID.Validate(); err != nil {
+			return fmt.Errorf("CSR.SponsorPatientID: %w", err)
+		}
+	}
+
+	if s.AlternatePatientIDCSR != nil {
+		if err := s.AlternatePatientIDCSR.Validate(); err != nil {
+			return fmt.Errorf("CSR.AlternatePatientIDCSR: %w", err)
+		}
+	}
+
+	if s.DateTimeOfPatientStudyRegistration == nil {
+		return fmt.Errorf("CSR.DateTimeOfPatientStudyRegistration is required")
+	}
+	if s.DateTimeOfPatientStudyRegistration != nil {
+		if err := s.DateTimeOfPatientStudyRegistration.Validate(); err != nil {
+			return fmt.Errorf("CSR.DateTimeOfPatientStudyRegistration: %w", err)
+		}
+	}
+
+	for _, item := range s.PersonPerformingStudyRegistration {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("CSR.PersonPerformingStudyRegistration: %w", err)
+		}
+	}
+
+	if len(s.StudyAuthorizingProvider) == 0 {
+		return fmt.Errorf("CSR.StudyAuthorizingProvider is required")
+	}
+	for _, item := range s.StudyAuthorizingProvider {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("CSR.StudyAuthorizingProvider: %w", err)
+		}
+	}
+
+	if s.DateTimePatientStudyConsentSigned != nil {
+		if err := s.DateTimePatientStudyConsentSigned.Validate(); err != nil {
+			return fmt.Errorf("CSR.DateTimePatientStudyConsentSigned: %w", err)
+		}
+	}
+
+	if s.PatientStudyEligibilityStatus != nil {
+		if err := s.PatientStudyEligibilityStatus.Validate(); err != nil {
+			return fmt.Errorf("CSR.PatientStudyEligibilityStatus: %w", err)
+		}
+	}
+
+	for _, item := range s.StudyRandomizationDateTime {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("CSR.StudyRandomizationDateTime: %w", err)
+		}
+	}
+
+	for _, item := range s.RandomizedStudyArm {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("CSR.RandomizedStudyArm: %w", err)
+		}
+	}
+
+	for _, item := range s.StratumForStudyRandomization {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("CSR.StratumForStudyRandomization: %w", err)
+		}
+	}
+
+	if s.PatientEvaluabilityStatus != nil {
+		if err := s.PatientEvaluabilityStatus.Validate(); err != nil {
+			return fmt.Errorf("CSR.PatientEvaluabilityStatus: %w", err)
+		}
+	}
+
+	if s.DateTimeEndedStudy != nil {
+		if err := s.DateTimeEndedStudy.Validate(); err != nil {
+			return fmt.Errorf("CSR.DateTimeEndedStudy: %w", err)
+		}
+	}
+
+	if s.ReasonEndedStudy != nil {
+		if err := s.ReasonEndedStudy.Validate(); err != nil {
+			return fmt.Errorf("CSR.ReasonEndedStudy: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *CSR) SetSponsorStudyID(v *EI) *CSR {
+	s.SponsorStudyID = v
+	return s
+}
+
+func (s *CSR) SetAlternateStudyID(v *EI) *CSR {
+	s.AlternateStudyID = v
+	return s
+}
+
+func (s *CSR) SetInstitutionRegisteringThePatient(v *CE) *CSR {
+	s.InstitutionRegisteringThePatient = v
+	return s
+}
+
+func (s *CSR) SetSponsorPatientID(v *CX) *CSR {
+	s.SponsorPatientID = v
+	return s
+}
+
+func (s *CSR) SetAlternatePatientIDCSR(v *CX) *CSR {
+	s.AlternatePatientIDCSR = v
+	return s
+}
+
+func (s *CSR) SetDateTimeOfPatientStudyRegistration(v *TS) *CSR {
+	s.DateTimeOfPatientStudyRegistration = v
+	return s
+}
+
+func (s *CSR) AddPersonPerformingStudyRegistration(v XCN) *CSR {
+	s.PersonPerformingStudyRegistration = append(s.PersonPerformingStudyRegistration, v)
+	return s
+}
+
+func (s *CSR) AddStudyAuthorizingProvider(v XCN) *CSR {
+	s.StudyAuthorizingProvider = append(s.StudyAuthorizingProvider, v)
+	return s
+}
+
+func (s *CSR) SetDateTimePatientStudyConsentSigned(v *TS) *CSR {
+	s.DateTimePatientStudyConsentSigned = v
+	return s
+}
+
+func (s *CSR) SetPatientStudyEligibilityStatus(v *CE) *CSR {
+	s.PatientStudyEligibilityStatus = v
+	return s
+}
+
+func (s *CSR) AddStudyRandomizationDateTime(v TS) *CSR {
+	s.StudyRandomizationDateTime = append(s.StudyRandomizationDateTime, v)
+	return s
+}
+
+func (s *CSR) AddRandomizedStudyArm(v CE) *CSR {
+	s.RandomizedStudyArm = append(s.RandomizedStudyArm, v)
+	return s
+}
+
+func (s *CSR) AddStratumForStudyRandomization(v CE) *CSR {
+	s.StratumForStudyRandomization = append(s.StratumForStudyRandomization, v)
+	return s
+}
+
+func (s *CSR) SetPatientEvaluabilityStatus(v *CE) *CSR {
+	s.PatientEvaluabilityStatus = v
+	return s
+}
+
+func (s *CSR) SetDateTimeEndedStudy(v *TS) *CSR {
+	s.DateTimeEndedStudy = v
+	return s
+}
+
+func (s *CSR) SetReasonEndedStudy(v *CE) *CSR {
+	s.ReasonEndedStudy = v
+	return s
 }
 
 // CSS - Clinical Study Data Schedule Segment
 // The Clinical Study Data Schedule (CSS) segment is optional depending on whether messaging of study data needs to be linked to the scheduled data time points for the study. (See Section 7.6.1.3, data schedule.) The CSS segment enables communication of data schedules and adherence that ranges from the basic to the elaborate. Use of the segment must be planned for each implementation. Each CSS segment will subsume observation and drug administration segments that follow, indicating that they satisfy this scheduled time point.
 type CSS struct {
-	StudyScheduledTimePoint        CE   `hl7:"1,required"`
-	StudyScheduledPatientTimePoint TS   `hl7:"2"`
+	StudyScheduledTimePoint        *CE  `hl7:"1,required"`
+	StudyScheduledPatientTimePoint *TS  `hl7:"2"`
 	StudyQualityControlCodes       []CE `hl7:"3"`
+}
+
+func NewCSS() *CSS {
+	return &CSS{}
+}
+
+func (s *CSS) Validate() error {
+
+	if s.StudyScheduledTimePoint == nil {
+		return fmt.Errorf("CSS.StudyScheduledTimePoint is required")
+	}
+	if s.StudyScheduledTimePoint != nil {
+		if err := s.StudyScheduledTimePoint.Validate(); err != nil {
+			return fmt.Errorf("CSS.StudyScheduledTimePoint: %w", err)
+		}
+	}
+
+	if s.StudyScheduledPatientTimePoint != nil {
+		if err := s.StudyScheduledPatientTimePoint.Validate(); err != nil {
+			return fmt.Errorf("CSS.StudyScheduledPatientTimePoint: %w", err)
+		}
+	}
+
+	for _, item := range s.StudyQualityControlCodes {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("CSS.StudyQualityControlCodes: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *CSS) SetStudyScheduledTimePoint(v *CE) *CSS {
+	s.StudyScheduledTimePoint = v
+	return s
+}
+
+func (s *CSS) SetStudyScheduledPatientTimePoint(v *TS) *CSS {
+	s.StudyScheduledPatientTimePoint = v
+	return s
+}
+
+func (s *CSS) AddStudyQualityControlCodes(v CE) *CSS {
+	s.StudyQualityControlCodes = append(s.StudyQualityControlCodes, v)
+	return s
 }
 
 // CTD - Contact Data
@@ -472,122 +3880,856 @@ type CTD struct {
 	ContactRole                     []CE  `hl7:"1,required"`
 	ContactName                     []XPN `hl7:"2"`
 	ContactAddress                  []XAD `hl7:"3"`
-	ContactLocation                 PL    `hl7:"4"`
+	ContactLocation                 *PL   `hl7:"4"`
 	ContactCommunicationInformation []XTN `hl7:"5"`
-	PreferredMethodOfContact        CE    `hl7:"6"`
+	PreferredMethodOfContact        *CE   `hl7:"6"`
 	ContactIdentifiers              []PLN `hl7:"7"`
+}
+
+func NewCTD() *CTD {
+	return &CTD{}
+}
+
+func (s *CTD) Validate() error {
+
+	if len(s.ContactRole) == 0 {
+		return fmt.Errorf("CTD.ContactRole is required")
+	}
+	for _, item := range s.ContactRole {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("CTD.ContactRole: %w", err)
+		}
+	}
+
+	for _, item := range s.ContactName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("CTD.ContactName: %w", err)
+		}
+	}
+
+	for _, item := range s.ContactAddress {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("CTD.ContactAddress: %w", err)
+		}
+	}
+
+	if s.ContactLocation != nil {
+		if err := s.ContactLocation.Validate(); err != nil {
+			return fmt.Errorf("CTD.ContactLocation: %w", err)
+		}
+	}
+
+	for _, item := range s.ContactCommunicationInformation {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("CTD.ContactCommunicationInformation: %w", err)
+		}
+	}
+
+	if s.PreferredMethodOfContact != nil {
+		if err := s.PreferredMethodOfContact.Validate(); err != nil {
+			return fmt.Errorf("CTD.PreferredMethodOfContact: %w", err)
+		}
+	}
+
+	for _, item := range s.ContactIdentifiers {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("CTD.ContactIdentifiers: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *CTD) AddContactRole(v CE) *CTD {
+	s.ContactRole = append(s.ContactRole, v)
+	return s
+}
+
+func (s *CTD) AddContactName(v XPN) *CTD {
+	s.ContactName = append(s.ContactName, v)
+	return s
+}
+
+func (s *CTD) AddContactAddress(v XAD) *CTD {
+	s.ContactAddress = append(s.ContactAddress, v)
+	return s
+}
+
+func (s *CTD) SetContactLocation(v *PL) *CTD {
+	s.ContactLocation = v
+	return s
+}
+
+func (s *CTD) AddContactCommunicationInformation(v XTN) *CTD {
+	s.ContactCommunicationInformation = append(s.ContactCommunicationInformation, v)
+	return s
+}
+
+func (s *CTD) SetPreferredMethodOfContact(v *CE) *CTD {
+	s.PreferredMethodOfContact = v
+	return s
+}
+
+func (s *CTD) AddContactIdentifiers(v PLN) *CTD {
+	s.ContactIdentifiers = append(s.ContactIdentifiers, v)
+	return s
 }
 
 // CTI - Clinical Trial Identification
 // The CTI segment is an optional segment that contains information to identify the clinical trial, phase and time point with which an order or result is associated.
 type CTI struct {
-	SponsorStudyID          EI `hl7:"1,required"`
-	StudyPhaseIdentifier    CE `hl7:"2"`
-	StudyScheduledTimePoint CE `hl7:"3"`
+	SponsorStudyID          *EI `hl7:"1,required"`
+	StudyPhaseIdentifier    *CE `hl7:"2"`
+	StudyScheduledTimePoint *CE `hl7:"3"`
+}
+
+func NewCTI() *CTI {
+	return &CTI{}
+}
+
+func (s *CTI) Validate() error {
+
+	if s.SponsorStudyID == nil {
+		return fmt.Errorf("CTI.SponsorStudyID is required")
+	}
+	if s.SponsorStudyID != nil {
+		if err := s.SponsorStudyID.Validate(); err != nil {
+			return fmt.Errorf("CTI.SponsorStudyID: %w", err)
+		}
+	}
+
+	if s.StudyPhaseIdentifier != nil {
+		if err := s.StudyPhaseIdentifier.Validate(); err != nil {
+			return fmt.Errorf("CTI.StudyPhaseIdentifier: %w", err)
+		}
+	}
+
+	if s.StudyScheduledTimePoint != nil {
+		if err := s.StudyScheduledTimePoint.Validate(); err != nil {
+			return fmt.Errorf("CTI.StudyScheduledTimePoint: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *CTI) SetSponsorStudyID(v *EI) *CTI {
+	s.SponsorStudyID = v
+	return s
+}
+
+func (s *CTI) SetStudyPhaseIdentifier(v *CE) *CTI {
+	s.StudyPhaseIdentifier = v
+	return s
+}
+
+func (s *CTI) SetStudyScheduledTimePoint(v *CE) *CTI {
+	s.StudyScheduledTimePoint = v
+	return s
 }
 
 // DB1 - Disability
 // The disability segment contains information related to the disability of a person. This segment was created instead of adding disability attributes to each segment that contains a person (to which disability may apply). This is an optional segment that can be used to send disability information about a person already defined by the Patient Administration Chapter. The disabled person code and identifier allow for the association of the disability information to the person.
 type DB1 struct {
-	SetIDDB1                   SI   `hl7:"1,required"`
-	DisabledPersonCode         IS   `hl7:"2"`
+	SetIDDB1                   *SI  `hl7:"1,required"`
+	DisabledPersonCode         *IS  `hl7:"2"`
 	DisabledPersonIdentifier   []CX `hl7:"3"`
-	DisabledIndicator          ID   `hl7:"4"`
-	DisabilityStartDate        DT   `hl7:"5"`
-	DisabilityEndDate          DT   `hl7:"6"`
-	DisabilityReturnToWorkDate DT   `hl7:"7"`
-	DisabilityUnableToWorkDate DT   `hl7:"8"`
+	DisabledIndicator          *ID  `hl7:"4"`
+	DisabilityStartDate        *DT  `hl7:"5"`
+	DisabilityEndDate          *DT  `hl7:"6"`
+	DisabilityReturnToWorkDate *DT  `hl7:"7"`
+	DisabilityUnableToWorkDate *DT  `hl7:"8"`
+}
+
+func NewDB1() *DB1 {
+	return &DB1{}
+}
+
+func (s *DB1) Validate() error {
+
+	if s.SetIDDB1 == nil {
+		return fmt.Errorf("DB1.SetIDDB1 is required")
+	}
+	if string(*s.SetIDDB1) == "" {
+		return fmt.Errorf("DB1.SetIDDB1 is empty")
+	}
+
+	for _, item := range s.DisabledPersonIdentifier {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("DB1.DisabledPersonIdentifier: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *DB1) SetSetIDDB1(v *SI) *DB1 {
+	s.SetIDDB1 = v
+	return s
+}
+
+func (s *DB1) SetDisabledPersonCode(v *IS) *DB1 {
+	s.DisabledPersonCode = v
+	return s
+}
+
+func (s *DB1) AddDisabledPersonIdentifier(v CX) *DB1 {
+	s.DisabledPersonIdentifier = append(s.DisabledPersonIdentifier, v)
+	return s
+}
+
+func (s *DB1) SetDisabledIndicator(v *ID) *DB1 {
+	s.DisabledIndicator = v
+	return s
+}
+
+func (s *DB1) SetDisabilityStartDate(v *DT) *DB1 {
+	s.DisabilityStartDate = v
+	return s
+}
+
+func (s *DB1) SetDisabilityEndDate(v *DT) *DB1 {
+	s.DisabilityEndDate = v
+	return s
+}
+
+func (s *DB1) SetDisabilityReturnToWorkDate(v *DT) *DB1 {
+	s.DisabilityReturnToWorkDate = v
+	return s
+}
+
+func (s *DB1) SetDisabilityUnableToWorkDate(v *DT) *DB1 {
+	s.DisabilityUnableToWorkDate = v
+	return s
 }
 
 // DG1 - Diagnosis
 // The DG1 segment contains patient diagnosis information of various types, for example, admitting, primary, etc. The DG1 segment is used to send multiple diagnoses (for example, for medical records encoding). It is also used when the FT1-19 - Diagnosis Code - FT1 does not provide sufficient information for a billing system. This diagnosis coding should be distinguished from the clinical problem segment used by caregivers to manage the patient (see Chapter 12, Patient Care). Coding methodologies are also defined.
 type DG1 struct {
-	SetIDDG1                SI    `hl7:"1,required"`
-	DiagnosisCodingMethod   ID    `hl7:"2"`
-	DiagnosisCodeDG1        CE    `hl7:"3"`
-	DiagnosisDescription    ST    `hl7:"4"`
-	DiagnosisDateTime       TS    `hl7:"5"`
-	DiagnosisType           IS    `hl7:"6,required"`
-	MajorDiagnosticCategory CE    `hl7:"7"`
-	DiagnosticRelatedGroup  CE    `hl7:"8"`
-	DRGApprovalIndicator    ID    `hl7:"9"`
-	DRGGrouperReviewCode    IS    `hl7:"10"`
-	OutlierType             CE    `hl7:"11"`
-	OutlierDays             NM    `hl7:"12"`
-	OutlierCost             CP    `hl7:"13"`
-	GrouperVersionAndType   ST    `hl7:"14"`
-	DiagnosisPriority       ID    `hl7:"15"`
+	SetIDDG1                *SI   `hl7:"1,required"`
+	DiagnosisCodingMethod   *ID   `hl7:"2"`
+	DiagnosisCodeDG1        *CE   `hl7:"3"`
+	DiagnosisDescription    *ST   `hl7:"4"`
+	DiagnosisDateTime       *TS   `hl7:"5"`
+	DiagnosisType           *IS   `hl7:"6,required"`
+	MajorDiagnosticCategory *CE   `hl7:"7"`
+	DiagnosticRelatedGroup  *CE   `hl7:"8"`
+	DRGApprovalIndicator    *ID   `hl7:"9"`
+	DRGGrouperReviewCode    *IS   `hl7:"10"`
+	OutlierType             *CE   `hl7:"11"`
+	OutlierDays             *NM   `hl7:"12"`
+	OutlierCost             *CP   `hl7:"13"`
+	GrouperVersionAndType   *ST   `hl7:"14"`
+	DiagnosisPriority       *ID   `hl7:"15"`
 	DiagnosingClinician     []XCN `hl7:"16"`
-	DiagnosisClassification IS    `hl7:"17"`
-	ConfidentialIndicator   ID    `hl7:"18"`
-	AttestationDateTime     TS    `hl7:"19"`
-	DiagnosisIdentifier     EI    `hl7:"20"`
-	DiagnosisActionCode     ID    `hl7:"21"`
+	DiagnosisClassification *IS   `hl7:"17"`
+	ConfidentialIndicator   *ID   `hl7:"18"`
+	AttestationDateTime     *TS   `hl7:"19"`
+	DiagnosisIdentifier     *EI   `hl7:"20"`
+	DiagnosisActionCode     *ID   `hl7:"21"`
+}
+
+func NewDG1() *DG1 {
+	return &DG1{}
+}
+
+func (s *DG1) Validate() error {
+
+	if s.SetIDDG1 == nil {
+		return fmt.Errorf("DG1.SetIDDG1 is required")
+	}
+	if string(*s.SetIDDG1) == "" {
+		return fmt.Errorf("DG1.SetIDDG1 is empty")
+	}
+
+	if s.DiagnosisCodeDG1 != nil {
+		if err := s.DiagnosisCodeDG1.Validate(); err != nil {
+			return fmt.Errorf("DG1.DiagnosisCodeDG1: %w", err)
+		}
+	}
+
+	if s.DiagnosisDateTime != nil {
+		if err := s.DiagnosisDateTime.Validate(); err != nil {
+			return fmt.Errorf("DG1.DiagnosisDateTime: %w", err)
+		}
+	}
+
+	if s.DiagnosisType == nil {
+		return fmt.Errorf("DG1.DiagnosisType is required")
+	}
+	if string(*s.DiagnosisType) == "" {
+		return fmt.Errorf("DG1.DiagnosisType is empty")
+	}
+
+	if s.MajorDiagnosticCategory != nil {
+		if err := s.MajorDiagnosticCategory.Validate(); err != nil {
+			return fmt.Errorf("DG1.MajorDiagnosticCategory: %w", err)
+		}
+	}
+
+	if s.DiagnosticRelatedGroup != nil {
+		if err := s.DiagnosticRelatedGroup.Validate(); err != nil {
+			return fmt.Errorf("DG1.DiagnosticRelatedGroup: %w", err)
+		}
+	}
+
+	if s.OutlierType != nil {
+		if err := s.OutlierType.Validate(); err != nil {
+			return fmt.Errorf("DG1.OutlierType: %w", err)
+		}
+	}
+
+	if s.OutlierCost != nil {
+		if err := s.OutlierCost.Validate(); err != nil {
+			return fmt.Errorf("DG1.OutlierCost: %w", err)
+		}
+	}
+
+	for _, item := range s.DiagnosingClinician {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("DG1.DiagnosingClinician: %w", err)
+		}
+	}
+
+	if s.AttestationDateTime != nil {
+		if err := s.AttestationDateTime.Validate(); err != nil {
+			return fmt.Errorf("DG1.AttestationDateTime: %w", err)
+		}
+	}
+
+	if s.DiagnosisIdentifier != nil {
+		if err := s.DiagnosisIdentifier.Validate(); err != nil {
+			return fmt.Errorf("DG1.DiagnosisIdentifier: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *DG1) SetSetIDDG1(v *SI) *DG1 {
+	s.SetIDDG1 = v
+	return s
+}
+
+func (s *DG1) SetDiagnosisCodingMethod(v *ID) *DG1 {
+	s.DiagnosisCodingMethod = v
+	return s
+}
+
+func (s *DG1) SetDiagnosisCodeDG1(v *CE) *DG1 {
+	s.DiagnosisCodeDG1 = v
+	return s
+}
+
+func (s *DG1) SetDiagnosisDescription(v *ST) *DG1 {
+	s.DiagnosisDescription = v
+	return s
+}
+
+func (s *DG1) SetDiagnosisDateTime(v *TS) *DG1 {
+	s.DiagnosisDateTime = v
+	return s
+}
+
+func (s *DG1) SetDiagnosisType(v *IS) *DG1 {
+	s.DiagnosisType = v
+	return s
+}
+
+func (s *DG1) SetMajorDiagnosticCategory(v *CE) *DG1 {
+	s.MajorDiagnosticCategory = v
+	return s
+}
+
+func (s *DG1) SetDiagnosticRelatedGroup(v *CE) *DG1 {
+	s.DiagnosticRelatedGroup = v
+	return s
+}
+
+func (s *DG1) SetDRGApprovalIndicator(v *ID) *DG1 {
+	s.DRGApprovalIndicator = v
+	return s
+}
+
+func (s *DG1) SetDRGGrouperReviewCode(v *IS) *DG1 {
+	s.DRGGrouperReviewCode = v
+	return s
+}
+
+func (s *DG1) SetOutlierType(v *CE) *DG1 {
+	s.OutlierType = v
+	return s
+}
+
+func (s *DG1) SetOutlierDays(v *NM) *DG1 {
+	s.OutlierDays = v
+	return s
+}
+
+func (s *DG1) SetOutlierCost(v *CP) *DG1 {
+	s.OutlierCost = v
+	return s
+}
+
+func (s *DG1) SetGrouperVersionAndType(v *ST) *DG1 {
+	s.GrouperVersionAndType = v
+	return s
+}
+
+func (s *DG1) SetDiagnosisPriority(v *ID) *DG1 {
+	s.DiagnosisPriority = v
+	return s
+}
+
+func (s *DG1) AddDiagnosingClinician(v XCN) *DG1 {
+	s.DiagnosingClinician = append(s.DiagnosingClinician, v)
+	return s
+}
+
+func (s *DG1) SetDiagnosisClassification(v *IS) *DG1 {
+	s.DiagnosisClassification = v
+	return s
+}
+
+func (s *DG1) SetConfidentialIndicator(v *ID) *DG1 {
+	s.ConfidentialIndicator = v
+	return s
+}
+
+func (s *DG1) SetAttestationDateTime(v *TS) *DG1 {
+	s.AttestationDateTime = v
+	return s
+}
+
+func (s *DG1) SetDiagnosisIdentifier(v *EI) *DG1 {
+	s.DiagnosisIdentifier = v
+	return s
+}
+
+func (s *DG1) SetDiagnosisActionCode(v *ID) *DG1 {
+	s.DiagnosisActionCode = v
+	return s
 }
 
 // DRG - Diagnosis Related Group
 // The DRG segment contains diagnoses-related grouping information of various types. The DRG segment is used to send the DRG information, for example, for billing and medical records encoding.
 type DRG struct {
-	DiagnosticRelatedGroup CE `hl7:"1"`
-	DRGAssignedDateTime    TS `hl7:"2"`
-	DRGApprovalIndicator   ID `hl7:"3"`
-	DRGGrouperReviewCode   IS `hl7:"4"`
-	OutlierType            CE `hl7:"5"`
-	OutlierDays            NM `hl7:"6"`
-	OutlierCost            CP `hl7:"7"`
-	DRGPayor               IS `hl7:"8"`
-	OutlierReimbursement   CP `hl7:"9"`
-	ConfidentialIndicator  ID `hl7:"10"`
-	DRGTransferType        IS `hl7:"11"`
+	DiagnosticRelatedGroup *CE `hl7:"1"`
+	DRGAssignedDateTime    *TS `hl7:"2"`
+	DRGApprovalIndicator   *ID `hl7:"3"`
+	DRGGrouperReviewCode   *IS `hl7:"4"`
+	OutlierType            *CE `hl7:"5"`
+	OutlierDays            *NM `hl7:"6"`
+	OutlierCost            *CP `hl7:"7"`
+	DRGPayor               *IS `hl7:"8"`
+	OutlierReimbursement   *CP `hl7:"9"`
+	ConfidentialIndicator  *ID `hl7:"10"`
+	DRGTransferType        *IS `hl7:"11"`
+}
+
+func NewDRG() *DRG {
+	return &DRG{}
+}
+
+func (s *DRG) Validate() error {
+
+	if s.DiagnosticRelatedGroup != nil {
+		if err := s.DiagnosticRelatedGroup.Validate(); err != nil {
+			return fmt.Errorf("DRG.DiagnosticRelatedGroup: %w", err)
+		}
+	}
+
+	if s.DRGAssignedDateTime != nil {
+		if err := s.DRGAssignedDateTime.Validate(); err != nil {
+			return fmt.Errorf("DRG.DRGAssignedDateTime: %w", err)
+		}
+	}
+
+	if s.OutlierType != nil {
+		if err := s.OutlierType.Validate(); err != nil {
+			return fmt.Errorf("DRG.OutlierType: %w", err)
+		}
+	}
+
+	if s.OutlierCost != nil {
+		if err := s.OutlierCost.Validate(); err != nil {
+			return fmt.Errorf("DRG.OutlierCost: %w", err)
+		}
+	}
+
+	if s.OutlierReimbursement != nil {
+		if err := s.OutlierReimbursement.Validate(); err != nil {
+			return fmt.Errorf("DRG.OutlierReimbursement: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *DRG) SetDiagnosticRelatedGroup(v *CE) *DRG {
+	s.DiagnosticRelatedGroup = v
+	return s
+}
+
+func (s *DRG) SetDRGAssignedDateTime(v *TS) *DRG {
+	s.DRGAssignedDateTime = v
+	return s
+}
+
+func (s *DRG) SetDRGApprovalIndicator(v *ID) *DRG {
+	s.DRGApprovalIndicator = v
+	return s
+}
+
+func (s *DRG) SetDRGGrouperReviewCode(v *IS) *DRG {
+	s.DRGGrouperReviewCode = v
+	return s
+}
+
+func (s *DRG) SetOutlierType(v *CE) *DRG {
+	s.OutlierType = v
+	return s
+}
+
+func (s *DRG) SetOutlierDays(v *NM) *DRG {
+	s.OutlierDays = v
+	return s
+}
+
+func (s *DRG) SetOutlierCost(v *CP) *DRG {
+	s.OutlierCost = v
+	return s
+}
+
+func (s *DRG) SetDRGPayor(v *IS) *DRG {
+	s.DRGPayor = v
+	return s
+}
+
+func (s *DRG) SetOutlierReimbursement(v *CP) *DRG {
+	s.OutlierReimbursement = v
+	return s
+}
+
+func (s *DRG) SetConfidentialIndicator(v *ID) *DRG {
+	s.ConfidentialIndicator = v
+	return s
+}
+
+func (s *DRG) SetDRGTransferType(v *IS) *DRG {
+	s.DRGTransferType = v
+	return s
 }
 
 // DSC - Continuation Pointer
 // The DSC segment is used in the continuation protocol.
 type DSC struct {
-	ContinuationPointer ST `hl7:"1"`
-	ContinuationStyle   ID `hl7:"2"`
+	ContinuationPointer *ST `hl7:"1"`
+	ContinuationStyle   *ID `hl7:"2"`
+}
+
+func NewDSC() *DSC {
+	return &DSC{}
+}
+
+func (s *DSC) Validate() error {
+
+	return nil
+}
+
+func (s *DSC) SetContinuationPointer(v *ST) *DSC {
+	s.ContinuationPointer = v
+	return s
+}
+
+func (s *DSC) SetContinuationStyle(v *ID) *DSC {
+	s.ContinuationStyle = v
+	return s
 }
 
 // DSP - Display Data
 // The DSP segment is used to contain data that has been preformatted by the sender for display. The semantic content of the data is lost; the data is simply treated as lines of text.
 type DSP struct {
-	SetIDDSP          SI `hl7:"1"`
-	DisplayLevel      SI `hl7:"2"`
-	DataLine          TX `hl7:"3,required"`
-	LogicalBreakPoint ST `hl7:"4"`
-	ResultID          TX `hl7:"5"`
+	SetIDDSP          *SI `hl7:"1"`
+	DisplayLevel      *SI `hl7:"2"`
+	DataLine          *TX `hl7:"3,required"`
+	LogicalBreakPoint *ST `hl7:"4"`
+	ResultID          *TX `hl7:"5"`
+}
+
+func NewDSP() *DSP {
+	return &DSP{}
+}
+
+func (s *DSP) Validate() error {
+
+	if s.DataLine == nil {
+		return fmt.Errorf("DSP.DataLine is required")
+	}
+	if string(*s.DataLine) == "" {
+		return fmt.Errorf("DSP.DataLine is empty")
+	}
+
+	return nil
+}
+
+func (s *DSP) SetSetIDDSP(v *SI) *DSP {
+	s.SetIDDSP = v
+	return s
+}
+
+func (s *DSP) SetDisplayLevel(v *SI) *DSP {
+	s.DisplayLevel = v
+	return s
+}
+
+func (s *DSP) SetDataLine(v *TX) *DSP {
+	s.DataLine = v
+	return s
+}
+
+func (s *DSP) SetLogicalBreakPoint(v *ST) *DSP {
+	s.LogicalBreakPoint = v
+	return s
+}
+
+func (s *DSP) SetResultID(v *TX) *DSP {
+	s.ResultID = v
+	return s
 }
 
 // ECD - Equipment Command
 // The equipment command segment contains the information required to notify the receiving component what is to happen.
 type ECD struct {
-	ReferenceCommandNumber  NM   `hl7:"1,required"`
-	RemoteControlCommand    CE   `hl7:"2,required"`
-	ResponseRequired        ID   `hl7:"3"`
-	RequestedCompletionTime TQ   `hl7:"4"`
+	ReferenceCommandNumber  *NM  `hl7:"1,required"`
+	RemoteControlCommand    *CE  `hl7:"2,required"`
+	ResponseRequired        *ID  `hl7:"3"`
+	RequestedCompletionTime *TQ  `hl7:"4"`
 	Parameters              []TX `hl7:"5"`
+}
+
+func NewECD() *ECD {
+	return &ECD{}
+}
+
+func (s *ECD) Validate() error {
+
+	if s.ReferenceCommandNumber == nil {
+		return fmt.Errorf("ECD.ReferenceCommandNumber is required")
+	}
+	if string(*s.ReferenceCommandNumber) == "" {
+		return fmt.Errorf("ECD.ReferenceCommandNumber is empty")
+	}
+
+	if s.RemoteControlCommand == nil {
+		return fmt.Errorf("ECD.RemoteControlCommand is required")
+	}
+	if s.RemoteControlCommand != nil {
+		if err := s.RemoteControlCommand.Validate(); err != nil {
+			return fmt.Errorf("ECD.RemoteControlCommand: %w", err)
+		}
+	}
+
+	if s.RequestedCompletionTime != nil {
+		if err := s.RequestedCompletionTime.Validate(); err != nil {
+			return fmt.Errorf("ECD.RequestedCompletionTime: %w", err)
+		}
+	}
+
+	for _, item := range s.Parameters {
+		if string(item) == "" {
+			return fmt.Errorf("ECD.Parameters item is empty")
+		}
+	}
+	return nil
+}
+
+func (s *ECD) SetReferenceCommandNumber(v *NM) *ECD {
+	s.ReferenceCommandNumber = v
+	return s
+}
+
+func (s *ECD) SetRemoteControlCommand(v *CE) *ECD {
+	s.RemoteControlCommand = v
+	return s
+}
+
+func (s *ECD) SetResponseRequired(v *ID) *ECD {
+	s.ResponseRequired = v
+	return s
+}
+
+func (s *ECD) SetRequestedCompletionTime(v *TQ) *ECD {
+	s.RequestedCompletionTime = v
+	return s
+}
+
+func (s *ECD) AddParameters(v TX) *ECD {
+	s.Parameters = append(s.Parameters, v)
+	return s
 }
 
 // ECR - Equipment Command Response
 // The equipment command response segment contains the receiving component's response to the previously received command.
 type ECR struct {
-	CommandResponse           CE   `hl7:"1,required"`
-	DateTimeCompleted         TS   `hl7:"2,required"`
+	CommandResponse           *CE  `hl7:"1,required"`
+	DateTimeCompleted         *TS  `hl7:"2,required"`
 	CommandResponseParameters []TX `hl7:"3"`
+}
+
+func NewECR() *ECR {
+	return &ECR{}
+}
+
+func (s *ECR) Validate() error {
+
+	if s.CommandResponse == nil {
+		return fmt.Errorf("ECR.CommandResponse is required")
+	}
+	if s.CommandResponse != nil {
+		if err := s.CommandResponse.Validate(); err != nil {
+			return fmt.Errorf("ECR.CommandResponse: %w", err)
+		}
+	}
+
+	if s.DateTimeCompleted == nil {
+		return fmt.Errorf("ECR.DateTimeCompleted is required")
+	}
+	if s.DateTimeCompleted != nil {
+		if err := s.DateTimeCompleted.Validate(); err != nil {
+			return fmt.Errorf("ECR.DateTimeCompleted: %w", err)
+		}
+	}
+
+	for _, item := range s.CommandResponseParameters {
+		if string(item) == "" {
+			return fmt.Errorf("ECR.CommandResponseParameters item is empty")
+		}
+	}
+	return nil
+}
+
+func (s *ECR) SetCommandResponse(v *CE) *ECR {
+	s.CommandResponse = v
+	return s
+}
+
+func (s *ECR) SetDateTimeCompleted(v *TS) *ECR {
+	s.DateTimeCompleted = v
+	return s
+}
+
+func (s *ECR) AddCommandResponseParameters(v TX) *ECR {
+	s.CommandResponseParameters = append(s.CommandResponseParameters, v)
+	return s
 }
 
 // EDU - Educational Detail
 // The EDU segment adds detailed educational information to the staff member identified by the STF segment. An EDU segment may optionally follow an STF segment. An EDU segment must always have been preceded by a corresponding STF segment.
 type EDU struct {
-	SetIDEDU                                    SI    `hl7:"1,required"`
-	AcademicDegree                              IS    `hl7:"2"`
-	AcademicDegreeProgramDateRange              DR    `hl7:"3"`
-	AcademicDegreeProgramParticipationDateRange DR    `hl7:"4"`
-	AcademicDegreeGrantedDate                   DT    `hl7:"5"`
-	School                                      XON   `hl7:"6"`
-	SchoolTypeCode                              CE    `hl7:"7"`
-	SchoolAddress                               XAD   `hl7:"8"`
+	SetIDEDU                                    *SI   `hl7:"1,required"`
+	AcademicDegree                              *IS   `hl7:"2"`
+	AcademicDegreeProgramDateRange              *DR   `hl7:"3"`
+	AcademicDegreeProgramParticipationDateRange *DR   `hl7:"4"`
+	AcademicDegreeGrantedDate                   *DT   `hl7:"5"`
+	School                                      *XON  `hl7:"6"`
+	SchoolTypeCode                              *CE   `hl7:"7"`
+	SchoolAddress                               *XAD  `hl7:"8"`
 	MajorFieldOfStudy                           []CWE `hl7:"9"`
+}
+
+func NewEDU() *EDU {
+	return &EDU{}
+}
+
+func (s *EDU) Validate() error {
+
+	if s.SetIDEDU == nil {
+		return fmt.Errorf("EDU.SetIDEDU is required")
+	}
+	if string(*s.SetIDEDU) == "" {
+		return fmt.Errorf("EDU.SetIDEDU is empty")
+	}
+
+	if s.AcademicDegreeProgramDateRange != nil {
+		if err := s.AcademicDegreeProgramDateRange.Validate(); err != nil {
+			return fmt.Errorf("EDU.AcademicDegreeProgramDateRange: %w", err)
+		}
+	}
+
+	if s.AcademicDegreeProgramParticipationDateRange != nil {
+		if err := s.AcademicDegreeProgramParticipationDateRange.Validate(); err != nil {
+			return fmt.Errorf("EDU.AcademicDegreeProgramParticipationDateRange: %w", err)
+		}
+	}
+
+	if s.School != nil {
+		if err := s.School.Validate(); err != nil {
+			return fmt.Errorf("EDU.School: %w", err)
+		}
+	}
+
+	if s.SchoolTypeCode != nil {
+		if err := s.SchoolTypeCode.Validate(); err != nil {
+			return fmt.Errorf("EDU.SchoolTypeCode: %w", err)
+		}
+	}
+
+	if s.SchoolAddress != nil {
+		if err := s.SchoolAddress.Validate(); err != nil {
+			return fmt.Errorf("EDU.SchoolAddress: %w", err)
+		}
+	}
+
+	for _, item := range s.MajorFieldOfStudy {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("EDU.MajorFieldOfStudy: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *EDU) SetSetIDEDU(v *SI) *EDU {
+	s.SetIDEDU = v
+	return s
+}
+
+func (s *EDU) SetAcademicDegree(v *IS) *EDU {
+	s.AcademicDegree = v
+	return s
+}
+
+func (s *EDU) SetAcademicDegreeProgramDateRange(v *DR) *EDU {
+	s.AcademicDegreeProgramDateRange = v
+	return s
+}
+
+func (s *EDU) SetAcademicDegreeProgramParticipationDateRange(v *DR) *EDU {
+	s.AcademicDegreeProgramParticipationDateRange = v
+	return s
+}
+
+func (s *EDU) SetAcademicDegreeGrantedDate(v *DT) *EDU {
+	s.AcademicDegreeGrantedDate = v
+	return s
+}
+
+func (s *EDU) SetSchool(v *XON) *EDU {
+	s.School = v
+	return s
+}
+
+func (s *EDU) SetSchoolTypeCode(v *CE) *EDU {
+	s.SchoolTypeCode = v
+	return s
+}
+
+func (s *EDU) SetSchoolAddress(v *XAD) *EDU {
+	s.SchoolAddress = v
+	return s
+}
+
+func (s *EDU) AddMajorFieldOfStudy(v CWE) *EDU {
+	s.MajorFieldOfStudy = append(s.MajorFieldOfStudy, v)
+	return s
 }
 
 // EQL - Embedded Query Language
@@ -595,38 +4737,262 @@ type EDU struct {
 //
 // This segment is not carried forward to the recommended queries for v 2.4.
 type EQL struct {
-	QueryTag                ST `hl7:"1"`
-	QueryResponseFormatCode ID `hl7:"2,required"`
-	EQLQueryName            CE `hl7:"3,required"`
-	EQLQueryStatement       ST `hl7:"4,required"`
+	QueryTag                *ST `hl7:"1"`
+	QueryResponseFormatCode *ID `hl7:"2,required"`
+	EQLQueryName            *CE `hl7:"3,required"`
+	EQLQueryStatement       *ST `hl7:"4,required"`
+}
+
+func NewEQL() *EQL {
+	return &EQL{}
+}
+
+func (s *EQL) Validate() error {
+
+	if s.QueryResponseFormatCode == nil {
+		return fmt.Errorf("EQL.QueryResponseFormatCode is required")
+	}
+	if string(*s.QueryResponseFormatCode) == "" {
+		return fmt.Errorf("EQL.QueryResponseFormatCode is empty")
+	}
+
+	if s.EQLQueryName == nil {
+		return fmt.Errorf("EQL.EQLQueryName is required")
+	}
+	if s.EQLQueryName != nil {
+		if err := s.EQLQueryName.Validate(); err != nil {
+			return fmt.Errorf("EQL.EQLQueryName: %w", err)
+		}
+	}
+
+	if s.EQLQueryStatement == nil {
+		return fmt.Errorf("EQL.EQLQueryStatement is required")
+	}
+	if string(*s.EQLQueryStatement) == "" {
+		return fmt.Errorf("EQL.EQLQueryStatement is empty")
+	}
+
+	return nil
+}
+
+func (s *EQL) SetQueryTag(v *ST) *EQL {
+	s.QueryTag = v
+	return s
+}
+
+func (s *EQL) SetQueryResponseFormatCode(v *ID) *EQL {
+	s.QueryResponseFormatCode = v
+	return s
+}
+
+func (s *EQL) SetEQLQueryName(v *CE) *EQL {
+	s.EQLQueryName = v
+	return s
+}
+
+func (s *EQL) SetEQLQueryStatement(v *ST) *EQL {
+	s.EQLQueryStatement = v
+	return s
 }
 
 // EQP - Equipment/log Service
 // The equipment log/service segment is the data necessary to maintain an adequate audit trail of events that have occurred on a particular piece of equipment.
 type EQP struct {
-	EventType       CE `hl7:"1,required"`
-	FileName        ST `hl7:"2"`
-	StartDateTime   TS `hl7:"3,required"`
-	EndDateTime     TS `hl7:"4"`
-	TransactionData FT `hl7:"5,required"`
+	EventType       *CE `hl7:"1,required"`
+	FileName        *ST `hl7:"2"`
+	StartDateTime   *TS `hl7:"3,required"`
+	EndDateTime     *TS `hl7:"4"`
+	TransactionData *FT `hl7:"5,required"`
+}
+
+func NewEQP() *EQP {
+	return &EQP{}
+}
+
+func (s *EQP) Validate() error {
+
+	if s.EventType == nil {
+		return fmt.Errorf("EQP.EventType is required")
+	}
+	if s.EventType != nil {
+		if err := s.EventType.Validate(); err != nil {
+			return fmt.Errorf("EQP.EventType: %w", err)
+		}
+	}
+
+	if s.StartDateTime == nil {
+		return fmt.Errorf("EQP.StartDateTime is required")
+	}
+	if s.StartDateTime != nil {
+		if err := s.StartDateTime.Validate(); err != nil {
+			return fmt.Errorf("EQP.StartDateTime: %w", err)
+		}
+	}
+
+	if s.EndDateTime != nil {
+		if err := s.EndDateTime.Validate(); err != nil {
+			return fmt.Errorf("EQP.EndDateTime: %w", err)
+		}
+	}
+
+	if s.TransactionData == nil {
+		return fmt.Errorf("EQP.TransactionData is required")
+	}
+	if string(*s.TransactionData) == "" {
+		return fmt.Errorf("EQP.TransactionData is empty")
+	}
+
+	return nil
+}
+
+func (s *EQP) SetEventType(v *CE) *EQP {
+	s.EventType = v
+	return s
+}
+
+func (s *EQP) SetFileName(v *ST) *EQP {
+	s.FileName = v
+	return s
+}
+
+func (s *EQP) SetStartDateTime(v *TS) *EQP {
+	s.StartDateTime = v
+	return s
+}
+
+func (s *EQP) SetEndDateTime(v *TS) *EQP {
+	s.EndDateTime = v
+	return s
+}
+
+func (s *EQP) SetTransactionData(v *FT) *EQP {
+	s.TransactionData = v
+	return s
 }
 
 // EQU - Equipment Detail
 // The equipment detail segment contains the data necessary to identify and maintain the equipment that is being used throughout the Laboratory Automation System.
 type EQU struct {
-	EquipmentInstanceIdentifier EI `hl7:"1,required"`
-	EventDateTime               TS `hl7:"2,required"`
-	EquipmentState              CE `hl7:"3"`
-	LocalRemoteControlState     CE `hl7:"4"`
-	AlertLevel                  CE `hl7:"5"`
+	EquipmentInstanceIdentifier *EI `hl7:"1,required"`
+	EventDateTime               *TS `hl7:"2,required"`
+	EquipmentState              *CE `hl7:"3"`
+	LocalRemoteControlState     *CE `hl7:"4"`
+	AlertLevel                  *CE `hl7:"5"`
+}
+
+func NewEQU() *EQU {
+	return &EQU{}
+}
+
+func (s *EQU) Validate() error {
+
+	if s.EquipmentInstanceIdentifier == nil {
+		return fmt.Errorf("EQU.EquipmentInstanceIdentifier is required")
+	}
+	if s.EquipmentInstanceIdentifier != nil {
+		if err := s.EquipmentInstanceIdentifier.Validate(); err != nil {
+			return fmt.Errorf("EQU.EquipmentInstanceIdentifier: %w", err)
+		}
+	}
+
+	if s.EventDateTime == nil {
+		return fmt.Errorf("EQU.EventDateTime is required")
+	}
+	if s.EventDateTime != nil {
+		if err := s.EventDateTime.Validate(); err != nil {
+			return fmt.Errorf("EQU.EventDateTime: %w", err)
+		}
+	}
+
+	if s.EquipmentState != nil {
+		if err := s.EquipmentState.Validate(); err != nil {
+			return fmt.Errorf("EQU.EquipmentState: %w", err)
+		}
+	}
+
+	if s.LocalRemoteControlState != nil {
+		if err := s.LocalRemoteControlState.Validate(); err != nil {
+			return fmt.Errorf("EQU.LocalRemoteControlState: %w", err)
+		}
+	}
+
+	if s.AlertLevel != nil {
+		if err := s.AlertLevel.Validate(); err != nil {
+			return fmt.Errorf("EQU.AlertLevel: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *EQU) SetEquipmentInstanceIdentifier(v *EI) *EQU {
+	s.EquipmentInstanceIdentifier = v
+	return s
+}
+
+func (s *EQU) SetEventDateTime(v *TS) *EQU {
+	s.EventDateTime = v
+	return s
+}
+
+func (s *EQU) SetEquipmentState(v *CE) *EQU {
+	s.EquipmentState = v
+	return s
+}
+
+func (s *EQU) SetLocalRemoteControlState(v *CE) *EQU {
+	s.LocalRemoteControlState = v
+	return s
+}
+
+func (s *EQU) SetAlertLevel(v *CE) *EQU {
+	s.AlertLevel = v
+	return s
 }
 
 // ERQ - Event replay query
 // This segment is not carried forward to the recommended queries for v 2.4.
 type ERQ struct {
-	QueryTag           ST    `hl7:"1"`
-	EventIdentifier    CE    `hl7:"2,required"`
+	QueryTag           *ST   `hl7:"1"`
+	EventIdentifier    *CE   `hl7:"2,required"`
 	InputParameterList []QIP `hl7:"3"`
+}
+
+func NewERQ() *ERQ {
+	return &ERQ{}
+}
+
+func (s *ERQ) Validate() error {
+
+	if s.EventIdentifier == nil {
+		return fmt.Errorf("ERQ.EventIdentifier is required")
+	}
+	if s.EventIdentifier != nil {
+		if err := s.EventIdentifier.Validate(); err != nil {
+			return fmt.Errorf("ERQ.EventIdentifier: %w", err)
+		}
+	}
+
+	for _, item := range s.InputParameterList {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("ERQ.InputParameterList: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *ERQ) SetQueryTag(v *ST) *ERQ {
+	s.QueryTag = v
+	return s
+}
+
+func (s *ERQ) SetEventIdentifier(v *CE) *ERQ {
+	s.EventIdentifier = v
+	return s
+}
+
+func (s *ERQ) AddInputParameterList(v QIP) *ERQ {
+	s.InputParameterList = append(s.InputParameterList, v)
+	return s
 }
 
 // ERR - Error
@@ -634,246 +5000,2175 @@ type ERQ struct {
 type ERR struct {
 	ErrorCodeAndLocation      []ELD `hl7:"1"`
 	ErrorLocation             []ERL `hl7:"2"`
-	HL7ErrorCode              CWE   `hl7:"3,required"`
-	Severity                  ID    `hl7:"4,required"`
-	ApplicationErrorCode      CWE   `hl7:"5"`
+	HL7ErrorCode              *CWE  `hl7:"3,required"`
+	Severity                  *ID   `hl7:"4,required"`
+	ApplicationErrorCode      *CWE  `hl7:"5"`
 	ApplicationErrorParameter []ST  `hl7:"6"`
-	DiagnosticInformation     TX    `hl7:"7"`
-	UserMessage               TX    `hl7:"8"`
+	DiagnosticInformation     *TX   `hl7:"7"`
+	UserMessage               *TX   `hl7:"8"`
 	InformPersonIndicator     []IS  `hl7:"9"`
-	OverrideType              CWE   `hl7:"10"`
+	OverrideType              *CWE  `hl7:"10"`
 	OverrideReasonCode        []CWE `hl7:"11"`
 	HelpDeskContactPoint      []XTN `hl7:"12"`
+}
+
+func NewERR() *ERR {
+	return &ERR{}
+}
+
+func (s *ERR) Validate() error {
+
+	for _, item := range s.ErrorCodeAndLocation {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("ERR.ErrorCodeAndLocation: %w", err)
+		}
+	}
+
+	for _, item := range s.ErrorLocation {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("ERR.ErrorLocation: %w", err)
+		}
+	}
+
+	if s.HL7ErrorCode == nil {
+		return fmt.Errorf("ERR.HL7ErrorCode is required")
+	}
+	if s.HL7ErrorCode != nil {
+		if err := s.HL7ErrorCode.Validate(); err != nil {
+			return fmt.Errorf("ERR.HL7ErrorCode: %w", err)
+		}
+	}
+
+	if s.Severity == nil {
+		return fmt.Errorf("ERR.Severity is required")
+	}
+	if string(*s.Severity) == "" {
+		return fmt.Errorf("ERR.Severity is empty")
+	}
+
+	if s.ApplicationErrorCode != nil {
+		if err := s.ApplicationErrorCode.Validate(); err != nil {
+			return fmt.Errorf("ERR.ApplicationErrorCode: %w", err)
+		}
+	}
+
+	for _, item := range s.ApplicationErrorParameter {
+		if string(item) == "" {
+			return fmt.Errorf("ERR.ApplicationErrorParameter item is empty")
+		}
+	}
+
+	for _, item := range s.InformPersonIndicator {
+		if string(item) == "" {
+			return fmt.Errorf("ERR.InformPersonIndicator item is empty")
+		}
+	}
+
+	if s.OverrideType != nil {
+		if err := s.OverrideType.Validate(); err != nil {
+			return fmt.Errorf("ERR.OverrideType: %w", err)
+		}
+	}
+
+	for _, item := range s.OverrideReasonCode {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("ERR.OverrideReasonCode: %w", err)
+		}
+	}
+
+	for _, item := range s.HelpDeskContactPoint {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("ERR.HelpDeskContactPoint: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *ERR) AddErrorCodeAndLocation(v ELD) *ERR {
+	s.ErrorCodeAndLocation = append(s.ErrorCodeAndLocation, v)
+	return s
+}
+
+func (s *ERR) AddErrorLocation(v ERL) *ERR {
+	s.ErrorLocation = append(s.ErrorLocation, v)
+	return s
+}
+
+func (s *ERR) SetHL7ErrorCode(v *CWE) *ERR {
+	s.HL7ErrorCode = v
+	return s
+}
+
+func (s *ERR) SetSeverity(v *ID) *ERR {
+	s.Severity = v
+	return s
+}
+
+func (s *ERR) SetApplicationErrorCode(v *CWE) *ERR {
+	s.ApplicationErrorCode = v
+	return s
+}
+
+func (s *ERR) AddApplicationErrorParameter(v ST) *ERR {
+	s.ApplicationErrorParameter = append(s.ApplicationErrorParameter, v)
+	return s
+}
+
+func (s *ERR) SetDiagnosticInformation(v *TX) *ERR {
+	s.DiagnosticInformation = v
+	return s
+}
+
+func (s *ERR) SetUserMessage(v *TX) *ERR {
+	s.UserMessage = v
+	return s
+}
+
+func (s *ERR) AddInformPersonIndicator(v IS) *ERR {
+	s.InformPersonIndicator = append(s.InformPersonIndicator, v)
+	return s
+}
+
+func (s *ERR) SetOverrideType(v *CWE) *ERR {
+	s.OverrideType = v
+	return s
+}
+
+func (s *ERR) AddOverrideReasonCode(v CWE) *ERR {
+	s.OverrideReasonCode = append(s.OverrideReasonCode, v)
+	return s
+}
+
+func (s *ERR) AddHelpDeskContactPoint(v XTN) *ERR {
+	s.HelpDeskContactPoint = append(s.HelpDeskContactPoint, v)
+	return s
 }
 
 // EVN - Event Type
 // The EVN segment is used to communicate necessary trigger event information to receiving applications. Valid event types for all chapters are contained in HL7 Table 0003 - Event Type .
 type EVN struct {
-	EventTypeCode        ID    `hl7:"1"`
-	RecordedDateTime     TS    `hl7:"2,required"`
-	DateTimePlannedEvent TS    `hl7:"3"`
-	EventReasonCode      IS    `hl7:"4"`
+	EventTypeCode        *ID   `hl7:"1"`
+	RecordedDateTime     *TS   `hl7:"2,required"`
+	DateTimePlannedEvent *TS   `hl7:"3"`
+	EventReasonCode      *IS   `hl7:"4"`
 	OperatorID           []XCN `hl7:"5"`
-	EventOccurred        TS    `hl7:"6"`
-	EventFacility        HD    `hl7:"7"`
+	EventOccurred        *TS   `hl7:"6"`
+	EventFacility        *HD   `hl7:"7"`
+}
+
+func NewEVN() *EVN {
+	return &EVN{}
+}
+
+func (s *EVN) Validate() error {
+
+	if s.RecordedDateTime == nil {
+		return fmt.Errorf("EVN.RecordedDateTime is required")
+	}
+	if s.RecordedDateTime != nil {
+		if err := s.RecordedDateTime.Validate(); err != nil {
+			return fmt.Errorf("EVN.RecordedDateTime: %w", err)
+		}
+	}
+
+	if s.DateTimePlannedEvent != nil {
+		if err := s.DateTimePlannedEvent.Validate(); err != nil {
+			return fmt.Errorf("EVN.DateTimePlannedEvent: %w", err)
+		}
+	}
+
+	for _, item := range s.OperatorID {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("EVN.OperatorID: %w", err)
+		}
+	}
+
+	if s.EventOccurred != nil {
+		if err := s.EventOccurred.Validate(); err != nil {
+			return fmt.Errorf("EVN.EventOccurred: %w", err)
+		}
+	}
+
+	if s.EventFacility != nil {
+		if err := s.EventFacility.Validate(); err != nil {
+			return fmt.Errorf("EVN.EventFacility: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *EVN) SetEventTypeCode(v *ID) *EVN {
+	s.EventTypeCode = v
+	return s
+}
+
+func (s *EVN) SetRecordedDateTime(v *TS) *EVN {
+	s.RecordedDateTime = v
+	return s
+}
+
+func (s *EVN) SetDateTimePlannedEvent(v *TS) *EVN {
+	s.DateTimePlannedEvent = v
+	return s
+}
+
+func (s *EVN) SetEventReasonCode(v *IS) *EVN {
+	s.EventReasonCode = v
+	return s
+}
+
+func (s *EVN) AddOperatorID(v XCN) *EVN {
+	s.OperatorID = append(s.OperatorID, v)
+	return s
+}
+
+func (s *EVN) SetEventOccurred(v *TS) *EVN {
+	s.EventOccurred = v
+	return s
+}
+
+func (s *EVN) SetEventFacility(v *HD) *EVN {
+	s.EventFacility = v
+	return s
 }
 
 // FAC - Facility
 type FAC struct {
-	FacilityIDFAC                       EI    `hl7:"1,required"`
-	FacilityType                        ID    `hl7:"2"`
+	FacilityIDFAC                       *EI   `hl7:"1,required"`
+	FacilityType                        *ID   `hl7:"2"`
 	FacilityAddress                     []XAD `hl7:"3,required"`
-	FacilityTelecommunication           XTN   `hl7:"4,required"`
+	FacilityTelecommunication           *XTN  `hl7:"4,required"`
 	ContactPerson                       []XCN `hl7:"5"`
 	ContactTitle                        []ST  `hl7:"6"`
 	ContactAddress                      []XAD `hl7:"7"`
 	ContactTelecommunication            []XTN `hl7:"8"`
 	SignatureAuthority                  []XCN `hl7:"9,required"`
-	SignatureAuthorityTitle             ST    `hl7:"10"`
+	SignatureAuthorityTitle             *ST   `hl7:"10"`
 	SignatureAuthorityAddress           []XAD `hl7:"11"`
-	SignatureAuthorityTelecommunication XTN   `hl7:"12"`
+	SignatureAuthorityTelecommunication *XTN  `hl7:"12"`
+}
+
+func NewFAC() *FAC {
+	return &FAC{}
+}
+
+func (s *FAC) Validate() error {
+
+	if s.FacilityIDFAC == nil {
+		return fmt.Errorf("FAC.FacilityIDFAC is required")
+	}
+	if s.FacilityIDFAC != nil {
+		if err := s.FacilityIDFAC.Validate(); err != nil {
+			return fmt.Errorf("FAC.FacilityIDFAC: %w", err)
+		}
+	}
+
+	if len(s.FacilityAddress) == 0 {
+		return fmt.Errorf("FAC.FacilityAddress is required")
+	}
+	for _, item := range s.FacilityAddress {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("FAC.FacilityAddress: %w", err)
+		}
+	}
+
+	if s.FacilityTelecommunication == nil {
+		return fmt.Errorf("FAC.FacilityTelecommunication is required")
+	}
+	if s.FacilityTelecommunication != nil {
+		if err := s.FacilityTelecommunication.Validate(); err != nil {
+			return fmt.Errorf("FAC.FacilityTelecommunication: %w", err)
+		}
+	}
+
+	for _, item := range s.ContactPerson {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("FAC.ContactPerson: %w", err)
+		}
+	}
+
+	for _, item := range s.ContactTitle {
+		if string(item) == "" {
+			return fmt.Errorf("FAC.ContactTitle item is empty")
+		}
+	}
+
+	for _, item := range s.ContactAddress {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("FAC.ContactAddress: %w", err)
+		}
+	}
+
+	for _, item := range s.ContactTelecommunication {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("FAC.ContactTelecommunication: %w", err)
+		}
+	}
+
+	if len(s.SignatureAuthority) == 0 {
+		return fmt.Errorf("FAC.SignatureAuthority is required")
+	}
+	for _, item := range s.SignatureAuthority {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("FAC.SignatureAuthority: %w", err)
+		}
+	}
+
+	for _, item := range s.SignatureAuthorityAddress {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("FAC.SignatureAuthorityAddress: %w", err)
+		}
+	}
+
+	if s.SignatureAuthorityTelecommunication != nil {
+		if err := s.SignatureAuthorityTelecommunication.Validate(); err != nil {
+			return fmt.Errorf("FAC.SignatureAuthorityTelecommunication: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *FAC) SetFacilityIDFAC(v *EI) *FAC {
+	s.FacilityIDFAC = v
+	return s
+}
+
+func (s *FAC) SetFacilityType(v *ID) *FAC {
+	s.FacilityType = v
+	return s
+}
+
+func (s *FAC) AddFacilityAddress(v XAD) *FAC {
+	s.FacilityAddress = append(s.FacilityAddress, v)
+	return s
+}
+
+func (s *FAC) SetFacilityTelecommunication(v *XTN) *FAC {
+	s.FacilityTelecommunication = v
+	return s
+}
+
+func (s *FAC) AddContactPerson(v XCN) *FAC {
+	s.ContactPerson = append(s.ContactPerson, v)
+	return s
+}
+
+func (s *FAC) AddContactTitle(v ST) *FAC {
+	s.ContactTitle = append(s.ContactTitle, v)
+	return s
+}
+
+func (s *FAC) AddContactAddress(v XAD) *FAC {
+	s.ContactAddress = append(s.ContactAddress, v)
+	return s
+}
+
+func (s *FAC) AddContactTelecommunication(v XTN) *FAC {
+	s.ContactTelecommunication = append(s.ContactTelecommunication, v)
+	return s
+}
+
+func (s *FAC) AddSignatureAuthority(v XCN) *FAC {
+	s.SignatureAuthority = append(s.SignatureAuthority, v)
+	return s
+}
+
+func (s *FAC) SetSignatureAuthorityTitle(v *ST) *FAC {
+	s.SignatureAuthorityTitle = v
+	return s
+}
+
+func (s *FAC) AddSignatureAuthorityAddress(v XAD) *FAC {
+	s.SignatureAuthorityAddress = append(s.SignatureAuthorityAddress, v)
+	return s
+}
+
+func (s *FAC) SetSignatureAuthorityTelecommunication(v *XTN) *FAC {
+	s.SignatureAuthorityTelecommunication = v
+	return s
 }
 
 // FHS - File Header Segment
 // The FHS segment is used to head a file (group of batches).
 type FHS struct {
-	FileFieldSeparator       ST `hl7:"1,required"`
-	FileEncodingCharacters   ST `hl7:"2,required"`
-	FileSendingApplication   HD `hl7:"3"`
-	FileSendingFacility      HD `hl7:"4"`
-	FileReceivingApplication HD `hl7:"5"`
-	FileReceivingFacility    HD `hl7:"6"`
-	FileCreationDateTime     TS `hl7:"7"`
-	FileSecurity             ST `hl7:"8"`
-	FileNameID               ST `hl7:"9"`
-	FileHeaderComment        ST `hl7:"10"`
-	FileControlID            ST `hl7:"11"`
-	ReferenceFileControlID   ST `hl7:"12"`
+	FileFieldSeparator       *ST `hl7:"1,required"`
+	FileEncodingCharacters   *ST `hl7:"2,required"`
+	FileSendingApplication   *HD `hl7:"3"`
+	FileSendingFacility      *HD `hl7:"4"`
+	FileReceivingApplication *HD `hl7:"5"`
+	FileReceivingFacility    *HD `hl7:"6"`
+	FileCreationDateTime     *TS `hl7:"7"`
+	FileSecurity             *ST `hl7:"8"`
+	FileNameID               *ST `hl7:"9"`
+	FileHeaderComment        *ST `hl7:"10"`
+	FileControlID            *ST `hl7:"11"`
+	ReferenceFileControlID   *ST `hl7:"12"`
+}
+
+func NewFHS() *FHS {
+	return &FHS{}
+}
+
+func (s *FHS) Validate() error {
+
+	if s.FileFieldSeparator == nil {
+		return fmt.Errorf("FHS.FileFieldSeparator is required")
+	}
+	if string(*s.FileFieldSeparator) == "" {
+		return fmt.Errorf("FHS.FileFieldSeparator is empty")
+	}
+
+	if s.FileEncodingCharacters == nil {
+		return fmt.Errorf("FHS.FileEncodingCharacters is required")
+	}
+	if string(*s.FileEncodingCharacters) == "" {
+		return fmt.Errorf("FHS.FileEncodingCharacters is empty")
+	}
+
+	if s.FileSendingApplication != nil {
+		if err := s.FileSendingApplication.Validate(); err != nil {
+			return fmt.Errorf("FHS.FileSendingApplication: %w", err)
+		}
+	}
+
+	if s.FileSendingFacility != nil {
+		if err := s.FileSendingFacility.Validate(); err != nil {
+			return fmt.Errorf("FHS.FileSendingFacility: %w", err)
+		}
+	}
+
+	if s.FileReceivingApplication != nil {
+		if err := s.FileReceivingApplication.Validate(); err != nil {
+			return fmt.Errorf("FHS.FileReceivingApplication: %w", err)
+		}
+	}
+
+	if s.FileReceivingFacility != nil {
+		if err := s.FileReceivingFacility.Validate(); err != nil {
+			return fmt.Errorf("FHS.FileReceivingFacility: %w", err)
+		}
+	}
+
+	if s.FileCreationDateTime != nil {
+		if err := s.FileCreationDateTime.Validate(); err != nil {
+			return fmt.Errorf("FHS.FileCreationDateTime: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *FHS) SetFileFieldSeparator(v *ST) *FHS {
+	s.FileFieldSeparator = v
+	return s
+}
+
+func (s *FHS) SetFileEncodingCharacters(v *ST) *FHS {
+	s.FileEncodingCharacters = v
+	return s
+}
+
+func (s *FHS) SetFileSendingApplication(v *HD) *FHS {
+	s.FileSendingApplication = v
+	return s
+}
+
+func (s *FHS) SetFileSendingFacility(v *HD) *FHS {
+	s.FileSendingFacility = v
+	return s
+}
+
+func (s *FHS) SetFileReceivingApplication(v *HD) *FHS {
+	s.FileReceivingApplication = v
+	return s
+}
+
+func (s *FHS) SetFileReceivingFacility(v *HD) *FHS {
+	s.FileReceivingFacility = v
+	return s
+}
+
+func (s *FHS) SetFileCreationDateTime(v *TS) *FHS {
+	s.FileCreationDateTime = v
+	return s
+}
+
+func (s *FHS) SetFileSecurity(v *ST) *FHS {
+	s.FileSecurity = v
+	return s
+}
+
+func (s *FHS) SetFileNameID(v *ST) *FHS {
+	s.FileNameID = v
+	return s
+}
+
+func (s *FHS) SetFileHeaderComment(v *ST) *FHS {
+	s.FileHeaderComment = v
+	return s
+}
+
+func (s *FHS) SetFileControlID(v *ST) *FHS {
+	s.FileControlID = v
+	return s
+}
+
+func (s *FHS) SetReferenceFileControlID(v *ST) *FHS {
+	s.ReferenceFileControlID = v
+	return s
 }
 
 // FT1 - Financial Transaction
 // The FT1 segment contains the detail data necessary to post charges, payments, adjustments, etc. to patient accounting records.
 type FT1 struct {
-	SetIDFT1                                   SI    `hl7:"1"`
-	TransactionID                              ST    `hl7:"2"`
-	TransactionBatchID                         ST    `hl7:"3"`
-	TransactionDate                            DR    `hl7:"4,required"`
-	TransactionPostingDate                     TS    `hl7:"5"`
-	TransactionType                            IS    `hl7:"6,required"`
-	TransactionCode                            CE    `hl7:"7,required"`
-	TransactionDescription                     ST    `hl7:"8"`
-	TransactionDescriptionAlt                  ST    `hl7:"9"`
-	TransactionQuantity                        NM    `hl7:"10"`
-	TransactionAmountExtended                  CP    `hl7:"11"`
-	TransactionAmountUnit                      CP    `hl7:"12"`
-	DepartmentCode                             CE    `hl7:"13"`
-	InsurancePlanID                            CE    `hl7:"14"`
-	InsuranceAmount                            CP    `hl7:"15"`
-	AssignedPatientLocation                    PL    `hl7:"16"`
-	FeeSchedule                                IS    `hl7:"17"`
-	PatientType                                IS    `hl7:"18"`
+	SetIDFT1                                   *SI   `hl7:"1"`
+	TransactionID                              *ST   `hl7:"2"`
+	TransactionBatchID                         *ST   `hl7:"3"`
+	TransactionDate                            *DR   `hl7:"4,required"`
+	TransactionPostingDate                     *TS   `hl7:"5"`
+	TransactionType                            *IS   `hl7:"6,required"`
+	TransactionCode                            *CE   `hl7:"7,required"`
+	TransactionDescription                     *ST   `hl7:"8"`
+	TransactionDescriptionAlt                  *ST   `hl7:"9"`
+	TransactionQuantity                        *NM   `hl7:"10"`
+	TransactionAmountExtended                  *CP   `hl7:"11"`
+	TransactionAmountUnit                      *CP   `hl7:"12"`
+	DepartmentCode                             *CE   `hl7:"13"`
+	InsurancePlanID                            *CE   `hl7:"14"`
+	InsuranceAmount                            *CP   `hl7:"15"`
+	AssignedPatientLocation                    *PL   `hl7:"16"`
+	FeeSchedule                                *IS   `hl7:"17"`
+	PatientType                                *IS   `hl7:"18"`
 	DiagnosisCodeFT1                           []CE  `hl7:"19"`
 	PerformedByCode                            []XCN `hl7:"20"`
 	OrderedByCode                              []XCN `hl7:"21"`
-	UnitCost                                   CP    `hl7:"22"`
-	FillerOrderNumber                          EI    `hl7:"23"`
+	UnitCost                                   *CP   `hl7:"22"`
+	FillerOrderNumber                          *EI   `hl7:"23"`
 	EnteredByCode                              []XCN `hl7:"24"`
-	ProcedureCode                              CE    `hl7:"25"`
+	ProcedureCode                              *CE   `hl7:"25"`
 	ProcedureCodeModifier                      []CE  `hl7:"26"`
-	AdvancedBeneficiaryNoticeCode              CE    `hl7:"27"`
-	MedicallyNecessaryDuplicateProcedureReason CWE   `hl7:"28"`
-	NDCCode                                    CNE   `hl7:"29"`
-	PaymentReferenceID                         CX    `hl7:"30"`
+	AdvancedBeneficiaryNoticeCode              *CE   `hl7:"27"`
+	MedicallyNecessaryDuplicateProcedureReason *CWE  `hl7:"28"`
+	NDCCode                                    *CNE  `hl7:"29"`
+	PaymentReferenceID                         *CX   `hl7:"30"`
 	TransactionReferenceKey                    []SI  `hl7:"31"`
+}
+
+func NewFT1() *FT1 {
+	return &FT1{}
+}
+
+func (s *FT1) Validate() error {
+
+	if s.TransactionDate == nil {
+		return fmt.Errorf("FT1.TransactionDate is required")
+	}
+	if s.TransactionDate != nil {
+		if err := s.TransactionDate.Validate(); err != nil {
+			return fmt.Errorf("FT1.TransactionDate: %w", err)
+		}
+	}
+
+	if s.TransactionPostingDate != nil {
+		if err := s.TransactionPostingDate.Validate(); err != nil {
+			return fmt.Errorf("FT1.TransactionPostingDate: %w", err)
+		}
+	}
+
+	if s.TransactionType == nil {
+		return fmt.Errorf("FT1.TransactionType is required")
+	}
+	if string(*s.TransactionType) == "" {
+		return fmt.Errorf("FT1.TransactionType is empty")
+	}
+
+	if s.TransactionCode == nil {
+		return fmt.Errorf("FT1.TransactionCode is required")
+	}
+	if s.TransactionCode != nil {
+		if err := s.TransactionCode.Validate(); err != nil {
+			return fmt.Errorf("FT1.TransactionCode: %w", err)
+		}
+	}
+
+	if s.TransactionAmountExtended != nil {
+		if err := s.TransactionAmountExtended.Validate(); err != nil {
+			return fmt.Errorf("FT1.TransactionAmountExtended: %w", err)
+		}
+	}
+
+	if s.TransactionAmountUnit != nil {
+		if err := s.TransactionAmountUnit.Validate(); err != nil {
+			return fmt.Errorf("FT1.TransactionAmountUnit: %w", err)
+		}
+	}
+
+	if s.DepartmentCode != nil {
+		if err := s.DepartmentCode.Validate(); err != nil {
+			return fmt.Errorf("FT1.DepartmentCode: %w", err)
+		}
+	}
+
+	if s.InsurancePlanID != nil {
+		if err := s.InsurancePlanID.Validate(); err != nil {
+			return fmt.Errorf("FT1.InsurancePlanID: %w", err)
+		}
+	}
+
+	if s.InsuranceAmount != nil {
+		if err := s.InsuranceAmount.Validate(); err != nil {
+			return fmt.Errorf("FT1.InsuranceAmount: %w", err)
+		}
+	}
+
+	if s.AssignedPatientLocation != nil {
+		if err := s.AssignedPatientLocation.Validate(); err != nil {
+			return fmt.Errorf("FT1.AssignedPatientLocation: %w", err)
+		}
+	}
+
+	for _, item := range s.DiagnosisCodeFT1 {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("FT1.DiagnosisCodeFT1: %w", err)
+		}
+	}
+
+	for _, item := range s.PerformedByCode {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("FT1.PerformedByCode: %w", err)
+		}
+	}
+
+	for _, item := range s.OrderedByCode {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("FT1.OrderedByCode: %w", err)
+		}
+	}
+
+	if s.UnitCost != nil {
+		if err := s.UnitCost.Validate(); err != nil {
+			return fmt.Errorf("FT1.UnitCost: %w", err)
+		}
+	}
+
+	if s.FillerOrderNumber != nil {
+		if err := s.FillerOrderNumber.Validate(); err != nil {
+			return fmt.Errorf("FT1.FillerOrderNumber: %w", err)
+		}
+	}
+
+	for _, item := range s.EnteredByCode {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("FT1.EnteredByCode: %w", err)
+		}
+	}
+
+	if s.ProcedureCode != nil {
+		if err := s.ProcedureCode.Validate(); err != nil {
+			return fmt.Errorf("FT1.ProcedureCode: %w", err)
+		}
+	}
+
+	for _, item := range s.ProcedureCodeModifier {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("FT1.ProcedureCodeModifier: %w", err)
+		}
+	}
+
+	if s.AdvancedBeneficiaryNoticeCode != nil {
+		if err := s.AdvancedBeneficiaryNoticeCode.Validate(); err != nil {
+			return fmt.Errorf("FT1.AdvancedBeneficiaryNoticeCode: %w", err)
+		}
+	}
+
+	if s.MedicallyNecessaryDuplicateProcedureReason != nil {
+		if err := s.MedicallyNecessaryDuplicateProcedureReason.Validate(); err != nil {
+			return fmt.Errorf("FT1.MedicallyNecessaryDuplicateProcedureReason: %w", err)
+		}
+	}
+
+	if s.NDCCode != nil {
+		if err := s.NDCCode.Validate(); err != nil {
+			return fmt.Errorf("FT1.NDCCode: %w", err)
+		}
+	}
+
+	if s.PaymentReferenceID != nil {
+		if err := s.PaymentReferenceID.Validate(); err != nil {
+			return fmt.Errorf("FT1.PaymentReferenceID: %w", err)
+		}
+	}
+
+	for _, item := range s.TransactionReferenceKey {
+		if string(item) == "" {
+			return fmt.Errorf("FT1.TransactionReferenceKey item is empty")
+		}
+	}
+	return nil
+}
+
+func (s *FT1) SetSetIDFT1(v *SI) *FT1 {
+	s.SetIDFT1 = v
+	return s
+}
+
+func (s *FT1) SetTransactionID(v *ST) *FT1 {
+	s.TransactionID = v
+	return s
+}
+
+func (s *FT1) SetTransactionBatchID(v *ST) *FT1 {
+	s.TransactionBatchID = v
+	return s
+}
+
+func (s *FT1) SetTransactionDate(v *DR) *FT1 {
+	s.TransactionDate = v
+	return s
+}
+
+func (s *FT1) SetTransactionPostingDate(v *TS) *FT1 {
+	s.TransactionPostingDate = v
+	return s
+}
+
+func (s *FT1) SetTransactionType(v *IS) *FT1 {
+	s.TransactionType = v
+	return s
+}
+
+func (s *FT1) SetTransactionCode(v *CE) *FT1 {
+	s.TransactionCode = v
+	return s
+}
+
+func (s *FT1) SetTransactionDescription(v *ST) *FT1 {
+	s.TransactionDescription = v
+	return s
+}
+
+func (s *FT1) SetTransactionDescriptionAlt(v *ST) *FT1 {
+	s.TransactionDescriptionAlt = v
+	return s
+}
+
+func (s *FT1) SetTransactionQuantity(v *NM) *FT1 {
+	s.TransactionQuantity = v
+	return s
+}
+
+func (s *FT1) SetTransactionAmountExtended(v *CP) *FT1 {
+	s.TransactionAmountExtended = v
+	return s
+}
+
+func (s *FT1) SetTransactionAmountUnit(v *CP) *FT1 {
+	s.TransactionAmountUnit = v
+	return s
+}
+
+func (s *FT1) SetDepartmentCode(v *CE) *FT1 {
+	s.DepartmentCode = v
+	return s
+}
+
+func (s *FT1) SetInsurancePlanID(v *CE) *FT1 {
+	s.InsurancePlanID = v
+	return s
+}
+
+func (s *FT1) SetInsuranceAmount(v *CP) *FT1 {
+	s.InsuranceAmount = v
+	return s
+}
+
+func (s *FT1) SetAssignedPatientLocation(v *PL) *FT1 {
+	s.AssignedPatientLocation = v
+	return s
+}
+
+func (s *FT1) SetFeeSchedule(v *IS) *FT1 {
+	s.FeeSchedule = v
+	return s
+}
+
+func (s *FT1) SetPatientType(v *IS) *FT1 {
+	s.PatientType = v
+	return s
+}
+
+func (s *FT1) AddDiagnosisCodeFT1(v CE) *FT1 {
+	s.DiagnosisCodeFT1 = append(s.DiagnosisCodeFT1, v)
+	return s
+}
+
+func (s *FT1) AddPerformedByCode(v XCN) *FT1 {
+	s.PerformedByCode = append(s.PerformedByCode, v)
+	return s
+}
+
+func (s *FT1) AddOrderedByCode(v XCN) *FT1 {
+	s.OrderedByCode = append(s.OrderedByCode, v)
+	return s
+}
+
+func (s *FT1) SetUnitCost(v *CP) *FT1 {
+	s.UnitCost = v
+	return s
+}
+
+func (s *FT1) SetFillerOrderNumber(v *EI) *FT1 {
+	s.FillerOrderNumber = v
+	return s
+}
+
+func (s *FT1) AddEnteredByCode(v XCN) *FT1 {
+	s.EnteredByCode = append(s.EnteredByCode, v)
+	return s
+}
+
+func (s *FT1) SetProcedureCode(v *CE) *FT1 {
+	s.ProcedureCode = v
+	return s
+}
+
+func (s *FT1) AddProcedureCodeModifier(v CE) *FT1 {
+	s.ProcedureCodeModifier = append(s.ProcedureCodeModifier, v)
+	return s
+}
+
+func (s *FT1) SetAdvancedBeneficiaryNoticeCode(v *CE) *FT1 {
+	s.AdvancedBeneficiaryNoticeCode = v
+	return s
+}
+
+func (s *FT1) SetMedicallyNecessaryDuplicateProcedureReason(v *CWE) *FT1 {
+	s.MedicallyNecessaryDuplicateProcedureReason = v
+	return s
+}
+
+func (s *FT1) SetNDCCode(v *CNE) *FT1 {
+	s.NDCCode = v
+	return s
+}
+
+func (s *FT1) SetPaymentReferenceID(v *CX) *FT1 {
+	s.PaymentReferenceID = v
+	return s
+}
+
+func (s *FT1) AddTransactionReferenceKey(v SI) *FT1 {
+	s.TransactionReferenceKey = append(s.TransactionReferenceKey, v)
+	return s
 }
 
 // FTS - File Trailer Segment
 // The FTS segment defines the end of a file.
 type FTS struct {
-	FileBatchCount     NM `hl7:"1"`
-	FileTrailerComment ST `hl7:"2"`
+	FileBatchCount     *NM `hl7:"1"`
+	FileTrailerComment *ST `hl7:"2"`
+}
+
+func NewFTS() *FTS {
+	return &FTS{}
+}
+
+func (s *FTS) Validate() error {
+
+	return nil
+}
+
+func (s *FTS) SetFileBatchCount(v *NM) *FTS {
+	s.FileBatchCount = v
+	return s
+}
+
+func (s *FTS) SetFileTrailerComment(v *ST) *FTS {
+	s.FileTrailerComment = v
+	return s
 }
 
 // GOL - Goal Detail
 // The goal detail segment contains the data necessary to add, update, correct, and delete the goals for an individual.
 type GOL struct {
-	ActionCode                  ID    `hl7:"1,required"`
-	ActionDateTime              TS    `hl7:"2,required"`
-	GoalID                      CE    `hl7:"3,required"`
-	GoalInstanceID              EI    `hl7:"4,required"`
-	EpisodeOfCareID             EI    `hl7:"5"`
-	GoalListPriority            NM    `hl7:"6"`
-	GoalEstablishedDateTime     TS    `hl7:"7"`
-	ExpectedGoalAchieveDateTime TS    `hl7:"8"`
-	GoalClassification          CE    `hl7:"9"`
-	GoalManagementDiscipline    CE    `hl7:"10"`
-	CurrentGoalReviewStatus     CE    `hl7:"11"`
-	CurrentGoalReviewDateTime   TS    `hl7:"12"`
-	NextGoalReviewDateTime      TS    `hl7:"13"`
-	PreviousGoalReviewDateTime  TS    `hl7:"14"`
-	GoalReviewInterval          TQ    `hl7:"15"`
-	GoalEvaluation              CE    `hl7:"16"`
+	ActionCode                  *ID   `hl7:"1,required"`
+	ActionDateTime              *TS   `hl7:"2,required"`
+	GoalID                      *CE   `hl7:"3,required"`
+	GoalInstanceID              *EI   `hl7:"4,required"`
+	EpisodeOfCareID             *EI   `hl7:"5"`
+	GoalListPriority            *NM   `hl7:"6"`
+	GoalEstablishedDateTime     *TS   `hl7:"7"`
+	ExpectedGoalAchieveDateTime *TS   `hl7:"8"`
+	GoalClassification          *CE   `hl7:"9"`
+	GoalManagementDiscipline    *CE   `hl7:"10"`
+	CurrentGoalReviewStatus     *CE   `hl7:"11"`
+	CurrentGoalReviewDateTime   *TS   `hl7:"12"`
+	NextGoalReviewDateTime      *TS   `hl7:"13"`
+	PreviousGoalReviewDateTime  *TS   `hl7:"14"`
+	GoalReviewInterval          *TQ   `hl7:"15"`
+	GoalEvaluation              *CE   `hl7:"16"`
 	GoalEvaluationComment       []ST  `hl7:"17"`
-	GoalLifeCycleStatus         CE    `hl7:"18"`
-	GoalLifeCycleStatusDateTime TS    `hl7:"19"`
+	GoalLifeCycleStatus         *CE   `hl7:"18"`
+	GoalLifeCycleStatusDateTime *TS   `hl7:"19"`
 	GoalTargetType              []CE  `hl7:"20"`
 	GoalTargetName              []XPN `hl7:"21"`
+}
+
+func NewGOL() *GOL {
+	return &GOL{}
+}
+
+func (s *GOL) Validate() error {
+
+	if s.ActionCode == nil {
+		return fmt.Errorf("GOL.ActionCode is required")
+	}
+	if string(*s.ActionCode) == "" {
+		return fmt.Errorf("GOL.ActionCode is empty")
+	}
+
+	if s.ActionDateTime == nil {
+		return fmt.Errorf("GOL.ActionDateTime is required")
+	}
+	if s.ActionDateTime != nil {
+		if err := s.ActionDateTime.Validate(); err != nil {
+			return fmt.Errorf("GOL.ActionDateTime: %w", err)
+		}
+	}
+
+	if s.GoalID == nil {
+		return fmt.Errorf("GOL.GoalID is required")
+	}
+	if s.GoalID != nil {
+		if err := s.GoalID.Validate(); err != nil {
+			return fmt.Errorf("GOL.GoalID: %w", err)
+		}
+	}
+
+	if s.GoalInstanceID == nil {
+		return fmt.Errorf("GOL.GoalInstanceID is required")
+	}
+	if s.GoalInstanceID != nil {
+		if err := s.GoalInstanceID.Validate(); err != nil {
+			return fmt.Errorf("GOL.GoalInstanceID: %w", err)
+		}
+	}
+
+	if s.EpisodeOfCareID != nil {
+		if err := s.EpisodeOfCareID.Validate(); err != nil {
+			return fmt.Errorf("GOL.EpisodeOfCareID: %w", err)
+		}
+	}
+
+	if s.GoalEstablishedDateTime != nil {
+		if err := s.GoalEstablishedDateTime.Validate(); err != nil {
+			return fmt.Errorf("GOL.GoalEstablishedDateTime: %w", err)
+		}
+	}
+
+	if s.ExpectedGoalAchieveDateTime != nil {
+		if err := s.ExpectedGoalAchieveDateTime.Validate(); err != nil {
+			return fmt.Errorf("GOL.ExpectedGoalAchieveDateTime: %w", err)
+		}
+	}
+
+	if s.GoalClassification != nil {
+		if err := s.GoalClassification.Validate(); err != nil {
+			return fmt.Errorf("GOL.GoalClassification: %w", err)
+		}
+	}
+
+	if s.GoalManagementDiscipline != nil {
+		if err := s.GoalManagementDiscipline.Validate(); err != nil {
+			return fmt.Errorf("GOL.GoalManagementDiscipline: %w", err)
+		}
+	}
+
+	if s.CurrentGoalReviewStatus != nil {
+		if err := s.CurrentGoalReviewStatus.Validate(); err != nil {
+			return fmt.Errorf("GOL.CurrentGoalReviewStatus: %w", err)
+		}
+	}
+
+	if s.CurrentGoalReviewDateTime != nil {
+		if err := s.CurrentGoalReviewDateTime.Validate(); err != nil {
+			return fmt.Errorf("GOL.CurrentGoalReviewDateTime: %w", err)
+		}
+	}
+
+	if s.NextGoalReviewDateTime != nil {
+		if err := s.NextGoalReviewDateTime.Validate(); err != nil {
+			return fmt.Errorf("GOL.NextGoalReviewDateTime: %w", err)
+		}
+	}
+
+	if s.PreviousGoalReviewDateTime != nil {
+		if err := s.PreviousGoalReviewDateTime.Validate(); err != nil {
+			return fmt.Errorf("GOL.PreviousGoalReviewDateTime: %w", err)
+		}
+	}
+
+	if s.GoalReviewInterval != nil {
+		if err := s.GoalReviewInterval.Validate(); err != nil {
+			return fmt.Errorf("GOL.GoalReviewInterval: %w", err)
+		}
+	}
+
+	if s.GoalEvaluation != nil {
+		if err := s.GoalEvaluation.Validate(); err != nil {
+			return fmt.Errorf("GOL.GoalEvaluation: %w", err)
+		}
+	}
+
+	for _, item := range s.GoalEvaluationComment {
+		if string(item) == "" {
+			return fmt.Errorf("GOL.GoalEvaluationComment item is empty")
+		}
+	}
+
+	if s.GoalLifeCycleStatus != nil {
+		if err := s.GoalLifeCycleStatus.Validate(); err != nil {
+			return fmt.Errorf("GOL.GoalLifeCycleStatus: %w", err)
+		}
+	}
+
+	if s.GoalLifeCycleStatusDateTime != nil {
+		if err := s.GoalLifeCycleStatusDateTime.Validate(); err != nil {
+			return fmt.Errorf("GOL.GoalLifeCycleStatusDateTime: %w", err)
+		}
+	}
+
+	for _, item := range s.GoalTargetType {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("GOL.GoalTargetType: %w", err)
+		}
+	}
+
+	for _, item := range s.GoalTargetName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("GOL.GoalTargetName: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *GOL) SetActionCode(v *ID) *GOL {
+	s.ActionCode = v
+	return s
+}
+
+func (s *GOL) SetActionDateTime(v *TS) *GOL {
+	s.ActionDateTime = v
+	return s
+}
+
+func (s *GOL) SetGoalID(v *CE) *GOL {
+	s.GoalID = v
+	return s
+}
+
+func (s *GOL) SetGoalInstanceID(v *EI) *GOL {
+	s.GoalInstanceID = v
+	return s
+}
+
+func (s *GOL) SetEpisodeOfCareID(v *EI) *GOL {
+	s.EpisodeOfCareID = v
+	return s
+}
+
+func (s *GOL) SetGoalListPriority(v *NM) *GOL {
+	s.GoalListPriority = v
+	return s
+}
+
+func (s *GOL) SetGoalEstablishedDateTime(v *TS) *GOL {
+	s.GoalEstablishedDateTime = v
+	return s
+}
+
+func (s *GOL) SetExpectedGoalAchieveDateTime(v *TS) *GOL {
+	s.ExpectedGoalAchieveDateTime = v
+	return s
+}
+
+func (s *GOL) SetGoalClassification(v *CE) *GOL {
+	s.GoalClassification = v
+	return s
+}
+
+func (s *GOL) SetGoalManagementDiscipline(v *CE) *GOL {
+	s.GoalManagementDiscipline = v
+	return s
+}
+
+func (s *GOL) SetCurrentGoalReviewStatus(v *CE) *GOL {
+	s.CurrentGoalReviewStatus = v
+	return s
+}
+
+func (s *GOL) SetCurrentGoalReviewDateTime(v *TS) *GOL {
+	s.CurrentGoalReviewDateTime = v
+	return s
+}
+
+func (s *GOL) SetNextGoalReviewDateTime(v *TS) *GOL {
+	s.NextGoalReviewDateTime = v
+	return s
+}
+
+func (s *GOL) SetPreviousGoalReviewDateTime(v *TS) *GOL {
+	s.PreviousGoalReviewDateTime = v
+	return s
+}
+
+func (s *GOL) SetGoalReviewInterval(v *TQ) *GOL {
+	s.GoalReviewInterval = v
+	return s
+}
+
+func (s *GOL) SetGoalEvaluation(v *CE) *GOL {
+	s.GoalEvaluation = v
+	return s
+}
+
+func (s *GOL) AddGoalEvaluationComment(v ST) *GOL {
+	s.GoalEvaluationComment = append(s.GoalEvaluationComment, v)
+	return s
+}
+
+func (s *GOL) SetGoalLifeCycleStatus(v *CE) *GOL {
+	s.GoalLifeCycleStatus = v
+	return s
+}
+
+func (s *GOL) SetGoalLifeCycleStatusDateTime(v *TS) *GOL {
+	s.GoalLifeCycleStatusDateTime = v
+	return s
+}
+
+func (s *GOL) AddGoalTargetType(v CE) *GOL {
+	s.GoalTargetType = append(s.GoalTargetType, v)
+	return s
+}
+
+func (s *GOL) AddGoalTargetName(v XPN) *GOL {
+	s.GoalTargetName = append(s.GoalTargetName, v)
+	return s
 }
 
 // GP1 - Grouping/Reimbursement - Visit
 // These fields are used in grouping and reimbursement for CMS APCs. Please refer to the "Outpatient Prospective Payment System Final Rule" ("OPPS Final Rule") issued by CMS.
 type GP1 struct {
-	TypeOfBillCode              IS   `hl7:"1,required"`
+	TypeOfBillCode              *IS  `hl7:"1,required"`
 	RevenueCode                 []IS `hl7:"2"`
-	OverallClaimDispositionCode IS   `hl7:"3"`
+	OverallClaimDispositionCode *IS  `hl7:"3"`
 	OCEEditsPerVisitCode        []IS `hl7:"4"`
-	OutlierCost                 CP   `hl7:"5"`
+	OutlierCost                 *CP  `hl7:"5"`
+}
+
+func NewGP1() *GP1 {
+	return &GP1{}
+}
+
+func (s *GP1) Validate() error {
+
+	if s.TypeOfBillCode == nil {
+		return fmt.Errorf("GP1.TypeOfBillCode is required")
+	}
+	if string(*s.TypeOfBillCode) == "" {
+		return fmt.Errorf("GP1.TypeOfBillCode is empty")
+	}
+
+	for _, item := range s.RevenueCode {
+		if string(item) == "" {
+			return fmt.Errorf("GP1.RevenueCode item is empty")
+		}
+	}
+
+	for _, item := range s.OCEEditsPerVisitCode {
+		if string(item) == "" {
+			return fmt.Errorf("GP1.OCEEditsPerVisitCode item is empty")
+		}
+	}
+
+	if s.OutlierCost != nil {
+		if err := s.OutlierCost.Validate(); err != nil {
+			return fmt.Errorf("GP1.OutlierCost: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *GP1) SetTypeOfBillCode(v *IS) *GP1 {
+	s.TypeOfBillCode = v
+	return s
+}
+
+func (s *GP1) AddRevenueCode(v IS) *GP1 {
+	s.RevenueCode = append(s.RevenueCode, v)
+	return s
+}
+
+func (s *GP1) SetOverallClaimDispositionCode(v *IS) *GP1 {
+	s.OverallClaimDispositionCode = v
+	return s
+}
+
+func (s *GP1) AddOCEEditsPerVisitCode(v IS) *GP1 {
+	s.OCEEditsPerVisitCode = append(s.OCEEditsPerVisitCode, v)
+	return s
+}
+
+func (s *GP1) SetOutlierCost(v *CP) *GP1 {
+	s.OutlierCost = v
+	return s
 }
 
 // GP2 - Grouping/Reimbursement - Procedure Line Item
 // This segment is used for items that pertain to each HCPC/CPT line item.
 type GP2 struct {
-	RevenueCode                         IS   `hl7:"1"`
-	NumberOfServiceUnits                NM   `hl7:"2"`
-	Charge                              CP   `hl7:"3"`
-	ReimbursementActionCode             IS   `hl7:"4"`
-	DenialOrRejectionCode               IS   `hl7:"5"`
+	RevenueCode                         *IS  `hl7:"1"`
+	NumberOfServiceUnits                *NM  `hl7:"2"`
+	Charge                              *CP  `hl7:"3"`
+	ReimbursementActionCode             *IS  `hl7:"4"`
+	DenialOrRejectionCode               *IS  `hl7:"5"`
 	OCEEditCode                         []IS `hl7:"6"`
-	AmbulatoryPaymentClassificationCode CE   `hl7:"7"`
+	AmbulatoryPaymentClassificationCode *CE  `hl7:"7"`
 	ModifierEditCode                    []IS `hl7:"8"`
-	PaymentAdjustmentCode               IS   `hl7:"9"`
-	PackagingStatusCode                 IS   `hl7:"10"`
-	ExpectedCMSPaymentAmount            CP   `hl7:"11"`
-	ReimbursementTypeCode               IS   `hl7:"12"`
-	CoPayAmount                         CP   `hl7:"13"`
-	PayRatePerServiceUnit               NM   `hl7:"14"`
+	PaymentAdjustmentCode               *IS  `hl7:"9"`
+	PackagingStatusCode                 *IS  `hl7:"10"`
+	ExpectedCMSPaymentAmount            *CP  `hl7:"11"`
+	ReimbursementTypeCode               *IS  `hl7:"12"`
+	CoPayAmount                         *CP  `hl7:"13"`
+	PayRatePerServiceUnit               *NM  `hl7:"14"`
+}
+
+func NewGP2() *GP2 {
+	return &GP2{}
+}
+
+func (s *GP2) Validate() error {
+
+	if s.Charge != nil {
+		if err := s.Charge.Validate(); err != nil {
+			return fmt.Errorf("GP2.Charge: %w", err)
+		}
+	}
+
+	for _, item := range s.OCEEditCode {
+		if string(item) == "" {
+			return fmt.Errorf("GP2.OCEEditCode item is empty")
+		}
+	}
+
+	if s.AmbulatoryPaymentClassificationCode != nil {
+		if err := s.AmbulatoryPaymentClassificationCode.Validate(); err != nil {
+			return fmt.Errorf("GP2.AmbulatoryPaymentClassificationCode: %w", err)
+		}
+	}
+
+	for _, item := range s.ModifierEditCode {
+		if string(item) == "" {
+			return fmt.Errorf("GP2.ModifierEditCode item is empty")
+		}
+	}
+
+	if s.ExpectedCMSPaymentAmount != nil {
+		if err := s.ExpectedCMSPaymentAmount.Validate(); err != nil {
+			return fmt.Errorf("GP2.ExpectedCMSPaymentAmount: %w", err)
+		}
+	}
+
+	if s.CoPayAmount != nil {
+		if err := s.CoPayAmount.Validate(); err != nil {
+			return fmt.Errorf("GP2.CoPayAmount: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *GP2) SetRevenueCode(v *IS) *GP2 {
+	s.RevenueCode = v
+	return s
+}
+
+func (s *GP2) SetNumberOfServiceUnits(v *NM) *GP2 {
+	s.NumberOfServiceUnits = v
+	return s
+}
+
+func (s *GP2) SetCharge(v *CP) *GP2 {
+	s.Charge = v
+	return s
+}
+
+func (s *GP2) SetReimbursementActionCode(v *IS) *GP2 {
+	s.ReimbursementActionCode = v
+	return s
+}
+
+func (s *GP2) SetDenialOrRejectionCode(v *IS) *GP2 {
+	s.DenialOrRejectionCode = v
+	return s
+}
+
+func (s *GP2) AddOCEEditCode(v IS) *GP2 {
+	s.OCEEditCode = append(s.OCEEditCode, v)
+	return s
+}
+
+func (s *GP2) SetAmbulatoryPaymentClassificationCode(v *CE) *GP2 {
+	s.AmbulatoryPaymentClassificationCode = v
+	return s
+}
+
+func (s *GP2) AddModifierEditCode(v IS) *GP2 {
+	s.ModifierEditCode = append(s.ModifierEditCode, v)
+	return s
+}
+
+func (s *GP2) SetPaymentAdjustmentCode(v *IS) *GP2 {
+	s.PaymentAdjustmentCode = v
+	return s
+}
+
+func (s *GP2) SetPackagingStatusCode(v *IS) *GP2 {
+	s.PackagingStatusCode = v
+	return s
+}
+
+func (s *GP2) SetExpectedCMSPaymentAmount(v *CP) *GP2 {
+	s.ExpectedCMSPaymentAmount = v
+	return s
+}
+
+func (s *GP2) SetReimbursementTypeCode(v *IS) *GP2 {
+	s.ReimbursementTypeCode = v
+	return s
+}
+
+func (s *GP2) SetCoPayAmount(v *CP) *GP2 {
+	s.CoPayAmount = v
+	return s
+}
+
+func (s *GP2) SetPayRatePerServiceUnit(v *NM) *GP2 {
+	s.PayRatePerServiceUnit = v
+	return s
 }
 
 // GT1 - Guarantor
 // The GT1 segment contains guarantor (e.g., the person or the organization with financial responsibility for payment of a patient account) data for patient and insurance billing applications.
 type GT1 struct {
-	SetIDGT1                           SI    `hl7:"1,required"`
+	SetIDGT1                           *SI   `hl7:"1,required"`
 	GuarantorNumber                    []CX  `hl7:"2"`
 	GuarantorName                      []XPN `hl7:"3,required"`
 	GuarantorSpouseName                []XPN `hl7:"4"`
 	GuarantorAddress                   []XAD `hl7:"5"`
 	GuarantorPhNumHome                 []XTN `hl7:"6"`
 	GuarantorPhNumBusiness             []XTN `hl7:"7"`
-	GuarantorDateTimeOfBirth           TS    `hl7:"8"`
-	GuarantorAdministrativeSex         IS    `hl7:"9"`
-	GuarantorType                      IS    `hl7:"10"`
-	GuarantorRelationship              CE    `hl7:"11"`
-	GuarantorSSN                       ST    `hl7:"12"`
-	GuarantorDateBegin                 DT    `hl7:"13"`
-	GuarantorDateEnd                   DT    `hl7:"14"`
-	GuarantorPriority                  NM    `hl7:"15"`
+	GuarantorDateTimeOfBirth           *TS   `hl7:"8"`
+	GuarantorAdministrativeSex         *IS   `hl7:"9"`
+	GuarantorType                      *IS   `hl7:"10"`
+	GuarantorRelationship              *CE   `hl7:"11"`
+	GuarantorSSN                       *ST   `hl7:"12"`
+	GuarantorDateBegin                 *DT   `hl7:"13"`
+	GuarantorDateEnd                   *DT   `hl7:"14"`
+	GuarantorPriority                  *NM   `hl7:"15"`
 	GuarantorEmployerName              []XPN `hl7:"16"`
 	GuarantorEmployerAddress           []XAD `hl7:"17"`
 	GuarantorEmployerPhoneNumber       []XTN `hl7:"18"`
 	GuarantorEmployeeIDNumber          []CX  `hl7:"19"`
-	GuarantorEmploymentStatus          IS    `hl7:"20"`
+	GuarantorEmploymentStatus          *IS   `hl7:"20"`
 	GuarantorOrganizationName          []XON `hl7:"21"`
-	GuarantorBillingHoldFlag           ID    `hl7:"22"`
-	GuarantorCreditRatingCode          CE    `hl7:"23"`
-	GuarantorDeathDateAndTime          TS    `hl7:"24"`
-	GuarantorDeathFlag                 ID    `hl7:"25"`
-	GuarantorChargeAdjustmentCode      CE    `hl7:"26"`
-	GuarantorHouseholdAnnualIncome     CP    `hl7:"27"`
-	GuarantorHouseholdSize             NM    `hl7:"28"`
+	GuarantorBillingHoldFlag           *ID   `hl7:"22"`
+	GuarantorCreditRatingCode          *CE   `hl7:"23"`
+	GuarantorDeathDateAndTime          *TS   `hl7:"24"`
+	GuarantorDeathFlag                 *ID   `hl7:"25"`
+	GuarantorChargeAdjustmentCode      *CE   `hl7:"26"`
+	GuarantorHouseholdAnnualIncome     *CP   `hl7:"27"`
+	GuarantorHouseholdSize             *NM   `hl7:"28"`
 	GuarantorEmployerIDNumber          []CX  `hl7:"29"`
-	GuarantorMaritalStatusCode         CE    `hl7:"30"`
-	GuarantorHireEffectiveDate         DT    `hl7:"31"`
-	EmploymentStopDate                 DT    `hl7:"32"`
-	LivingDependency                   IS    `hl7:"33"`
+	GuarantorMaritalStatusCode         *CE   `hl7:"30"`
+	GuarantorHireEffectiveDate         *DT   `hl7:"31"`
+	EmploymentStopDate                 *DT   `hl7:"32"`
+	LivingDependency                   *IS   `hl7:"33"`
 	AmbulatoryStatus                   []IS  `hl7:"34"`
 	Citizenship                        []CE  `hl7:"35"`
-	PrimaryLanguage                    CE    `hl7:"36"`
-	LivingArrangement                  IS    `hl7:"37"`
-	PublicityCode                      CE    `hl7:"38"`
-	ProtectionIndicator                ID    `hl7:"39"`
-	StudentIndicator                   IS    `hl7:"40"`
-	Religion                           CE    `hl7:"41"`
+	PrimaryLanguage                    *CE   `hl7:"36"`
+	LivingArrangement                  *IS   `hl7:"37"`
+	PublicityCode                      *CE   `hl7:"38"`
+	ProtectionIndicator                *ID   `hl7:"39"`
+	StudentIndicator                   *IS   `hl7:"40"`
+	Religion                           *CE   `hl7:"41"`
 	MotherSMaidenName                  []XPN `hl7:"42"`
-	Nationality                        CE    `hl7:"43"`
+	Nationality                        *CE   `hl7:"43"`
 	EthnicGroup                        []CE  `hl7:"44"`
 	ContactPersonSName                 []XPN `hl7:"45"`
 	ContactPersonSTelephoneNumber      []XTN `hl7:"46"`
-	ContactReason                      CE    `hl7:"47"`
-	ContactRelationship                IS    `hl7:"48"`
-	JobTitle                           ST    `hl7:"49"`
-	JobCodeClass                       JCC   `hl7:"50"`
+	ContactReason                      *CE   `hl7:"47"`
+	ContactRelationship                *IS   `hl7:"48"`
+	JobTitle                           *ST   `hl7:"49"`
+	JobCodeClass                       *JCC  `hl7:"50"`
 	GuarantorEmployerSOrganizationName []XON `hl7:"51"`
-	Handicap                           IS    `hl7:"52"`
-	JobStatus                          IS    `hl7:"53"`
-	GuarantorFinancialClass            FC    `hl7:"54"`
+	Handicap                           *IS   `hl7:"52"`
+	JobStatus                          *IS   `hl7:"53"`
+	GuarantorFinancialClass            *FC   `hl7:"54"`
 	GuarantorRace                      []CE  `hl7:"55"`
-	GuarantorBirthPlace                ST    `hl7:"56"`
-	VIPIndicator                       IS    `hl7:"57"`
+	GuarantorBirthPlace                *ST   `hl7:"56"`
+	VIPIndicator                       *IS   `hl7:"57"`
+}
+
+func NewGT1() *GT1 {
+	return &GT1{}
+}
+
+func (s *GT1) Validate() error {
+
+	if s.SetIDGT1 == nil {
+		return fmt.Errorf("GT1.SetIDGT1 is required")
+	}
+	if string(*s.SetIDGT1) == "" {
+		return fmt.Errorf("GT1.SetIDGT1 is empty")
+	}
+
+	for _, item := range s.GuarantorNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("GT1.GuarantorNumber: %w", err)
+		}
+	}
+
+	if len(s.GuarantorName) == 0 {
+		return fmt.Errorf("GT1.GuarantorName is required")
+	}
+	for _, item := range s.GuarantorName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("GT1.GuarantorName: %w", err)
+		}
+	}
+
+	for _, item := range s.GuarantorSpouseName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("GT1.GuarantorSpouseName: %w", err)
+		}
+	}
+
+	for _, item := range s.GuarantorAddress {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("GT1.GuarantorAddress: %w", err)
+		}
+	}
+
+	for _, item := range s.GuarantorPhNumHome {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("GT1.GuarantorPhNumHome: %w", err)
+		}
+	}
+
+	for _, item := range s.GuarantorPhNumBusiness {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("GT1.GuarantorPhNumBusiness: %w", err)
+		}
+	}
+
+	if s.GuarantorDateTimeOfBirth != nil {
+		if err := s.GuarantorDateTimeOfBirth.Validate(); err != nil {
+			return fmt.Errorf("GT1.GuarantorDateTimeOfBirth: %w", err)
+		}
+	}
+
+	if s.GuarantorRelationship != nil {
+		if err := s.GuarantorRelationship.Validate(); err != nil {
+			return fmt.Errorf("GT1.GuarantorRelationship: %w", err)
+		}
+	}
+
+	for _, item := range s.GuarantorEmployerName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("GT1.GuarantorEmployerName: %w", err)
+		}
+	}
+
+	for _, item := range s.GuarantorEmployerAddress {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("GT1.GuarantorEmployerAddress: %w", err)
+		}
+	}
+
+	for _, item := range s.GuarantorEmployerPhoneNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("GT1.GuarantorEmployerPhoneNumber: %w", err)
+		}
+	}
+
+	for _, item := range s.GuarantorEmployeeIDNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("GT1.GuarantorEmployeeIDNumber: %w", err)
+		}
+	}
+
+	for _, item := range s.GuarantorOrganizationName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("GT1.GuarantorOrganizationName: %w", err)
+		}
+	}
+
+	if s.GuarantorCreditRatingCode != nil {
+		if err := s.GuarantorCreditRatingCode.Validate(); err != nil {
+			return fmt.Errorf("GT1.GuarantorCreditRatingCode: %w", err)
+		}
+	}
+
+	if s.GuarantorDeathDateAndTime != nil {
+		if err := s.GuarantorDeathDateAndTime.Validate(); err != nil {
+			return fmt.Errorf("GT1.GuarantorDeathDateAndTime: %w", err)
+		}
+	}
+
+	if s.GuarantorChargeAdjustmentCode != nil {
+		if err := s.GuarantorChargeAdjustmentCode.Validate(); err != nil {
+			return fmt.Errorf("GT1.GuarantorChargeAdjustmentCode: %w", err)
+		}
+	}
+
+	if s.GuarantorHouseholdAnnualIncome != nil {
+		if err := s.GuarantorHouseholdAnnualIncome.Validate(); err != nil {
+			return fmt.Errorf("GT1.GuarantorHouseholdAnnualIncome: %w", err)
+		}
+	}
+
+	for _, item := range s.GuarantorEmployerIDNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("GT1.GuarantorEmployerIDNumber: %w", err)
+		}
+	}
+
+	if s.GuarantorMaritalStatusCode != nil {
+		if err := s.GuarantorMaritalStatusCode.Validate(); err != nil {
+			return fmt.Errorf("GT1.GuarantorMaritalStatusCode: %w", err)
+		}
+	}
+
+	for _, item := range s.AmbulatoryStatus {
+		if string(item) == "" {
+			return fmt.Errorf("GT1.AmbulatoryStatus item is empty")
+		}
+	}
+
+	for _, item := range s.Citizenship {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("GT1.Citizenship: %w", err)
+		}
+	}
+
+	if s.PrimaryLanguage != nil {
+		if err := s.PrimaryLanguage.Validate(); err != nil {
+			return fmt.Errorf("GT1.PrimaryLanguage: %w", err)
+		}
+	}
+
+	if s.PublicityCode != nil {
+		if err := s.PublicityCode.Validate(); err != nil {
+			return fmt.Errorf("GT1.PublicityCode: %w", err)
+		}
+	}
+
+	if s.Religion != nil {
+		if err := s.Religion.Validate(); err != nil {
+			return fmt.Errorf("GT1.Religion: %w", err)
+		}
+	}
+
+	for _, item := range s.MotherSMaidenName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("GT1.MotherSMaidenName: %w", err)
+		}
+	}
+
+	if s.Nationality != nil {
+		if err := s.Nationality.Validate(); err != nil {
+			return fmt.Errorf("GT1.Nationality: %w", err)
+		}
+	}
+
+	for _, item := range s.EthnicGroup {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("GT1.EthnicGroup: %w", err)
+		}
+	}
+
+	for _, item := range s.ContactPersonSName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("GT1.ContactPersonSName: %w", err)
+		}
+	}
+
+	for _, item := range s.ContactPersonSTelephoneNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("GT1.ContactPersonSTelephoneNumber: %w", err)
+		}
+	}
+
+	if s.ContactReason != nil {
+		if err := s.ContactReason.Validate(); err != nil {
+			return fmt.Errorf("GT1.ContactReason: %w", err)
+		}
+	}
+
+	if s.JobCodeClass != nil {
+		if err := s.JobCodeClass.Validate(); err != nil {
+			return fmt.Errorf("GT1.JobCodeClass: %w", err)
+		}
+	}
+
+	for _, item := range s.GuarantorEmployerSOrganizationName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("GT1.GuarantorEmployerSOrganizationName: %w", err)
+		}
+	}
+
+	if s.GuarantorFinancialClass != nil {
+		if err := s.GuarantorFinancialClass.Validate(); err != nil {
+			return fmt.Errorf("GT1.GuarantorFinancialClass: %w", err)
+		}
+	}
+
+	for _, item := range s.GuarantorRace {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("GT1.GuarantorRace: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *GT1) SetSetIDGT1(v *SI) *GT1 {
+	s.SetIDGT1 = v
+	return s
+}
+
+func (s *GT1) AddGuarantorNumber(v CX) *GT1 {
+	s.GuarantorNumber = append(s.GuarantorNumber, v)
+	return s
+}
+
+func (s *GT1) AddGuarantorName(v XPN) *GT1 {
+	s.GuarantorName = append(s.GuarantorName, v)
+	return s
+}
+
+func (s *GT1) AddGuarantorSpouseName(v XPN) *GT1 {
+	s.GuarantorSpouseName = append(s.GuarantorSpouseName, v)
+	return s
+}
+
+func (s *GT1) AddGuarantorAddress(v XAD) *GT1 {
+	s.GuarantorAddress = append(s.GuarantorAddress, v)
+	return s
+}
+
+func (s *GT1) AddGuarantorPhNumHome(v XTN) *GT1 {
+	s.GuarantorPhNumHome = append(s.GuarantorPhNumHome, v)
+	return s
+}
+
+func (s *GT1) AddGuarantorPhNumBusiness(v XTN) *GT1 {
+	s.GuarantorPhNumBusiness = append(s.GuarantorPhNumBusiness, v)
+	return s
+}
+
+func (s *GT1) SetGuarantorDateTimeOfBirth(v *TS) *GT1 {
+	s.GuarantorDateTimeOfBirth = v
+	return s
+}
+
+func (s *GT1) SetGuarantorAdministrativeSex(v *IS) *GT1 {
+	s.GuarantorAdministrativeSex = v
+	return s
+}
+
+func (s *GT1) SetGuarantorType(v *IS) *GT1 {
+	s.GuarantorType = v
+	return s
+}
+
+func (s *GT1) SetGuarantorRelationship(v *CE) *GT1 {
+	s.GuarantorRelationship = v
+	return s
+}
+
+func (s *GT1) SetGuarantorSSN(v *ST) *GT1 {
+	s.GuarantorSSN = v
+	return s
+}
+
+func (s *GT1) SetGuarantorDateBegin(v *DT) *GT1 {
+	s.GuarantorDateBegin = v
+	return s
+}
+
+func (s *GT1) SetGuarantorDateEnd(v *DT) *GT1 {
+	s.GuarantorDateEnd = v
+	return s
+}
+
+func (s *GT1) SetGuarantorPriority(v *NM) *GT1 {
+	s.GuarantorPriority = v
+	return s
+}
+
+func (s *GT1) AddGuarantorEmployerName(v XPN) *GT1 {
+	s.GuarantorEmployerName = append(s.GuarantorEmployerName, v)
+	return s
+}
+
+func (s *GT1) AddGuarantorEmployerAddress(v XAD) *GT1 {
+	s.GuarantorEmployerAddress = append(s.GuarantorEmployerAddress, v)
+	return s
+}
+
+func (s *GT1) AddGuarantorEmployerPhoneNumber(v XTN) *GT1 {
+	s.GuarantorEmployerPhoneNumber = append(s.GuarantorEmployerPhoneNumber, v)
+	return s
+}
+
+func (s *GT1) AddGuarantorEmployeeIDNumber(v CX) *GT1 {
+	s.GuarantorEmployeeIDNumber = append(s.GuarantorEmployeeIDNumber, v)
+	return s
+}
+
+func (s *GT1) SetGuarantorEmploymentStatus(v *IS) *GT1 {
+	s.GuarantorEmploymentStatus = v
+	return s
+}
+
+func (s *GT1) AddGuarantorOrganizationName(v XON) *GT1 {
+	s.GuarantorOrganizationName = append(s.GuarantorOrganizationName, v)
+	return s
+}
+
+func (s *GT1) SetGuarantorBillingHoldFlag(v *ID) *GT1 {
+	s.GuarantorBillingHoldFlag = v
+	return s
+}
+
+func (s *GT1) SetGuarantorCreditRatingCode(v *CE) *GT1 {
+	s.GuarantorCreditRatingCode = v
+	return s
+}
+
+func (s *GT1) SetGuarantorDeathDateAndTime(v *TS) *GT1 {
+	s.GuarantorDeathDateAndTime = v
+	return s
+}
+
+func (s *GT1) SetGuarantorDeathFlag(v *ID) *GT1 {
+	s.GuarantorDeathFlag = v
+	return s
+}
+
+func (s *GT1) SetGuarantorChargeAdjustmentCode(v *CE) *GT1 {
+	s.GuarantorChargeAdjustmentCode = v
+	return s
+}
+
+func (s *GT1) SetGuarantorHouseholdAnnualIncome(v *CP) *GT1 {
+	s.GuarantorHouseholdAnnualIncome = v
+	return s
+}
+
+func (s *GT1) SetGuarantorHouseholdSize(v *NM) *GT1 {
+	s.GuarantorHouseholdSize = v
+	return s
+}
+
+func (s *GT1) AddGuarantorEmployerIDNumber(v CX) *GT1 {
+	s.GuarantorEmployerIDNumber = append(s.GuarantorEmployerIDNumber, v)
+	return s
+}
+
+func (s *GT1) SetGuarantorMaritalStatusCode(v *CE) *GT1 {
+	s.GuarantorMaritalStatusCode = v
+	return s
+}
+
+func (s *GT1) SetGuarantorHireEffectiveDate(v *DT) *GT1 {
+	s.GuarantorHireEffectiveDate = v
+	return s
+}
+
+func (s *GT1) SetEmploymentStopDate(v *DT) *GT1 {
+	s.EmploymentStopDate = v
+	return s
+}
+
+func (s *GT1) SetLivingDependency(v *IS) *GT1 {
+	s.LivingDependency = v
+	return s
+}
+
+func (s *GT1) AddAmbulatoryStatus(v IS) *GT1 {
+	s.AmbulatoryStatus = append(s.AmbulatoryStatus, v)
+	return s
+}
+
+func (s *GT1) AddCitizenship(v CE) *GT1 {
+	s.Citizenship = append(s.Citizenship, v)
+	return s
+}
+
+func (s *GT1) SetPrimaryLanguage(v *CE) *GT1 {
+	s.PrimaryLanguage = v
+	return s
+}
+
+func (s *GT1) SetLivingArrangement(v *IS) *GT1 {
+	s.LivingArrangement = v
+	return s
+}
+
+func (s *GT1) SetPublicityCode(v *CE) *GT1 {
+	s.PublicityCode = v
+	return s
+}
+
+func (s *GT1) SetProtectionIndicator(v *ID) *GT1 {
+	s.ProtectionIndicator = v
+	return s
+}
+
+func (s *GT1) SetStudentIndicator(v *IS) *GT1 {
+	s.StudentIndicator = v
+	return s
+}
+
+func (s *GT1) SetReligion(v *CE) *GT1 {
+	s.Religion = v
+	return s
+}
+
+func (s *GT1) AddMotherSMaidenName(v XPN) *GT1 {
+	s.MotherSMaidenName = append(s.MotherSMaidenName, v)
+	return s
+}
+
+func (s *GT1) SetNationality(v *CE) *GT1 {
+	s.Nationality = v
+	return s
+}
+
+func (s *GT1) AddEthnicGroup(v CE) *GT1 {
+	s.EthnicGroup = append(s.EthnicGroup, v)
+	return s
+}
+
+func (s *GT1) AddContactPersonSName(v XPN) *GT1 {
+	s.ContactPersonSName = append(s.ContactPersonSName, v)
+	return s
+}
+
+func (s *GT1) AddContactPersonSTelephoneNumber(v XTN) *GT1 {
+	s.ContactPersonSTelephoneNumber = append(s.ContactPersonSTelephoneNumber, v)
+	return s
+}
+
+func (s *GT1) SetContactReason(v *CE) *GT1 {
+	s.ContactReason = v
+	return s
+}
+
+func (s *GT1) SetContactRelationship(v *IS) *GT1 {
+	s.ContactRelationship = v
+	return s
+}
+
+func (s *GT1) SetJobTitle(v *ST) *GT1 {
+	s.JobTitle = v
+	return s
+}
+
+func (s *GT1) SetJobCodeClass(v *JCC) *GT1 {
+	s.JobCodeClass = v
+	return s
+}
+
+func (s *GT1) AddGuarantorEmployerSOrganizationName(v XON) *GT1 {
+	s.GuarantorEmployerSOrganizationName = append(s.GuarantorEmployerSOrganizationName, v)
+	return s
+}
+
+func (s *GT1) SetHandicap(v *IS) *GT1 {
+	s.Handicap = v
+	return s
+}
+
+func (s *GT1) SetJobStatus(v *IS) *GT1 {
+	s.JobStatus = v
+	return s
+}
+
+func (s *GT1) SetGuarantorFinancialClass(v *FC) *GT1 {
+	s.GuarantorFinancialClass = v
+	return s
+}
+
+func (s *GT1) AddGuarantorRace(v CE) *GT1 {
+	s.GuarantorRace = append(s.GuarantorRace, v)
+	return s
+}
+
+func (s *GT1) SetGuarantorBirthPlace(v *ST) *GT1 {
+	s.GuarantorBirthPlace = v
+	return s
+}
+
+func (s *GT1) SetVIPIndicator(v *IS) *GT1 {
+	s.VIPIndicator = v
+	return s
 }
 
 // IAM - Patient Adverse Reaction Information
 // The IAM segment contains person/patient adverse reaction information of various types. Most of this information will be derived from user-defined tables. Each IAM segment describes a single person/patient adverse reaction. This segment is used in lieu of the AL1 - Patient Allergy Information Segment to support action code/unique identifier mode update definition of repeating segments. The AL1 segment is used to support Snapshot mode update definition.
 type IAM struct {
-	SetIDIAM                             SI   `hl7:"1,required"`
-	AllergenTypeCode                     CE   `hl7:"2"`
-	AllergenCodeMnemonicDescription      CE   `hl7:"3,required"`
-	AllergySeverityCode                  CE   `hl7:"4"`
+	SetIDIAM                             *SI  `hl7:"1,required"`
+	AllergenTypeCode                     *CE  `hl7:"2"`
+	AllergenCodeMnemonicDescription      *CE  `hl7:"3,required"`
+	AllergySeverityCode                  *CE  `hl7:"4"`
 	AllergyReactionCode                  []ST `hl7:"5"`
-	AllergyActionCode                    CNE  `hl7:"6,required"`
-	AllergyUniqueIdentifier              EI   `hl7:"7"`
-	ActionReason                         ST   `hl7:"8"`
-	SensitivityToCausativeAgentCode      CE   `hl7:"9"`
-	AllergenGroupCodeMnemonicDescription CE   `hl7:"10"`
-	OnsetDate                            DT   `hl7:"11"`
-	OnsetDateText                        ST   `hl7:"12"`
-	ReportedDateTime                     TS   `hl7:"13"`
-	ReportedBy                           XPN  `hl7:"14"`
-	RelationshipToPatientCode            CE   `hl7:"15"`
-	AlertDeviceCode                      CE   `hl7:"16"`
-	AllergyClinicalStatusCode            CE   `hl7:"17"`
-	StatusedByPerson                     XCN  `hl7:"18"`
-	StatusedByOrganization               XON  `hl7:"19"`
-	StatusedAtDateTime                   TS   `hl7:"20"`
+	AllergyActionCode                    *CNE `hl7:"6,required"`
+	AllergyUniqueIdentifier              *EI  `hl7:"7"`
+	ActionReason                         *ST  `hl7:"8"`
+	SensitivityToCausativeAgentCode      *CE  `hl7:"9"`
+	AllergenGroupCodeMnemonicDescription *CE  `hl7:"10"`
+	OnsetDate                            *DT  `hl7:"11"`
+	OnsetDateText                        *ST  `hl7:"12"`
+	ReportedDateTime                     *TS  `hl7:"13"`
+	ReportedBy                           *XPN `hl7:"14"`
+	RelationshipToPatientCode            *CE  `hl7:"15"`
+	AlertDeviceCode                      *CE  `hl7:"16"`
+	AllergyClinicalStatusCode            *CE  `hl7:"17"`
+	StatusedByPerson                     *XCN `hl7:"18"`
+	StatusedByOrganization               *XON `hl7:"19"`
+	StatusedAtDateTime                   *TS  `hl7:"20"`
+}
+
+func NewIAM() *IAM {
+	return &IAM{}
+}
+
+func (s *IAM) Validate() error {
+
+	if s.SetIDIAM == nil {
+		return fmt.Errorf("IAM.SetIDIAM is required")
+	}
+	if string(*s.SetIDIAM) == "" {
+		return fmt.Errorf("IAM.SetIDIAM is empty")
+	}
+
+	if s.AllergenTypeCode != nil {
+		if err := s.AllergenTypeCode.Validate(); err != nil {
+			return fmt.Errorf("IAM.AllergenTypeCode: %w", err)
+		}
+	}
+
+	if s.AllergenCodeMnemonicDescription == nil {
+		return fmt.Errorf("IAM.AllergenCodeMnemonicDescription is required")
+	}
+	if s.AllergenCodeMnemonicDescription != nil {
+		if err := s.AllergenCodeMnemonicDescription.Validate(); err != nil {
+			return fmt.Errorf("IAM.AllergenCodeMnemonicDescription: %w", err)
+		}
+	}
+
+	if s.AllergySeverityCode != nil {
+		if err := s.AllergySeverityCode.Validate(); err != nil {
+			return fmt.Errorf("IAM.AllergySeverityCode: %w", err)
+		}
+	}
+
+	for _, item := range s.AllergyReactionCode {
+		if string(item) == "" {
+			return fmt.Errorf("IAM.AllergyReactionCode item is empty")
+		}
+	}
+
+	if s.AllergyActionCode == nil {
+		return fmt.Errorf("IAM.AllergyActionCode is required")
+	}
+	if s.AllergyActionCode != nil {
+		if err := s.AllergyActionCode.Validate(); err != nil {
+			return fmt.Errorf("IAM.AllergyActionCode: %w", err)
+		}
+	}
+
+	if s.AllergyUniqueIdentifier != nil {
+		if err := s.AllergyUniqueIdentifier.Validate(); err != nil {
+			return fmt.Errorf("IAM.AllergyUniqueIdentifier: %w", err)
+		}
+	}
+
+	if s.SensitivityToCausativeAgentCode != nil {
+		if err := s.SensitivityToCausativeAgentCode.Validate(); err != nil {
+			return fmt.Errorf("IAM.SensitivityToCausativeAgentCode: %w", err)
+		}
+	}
+
+	if s.AllergenGroupCodeMnemonicDescription != nil {
+		if err := s.AllergenGroupCodeMnemonicDescription.Validate(); err != nil {
+			return fmt.Errorf("IAM.AllergenGroupCodeMnemonicDescription: %w", err)
+		}
+	}
+
+	if s.ReportedDateTime != nil {
+		if err := s.ReportedDateTime.Validate(); err != nil {
+			return fmt.Errorf("IAM.ReportedDateTime: %w", err)
+		}
+	}
+
+	if s.ReportedBy != nil {
+		if err := s.ReportedBy.Validate(); err != nil {
+			return fmt.Errorf("IAM.ReportedBy: %w", err)
+		}
+	}
+
+	if s.RelationshipToPatientCode != nil {
+		if err := s.RelationshipToPatientCode.Validate(); err != nil {
+			return fmt.Errorf("IAM.RelationshipToPatientCode: %w", err)
+		}
+	}
+
+	if s.AlertDeviceCode != nil {
+		if err := s.AlertDeviceCode.Validate(); err != nil {
+			return fmt.Errorf("IAM.AlertDeviceCode: %w", err)
+		}
+	}
+
+	if s.AllergyClinicalStatusCode != nil {
+		if err := s.AllergyClinicalStatusCode.Validate(); err != nil {
+			return fmt.Errorf("IAM.AllergyClinicalStatusCode: %w", err)
+		}
+	}
+
+	if s.StatusedByPerson != nil {
+		if err := s.StatusedByPerson.Validate(); err != nil {
+			return fmt.Errorf("IAM.StatusedByPerson: %w", err)
+		}
+	}
+
+	if s.StatusedByOrganization != nil {
+		if err := s.StatusedByOrganization.Validate(); err != nil {
+			return fmt.Errorf("IAM.StatusedByOrganization: %w", err)
+		}
+	}
+
+	if s.StatusedAtDateTime != nil {
+		if err := s.StatusedAtDateTime.Validate(); err != nil {
+			return fmt.Errorf("IAM.StatusedAtDateTime: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *IAM) SetSetIDIAM(v *SI) *IAM {
+	s.SetIDIAM = v
+	return s
+}
+
+func (s *IAM) SetAllergenTypeCode(v *CE) *IAM {
+	s.AllergenTypeCode = v
+	return s
+}
+
+func (s *IAM) SetAllergenCodeMnemonicDescription(v *CE) *IAM {
+	s.AllergenCodeMnemonicDescription = v
+	return s
+}
+
+func (s *IAM) SetAllergySeverityCode(v *CE) *IAM {
+	s.AllergySeverityCode = v
+	return s
+}
+
+func (s *IAM) AddAllergyReactionCode(v ST) *IAM {
+	s.AllergyReactionCode = append(s.AllergyReactionCode, v)
+	return s
+}
+
+func (s *IAM) SetAllergyActionCode(v *CNE) *IAM {
+	s.AllergyActionCode = v
+	return s
+}
+
+func (s *IAM) SetAllergyUniqueIdentifier(v *EI) *IAM {
+	s.AllergyUniqueIdentifier = v
+	return s
+}
+
+func (s *IAM) SetActionReason(v *ST) *IAM {
+	s.ActionReason = v
+	return s
+}
+
+func (s *IAM) SetSensitivityToCausativeAgentCode(v *CE) *IAM {
+	s.SensitivityToCausativeAgentCode = v
+	return s
+}
+
+func (s *IAM) SetAllergenGroupCodeMnemonicDescription(v *CE) *IAM {
+	s.AllergenGroupCodeMnemonicDescription = v
+	return s
+}
+
+func (s *IAM) SetOnsetDate(v *DT) *IAM {
+	s.OnsetDate = v
+	return s
+}
+
+func (s *IAM) SetOnsetDateText(v *ST) *IAM {
+	s.OnsetDateText = v
+	return s
+}
+
+func (s *IAM) SetReportedDateTime(v *TS) *IAM {
+	s.ReportedDateTime = v
+	return s
+}
+
+func (s *IAM) SetReportedBy(v *XPN) *IAM {
+	s.ReportedBy = v
+	return s
+}
+
+func (s *IAM) SetRelationshipToPatientCode(v *CE) *IAM {
+	s.RelationshipToPatientCode = v
+	return s
+}
+
+func (s *IAM) SetAlertDeviceCode(v *CE) *IAM {
+	s.AlertDeviceCode = v
+	return s
+}
+
+func (s *IAM) SetAllergyClinicalStatusCode(v *CE) *IAM {
+	s.AllergyClinicalStatusCode = v
+	return s
+}
+
+func (s *IAM) SetStatusedByPerson(v *XCN) *IAM {
+	s.StatusedByPerson = v
+	return s
+}
+
+func (s *IAM) SetStatusedByOrganization(v *XON) *IAM {
+	s.StatusedByOrganization = v
+	return s
+}
+
+func (s *IAM) SetStatusedAtDateTime(v *TS) *IAM {
+	s.StatusedAtDateTime = v
+	return s
 }
 
 // IIM - Inventory Item Master
@@ -881,251 +7176,2161 @@ type IAM struct {
 //
 // Note:  We recognize that the M15 Inventory Item Master File trigger event and the IIM inventory item master segment is a limited implementation.  There is a comprehensive Materials Management message in development for inclusion in the next release.  For further information contact the Scheduling and Logistics TC.  This will be coordinated with the Control/Query TC and the Orders and Observations TC.
 type IIM struct {
-	PrimaryKeyValueIIM            CWE  `hl7:"1,required"`
-	ServiceItemCode               CWE  `hl7:"2,required"`
-	InventoryLotNumber            ST   `hl7:"3"`
-	InventoryExpirationDate       TS   `hl7:"4"`
-	InventoryManufacturerName     CWE  `hl7:"5"`
-	InventoryLocation             CWE  `hl7:"6"`
-	InventoryReceivedDate         TS   `hl7:"7"`
-	InventoryReceivedQuantity     NM   `hl7:"8"`
-	InventoryReceivedQuantityUnit CWE  `hl7:"9"`
-	InventoryReceivedItemCost     MO   `hl7:"10"`
-	InventoryOnHandDate           TS   `hl7:"11"`
-	InventoryOnHandQuantity       NM   `hl7:"12"`
-	InventoryOnHandQuantityUnit   CWE  `hl7:"13"`
-	ProcedureCode                 CE   `hl7:"14"`
+	PrimaryKeyValueIIM            *CWE `hl7:"1,required"`
+	ServiceItemCode               *CWE `hl7:"2,required"`
+	InventoryLotNumber            *ST  `hl7:"3"`
+	InventoryExpirationDate       *TS  `hl7:"4"`
+	InventoryManufacturerName     *CWE `hl7:"5"`
+	InventoryLocation             *CWE `hl7:"6"`
+	InventoryReceivedDate         *TS  `hl7:"7"`
+	InventoryReceivedQuantity     *NM  `hl7:"8"`
+	InventoryReceivedQuantityUnit *CWE `hl7:"9"`
+	InventoryReceivedItemCost     *MO  `hl7:"10"`
+	InventoryOnHandDate           *TS  `hl7:"11"`
+	InventoryOnHandQuantity       *NM  `hl7:"12"`
+	InventoryOnHandQuantityUnit   *CWE `hl7:"13"`
+	ProcedureCode                 *CE  `hl7:"14"`
 	ProcedureCodeModifier         []CE `hl7:"15"`
+}
+
+func NewIIM() *IIM {
+	return &IIM{}
+}
+
+func (s *IIM) Validate() error {
+
+	if s.PrimaryKeyValueIIM == nil {
+		return fmt.Errorf("IIM.PrimaryKeyValueIIM is required")
+	}
+	if s.PrimaryKeyValueIIM != nil {
+		if err := s.PrimaryKeyValueIIM.Validate(); err != nil {
+			return fmt.Errorf("IIM.PrimaryKeyValueIIM: %w", err)
+		}
+	}
+
+	if s.ServiceItemCode == nil {
+		return fmt.Errorf("IIM.ServiceItemCode is required")
+	}
+	if s.ServiceItemCode != nil {
+		if err := s.ServiceItemCode.Validate(); err != nil {
+			return fmt.Errorf("IIM.ServiceItemCode: %w", err)
+		}
+	}
+
+	if s.InventoryExpirationDate != nil {
+		if err := s.InventoryExpirationDate.Validate(); err != nil {
+			return fmt.Errorf("IIM.InventoryExpirationDate: %w", err)
+		}
+	}
+
+	if s.InventoryManufacturerName != nil {
+		if err := s.InventoryManufacturerName.Validate(); err != nil {
+			return fmt.Errorf("IIM.InventoryManufacturerName: %w", err)
+		}
+	}
+
+	if s.InventoryLocation != nil {
+		if err := s.InventoryLocation.Validate(); err != nil {
+			return fmt.Errorf("IIM.InventoryLocation: %w", err)
+		}
+	}
+
+	if s.InventoryReceivedDate != nil {
+		if err := s.InventoryReceivedDate.Validate(); err != nil {
+			return fmt.Errorf("IIM.InventoryReceivedDate: %w", err)
+		}
+	}
+
+	if s.InventoryReceivedQuantityUnit != nil {
+		if err := s.InventoryReceivedQuantityUnit.Validate(); err != nil {
+			return fmt.Errorf("IIM.InventoryReceivedQuantityUnit: %w", err)
+		}
+	}
+
+	if s.InventoryReceivedItemCost != nil {
+		if err := s.InventoryReceivedItemCost.Validate(); err != nil {
+			return fmt.Errorf("IIM.InventoryReceivedItemCost: %w", err)
+		}
+	}
+
+	if s.InventoryOnHandDate != nil {
+		if err := s.InventoryOnHandDate.Validate(); err != nil {
+			return fmt.Errorf("IIM.InventoryOnHandDate: %w", err)
+		}
+	}
+
+	if s.InventoryOnHandQuantityUnit != nil {
+		if err := s.InventoryOnHandQuantityUnit.Validate(); err != nil {
+			return fmt.Errorf("IIM.InventoryOnHandQuantityUnit: %w", err)
+		}
+	}
+
+	if s.ProcedureCode != nil {
+		if err := s.ProcedureCode.Validate(); err != nil {
+			return fmt.Errorf("IIM.ProcedureCode: %w", err)
+		}
+	}
+
+	for _, item := range s.ProcedureCodeModifier {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IIM.ProcedureCodeModifier: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *IIM) SetPrimaryKeyValueIIM(v *CWE) *IIM {
+	s.PrimaryKeyValueIIM = v
+	return s
+}
+
+func (s *IIM) SetServiceItemCode(v *CWE) *IIM {
+	s.ServiceItemCode = v
+	return s
+}
+
+func (s *IIM) SetInventoryLotNumber(v *ST) *IIM {
+	s.InventoryLotNumber = v
+	return s
+}
+
+func (s *IIM) SetInventoryExpirationDate(v *TS) *IIM {
+	s.InventoryExpirationDate = v
+	return s
+}
+
+func (s *IIM) SetInventoryManufacturerName(v *CWE) *IIM {
+	s.InventoryManufacturerName = v
+	return s
+}
+
+func (s *IIM) SetInventoryLocation(v *CWE) *IIM {
+	s.InventoryLocation = v
+	return s
+}
+
+func (s *IIM) SetInventoryReceivedDate(v *TS) *IIM {
+	s.InventoryReceivedDate = v
+	return s
+}
+
+func (s *IIM) SetInventoryReceivedQuantity(v *NM) *IIM {
+	s.InventoryReceivedQuantity = v
+	return s
+}
+
+func (s *IIM) SetInventoryReceivedQuantityUnit(v *CWE) *IIM {
+	s.InventoryReceivedQuantityUnit = v
+	return s
+}
+
+func (s *IIM) SetInventoryReceivedItemCost(v *MO) *IIM {
+	s.InventoryReceivedItemCost = v
+	return s
+}
+
+func (s *IIM) SetInventoryOnHandDate(v *TS) *IIM {
+	s.InventoryOnHandDate = v
+	return s
+}
+
+func (s *IIM) SetInventoryOnHandQuantity(v *NM) *IIM {
+	s.InventoryOnHandQuantity = v
+	return s
+}
+
+func (s *IIM) SetInventoryOnHandQuantityUnit(v *CWE) *IIM {
+	s.InventoryOnHandQuantityUnit = v
+	return s
+}
+
+func (s *IIM) SetProcedureCode(v *CE) *IIM {
+	s.ProcedureCode = v
+	return s
+}
+
+func (s *IIM) AddProcedureCodeModifier(v CE) *IIM {
+	s.ProcedureCodeModifier = append(s.ProcedureCodeModifier, v)
+	return s
 }
 
 // IN1 - Insurance
 // The IN1 segment contains insurance policy coverage information necessary to produce properly pro-rated and patient and insurance bills.
 type IN1 struct {
-	SetIDIN1                      SI    `hl7:"1,required"`
-	InsurancePlanID               CE    `hl7:"2,required"`
+	SetIDIN1                      *SI   `hl7:"1,required"`
+	InsurancePlanID               *CE   `hl7:"2,required"`
 	InsuranceCompanyID            []CX  `hl7:"3,required"`
 	InsuranceCompanyName          []XON `hl7:"4"`
 	InsuranceCompanyAddress       []XAD `hl7:"5"`
 	InsuranceCoContactPerson      []XPN `hl7:"6"`
 	InsuranceCoPhoneNumber        []XTN `hl7:"7"`
-	GroupNumber                   ST    `hl7:"8"`
+	GroupNumber                   *ST   `hl7:"8"`
 	GroupName                     []XON `hl7:"9"`
 	InsuredSGroupEmpID            []CX  `hl7:"10"`
 	InsuredSGroupEmpName          []XON `hl7:"11"`
-	PlanEffectiveDate             DT    `hl7:"12"`
-	PlanExpirationDate            DT    `hl7:"13"`
-	AuthorizationInformation      AUI   `hl7:"14"`
-	PlanType                      IS    `hl7:"15"`
+	PlanEffectiveDate             *DT   `hl7:"12"`
+	PlanExpirationDate            *DT   `hl7:"13"`
+	AuthorizationInformation      *AUI  `hl7:"14"`
+	PlanType                      *IS   `hl7:"15"`
 	NameOfInsured                 []XPN `hl7:"16"`
-	InsuredSRelationshipToPatient CE    `hl7:"17"`
-	InsuredSDateOfBirth           TS    `hl7:"18"`
+	InsuredSRelationshipToPatient *CE   `hl7:"17"`
+	InsuredSDateOfBirth           *TS   `hl7:"18"`
 	InsuredSAddress               []XAD `hl7:"19"`
-	AssignmentOfBenefits          IS    `hl7:"20"`
-	CoordinationOfBenefits        IS    `hl7:"21"`
-	CoordOfBenPriority            ST    `hl7:"22"`
-	NoticeOfAdmissionFlag         ID    `hl7:"23"`
-	NoticeOfAdmissionDate         DT    `hl7:"24"`
-	ReportOfEligibilityFlag       ID    `hl7:"25"`
-	ReportOfEligibilityDate       DT    `hl7:"26"`
-	ReleaseInformationCode        IS    `hl7:"27"`
-	PreAdmitCertPAC               ST    `hl7:"28"`
-	VerificationDateTime          TS    `hl7:"29"`
+	AssignmentOfBenefits          *IS   `hl7:"20"`
+	CoordinationOfBenefits        *IS   `hl7:"21"`
+	CoordOfBenPriority            *ST   `hl7:"22"`
+	NoticeOfAdmissionFlag         *ID   `hl7:"23"`
+	NoticeOfAdmissionDate         *DT   `hl7:"24"`
+	ReportOfEligibilityFlag       *ID   `hl7:"25"`
+	ReportOfEligibilityDate       *DT   `hl7:"26"`
+	ReleaseInformationCode        *IS   `hl7:"27"`
+	PreAdmitCertPAC               *ST   `hl7:"28"`
+	VerificationDateTime          *TS   `hl7:"29"`
 	VerificationBy                []XCN `hl7:"30"`
-	TypeOfAgreementCode           IS    `hl7:"31"`
-	BillingStatus                 IS    `hl7:"32"`
-	LifetimeReserveDays           NM    `hl7:"33"`
-	DelayBeforeLRDay              NM    `hl7:"34"`
-	CompanyPlanCode               IS    `hl7:"35"`
-	PolicyNumber                  ST    `hl7:"36"`
-	PolicyDeductible              CP    `hl7:"37"`
-	PolicyLimitAmount             CP    `hl7:"38"`
-	PolicyLimitDays               NM    `hl7:"39"`
-	RoomRateSemiPrivate           CP    `hl7:"40"`
-	RoomRatePrivate               CP    `hl7:"41"`
-	InsuredSEmploymentStatus      CE    `hl7:"42"`
-	InsuredSAdministrativeSex     IS    `hl7:"43"`
+	TypeOfAgreementCode           *IS   `hl7:"31"`
+	BillingStatus                 *IS   `hl7:"32"`
+	LifetimeReserveDays           *NM   `hl7:"33"`
+	DelayBeforeLRDay              *NM   `hl7:"34"`
+	CompanyPlanCode               *IS   `hl7:"35"`
+	PolicyNumber                  *ST   `hl7:"36"`
+	PolicyDeductible              *CP   `hl7:"37"`
+	PolicyLimitAmount             *CP   `hl7:"38"`
+	PolicyLimitDays               *NM   `hl7:"39"`
+	RoomRateSemiPrivate           *CP   `hl7:"40"`
+	RoomRatePrivate               *CP   `hl7:"41"`
+	InsuredSEmploymentStatus      *CE   `hl7:"42"`
+	InsuredSAdministrativeSex     *IS   `hl7:"43"`
 	InsuredSEmployerSAddress      []XAD `hl7:"44"`
-	VerificationStatus            ST    `hl7:"45"`
-	PriorInsurancePlanID          IS    `hl7:"46"`
-	CoverageType                  IS    `hl7:"47"`
-	Handicap                      IS    `hl7:"48"`
+	VerificationStatus            *ST   `hl7:"45"`
+	PriorInsurancePlanID          *IS   `hl7:"46"`
+	CoverageType                  *IS   `hl7:"47"`
+	Handicap                      *IS   `hl7:"48"`
 	InsuredSIDNumber              []CX  `hl7:"49"`
-	SignatureCode                 IS    `hl7:"50"`
-	SignatureCodeDate             DT    `hl7:"51"`
-	InsuredSBirthPlace            ST    `hl7:"52"`
-	VIPIndicator                  IS    `hl7:"53"`
+	SignatureCode                 *IS   `hl7:"50"`
+	SignatureCodeDate             *DT   `hl7:"51"`
+	InsuredSBirthPlace            *ST   `hl7:"52"`
+	VIPIndicator                  *IS   `hl7:"53"`
+}
+
+func NewIN1() *IN1 {
+	return &IN1{}
+}
+
+func (s *IN1) Validate() error {
+
+	if s.SetIDIN1 == nil {
+		return fmt.Errorf("IN1.SetIDIN1 is required")
+	}
+	if string(*s.SetIDIN1) == "" {
+		return fmt.Errorf("IN1.SetIDIN1 is empty")
+	}
+
+	if s.InsurancePlanID == nil {
+		return fmt.Errorf("IN1.InsurancePlanID is required")
+	}
+	if s.InsurancePlanID != nil {
+		if err := s.InsurancePlanID.Validate(); err != nil {
+			return fmt.Errorf("IN1.InsurancePlanID: %w", err)
+		}
+	}
+
+	if len(s.InsuranceCompanyID) == 0 {
+		return fmt.Errorf("IN1.InsuranceCompanyID is required")
+	}
+	for _, item := range s.InsuranceCompanyID {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN1.InsuranceCompanyID: %w", err)
+		}
+	}
+
+	for _, item := range s.InsuranceCompanyName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN1.InsuranceCompanyName: %w", err)
+		}
+	}
+
+	for _, item := range s.InsuranceCompanyAddress {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN1.InsuranceCompanyAddress: %w", err)
+		}
+	}
+
+	for _, item := range s.InsuranceCoContactPerson {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN1.InsuranceCoContactPerson: %w", err)
+		}
+	}
+
+	for _, item := range s.InsuranceCoPhoneNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN1.InsuranceCoPhoneNumber: %w", err)
+		}
+	}
+
+	for _, item := range s.GroupName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN1.GroupName: %w", err)
+		}
+	}
+
+	for _, item := range s.InsuredSGroupEmpID {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN1.InsuredSGroupEmpID: %w", err)
+		}
+	}
+
+	for _, item := range s.InsuredSGroupEmpName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN1.InsuredSGroupEmpName: %w", err)
+		}
+	}
+
+	if s.AuthorizationInformation != nil {
+		if err := s.AuthorizationInformation.Validate(); err != nil {
+			return fmt.Errorf("IN1.AuthorizationInformation: %w", err)
+		}
+	}
+
+	for _, item := range s.NameOfInsured {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN1.NameOfInsured: %w", err)
+		}
+	}
+
+	if s.InsuredSRelationshipToPatient != nil {
+		if err := s.InsuredSRelationshipToPatient.Validate(); err != nil {
+			return fmt.Errorf("IN1.InsuredSRelationshipToPatient: %w", err)
+		}
+	}
+
+	if s.InsuredSDateOfBirth != nil {
+		if err := s.InsuredSDateOfBirth.Validate(); err != nil {
+			return fmt.Errorf("IN1.InsuredSDateOfBirth: %w", err)
+		}
+	}
+
+	for _, item := range s.InsuredSAddress {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN1.InsuredSAddress: %w", err)
+		}
+	}
+
+	if s.VerificationDateTime != nil {
+		if err := s.VerificationDateTime.Validate(); err != nil {
+			return fmt.Errorf("IN1.VerificationDateTime: %w", err)
+		}
+	}
+
+	for _, item := range s.VerificationBy {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN1.VerificationBy: %w", err)
+		}
+	}
+
+	if s.PolicyDeductible != nil {
+		if err := s.PolicyDeductible.Validate(); err != nil {
+			return fmt.Errorf("IN1.PolicyDeductible: %w", err)
+		}
+	}
+
+	if s.PolicyLimitAmount != nil {
+		if err := s.PolicyLimitAmount.Validate(); err != nil {
+			return fmt.Errorf("IN1.PolicyLimitAmount: %w", err)
+		}
+	}
+
+	if s.RoomRateSemiPrivate != nil {
+		if err := s.RoomRateSemiPrivate.Validate(); err != nil {
+			return fmt.Errorf("IN1.RoomRateSemiPrivate: %w", err)
+		}
+	}
+
+	if s.RoomRatePrivate != nil {
+		if err := s.RoomRatePrivate.Validate(); err != nil {
+			return fmt.Errorf("IN1.RoomRatePrivate: %w", err)
+		}
+	}
+
+	if s.InsuredSEmploymentStatus != nil {
+		if err := s.InsuredSEmploymentStatus.Validate(); err != nil {
+			return fmt.Errorf("IN1.InsuredSEmploymentStatus: %w", err)
+		}
+	}
+
+	for _, item := range s.InsuredSEmployerSAddress {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN1.InsuredSEmployerSAddress: %w", err)
+		}
+	}
+
+	for _, item := range s.InsuredSIDNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN1.InsuredSIDNumber: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *IN1) SetSetIDIN1(v *SI) *IN1 {
+	s.SetIDIN1 = v
+	return s
+}
+
+func (s *IN1) SetInsurancePlanID(v *CE) *IN1 {
+	s.InsurancePlanID = v
+	return s
+}
+
+func (s *IN1) AddInsuranceCompanyID(v CX) *IN1 {
+	s.InsuranceCompanyID = append(s.InsuranceCompanyID, v)
+	return s
+}
+
+func (s *IN1) AddInsuranceCompanyName(v XON) *IN1 {
+	s.InsuranceCompanyName = append(s.InsuranceCompanyName, v)
+	return s
+}
+
+func (s *IN1) AddInsuranceCompanyAddress(v XAD) *IN1 {
+	s.InsuranceCompanyAddress = append(s.InsuranceCompanyAddress, v)
+	return s
+}
+
+func (s *IN1) AddInsuranceCoContactPerson(v XPN) *IN1 {
+	s.InsuranceCoContactPerson = append(s.InsuranceCoContactPerson, v)
+	return s
+}
+
+func (s *IN1) AddInsuranceCoPhoneNumber(v XTN) *IN1 {
+	s.InsuranceCoPhoneNumber = append(s.InsuranceCoPhoneNumber, v)
+	return s
+}
+
+func (s *IN1) SetGroupNumber(v *ST) *IN1 {
+	s.GroupNumber = v
+	return s
+}
+
+func (s *IN1) AddGroupName(v XON) *IN1 {
+	s.GroupName = append(s.GroupName, v)
+	return s
+}
+
+func (s *IN1) AddInsuredSGroupEmpID(v CX) *IN1 {
+	s.InsuredSGroupEmpID = append(s.InsuredSGroupEmpID, v)
+	return s
+}
+
+func (s *IN1) AddInsuredSGroupEmpName(v XON) *IN1 {
+	s.InsuredSGroupEmpName = append(s.InsuredSGroupEmpName, v)
+	return s
+}
+
+func (s *IN1) SetPlanEffectiveDate(v *DT) *IN1 {
+	s.PlanEffectiveDate = v
+	return s
+}
+
+func (s *IN1) SetPlanExpirationDate(v *DT) *IN1 {
+	s.PlanExpirationDate = v
+	return s
+}
+
+func (s *IN1) SetAuthorizationInformation(v *AUI) *IN1 {
+	s.AuthorizationInformation = v
+	return s
+}
+
+func (s *IN1) SetPlanType(v *IS) *IN1 {
+	s.PlanType = v
+	return s
+}
+
+func (s *IN1) AddNameOfInsured(v XPN) *IN1 {
+	s.NameOfInsured = append(s.NameOfInsured, v)
+	return s
+}
+
+func (s *IN1) SetInsuredSRelationshipToPatient(v *CE) *IN1 {
+	s.InsuredSRelationshipToPatient = v
+	return s
+}
+
+func (s *IN1) SetInsuredSDateOfBirth(v *TS) *IN1 {
+	s.InsuredSDateOfBirth = v
+	return s
+}
+
+func (s *IN1) AddInsuredSAddress(v XAD) *IN1 {
+	s.InsuredSAddress = append(s.InsuredSAddress, v)
+	return s
+}
+
+func (s *IN1) SetAssignmentOfBenefits(v *IS) *IN1 {
+	s.AssignmentOfBenefits = v
+	return s
+}
+
+func (s *IN1) SetCoordinationOfBenefits(v *IS) *IN1 {
+	s.CoordinationOfBenefits = v
+	return s
+}
+
+func (s *IN1) SetCoordOfBenPriority(v *ST) *IN1 {
+	s.CoordOfBenPriority = v
+	return s
+}
+
+func (s *IN1) SetNoticeOfAdmissionFlag(v *ID) *IN1 {
+	s.NoticeOfAdmissionFlag = v
+	return s
+}
+
+func (s *IN1) SetNoticeOfAdmissionDate(v *DT) *IN1 {
+	s.NoticeOfAdmissionDate = v
+	return s
+}
+
+func (s *IN1) SetReportOfEligibilityFlag(v *ID) *IN1 {
+	s.ReportOfEligibilityFlag = v
+	return s
+}
+
+func (s *IN1) SetReportOfEligibilityDate(v *DT) *IN1 {
+	s.ReportOfEligibilityDate = v
+	return s
+}
+
+func (s *IN1) SetReleaseInformationCode(v *IS) *IN1 {
+	s.ReleaseInformationCode = v
+	return s
+}
+
+func (s *IN1) SetPreAdmitCertPAC(v *ST) *IN1 {
+	s.PreAdmitCertPAC = v
+	return s
+}
+
+func (s *IN1) SetVerificationDateTime(v *TS) *IN1 {
+	s.VerificationDateTime = v
+	return s
+}
+
+func (s *IN1) AddVerificationBy(v XCN) *IN1 {
+	s.VerificationBy = append(s.VerificationBy, v)
+	return s
+}
+
+func (s *IN1) SetTypeOfAgreementCode(v *IS) *IN1 {
+	s.TypeOfAgreementCode = v
+	return s
+}
+
+func (s *IN1) SetBillingStatus(v *IS) *IN1 {
+	s.BillingStatus = v
+	return s
+}
+
+func (s *IN1) SetLifetimeReserveDays(v *NM) *IN1 {
+	s.LifetimeReserveDays = v
+	return s
+}
+
+func (s *IN1) SetDelayBeforeLRDay(v *NM) *IN1 {
+	s.DelayBeforeLRDay = v
+	return s
+}
+
+func (s *IN1) SetCompanyPlanCode(v *IS) *IN1 {
+	s.CompanyPlanCode = v
+	return s
+}
+
+func (s *IN1) SetPolicyNumber(v *ST) *IN1 {
+	s.PolicyNumber = v
+	return s
+}
+
+func (s *IN1) SetPolicyDeductible(v *CP) *IN1 {
+	s.PolicyDeductible = v
+	return s
+}
+
+func (s *IN1) SetPolicyLimitAmount(v *CP) *IN1 {
+	s.PolicyLimitAmount = v
+	return s
+}
+
+func (s *IN1) SetPolicyLimitDays(v *NM) *IN1 {
+	s.PolicyLimitDays = v
+	return s
+}
+
+func (s *IN1) SetRoomRateSemiPrivate(v *CP) *IN1 {
+	s.RoomRateSemiPrivate = v
+	return s
+}
+
+func (s *IN1) SetRoomRatePrivate(v *CP) *IN1 {
+	s.RoomRatePrivate = v
+	return s
+}
+
+func (s *IN1) SetInsuredSEmploymentStatus(v *CE) *IN1 {
+	s.InsuredSEmploymentStatus = v
+	return s
+}
+
+func (s *IN1) SetInsuredSAdministrativeSex(v *IS) *IN1 {
+	s.InsuredSAdministrativeSex = v
+	return s
+}
+
+func (s *IN1) AddInsuredSEmployerSAddress(v XAD) *IN1 {
+	s.InsuredSEmployerSAddress = append(s.InsuredSEmployerSAddress, v)
+	return s
+}
+
+func (s *IN1) SetVerificationStatus(v *ST) *IN1 {
+	s.VerificationStatus = v
+	return s
+}
+
+func (s *IN1) SetPriorInsurancePlanID(v *IS) *IN1 {
+	s.PriorInsurancePlanID = v
+	return s
+}
+
+func (s *IN1) SetCoverageType(v *IS) *IN1 {
+	s.CoverageType = v
+	return s
+}
+
+func (s *IN1) SetHandicap(v *IS) *IN1 {
+	s.Handicap = v
+	return s
+}
+
+func (s *IN1) AddInsuredSIDNumber(v CX) *IN1 {
+	s.InsuredSIDNumber = append(s.InsuredSIDNumber, v)
+	return s
+}
+
+func (s *IN1) SetSignatureCode(v *IS) *IN1 {
+	s.SignatureCode = v
+	return s
+}
+
+func (s *IN1) SetSignatureCodeDate(v *DT) *IN1 {
+	s.SignatureCodeDate = v
+	return s
+}
+
+func (s *IN1) SetInsuredSBirthPlace(v *ST) *IN1 {
+	s.InsuredSBirthPlace = v
+	return s
+}
+
+func (s *IN1) SetVIPIndicator(v *IS) *IN1 {
+	s.VIPIndicator = v
+	return s
 }
 
 // IN2 - Insurance Additional Information
 // The IN2 segment contains additional insurance policy coverage and benefit information necessary for proper billing and reimbursement. Fields used by this segment are defined by CMS or other regulatory agencies.
 type IN2 struct {
 	InsuredSEmployeeID                   []CX  `hl7:"1"`
-	InsuredSSocialSecurityNumber         ST    `hl7:"2"`
+	InsuredSSocialSecurityNumber         *ST   `hl7:"2"`
 	InsuredSEmployerSNameAndID           []XCN `hl7:"3"`
-	EmployerInformationData              IS    `hl7:"4"`
+	EmployerInformationData              *IS   `hl7:"4"`
 	MailClaimParty                       []IS  `hl7:"5"`
-	MedicareHealthInsCardNumber          ST    `hl7:"6"`
+	MedicareHealthInsCardNumber          *ST   `hl7:"6"`
 	MedicaidCaseName                     []XPN `hl7:"7"`
-	MedicaidCaseNumber                   ST    `hl7:"8"`
+	MedicaidCaseNumber                   *ST   `hl7:"8"`
 	MilitarySponsorName                  []XPN `hl7:"9"`
-	MilitaryIDNumber                     ST    `hl7:"10"`
-	DependentOfMilitaryRecipient         CE    `hl7:"11"`
-	MilitaryOrganization                 ST    `hl7:"12"`
-	MilitaryStation                      ST    `hl7:"13"`
-	MilitaryService                      IS    `hl7:"14"`
-	MilitaryRankGrade                    IS    `hl7:"15"`
-	MilitaryStatus                       IS    `hl7:"16"`
-	MilitaryRetireDate                   DT    `hl7:"17"`
-	MilitaryNonAvailCertOnFile           ID    `hl7:"18"`
-	BabyCoverage                         ID    `hl7:"19"`
-	CombineBabyBill                      ID    `hl7:"20"`
-	BloodDeductible                      ST    `hl7:"21"`
+	MilitaryIDNumber                     *ST   `hl7:"10"`
+	DependentOfMilitaryRecipient         *CE   `hl7:"11"`
+	MilitaryOrganization                 *ST   `hl7:"12"`
+	MilitaryStation                      *ST   `hl7:"13"`
+	MilitaryService                      *IS   `hl7:"14"`
+	MilitaryRankGrade                    *IS   `hl7:"15"`
+	MilitaryStatus                       *IS   `hl7:"16"`
+	MilitaryRetireDate                   *DT   `hl7:"17"`
+	MilitaryNonAvailCertOnFile           *ID   `hl7:"18"`
+	BabyCoverage                         *ID   `hl7:"19"`
+	CombineBabyBill                      *ID   `hl7:"20"`
+	BloodDeductible                      *ST   `hl7:"21"`
 	SpecialCoverageApprovalName          []XPN `hl7:"22"`
-	SpecialCoverageApprovalTitle         ST    `hl7:"23"`
+	SpecialCoverageApprovalTitle         *ST   `hl7:"23"`
 	NonCoveredInsuranceCode              []IS  `hl7:"24"`
 	PayorID                              []CX  `hl7:"25"`
 	PayorSubscriberID                    []CX  `hl7:"26"`
-	EligibilitySource                    IS    `hl7:"27"`
+	EligibilitySource                    *IS   `hl7:"27"`
 	RoomCoverageTypeAmount               []RMC `hl7:"28"`
 	PolicyTypeAmount                     []PTA `hl7:"29"`
-	DailyDeductible                      DDI   `hl7:"30"`
-	LivingDependency                     IS    `hl7:"31"`
+	DailyDeductible                      *DDI  `hl7:"30"`
+	LivingDependency                     *IS   `hl7:"31"`
 	AmbulatoryStatus                     []IS  `hl7:"32"`
 	Citizenship                          []CE  `hl7:"33"`
-	PrimaryLanguage                      CE    `hl7:"34"`
-	LivingArrangement                    IS    `hl7:"35"`
-	PublicityCode                        CE    `hl7:"36"`
-	ProtectionIndicator                  ID    `hl7:"37"`
-	StudentIndicator                     IS    `hl7:"38"`
-	Religion                             CE    `hl7:"39"`
+	PrimaryLanguage                      *CE   `hl7:"34"`
+	LivingArrangement                    *IS   `hl7:"35"`
+	PublicityCode                        *CE   `hl7:"36"`
+	ProtectionIndicator                  *ID   `hl7:"37"`
+	StudentIndicator                     *IS   `hl7:"38"`
+	Religion                             *CE   `hl7:"39"`
 	MotherSMaidenName                    []XPN `hl7:"40"`
-	Nationality                          CE    `hl7:"41"`
+	Nationality                          *CE   `hl7:"41"`
 	EthnicGroup                          []CE  `hl7:"42"`
 	MaritalStatus                        []CE  `hl7:"43"`
-	InsuredSEmploymentStartDate          DT    `hl7:"44"`
-	EmploymentStopDate                   DT    `hl7:"45"`
-	JobTitle                             ST    `hl7:"46"`
-	JobCodeClass                         JCC   `hl7:"47"`
-	JobStatus                            IS    `hl7:"48"`
+	InsuredSEmploymentStartDate          *DT   `hl7:"44"`
+	EmploymentStopDate                   *DT   `hl7:"45"`
+	JobTitle                             *ST   `hl7:"46"`
+	JobCodeClass                         *JCC  `hl7:"47"`
+	JobStatus                            *IS   `hl7:"48"`
 	EmployerContactPersonName            []XPN `hl7:"49"`
 	EmployerContactPersonPhoneNumber     []XTN `hl7:"50"`
-	EmployerContactReason                IS    `hl7:"51"`
+	EmployerContactReason                *IS   `hl7:"51"`
 	InsuredSContactPersonSName           []XPN `hl7:"52"`
 	InsuredSContactPersonPhoneNumber     []XTN `hl7:"53"`
 	InsuredSContactPersonReason          []IS  `hl7:"54"`
-	RelationshipToThePatientStartDate    DT    `hl7:"55"`
+	RelationshipToThePatientStartDate    *DT   `hl7:"55"`
 	RelationshipToThePatientStopDate     []DT  `hl7:"56"`
-	InsuranceCoContactReason             IS    `hl7:"57"`
-	InsuranceCoContactPhoneNumber        XTN   `hl7:"58"`
-	PolicyScope                          IS    `hl7:"59"`
-	PolicySource                         IS    `hl7:"60"`
-	PatientMemberNumber                  CX    `hl7:"61"`
-	GuarantorSRelationshipToInsured      CE    `hl7:"62"`
+	InsuranceCoContactReason             *IS   `hl7:"57"`
+	InsuranceCoContactPhoneNumber        *XTN  `hl7:"58"`
+	PolicyScope                          *IS   `hl7:"59"`
+	PolicySource                         *IS   `hl7:"60"`
+	PatientMemberNumber                  *CX   `hl7:"61"`
+	GuarantorSRelationshipToInsured      *CE   `hl7:"62"`
 	InsuredSPhoneNumberHome              []XTN `hl7:"63"`
 	InsuredSEmployerPhoneNumber          []XTN `hl7:"64"`
-	MilitaryHandicappedProgram           CE    `hl7:"65"`
-	SuspendFlag                          ID    `hl7:"66"`
-	CopayLimitFlag                       ID    `hl7:"67"`
-	StoplossLimitFlag                    ID    `hl7:"68"`
+	MilitaryHandicappedProgram           *CE   `hl7:"65"`
+	SuspendFlag                          *ID   `hl7:"66"`
+	CopayLimitFlag                       *ID   `hl7:"67"`
+	StoplossLimitFlag                    *ID   `hl7:"68"`
 	InsuredOrganizationNameAndID         []XON `hl7:"69"`
 	InsuredEmployerOrganizationNameAndID []XON `hl7:"70"`
 	Race                                 []CE  `hl7:"71"`
-	CMSPatientSRelationshipToInsured     CE    `hl7:"72"`
+	CMSPatientSRelationshipToInsured     *CE   `hl7:"72"`
+}
+
+func NewIN2() *IN2 {
+	return &IN2{}
+}
+
+func (s *IN2) Validate() error {
+
+	for _, item := range s.InsuredSEmployeeID {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN2.InsuredSEmployeeID: %w", err)
+		}
+	}
+
+	for _, item := range s.InsuredSEmployerSNameAndID {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN2.InsuredSEmployerSNameAndID: %w", err)
+		}
+	}
+
+	for _, item := range s.MailClaimParty {
+		if string(item) == "" {
+			return fmt.Errorf("IN2.MailClaimParty item is empty")
+		}
+	}
+
+	for _, item := range s.MedicaidCaseName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN2.MedicaidCaseName: %w", err)
+		}
+	}
+
+	for _, item := range s.MilitarySponsorName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN2.MilitarySponsorName: %w", err)
+		}
+	}
+
+	if s.DependentOfMilitaryRecipient != nil {
+		if err := s.DependentOfMilitaryRecipient.Validate(); err != nil {
+			return fmt.Errorf("IN2.DependentOfMilitaryRecipient: %w", err)
+		}
+	}
+
+	for _, item := range s.SpecialCoverageApprovalName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN2.SpecialCoverageApprovalName: %w", err)
+		}
+	}
+
+	for _, item := range s.NonCoveredInsuranceCode {
+		if string(item) == "" {
+			return fmt.Errorf("IN2.NonCoveredInsuranceCode item is empty")
+		}
+	}
+
+	for _, item := range s.PayorID {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN2.PayorID: %w", err)
+		}
+	}
+
+	for _, item := range s.PayorSubscriberID {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN2.PayorSubscriberID: %w", err)
+		}
+	}
+
+	for _, item := range s.RoomCoverageTypeAmount {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN2.RoomCoverageTypeAmount: %w", err)
+		}
+	}
+
+	for _, item := range s.PolicyTypeAmount {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN2.PolicyTypeAmount: %w", err)
+		}
+	}
+
+	if s.DailyDeductible != nil {
+		if err := s.DailyDeductible.Validate(); err != nil {
+			return fmt.Errorf("IN2.DailyDeductible: %w", err)
+		}
+	}
+
+	for _, item := range s.AmbulatoryStatus {
+		if string(item) == "" {
+			return fmt.Errorf("IN2.AmbulatoryStatus item is empty")
+		}
+	}
+
+	for _, item := range s.Citizenship {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN2.Citizenship: %w", err)
+		}
+	}
+
+	if s.PrimaryLanguage != nil {
+		if err := s.PrimaryLanguage.Validate(); err != nil {
+			return fmt.Errorf("IN2.PrimaryLanguage: %w", err)
+		}
+	}
+
+	if s.PublicityCode != nil {
+		if err := s.PublicityCode.Validate(); err != nil {
+			return fmt.Errorf("IN2.PublicityCode: %w", err)
+		}
+	}
+
+	if s.Religion != nil {
+		if err := s.Religion.Validate(); err != nil {
+			return fmt.Errorf("IN2.Religion: %w", err)
+		}
+	}
+
+	for _, item := range s.MotherSMaidenName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN2.MotherSMaidenName: %w", err)
+		}
+	}
+
+	if s.Nationality != nil {
+		if err := s.Nationality.Validate(); err != nil {
+			return fmt.Errorf("IN2.Nationality: %w", err)
+		}
+	}
+
+	for _, item := range s.EthnicGroup {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN2.EthnicGroup: %w", err)
+		}
+	}
+
+	for _, item := range s.MaritalStatus {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN2.MaritalStatus: %w", err)
+		}
+	}
+
+	if s.JobCodeClass != nil {
+		if err := s.JobCodeClass.Validate(); err != nil {
+			return fmt.Errorf("IN2.JobCodeClass: %w", err)
+		}
+	}
+
+	for _, item := range s.EmployerContactPersonName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN2.EmployerContactPersonName: %w", err)
+		}
+	}
+
+	for _, item := range s.EmployerContactPersonPhoneNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN2.EmployerContactPersonPhoneNumber: %w", err)
+		}
+	}
+
+	for _, item := range s.InsuredSContactPersonSName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN2.InsuredSContactPersonSName: %w", err)
+		}
+	}
+
+	for _, item := range s.InsuredSContactPersonPhoneNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN2.InsuredSContactPersonPhoneNumber: %w", err)
+		}
+	}
+
+	for _, item := range s.InsuredSContactPersonReason {
+		if string(item) == "" {
+			return fmt.Errorf("IN2.InsuredSContactPersonReason item is empty")
+		}
+	}
+
+	for _, item := range s.RelationshipToThePatientStopDate {
+		if string(item) == "" {
+			return fmt.Errorf("IN2.RelationshipToThePatientStopDate item is empty")
+		}
+	}
+
+	if s.InsuranceCoContactPhoneNumber != nil {
+		if err := s.InsuranceCoContactPhoneNumber.Validate(); err != nil {
+			return fmt.Errorf("IN2.InsuranceCoContactPhoneNumber: %w", err)
+		}
+	}
+
+	if s.PatientMemberNumber != nil {
+		if err := s.PatientMemberNumber.Validate(); err != nil {
+			return fmt.Errorf("IN2.PatientMemberNumber: %w", err)
+		}
+	}
+
+	if s.GuarantorSRelationshipToInsured != nil {
+		if err := s.GuarantorSRelationshipToInsured.Validate(); err != nil {
+			return fmt.Errorf("IN2.GuarantorSRelationshipToInsured: %w", err)
+		}
+	}
+
+	for _, item := range s.InsuredSPhoneNumberHome {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN2.InsuredSPhoneNumberHome: %w", err)
+		}
+	}
+
+	for _, item := range s.InsuredSEmployerPhoneNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN2.InsuredSEmployerPhoneNumber: %w", err)
+		}
+	}
+
+	if s.MilitaryHandicappedProgram != nil {
+		if err := s.MilitaryHandicappedProgram.Validate(); err != nil {
+			return fmt.Errorf("IN2.MilitaryHandicappedProgram: %w", err)
+		}
+	}
+
+	for _, item := range s.InsuredOrganizationNameAndID {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN2.InsuredOrganizationNameAndID: %w", err)
+		}
+	}
+
+	for _, item := range s.InsuredEmployerOrganizationNameAndID {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN2.InsuredEmployerOrganizationNameAndID: %w", err)
+		}
+	}
+
+	for _, item := range s.Race {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN2.Race: %w", err)
+		}
+	}
+
+	if s.CMSPatientSRelationshipToInsured != nil {
+		if err := s.CMSPatientSRelationshipToInsured.Validate(); err != nil {
+			return fmt.Errorf("IN2.CMSPatientSRelationshipToInsured: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *IN2) AddInsuredSEmployeeID(v CX) *IN2 {
+	s.InsuredSEmployeeID = append(s.InsuredSEmployeeID, v)
+	return s
+}
+
+func (s *IN2) SetInsuredSSocialSecurityNumber(v *ST) *IN2 {
+	s.InsuredSSocialSecurityNumber = v
+	return s
+}
+
+func (s *IN2) AddInsuredSEmployerSNameAndID(v XCN) *IN2 {
+	s.InsuredSEmployerSNameAndID = append(s.InsuredSEmployerSNameAndID, v)
+	return s
+}
+
+func (s *IN2) SetEmployerInformationData(v *IS) *IN2 {
+	s.EmployerInformationData = v
+	return s
+}
+
+func (s *IN2) AddMailClaimParty(v IS) *IN2 {
+	s.MailClaimParty = append(s.MailClaimParty, v)
+	return s
+}
+
+func (s *IN2) SetMedicareHealthInsCardNumber(v *ST) *IN2 {
+	s.MedicareHealthInsCardNumber = v
+	return s
+}
+
+func (s *IN2) AddMedicaidCaseName(v XPN) *IN2 {
+	s.MedicaidCaseName = append(s.MedicaidCaseName, v)
+	return s
+}
+
+func (s *IN2) SetMedicaidCaseNumber(v *ST) *IN2 {
+	s.MedicaidCaseNumber = v
+	return s
+}
+
+func (s *IN2) AddMilitarySponsorName(v XPN) *IN2 {
+	s.MilitarySponsorName = append(s.MilitarySponsorName, v)
+	return s
+}
+
+func (s *IN2) SetMilitaryIDNumber(v *ST) *IN2 {
+	s.MilitaryIDNumber = v
+	return s
+}
+
+func (s *IN2) SetDependentOfMilitaryRecipient(v *CE) *IN2 {
+	s.DependentOfMilitaryRecipient = v
+	return s
+}
+
+func (s *IN2) SetMilitaryOrganization(v *ST) *IN2 {
+	s.MilitaryOrganization = v
+	return s
+}
+
+func (s *IN2) SetMilitaryStation(v *ST) *IN2 {
+	s.MilitaryStation = v
+	return s
+}
+
+func (s *IN2) SetMilitaryService(v *IS) *IN2 {
+	s.MilitaryService = v
+	return s
+}
+
+func (s *IN2) SetMilitaryRankGrade(v *IS) *IN2 {
+	s.MilitaryRankGrade = v
+	return s
+}
+
+func (s *IN2) SetMilitaryStatus(v *IS) *IN2 {
+	s.MilitaryStatus = v
+	return s
+}
+
+func (s *IN2) SetMilitaryRetireDate(v *DT) *IN2 {
+	s.MilitaryRetireDate = v
+	return s
+}
+
+func (s *IN2) SetMilitaryNonAvailCertOnFile(v *ID) *IN2 {
+	s.MilitaryNonAvailCertOnFile = v
+	return s
+}
+
+func (s *IN2) SetBabyCoverage(v *ID) *IN2 {
+	s.BabyCoverage = v
+	return s
+}
+
+func (s *IN2) SetCombineBabyBill(v *ID) *IN2 {
+	s.CombineBabyBill = v
+	return s
+}
+
+func (s *IN2) SetBloodDeductible(v *ST) *IN2 {
+	s.BloodDeductible = v
+	return s
+}
+
+func (s *IN2) AddSpecialCoverageApprovalName(v XPN) *IN2 {
+	s.SpecialCoverageApprovalName = append(s.SpecialCoverageApprovalName, v)
+	return s
+}
+
+func (s *IN2) SetSpecialCoverageApprovalTitle(v *ST) *IN2 {
+	s.SpecialCoverageApprovalTitle = v
+	return s
+}
+
+func (s *IN2) AddNonCoveredInsuranceCode(v IS) *IN2 {
+	s.NonCoveredInsuranceCode = append(s.NonCoveredInsuranceCode, v)
+	return s
+}
+
+func (s *IN2) AddPayorID(v CX) *IN2 {
+	s.PayorID = append(s.PayorID, v)
+	return s
+}
+
+func (s *IN2) AddPayorSubscriberID(v CX) *IN2 {
+	s.PayorSubscriberID = append(s.PayorSubscriberID, v)
+	return s
+}
+
+func (s *IN2) SetEligibilitySource(v *IS) *IN2 {
+	s.EligibilitySource = v
+	return s
+}
+
+func (s *IN2) AddRoomCoverageTypeAmount(v RMC) *IN2 {
+	s.RoomCoverageTypeAmount = append(s.RoomCoverageTypeAmount, v)
+	return s
+}
+
+func (s *IN2) AddPolicyTypeAmount(v PTA) *IN2 {
+	s.PolicyTypeAmount = append(s.PolicyTypeAmount, v)
+	return s
+}
+
+func (s *IN2) SetDailyDeductible(v *DDI) *IN2 {
+	s.DailyDeductible = v
+	return s
+}
+
+func (s *IN2) SetLivingDependency(v *IS) *IN2 {
+	s.LivingDependency = v
+	return s
+}
+
+func (s *IN2) AddAmbulatoryStatus(v IS) *IN2 {
+	s.AmbulatoryStatus = append(s.AmbulatoryStatus, v)
+	return s
+}
+
+func (s *IN2) AddCitizenship(v CE) *IN2 {
+	s.Citizenship = append(s.Citizenship, v)
+	return s
+}
+
+func (s *IN2) SetPrimaryLanguage(v *CE) *IN2 {
+	s.PrimaryLanguage = v
+	return s
+}
+
+func (s *IN2) SetLivingArrangement(v *IS) *IN2 {
+	s.LivingArrangement = v
+	return s
+}
+
+func (s *IN2) SetPublicityCode(v *CE) *IN2 {
+	s.PublicityCode = v
+	return s
+}
+
+func (s *IN2) SetProtectionIndicator(v *ID) *IN2 {
+	s.ProtectionIndicator = v
+	return s
+}
+
+func (s *IN2) SetStudentIndicator(v *IS) *IN2 {
+	s.StudentIndicator = v
+	return s
+}
+
+func (s *IN2) SetReligion(v *CE) *IN2 {
+	s.Religion = v
+	return s
+}
+
+func (s *IN2) AddMotherSMaidenName(v XPN) *IN2 {
+	s.MotherSMaidenName = append(s.MotherSMaidenName, v)
+	return s
+}
+
+func (s *IN2) SetNationality(v *CE) *IN2 {
+	s.Nationality = v
+	return s
+}
+
+func (s *IN2) AddEthnicGroup(v CE) *IN2 {
+	s.EthnicGroup = append(s.EthnicGroup, v)
+	return s
+}
+
+func (s *IN2) AddMaritalStatus(v CE) *IN2 {
+	s.MaritalStatus = append(s.MaritalStatus, v)
+	return s
+}
+
+func (s *IN2) SetInsuredSEmploymentStartDate(v *DT) *IN2 {
+	s.InsuredSEmploymentStartDate = v
+	return s
+}
+
+func (s *IN2) SetEmploymentStopDate(v *DT) *IN2 {
+	s.EmploymentStopDate = v
+	return s
+}
+
+func (s *IN2) SetJobTitle(v *ST) *IN2 {
+	s.JobTitle = v
+	return s
+}
+
+func (s *IN2) SetJobCodeClass(v *JCC) *IN2 {
+	s.JobCodeClass = v
+	return s
+}
+
+func (s *IN2) SetJobStatus(v *IS) *IN2 {
+	s.JobStatus = v
+	return s
+}
+
+func (s *IN2) AddEmployerContactPersonName(v XPN) *IN2 {
+	s.EmployerContactPersonName = append(s.EmployerContactPersonName, v)
+	return s
+}
+
+func (s *IN2) AddEmployerContactPersonPhoneNumber(v XTN) *IN2 {
+	s.EmployerContactPersonPhoneNumber = append(s.EmployerContactPersonPhoneNumber, v)
+	return s
+}
+
+func (s *IN2) SetEmployerContactReason(v *IS) *IN2 {
+	s.EmployerContactReason = v
+	return s
+}
+
+func (s *IN2) AddInsuredSContactPersonSName(v XPN) *IN2 {
+	s.InsuredSContactPersonSName = append(s.InsuredSContactPersonSName, v)
+	return s
+}
+
+func (s *IN2) AddInsuredSContactPersonPhoneNumber(v XTN) *IN2 {
+	s.InsuredSContactPersonPhoneNumber = append(s.InsuredSContactPersonPhoneNumber, v)
+	return s
+}
+
+func (s *IN2) AddInsuredSContactPersonReason(v IS) *IN2 {
+	s.InsuredSContactPersonReason = append(s.InsuredSContactPersonReason, v)
+	return s
+}
+
+func (s *IN2) SetRelationshipToThePatientStartDate(v *DT) *IN2 {
+	s.RelationshipToThePatientStartDate = v
+	return s
+}
+
+func (s *IN2) AddRelationshipToThePatientStopDate(v DT) *IN2 {
+	s.RelationshipToThePatientStopDate = append(s.RelationshipToThePatientStopDate, v)
+	return s
+}
+
+func (s *IN2) SetInsuranceCoContactReason(v *IS) *IN2 {
+	s.InsuranceCoContactReason = v
+	return s
+}
+
+func (s *IN2) SetInsuranceCoContactPhoneNumber(v *XTN) *IN2 {
+	s.InsuranceCoContactPhoneNumber = v
+	return s
+}
+
+func (s *IN2) SetPolicyScope(v *IS) *IN2 {
+	s.PolicyScope = v
+	return s
+}
+
+func (s *IN2) SetPolicySource(v *IS) *IN2 {
+	s.PolicySource = v
+	return s
+}
+
+func (s *IN2) SetPatientMemberNumber(v *CX) *IN2 {
+	s.PatientMemberNumber = v
+	return s
+}
+
+func (s *IN2) SetGuarantorSRelationshipToInsured(v *CE) *IN2 {
+	s.GuarantorSRelationshipToInsured = v
+	return s
+}
+
+func (s *IN2) AddInsuredSPhoneNumberHome(v XTN) *IN2 {
+	s.InsuredSPhoneNumberHome = append(s.InsuredSPhoneNumberHome, v)
+	return s
+}
+
+func (s *IN2) AddInsuredSEmployerPhoneNumber(v XTN) *IN2 {
+	s.InsuredSEmployerPhoneNumber = append(s.InsuredSEmployerPhoneNumber, v)
+	return s
+}
+
+func (s *IN2) SetMilitaryHandicappedProgram(v *CE) *IN2 {
+	s.MilitaryHandicappedProgram = v
+	return s
+}
+
+func (s *IN2) SetSuspendFlag(v *ID) *IN2 {
+	s.SuspendFlag = v
+	return s
+}
+
+func (s *IN2) SetCopayLimitFlag(v *ID) *IN2 {
+	s.CopayLimitFlag = v
+	return s
+}
+
+func (s *IN2) SetStoplossLimitFlag(v *ID) *IN2 {
+	s.StoplossLimitFlag = v
+	return s
+}
+
+func (s *IN2) AddInsuredOrganizationNameAndID(v XON) *IN2 {
+	s.InsuredOrganizationNameAndID = append(s.InsuredOrganizationNameAndID, v)
+	return s
+}
+
+func (s *IN2) AddInsuredEmployerOrganizationNameAndID(v XON) *IN2 {
+	s.InsuredEmployerOrganizationNameAndID = append(s.InsuredEmployerOrganizationNameAndID, v)
+	return s
+}
+
+func (s *IN2) AddRace(v CE) *IN2 {
+	s.Race = append(s.Race, v)
+	return s
+}
+
+func (s *IN2) SetCMSPatientSRelationshipToInsured(v *CE) *IN2 {
+	s.CMSPatientSRelationshipToInsured = v
+	return s
 }
 
 // IN3 - Insurance Additional Information, Certification
 // The IN3 segment contains additional insurance information for certifying the need for patient care. Fields used by this segment are defined by CMS, or other regulatory agencies.
 type IN3 struct {
-	SetIDIN3                           SI    `hl7:"1,required"`
-	CertificationNumber                CX    `hl7:"2"`
+	SetIDIN3                           *SI   `hl7:"1,required"`
+	CertificationNumber                *CX   `hl7:"2"`
 	CertifiedBy                        []XCN `hl7:"3"`
-	CertificationRequired              ID    `hl7:"4"`
-	Penalty                            MOP   `hl7:"5"`
-	CertificationDateTime              TS    `hl7:"6"`
-	CertificationModifyDateTime        TS    `hl7:"7"`
+	CertificationRequired              *ID   `hl7:"4"`
+	Penalty                            *MOP  `hl7:"5"`
+	CertificationDateTime              *TS   `hl7:"6"`
+	CertificationModifyDateTime        *TS   `hl7:"7"`
 	Operator                           []XCN `hl7:"8"`
-	CertificationBeginDate             DT    `hl7:"9"`
-	CertificationEndDate               DT    `hl7:"10"`
-	Days                               DTN   `hl7:"11"`
-	NonConcurCodeDescription           CE    `hl7:"12"`
-	NonConcurEffectiveDateTime         TS    `hl7:"13"`
+	CertificationBeginDate             *DT   `hl7:"9"`
+	CertificationEndDate               *DT   `hl7:"10"`
+	Days                               *DTN  `hl7:"11"`
+	NonConcurCodeDescription           *CE   `hl7:"12"`
+	NonConcurEffectiveDateTime         *TS   `hl7:"13"`
 	PhysicianReviewer                  []XCN `hl7:"14"`
-	CertificationContact               ST    `hl7:"15"`
+	CertificationContact               *ST   `hl7:"15"`
 	CertificationContactPhoneNumber    []XTN `hl7:"16"`
-	AppealReason                       CE    `hl7:"17"`
-	CertificationAgency                CE    `hl7:"18"`
+	AppealReason                       *CE   `hl7:"17"`
+	CertificationAgency                *CE   `hl7:"18"`
 	CertificationAgencyPhoneNumber     []XTN `hl7:"19"`
 	PreCertificationRequirement        []ICD `hl7:"20"`
-	CaseManager                        ST    `hl7:"21"`
-	SecondOpinionDate                  DT    `hl7:"22"`
-	SecondOpinionStatus                IS    `hl7:"23"`
+	CaseManager                        *ST   `hl7:"21"`
+	SecondOpinionDate                  *DT   `hl7:"22"`
+	SecondOpinionStatus                *IS   `hl7:"23"`
 	SecondOpinionDocumentationReceived []IS  `hl7:"24"`
 	SecondOpinionPhysician             []XCN `hl7:"25"`
+}
+
+func NewIN3() *IN3 {
+	return &IN3{}
+}
+
+func (s *IN3) Validate() error {
+
+	if s.SetIDIN3 == nil {
+		return fmt.Errorf("IN3.SetIDIN3 is required")
+	}
+	if string(*s.SetIDIN3) == "" {
+		return fmt.Errorf("IN3.SetIDIN3 is empty")
+	}
+
+	if s.CertificationNumber != nil {
+		if err := s.CertificationNumber.Validate(); err != nil {
+			return fmt.Errorf("IN3.CertificationNumber: %w", err)
+		}
+	}
+
+	for _, item := range s.CertifiedBy {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN3.CertifiedBy: %w", err)
+		}
+	}
+
+	if s.Penalty != nil {
+		if err := s.Penalty.Validate(); err != nil {
+			return fmt.Errorf("IN3.Penalty: %w", err)
+		}
+	}
+
+	if s.CertificationDateTime != nil {
+		if err := s.CertificationDateTime.Validate(); err != nil {
+			return fmt.Errorf("IN3.CertificationDateTime: %w", err)
+		}
+	}
+
+	if s.CertificationModifyDateTime != nil {
+		if err := s.CertificationModifyDateTime.Validate(); err != nil {
+			return fmt.Errorf("IN3.CertificationModifyDateTime: %w", err)
+		}
+	}
+
+	for _, item := range s.Operator {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN3.Operator: %w", err)
+		}
+	}
+
+	if s.Days != nil {
+		if err := s.Days.Validate(); err != nil {
+			return fmt.Errorf("IN3.Days: %w", err)
+		}
+	}
+
+	if s.NonConcurCodeDescription != nil {
+		if err := s.NonConcurCodeDescription.Validate(); err != nil {
+			return fmt.Errorf("IN3.NonConcurCodeDescription: %w", err)
+		}
+	}
+
+	if s.NonConcurEffectiveDateTime != nil {
+		if err := s.NonConcurEffectiveDateTime.Validate(); err != nil {
+			return fmt.Errorf("IN3.NonConcurEffectiveDateTime: %w", err)
+		}
+	}
+
+	for _, item := range s.PhysicianReviewer {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN3.PhysicianReviewer: %w", err)
+		}
+	}
+
+	for _, item := range s.CertificationContactPhoneNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN3.CertificationContactPhoneNumber: %w", err)
+		}
+	}
+
+	if s.AppealReason != nil {
+		if err := s.AppealReason.Validate(); err != nil {
+			return fmt.Errorf("IN3.AppealReason: %w", err)
+		}
+	}
+
+	if s.CertificationAgency != nil {
+		if err := s.CertificationAgency.Validate(); err != nil {
+			return fmt.Errorf("IN3.CertificationAgency: %w", err)
+		}
+	}
+
+	for _, item := range s.CertificationAgencyPhoneNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN3.CertificationAgencyPhoneNumber: %w", err)
+		}
+	}
+
+	for _, item := range s.PreCertificationRequirement {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN3.PreCertificationRequirement: %w", err)
+		}
+	}
+
+	for _, item := range s.SecondOpinionDocumentationReceived {
+		if string(item) == "" {
+			return fmt.Errorf("IN3.SecondOpinionDocumentationReceived item is empty")
+		}
+	}
+
+	for _, item := range s.SecondOpinionPhysician {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IN3.SecondOpinionPhysician: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *IN3) SetSetIDIN3(v *SI) *IN3 {
+	s.SetIDIN3 = v
+	return s
+}
+
+func (s *IN3) SetCertificationNumber(v *CX) *IN3 {
+	s.CertificationNumber = v
+	return s
+}
+
+func (s *IN3) AddCertifiedBy(v XCN) *IN3 {
+	s.CertifiedBy = append(s.CertifiedBy, v)
+	return s
+}
+
+func (s *IN3) SetCertificationRequired(v *ID) *IN3 {
+	s.CertificationRequired = v
+	return s
+}
+
+func (s *IN3) SetPenalty(v *MOP) *IN3 {
+	s.Penalty = v
+	return s
+}
+
+func (s *IN3) SetCertificationDateTime(v *TS) *IN3 {
+	s.CertificationDateTime = v
+	return s
+}
+
+func (s *IN3) SetCertificationModifyDateTime(v *TS) *IN3 {
+	s.CertificationModifyDateTime = v
+	return s
+}
+
+func (s *IN3) AddOperator(v XCN) *IN3 {
+	s.Operator = append(s.Operator, v)
+	return s
+}
+
+func (s *IN3) SetCertificationBeginDate(v *DT) *IN3 {
+	s.CertificationBeginDate = v
+	return s
+}
+
+func (s *IN3) SetCertificationEndDate(v *DT) *IN3 {
+	s.CertificationEndDate = v
+	return s
+}
+
+func (s *IN3) SetDays(v *DTN) *IN3 {
+	s.Days = v
+	return s
+}
+
+func (s *IN3) SetNonConcurCodeDescription(v *CE) *IN3 {
+	s.NonConcurCodeDescription = v
+	return s
+}
+
+func (s *IN3) SetNonConcurEffectiveDateTime(v *TS) *IN3 {
+	s.NonConcurEffectiveDateTime = v
+	return s
+}
+
+func (s *IN3) AddPhysicianReviewer(v XCN) *IN3 {
+	s.PhysicianReviewer = append(s.PhysicianReviewer, v)
+	return s
+}
+
+func (s *IN3) SetCertificationContact(v *ST) *IN3 {
+	s.CertificationContact = v
+	return s
+}
+
+func (s *IN3) AddCertificationContactPhoneNumber(v XTN) *IN3 {
+	s.CertificationContactPhoneNumber = append(s.CertificationContactPhoneNumber, v)
+	return s
+}
+
+func (s *IN3) SetAppealReason(v *CE) *IN3 {
+	s.AppealReason = v
+	return s
+}
+
+func (s *IN3) SetCertificationAgency(v *CE) *IN3 {
+	s.CertificationAgency = v
+	return s
+}
+
+func (s *IN3) AddCertificationAgencyPhoneNumber(v XTN) *IN3 {
+	s.CertificationAgencyPhoneNumber = append(s.CertificationAgencyPhoneNumber, v)
+	return s
+}
+
+func (s *IN3) AddPreCertificationRequirement(v ICD) *IN3 {
+	s.PreCertificationRequirement = append(s.PreCertificationRequirement, v)
+	return s
+}
+
+func (s *IN3) SetCaseManager(v *ST) *IN3 {
+	s.CaseManager = v
+	return s
+}
+
+func (s *IN3) SetSecondOpinionDate(v *DT) *IN3 {
+	s.SecondOpinionDate = v
+	return s
+}
+
+func (s *IN3) SetSecondOpinionStatus(v *IS) *IN3 {
+	s.SecondOpinionStatus = v
+	return s
+}
+
+func (s *IN3) AddSecondOpinionDocumentationReceived(v IS) *IN3 {
+	s.SecondOpinionDocumentationReceived = append(s.SecondOpinionDocumentationReceived, v)
+	return s
+}
+
+func (s *IN3) AddSecondOpinionPhysician(v XCN) *IN3 {
+	s.SecondOpinionPhysician = append(s.SecondOpinionPhysician, v)
+	return s
 }
 
 // INV - Inventory Detail
 // The inventory detail segment is the data necessary to track the inventory of substances (e.g. reagent, tips, waste) on equipment.
 type INV struct {
-	SubstanceIdentifier          CE   `hl7:"1,required"`
+	SubstanceIdentifier          *CE  `hl7:"1,required"`
 	SubstanceStatus              []CE `hl7:"2,required"`
-	SubstanceType                CE   `hl7:"3"`
-	InventoryContainerIdentifier CE   `hl7:"4"`
-	ContainerCarrierIdentifier   CE   `hl7:"5"`
-	PositionOnCarrier            CE   `hl7:"6"`
-	InitialQuantity              NM   `hl7:"7"`
-	CurrentQuantity              NM   `hl7:"8"`
-	AvailableQuantity            NM   `hl7:"9"`
-	ConsumptionQuantity          NM   `hl7:"10"`
-	QuantityUnits                CE   `hl7:"11"`
-	ExpirationDateTime           TS   `hl7:"12"`
-	FirstUsedDateTime            TS   `hl7:"13"`
-	OnBoardStabilityDuration     TQ   `hl7:"14"`
+	SubstanceType                *CE  `hl7:"3"`
+	InventoryContainerIdentifier *CE  `hl7:"4"`
+	ContainerCarrierIdentifier   *CE  `hl7:"5"`
+	PositionOnCarrier            *CE  `hl7:"6"`
+	InitialQuantity              *NM  `hl7:"7"`
+	CurrentQuantity              *NM  `hl7:"8"`
+	AvailableQuantity            *NM  `hl7:"9"`
+	ConsumptionQuantity          *NM  `hl7:"10"`
+	QuantityUnits                *CE  `hl7:"11"`
+	ExpirationDateTime           *TS  `hl7:"12"`
+	FirstUsedDateTime            *TS  `hl7:"13"`
+	OnBoardStabilityDuration     *TQ  `hl7:"14"`
 	TestFluidIdentifierS         []CE `hl7:"15"`
-	ManufacturerLotNumber        ST   `hl7:"16"`
-	ManufacturerIdentifier       CE   `hl7:"17"`
-	SupplierIdentifier           CE   `hl7:"18"`
-	OnBoardStabilityTime         CQ   `hl7:"19"`
-	TargetValue                  CQ   `hl7:"20"`
+	ManufacturerLotNumber        *ST  `hl7:"16"`
+	ManufacturerIdentifier       *CE  `hl7:"17"`
+	SupplierIdentifier           *CE  `hl7:"18"`
+	OnBoardStabilityTime         *CQ  `hl7:"19"`
+	TargetValue                  *CQ  `hl7:"20"`
+}
+
+func NewINV() *INV {
+	return &INV{}
+}
+
+func (s *INV) Validate() error {
+
+	if s.SubstanceIdentifier == nil {
+		return fmt.Errorf("INV.SubstanceIdentifier is required")
+	}
+	if s.SubstanceIdentifier != nil {
+		if err := s.SubstanceIdentifier.Validate(); err != nil {
+			return fmt.Errorf("INV.SubstanceIdentifier: %w", err)
+		}
+	}
+
+	if len(s.SubstanceStatus) == 0 {
+		return fmt.Errorf("INV.SubstanceStatus is required")
+	}
+	for _, item := range s.SubstanceStatus {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("INV.SubstanceStatus: %w", err)
+		}
+	}
+
+	if s.SubstanceType != nil {
+		if err := s.SubstanceType.Validate(); err != nil {
+			return fmt.Errorf("INV.SubstanceType: %w", err)
+		}
+	}
+
+	if s.InventoryContainerIdentifier != nil {
+		if err := s.InventoryContainerIdentifier.Validate(); err != nil {
+			return fmt.Errorf("INV.InventoryContainerIdentifier: %w", err)
+		}
+	}
+
+	if s.ContainerCarrierIdentifier != nil {
+		if err := s.ContainerCarrierIdentifier.Validate(); err != nil {
+			return fmt.Errorf("INV.ContainerCarrierIdentifier: %w", err)
+		}
+	}
+
+	if s.PositionOnCarrier != nil {
+		if err := s.PositionOnCarrier.Validate(); err != nil {
+			return fmt.Errorf("INV.PositionOnCarrier: %w", err)
+		}
+	}
+
+	if s.QuantityUnits != nil {
+		if err := s.QuantityUnits.Validate(); err != nil {
+			return fmt.Errorf("INV.QuantityUnits: %w", err)
+		}
+	}
+
+	if s.ExpirationDateTime != nil {
+		if err := s.ExpirationDateTime.Validate(); err != nil {
+			return fmt.Errorf("INV.ExpirationDateTime: %w", err)
+		}
+	}
+
+	if s.FirstUsedDateTime != nil {
+		if err := s.FirstUsedDateTime.Validate(); err != nil {
+			return fmt.Errorf("INV.FirstUsedDateTime: %w", err)
+		}
+	}
+
+	if s.OnBoardStabilityDuration != nil {
+		if err := s.OnBoardStabilityDuration.Validate(); err != nil {
+			return fmt.Errorf("INV.OnBoardStabilityDuration: %w", err)
+		}
+	}
+
+	for _, item := range s.TestFluidIdentifierS {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("INV.TestFluidIdentifierS: %w", err)
+		}
+	}
+
+	if s.ManufacturerIdentifier != nil {
+		if err := s.ManufacturerIdentifier.Validate(); err != nil {
+			return fmt.Errorf("INV.ManufacturerIdentifier: %w", err)
+		}
+	}
+
+	if s.SupplierIdentifier != nil {
+		if err := s.SupplierIdentifier.Validate(); err != nil {
+			return fmt.Errorf("INV.SupplierIdentifier: %w", err)
+		}
+	}
+
+	if s.OnBoardStabilityTime != nil {
+		if err := s.OnBoardStabilityTime.Validate(); err != nil {
+			return fmt.Errorf("INV.OnBoardStabilityTime: %w", err)
+		}
+	}
+
+	if s.TargetValue != nil {
+		if err := s.TargetValue.Validate(); err != nil {
+			return fmt.Errorf("INV.TargetValue: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *INV) SetSubstanceIdentifier(v *CE) *INV {
+	s.SubstanceIdentifier = v
+	return s
+}
+
+func (s *INV) AddSubstanceStatus(v CE) *INV {
+	s.SubstanceStatus = append(s.SubstanceStatus, v)
+	return s
+}
+
+func (s *INV) SetSubstanceType(v *CE) *INV {
+	s.SubstanceType = v
+	return s
+}
+
+func (s *INV) SetInventoryContainerIdentifier(v *CE) *INV {
+	s.InventoryContainerIdentifier = v
+	return s
+}
+
+func (s *INV) SetContainerCarrierIdentifier(v *CE) *INV {
+	s.ContainerCarrierIdentifier = v
+	return s
+}
+
+func (s *INV) SetPositionOnCarrier(v *CE) *INV {
+	s.PositionOnCarrier = v
+	return s
+}
+
+func (s *INV) SetInitialQuantity(v *NM) *INV {
+	s.InitialQuantity = v
+	return s
+}
+
+func (s *INV) SetCurrentQuantity(v *NM) *INV {
+	s.CurrentQuantity = v
+	return s
+}
+
+func (s *INV) SetAvailableQuantity(v *NM) *INV {
+	s.AvailableQuantity = v
+	return s
+}
+
+func (s *INV) SetConsumptionQuantity(v *NM) *INV {
+	s.ConsumptionQuantity = v
+	return s
+}
+
+func (s *INV) SetQuantityUnits(v *CE) *INV {
+	s.QuantityUnits = v
+	return s
+}
+
+func (s *INV) SetExpirationDateTime(v *TS) *INV {
+	s.ExpirationDateTime = v
+	return s
+}
+
+func (s *INV) SetFirstUsedDateTime(v *TS) *INV {
+	s.FirstUsedDateTime = v
+	return s
+}
+
+func (s *INV) SetOnBoardStabilityDuration(v *TQ) *INV {
+	s.OnBoardStabilityDuration = v
+	return s
+}
+
+func (s *INV) AddTestFluidIdentifierS(v CE) *INV {
+	s.TestFluidIdentifierS = append(s.TestFluidIdentifierS, v)
+	return s
+}
+
+func (s *INV) SetManufacturerLotNumber(v *ST) *INV {
+	s.ManufacturerLotNumber = v
+	return s
+}
+
+func (s *INV) SetManufacturerIdentifier(v *CE) *INV {
+	s.ManufacturerIdentifier = v
+	return s
+}
+
+func (s *INV) SetSupplierIdentifier(v *CE) *INV {
+	s.SupplierIdentifier = v
+	return s
+}
+
+func (s *INV) SetOnBoardStabilityTime(v *CQ) *INV {
+	s.OnBoardStabilityTime = v
+	return s
+}
+
+func (s *INV) SetTargetValue(v *CQ) *INV {
+	s.TargetValue = v
+	return s
 }
 
 // IPC - Imaging Procedure Control Segment
 // The IPC segment contains information about tasks that need to be performed in order to fulfill the request for imaging service. The information includes location, type and instance identification of equipment (acquisition modality) and stages (procedure steps).
 type IPC struct {
-	AccessionIdentifier            EI   `hl7:"1,required"`
-	RequestedProcedureID           EI   `hl7:"2,required"`
-	StudyInstanceUID               EI   `hl7:"3,required"`
-	ScheduledProcedureStepID       EI   `hl7:"4,required"`
-	Modality                       CE   `hl7:"5"`
+	AccessionIdentifier            *EI  `hl7:"1,required"`
+	RequestedProcedureID           *EI  `hl7:"2,required"`
+	StudyInstanceUID               *EI  `hl7:"3,required"`
+	ScheduledProcedureStepID       *EI  `hl7:"4,required"`
+	Modality                       *CE  `hl7:"5"`
 	ProtocolCode                   []CE `hl7:"6"`
-	ScheduledStationName           EI   `hl7:"7"`
+	ScheduledStationName           *EI  `hl7:"7"`
 	ScheduledProcedureStepLocation []CE `hl7:"8"`
-	ScheduledAETitle               ST   `hl7:"9"`
+	ScheduledAETitle               *ST  `hl7:"9"`
+}
+
+func NewIPC() *IPC {
+	return &IPC{}
+}
+
+func (s *IPC) Validate() error {
+
+	if s.AccessionIdentifier == nil {
+		return fmt.Errorf("IPC.AccessionIdentifier is required")
+	}
+	if s.AccessionIdentifier != nil {
+		if err := s.AccessionIdentifier.Validate(); err != nil {
+			return fmt.Errorf("IPC.AccessionIdentifier: %w", err)
+		}
+	}
+
+	if s.RequestedProcedureID == nil {
+		return fmt.Errorf("IPC.RequestedProcedureID is required")
+	}
+	if s.RequestedProcedureID != nil {
+		if err := s.RequestedProcedureID.Validate(); err != nil {
+			return fmt.Errorf("IPC.RequestedProcedureID: %w", err)
+		}
+	}
+
+	if s.StudyInstanceUID == nil {
+		return fmt.Errorf("IPC.StudyInstanceUID is required")
+	}
+	if s.StudyInstanceUID != nil {
+		if err := s.StudyInstanceUID.Validate(); err != nil {
+			return fmt.Errorf("IPC.StudyInstanceUID: %w", err)
+		}
+	}
+
+	if s.ScheduledProcedureStepID == nil {
+		return fmt.Errorf("IPC.ScheduledProcedureStepID is required")
+	}
+	if s.ScheduledProcedureStepID != nil {
+		if err := s.ScheduledProcedureStepID.Validate(); err != nil {
+			return fmt.Errorf("IPC.ScheduledProcedureStepID: %w", err)
+		}
+	}
+
+	if s.Modality != nil {
+		if err := s.Modality.Validate(); err != nil {
+			return fmt.Errorf("IPC.Modality: %w", err)
+		}
+	}
+
+	for _, item := range s.ProtocolCode {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IPC.ProtocolCode: %w", err)
+		}
+	}
+
+	if s.ScheduledStationName != nil {
+		if err := s.ScheduledStationName.Validate(); err != nil {
+			return fmt.Errorf("IPC.ScheduledStationName: %w", err)
+		}
+	}
+
+	for _, item := range s.ScheduledProcedureStepLocation {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("IPC.ScheduledProcedureStepLocation: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *IPC) SetAccessionIdentifier(v *EI) *IPC {
+	s.AccessionIdentifier = v
+	return s
+}
+
+func (s *IPC) SetRequestedProcedureID(v *EI) *IPC {
+	s.RequestedProcedureID = v
+	return s
+}
+
+func (s *IPC) SetStudyInstanceUID(v *EI) *IPC {
+	s.StudyInstanceUID = v
+	return s
+}
+
+func (s *IPC) SetScheduledProcedureStepID(v *EI) *IPC {
+	s.ScheduledProcedureStepID = v
+	return s
+}
+
+func (s *IPC) SetModality(v *CE) *IPC {
+	s.Modality = v
+	return s
+}
+
+func (s *IPC) AddProtocolCode(v CE) *IPC {
+	s.ProtocolCode = append(s.ProtocolCode, v)
+	return s
+}
+
+func (s *IPC) SetScheduledStationName(v *EI) *IPC {
+	s.ScheduledStationName = v
+	return s
+}
+
+func (s *IPC) AddScheduledProcedureStepLocation(v CE) *IPC {
+	s.ScheduledProcedureStepLocation = append(s.ScheduledProcedureStepLocation, v)
+	return s
+}
+
+func (s *IPC) SetScheduledAETitle(v *ST) *IPC {
+	s.ScheduledAETitle = v
+	return s
 }
 
 // ISD - Interaction Status Detail
 // The interaction detail segment contains information about the status of specific interaction (e.g., processing) on the specific equipment.
 type ISD struct {
-	ReferenceInteractionNumberUniqueIdentifier NM `hl7:"1,required"`
-	InteractionTypeIdentifier                  CE `hl7:"2"`
-	InteractionActiveState                     CE `hl7:"3,required"`
+	ReferenceInteractionNumberUniqueIdentifier *NM `hl7:"1,required"`
+	InteractionTypeIdentifier                  *CE `hl7:"2"`
+	InteractionActiveState                     *CE `hl7:"3,required"`
+}
+
+func NewISD() *ISD {
+	return &ISD{}
+}
+
+func (s *ISD) Validate() error {
+
+	if s.ReferenceInteractionNumberUniqueIdentifier == nil {
+		return fmt.Errorf("ISD.ReferenceInteractionNumberUniqueIdentifier is required")
+	}
+	if string(*s.ReferenceInteractionNumberUniqueIdentifier) == "" {
+		return fmt.Errorf("ISD.ReferenceInteractionNumberUniqueIdentifier is empty")
+	}
+
+	if s.InteractionTypeIdentifier != nil {
+		if err := s.InteractionTypeIdentifier.Validate(); err != nil {
+			return fmt.Errorf("ISD.InteractionTypeIdentifier: %w", err)
+		}
+	}
+
+	if s.InteractionActiveState == nil {
+		return fmt.Errorf("ISD.InteractionActiveState is required")
+	}
+	if s.InteractionActiveState != nil {
+		if err := s.InteractionActiveState.Validate(); err != nil {
+			return fmt.Errorf("ISD.InteractionActiveState: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *ISD) SetReferenceInteractionNumberUniqueIdentifier(v *NM) *ISD {
+	s.ReferenceInteractionNumberUniqueIdentifier = v
+	return s
+}
+
+func (s *ISD) SetInteractionTypeIdentifier(v *CE) *ISD {
+	s.InteractionTypeIdentifier = v
+	return s
+}
+
+func (s *ISD) SetInteractionActiveState(v *CE) *ISD {
+	s.InteractionActiveState = v
+	return s
 }
 
 // LAN - Language Detail
 // The LAN segment adds detailed language information to the staff member identified by the STF segment. An LAN segment may optionally follow an STF segment. An LAN segment must always have been preceded by a corresponding STF segment.
 type LAN struct {
-	SetIDLAN                SI   `hl7:"1,required"`
-	LanguageCode            CE   `hl7:"2,required"`
+	SetIDLAN                *SI  `hl7:"1,required"`
+	LanguageCode            *CE  `hl7:"2,required"`
 	LanguageAbilityCode     []CE `hl7:"3"`
-	LanguageProficiencyCode CE   `hl7:"4"`
+	LanguageProficiencyCode *CE  `hl7:"4"`
+}
+
+func NewLAN() *LAN {
+	return &LAN{}
+}
+
+func (s *LAN) Validate() error {
+
+	if s.SetIDLAN == nil {
+		return fmt.Errorf("LAN.SetIDLAN is required")
+	}
+	if string(*s.SetIDLAN) == "" {
+		return fmt.Errorf("LAN.SetIDLAN is empty")
+	}
+
+	if s.LanguageCode == nil {
+		return fmt.Errorf("LAN.LanguageCode is required")
+	}
+	if s.LanguageCode != nil {
+		if err := s.LanguageCode.Validate(); err != nil {
+			return fmt.Errorf("LAN.LanguageCode: %w", err)
+		}
+	}
+
+	for _, item := range s.LanguageAbilityCode {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("LAN.LanguageAbilityCode: %w", err)
+		}
+	}
+
+	if s.LanguageProficiencyCode != nil {
+		if err := s.LanguageProficiencyCode.Validate(); err != nil {
+			return fmt.Errorf("LAN.LanguageProficiencyCode: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *LAN) SetSetIDLAN(v *SI) *LAN {
+	s.SetIDLAN = v
+	return s
+}
+
+func (s *LAN) SetLanguageCode(v *CE) *LAN {
+	s.LanguageCode = v
+	return s
+}
+
+func (s *LAN) AddLanguageAbilityCode(v CE) *LAN {
+	s.LanguageAbilityCode = append(s.LanguageAbilityCode, v)
+	return s
+}
+
+func (s *LAN) SetLanguageProficiencyCode(v *CE) *LAN {
+	s.LanguageProficiencyCode = v
+	return s
 }
 
 // LCC - Location Charge Code
 // The optional LCC segment identifies how a patient location room can be billed by a certain department.  A department can use different charge codes for the same room or bed, so there can be multiple LCC segments following an LDP segment.
 type LCC struct {
-	PrimaryKeyValueLCC PL   `hl7:"1,required"`
-	LocationDepartment CE   `hl7:"2,required"`
+	PrimaryKeyValueLCC *PL  `hl7:"1,required"`
+	LocationDepartment *CE  `hl7:"2,required"`
 	AccommodationType  []CE `hl7:"3"`
 	ChargeCode         []CE `hl7:"4,required"`
+}
+
+func NewLCC() *LCC {
+	return &LCC{}
+}
+
+func (s *LCC) Validate() error {
+
+	if s.PrimaryKeyValueLCC == nil {
+		return fmt.Errorf("LCC.PrimaryKeyValueLCC is required")
+	}
+	if s.PrimaryKeyValueLCC != nil {
+		if err := s.PrimaryKeyValueLCC.Validate(); err != nil {
+			return fmt.Errorf("LCC.PrimaryKeyValueLCC: %w", err)
+		}
+	}
+
+	if s.LocationDepartment == nil {
+		return fmt.Errorf("LCC.LocationDepartment is required")
+	}
+	if s.LocationDepartment != nil {
+		if err := s.LocationDepartment.Validate(); err != nil {
+			return fmt.Errorf("LCC.LocationDepartment: %w", err)
+		}
+	}
+
+	for _, item := range s.AccommodationType {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("LCC.AccommodationType: %w", err)
+		}
+	}
+
+	if len(s.ChargeCode) == 0 {
+		return fmt.Errorf("LCC.ChargeCode is required")
+	}
+	for _, item := range s.ChargeCode {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("LCC.ChargeCode: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *LCC) SetPrimaryKeyValueLCC(v *PL) *LCC {
+	s.PrimaryKeyValueLCC = v
+	return s
+}
+
+func (s *LCC) SetLocationDepartment(v *CE) *LCC {
+	s.LocationDepartment = v
+	return s
+}
+
+func (s *LCC) AddAccommodationType(v CE) *LCC {
+	s.AccommodationType = append(s.AccommodationType, v)
+	return s
+}
+
+func (s *LCC) AddChargeCode(v CE) *LCC {
+	s.ChargeCode = append(s.ChargeCode, v)
+	return s
 }
 
 // LCH - Location Characteristic
@@ -1133,85 +9338,683 @@ type LCC struct {
 //
 // When the LCH segment appears immediately following the LOC segment, it communicates characteristics which are the same across multiple departments that may use the same room.  When the LCH segment appears immediately following the LDP segment, it communicates characteristics which differ for different departments that may use the same room.  For example, the following characteristics are more likely to vary by which department is using the room: teaching, gender, staffed, set up, overflow, whereas the other characteristics are likely to remain the same.
 type LCH struct {
-	PrimaryKeyValueLCH             PL `hl7:"1,required"`
-	SegmentActionCode              ID `hl7:"2"`
-	SegmentUniqueKey               EI `hl7:"3"`
-	LocationCharacteristicID       CE `hl7:"4,required"`
-	LocationCharacteristicValueLCH CE `hl7:"5,required"`
+	PrimaryKeyValueLCH             *PL `hl7:"1,required"`
+	SegmentActionCode              *ID `hl7:"2"`
+	SegmentUniqueKey               *EI `hl7:"3"`
+	LocationCharacteristicID       *CE `hl7:"4,required"`
+	LocationCharacteristicValueLCH *CE `hl7:"5,required"`
+}
+
+func NewLCH() *LCH {
+	return &LCH{}
+}
+
+func (s *LCH) Validate() error {
+
+	if s.PrimaryKeyValueLCH == nil {
+		return fmt.Errorf("LCH.PrimaryKeyValueLCH is required")
+	}
+	if s.PrimaryKeyValueLCH != nil {
+		if err := s.PrimaryKeyValueLCH.Validate(); err != nil {
+			return fmt.Errorf("LCH.PrimaryKeyValueLCH: %w", err)
+		}
+	}
+
+	if s.SegmentUniqueKey != nil {
+		if err := s.SegmentUniqueKey.Validate(); err != nil {
+			return fmt.Errorf("LCH.SegmentUniqueKey: %w", err)
+		}
+	}
+
+	if s.LocationCharacteristicID == nil {
+		return fmt.Errorf("LCH.LocationCharacteristicID is required")
+	}
+	if s.LocationCharacteristicID != nil {
+		if err := s.LocationCharacteristicID.Validate(); err != nil {
+			return fmt.Errorf("LCH.LocationCharacteristicID: %w", err)
+		}
+	}
+
+	if s.LocationCharacteristicValueLCH == nil {
+		return fmt.Errorf("LCH.LocationCharacteristicValueLCH is required")
+	}
+	if s.LocationCharacteristicValueLCH != nil {
+		if err := s.LocationCharacteristicValueLCH.Validate(); err != nil {
+			return fmt.Errorf("LCH.LocationCharacteristicValueLCH: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *LCH) SetPrimaryKeyValueLCH(v *PL) *LCH {
+	s.PrimaryKeyValueLCH = v
+	return s
+}
+
+func (s *LCH) SetSegmentActionCode(v *ID) *LCH {
+	s.SegmentActionCode = v
+	return s
+}
+
+func (s *LCH) SetSegmentUniqueKey(v *EI) *LCH {
+	s.SegmentUniqueKey = v
+	return s
+}
+
+func (s *LCH) SetLocationCharacteristicID(v *CE) *LCH {
+	s.LocationCharacteristicID = v
+	return s
+}
+
+func (s *LCH) SetLocationCharacteristicValueLCH(v *CE) *LCH {
+	s.LocationCharacteristicValueLCH = v
+	return s
 }
 
 // LDP - Location Department
 // The LDP segment identifies how a patient location room is being used by a certain department.  Multiple departments can use the same patient location, so there can be multiple LDP segments following an LOC segment.  There must be at least one LDP segment for each LOC segment.  This is not intended to include any current occupant information.
 type LDP struct {
-	PrimaryKeyValueLDP  PL   `hl7:"1,required"`
-	LocationDepartment  CE   `hl7:"2,required"`
+	PrimaryKeyValueLDP  *PL  `hl7:"1,required"`
+	LocationDepartment  *CE  `hl7:"2,required"`
 	LocationService     []IS `hl7:"3"`
 	SpecialtyType       []CE `hl7:"4"`
 	ValidPatientClasses []IS `hl7:"5"`
-	ActiveInactiveFlag  ID   `hl7:"6"`
-	ActivationDateLDP   TS   `hl7:"7"`
-	InactivationDateLDP TS   `hl7:"8"`
-	InactivatedReason   ST   `hl7:"9"`
+	ActiveInactiveFlag  *ID  `hl7:"6"`
+	ActivationDateLDP   *TS  `hl7:"7"`
+	InactivationDateLDP *TS  `hl7:"8"`
+	InactivatedReason   *ST  `hl7:"9"`
 	VisitingHours       []VH `hl7:"10"`
-	ContactPhone        XTN  `hl7:"11"`
-	LocationCostCenter  CE   `hl7:"12"`
+	ContactPhone        *XTN `hl7:"11"`
+	LocationCostCenter  *CE  `hl7:"12"`
+}
+
+func NewLDP() *LDP {
+	return &LDP{}
+}
+
+func (s *LDP) Validate() error {
+
+	if s.PrimaryKeyValueLDP == nil {
+		return fmt.Errorf("LDP.PrimaryKeyValueLDP is required")
+	}
+	if s.PrimaryKeyValueLDP != nil {
+		if err := s.PrimaryKeyValueLDP.Validate(); err != nil {
+			return fmt.Errorf("LDP.PrimaryKeyValueLDP: %w", err)
+		}
+	}
+
+	if s.LocationDepartment == nil {
+		return fmt.Errorf("LDP.LocationDepartment is required")
+	}
+	if s.LocationDepartment != nil {
+		if err := s.LocationDepartment.Validate(); err != nil {
+			return fmt.Errorf("LDP.LocationDepartment: %w", err)
+		}
+	}
+
+	for _, item := range s.LocationService {
+		if string(item) == "" {
+			return fmt.Errorf("LDP.LocationService item is empty")
+		}
+	}
+
+	for _, item := range s.SpecialtyType {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("LDP.SpecialtyType: %w", err)
+		}
+	}
+
+	for _, item := range s.ValidPatientClasses {
+		if string(item) == "" {
+			return fmt.Errorf("LDP.ValidPatientClasses item is empty")
+		}
+	}
+
+	if s.ActivationDateLDP != nil {
+		if err := s.ActivationDateLDP.Validate(); err != nil {
+			return fmt.Errorf("LDP.ActivationDateLDP: %w", err)
+		}
+	}
+
+	if s.InactivationDateLDP != nil {
+		if err := s.InactivationDateLDP.Validate(); err != nil {
+			return fmt.Errorf("LDP.InactivationDateLDP: %w", err)
+		}
+	}
+
+	for _, item := range s.VisitingHours {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("LDP.VisitingHours: %w", err)
+		}
+	}
+
+	if s.ContactPhone != nil {
+		if err := s.ContactPhone.Validate(); err != nil {
+			return fmt.Errorf("LDP.ContactPhone: %w", err)
+		}
+	}
+
+	if s.LocationCostCenter != nil {
+		if err := s.LocationCostCenter.Validate(); err != nil {
+			return fmt.Errorf("LDP.LocationCostCenter: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *LDP) SetPrimaryKeyValueLDP(v *PL) *LDP {
+	s.PrimaryKeyValueLDP = v
+	return s
+}
+
+func (s *LDP) SetLocationDepartment(v *CE) *LDP {
+	s.LocationDepartment = v
+	return s
+}
+
+func (s *LDP) AddLocationService(v IS) *LDP {
+	s.LocationService = append(s.LocationService, v)
+	return s
+}
+
+func (s *LDP) AddSpecialtyType(v CE) *LDP {
+	s.SpecialtyType = append(s.SpecialtyType, v)
+	return s
+}
+
+func (s *LDP) AddValidPatientClasses(v IS) *LDP {
+	s.ValidPatientClasses = append(s.ValidPatientClasses, v)
+	return s
+}
+
+func (s *LDP) SetActiveInactiveFlag(v *ID) *LDP {
+	s.ActiveInactiveFlag = v
+	return s
+}
+
+func (s *LDP) SetActivationDateLDP(v *TS) *LDP {
+	s.ActivationDateLDP = v
+	return s
+}
+
+func (s *LDP) SetInactivationDateLDP(v *TS) *LDP {
+	s.InactivationDateLDP = v
+	return s
+}
+
+func (s *LDP) SetInactivatedReason(v *ST) *LDP {
+	s.InactivatedReason = v
+	return s
+}
+
+func (s *LDP) AddVisitingHours(v VH) *LDP {
+	s.VisitingHours = append(s.VisitingHours, v)
+	return s
+}
+
+func (s *LDP) SetContactPhone(v *XTN) *LDP {
+	s.ContactPhone = v
+	return s
+}
+
+func (s *LDP) SetLocationCostCenter(v *CE) *LDP {
+	s.LocationCostCenter = v
+	return s
 }
 
 // LOC - Location Identification
 // The LOC segment can identify any patient location referenced by information systems.  This segment gives physical set up information about the location.  This is not intended to include any current occupant or current use information.  There should be one LOC segment for each patient location.  If desired, there can also be one LOC segment for each nursing unit and room.
 type LOC struct {
-	PrimaryKeyValueLOC  PL    `hl7:"1,required"`
-	LocationDescription ST    `hl7:"2"`
+	PrimaryKeyValueLOC  *PL   `hl7:"1,required"`
+	LocationDescription *ST   `hl7:"2"`
 	LocationTypeLOC     []IS  `hl7:"3,required"`
 	OrganizationNameLOC []XON `hl7:"4"`
 	LocationAddress     []XAD `hl7:"5"`
 	LocationPhone       []XTN `hl7:"6"`
 	LicenseNumber       []CE  `hl7:"7"`
 	LocationEquipment   []IS  `hl7:"8"`
-	LocationServiceCode IS    `hl7:"9"`
+	LocationServiceCode *IS   `hl7:"9"`
+}
+
+func NewLOC() *LOC {
+	return &LOC{}
+}
+
+func (s *LOC) Validate() error {
+
+	if s.PrimaryKeyValueLOC == nil {
+		return fmt.Errorf("LOC.PrimaryKeyValueLOC is required")
+	}
+	if s.PrimaryKeyValueLOC != nil {
+		if err := s.PrimaryKeyValueLOC.Validate(); err != nil {
+			return fmt.Errorf("LOC.PrimaryKeyValueLOC: %w", err)
+		}
+	}
+
+	if len(s.LocationTypeLOC) == 0 {
+		return fmt.Errorf("LOC.LocationTypeLOC is required")
+	}
+	for _, item := range s.LocationTypeLOC {
+		if string(item) == "" {
+			return fmt.Errorf("LOC.LocationTypeLOC item is empty")
+		}
+	}
+
+	for _, item := range s.OrganizationNameLOC {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("LOC.OrganizationNameLOC: %w", err)
+		}
+	}
+
+	for _, item := range s.LocationAddress {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("LOC.LocationAddress: %w", err)
+		}
+	}
+
+	for _, item := range s.LocationPhone {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("LOC.LocationPhone: %w", err)
+		}
+	}
+
+	for _, item := range s.LicenseNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("LOC.LicenseNumber: %w", err)
+		}
+	}
+
+	for _, item := range s.LocationEquipment {
+		if string(item) == "" {
+			return fmt.Errorf("LOC.LocationEquipment item is empty")
+		}
+	}
+
+	return nil
+}
+
+func (s *LOC) SetPrimaryKeyValueLOC(v *PL) *LOC {
+	s.PrimaryKeyValueLOC = v
+	return s
+}
+
+func (s *LOC) SetLocationDescription(v *ST) *LOC {
+	s.LocationDescription = v
+	return s
+}
+
+func (s *LOC) AddLocationTypeLOC(v IS) *LOC {
+	s.LocationTypeLOC = append(s.LocationTypeLOC, v)
+	return s
+}
+
+func (s *LOC) AddOrganizationNameLOC(v XON) *LOC {
+	s.OrganizationNameLOC = append(s.OrganizationNameLOC, v)
+	return s
+}
+
+func (s *LOC) AddLocationAddress(v XAD) *LOC {
+	s.LocationAddress = append(s.LocationAddress, v)
+	return s
+}
+
+func (s *LOC) AddLocationPhone(v XTN) *LOC {
+	s.LocationPhone = append(s.LocationPhone, v)
+	return s
+}
+
+func (s *LOC) AddLicenseNumber(v CE) *LOC {
+	s.LicenseNumber = append(s.LicenseNumber, v)
+	return s
+}
+
+func (s *LOC) AddLocationEquipment(v IS) *LOC {
+	s.LocationEquipment = append(s.LocationEquipment, v)
+	return s
+}
+
+func (s *LOC) SetLocationServiceCode(v *IS) *LOC {
+	s.LocationServiceCode = v
+	return s
 }
 
 // LRL - Location Relationship
 // The LRL segment is used to identify one location’s relationship to another location, the nearest lab, pharmacy, etc.
 type LRL struct {
-	PrimaryKeyValueLRL                      PL    `hl7:"1,required"`
-	SegmentActionCode                       ID    `hl7:"2"`
-	SegmentUniqueKey                        EI    `hl7:"3"`
-	LocationRelationshipID                  CE    `hl7:"4,required"`
+	PrimaryKeyValueLRL                      *PL   `hl7:"1,required"`
+	SegmentActionCode                       *ID   `hl7:"2"`
+	SegmentUniqueKey                        *EI   `hl7:"3"`
+	LocationRelationshipID                  *CE   `hl7:"4,required"`
 	OrganizationalLocationRelationshipValue []XON `hl7:"5"`
-	PatientLocationRelationshipValue        PL    `hl7:"6"`
+	PatientLocationRelationshipValue        *PL   `hl7:"6"`
+}
+
+func NewLRL() *LRL {
+	return &LRL{}
+}
+
+func (s *LRL) Validate() error {
+
+	if s.PrimaryKeyValueLRL == nil {
+		return fmt.Errorf("LRL.PrimaryKeyValueLRL is required")
+	}
+	if s.PrimaryKeyValueLRL != nil {
+		if err := s.PrimaryKeyValueLRL.Validate(); err != nil {
+			return fmt.Errorf("LRL.PrimaryKeyValueLRL: %w", err)
+		}
+	}
+
+	if s.SegmentUniqueKey != nil {
+		if err := s.SegmentUniqueKey.Validate(); err != nil {
+			return fmt.Errorf("LRL.SegmentUniqueKey: %w", err)
+		}
+	}
+
+	if s.LocationRelationshipID == nil {
+		return fmt.Errorf("LRL.LocationRelationshipID is required")
+	}
+	if s.LocationRelationshipID != nil {
+		if err := s.LocationRelationshipID.Validate(); err != nil {
+			return fmt.Errorf("LRL.LocationRelationshipID: %w", err)
+		}
+	}
+
+	for _, item := range s.OrganizationalLocationRelationshipValue {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("LRL.OrganizationalLocationRelationshipValue: %w", err)
+		}
+	}
+
+	if s.PatientLocationRelationshipValue != nil {
+		if err := s.PatientLocationRelationshipValue.Validate(); err != nil {
+			return fmt.Errorf("LRL.PatientLocationRelationshipValue: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *LRL) SetPrimaryKeyValueLRL(v *PL) *LRL {
+	s.PrimaryKeyValueLRL = v
+	return s
+}
+
+func (s *LRL) SetSegmentActionCode(v *ID) *LRL {
+	s.SegmentActionCode = v
+	return s
+}
+
+func (s *LRL) SetSegmentUniqueKey(v *EI) *LRL {
+	s.SegmentUniqueKey = v
+	return s
+}
+
+func (s *LRL) SetLocationRelationshipID(v *CE) *LRL {
+	s.LocationRelationshipID = v
+	return s
+}
+
+func (s *LRL) AddOrganizationalLocationRelationshipValue(v XON) *LRL {
+	s.OrganizationalLocationRelationshipValue = append(s.OrganizationalLocationRelationshipValue, v)
+	return s
+}
+
+func (s *LRL) SetPatientLocationRelationshipValue(v *PL) *LRL {
+	s.PatientLocationRelationshipValue = v
+	return s
 }
 
 // MFA - Master File Acknowledgment
 // The Technical Steward for the MFA segment is CQ.
 type MFA struct {
-	RecordLevelEventCode      ID       `hl7:"1,required"`
-	MFNControlID              ST       `hl7:"2"`
-	EventCompletionDateTime   TS       `hl7:"3"`
-	MFNRecordLevelErrorReturn CE       `hl7:"4,required"`
+	RecordLevelEventCode      *ID      `hl7:"1,required"`
+	MFNControlID              *ST      `hl7:"2"`
+	EventCompletionDateTime   *TS      `hl7:"3"`
+	MFNRecordLevelErrorReturn *CE      `hl7:"4,required"`
 	PrimaryKeyValueMFA        []VARIES `hl7:"5,required"`
 	PrimaryKeyValueTypeMFA    []ID     `hl7:"6,required"`
+}
+
+func NewMFA() *MFA {
+	return &MFA{}
+}
+
+func (s *MFA) Validate() error {
+
+	if s.RecordLevelEventCode == nil {
+		return fmt.Errorf("MFA.RecordLevelEventCode is required")
+	}
+	if string(*s.RecordLevelEventCode) == "" {
+		return fmt.Errorf("MFA.RecordLevelEventCode is empty")
+	}
+
+	if s.EventCompletionDateTime != nil {
+		if err := s.EventCompletionDateTime.Validate(); err != nil {
+			return fmt.Errorf("MFA.EventCompletionDateTime: %w", err)
+		}
+	}
+
+	if s.MFNRecordLevelErrorReturn == nil {
+		return fmt.Errorf("MFA.MFNRecordLevelErrorReturn is required")
+	}
+	if s.MFNRecordLevelErrorReturn != nil {
+		if err := s.MFNRecordLevelErrorReturn.Validate(); err != nil {
+			return fmt.Errorf("MFA.MFNRecordLevelErrorReturn: %w", err)
+		}
+	}
+
+	if len(s.PrimaryKeyValueMFA) == 0 {
+		return fmt.Errorf("MFA.PrimaryKeyValueMFA is required")
+	}
+	for _, item := range s.PrimaryKeyValueMFA {
+		if string(item) == "" {
+			return fmt.Errorf("MFA.PrimaryKeyValueMFA item is empty")
+		}
+	}
+
+	if len(s.PrimaryKeyValueTypeMFA) == 0 {
+		return fmt.Errorf("MFA.PrimaryKeyValueTypeMFA is required")
+	}
+	for _, item := range s.PrimaryKeyValueTypeMFA {
+		if string(item) == "" {
+			return fmt.Errorf("MFA.PrimaryKeyValueTypeMFA item is empty")
+		}
+	}
+	return nil
+}
+
+func (s *MFA) SetRecordLevelEventCode(v *ID) *MFA {
+	s.RecordLevelEventCode = v
+	return s
+}
+
+func (s *MFA) SetMFNControlID(v *ST) *MFA {
+	s.MFNControlID = v
+	return s
+}
+
+func (s *MFA) SetEventCompletionDateTime(v *TS) *MFA {
+	s.EventCompletionDateTime = v
+	return s
+}
+
+func (s *MFA) SetMFNRecordLevelErrorReturn(v *CE) *MFA {
+	s.MFNRecordLevelErrorReturn = v
+	return s
+}
+
+func (s *MFA) AddPrimaryKeyValueMFA(v VARIES) *MFA {
+	s.PrimaryKeyValueMFA = append(s.PrimaryKeyValueMFA, v)
+	return s
+}
+
+func (s *MFA) AddPrimaryKeyValueTypeMFA(v ID) *MFA {
+	s.PrimaryKeyValueTypeMFA = append(s.PrimaryKeyValueTypeMFA, v)
+	return s
 }
 
 // MFE - Master File Entry
 // The Technical Steward for the MFE segment is CQ.
 type MFE struct {
-	RecordLevelEventCode ID       `hl7:"1,required"`
-	MFNControlID         ST       `hl7:"2"`
-	EffectiveDateTime    TS       `hl7:"3"`
+	RecordLevelEventCode *ID      `hl7:"1,required"`
+	MFNControlID         *ST      `hl7:"2"`
+	EffectiveDateTime    *TS      `hl7:"3"`
 	PrimaryKeyValueMFE   []VARIES `hl7:"4,required"`
 	PrimaryKeyValueType  []ID     `hl7:"5,required"`
+}
+
+func NewMFE() *MFE {
+	return &MFE{}
+}
+
+func (s *MFE) Validate() error {
+
+	if s.RecordLevelEventCode == nil {
+		return fmt.Errorf("MFE.RecordLevelEventCode is required")
+	}
+	if string(*s.RecordLevelEventCode) == "" {
+		return fmt.Errorf("MFE.RecordLevelEventCode is empty")
+	}
+
+	if s.EffectiveDateTime != nil {
+		if err := s.EffectiveDateTime.Validate(); err != nil {
+			return fmt.Errorf("MFE.EffectiveDateTime: %w", err)
+		}
+	}
+
+	if len(s.PrimaryKeyValueMFE) == 0 {
+		return fmt.Errorf("MFE.PrimaryKeyValueMFE is required")
+	}
+	for _, item := range s.PrimaryKeyValueMFE {
+		if string(item) == "" {
+			return fmt.Errorf("MFE.PrimaryKeyValueMFE item is empty")
+		}
+	}
+
+	if len(s.PrimaryKeyValueType) == 0 {
+		return fmt.Errorf("MFE.PrimaryKeyValueType is required")
+	}
+	for _, item := range s.PrimaryKeyValueType {
+		if string(item) == "" {
+			return fmt.Errorf("MFE.PrimaryKeyValueType item is empty")
+		}
+	}
+	return nil
+}
+
+func (s *MFE) SetRecordLevelEventCode(v *ID) *MFE {
+	s.RecordLevelEventCode = v
+	return s
+}
+
+func (s *MFE) SetMFNControlID(v *ST) *MFE {
+	s.MFNControlID = v
+	return s
+}
+
+func (s *MFE) SetEffectiveDateTime(v *TS) *MFE {
+	s.EffectiveDateTime = v
+	return s
+}
+
+func (s *MFE) AddPrimaryKeyValueMFE(v VARIES) *MFE {
+	s.PrimaryKeyValueMFE = append(s.PrimaryKeyValueMFE, v)
+	return s
+}
+
+func (s *MFE) AddPrimaryKeyValueType(v ID) *MFE {
+	s.PrimaryKeyValueType = append(s.PrimaryKeyValueType, v)
+	return s
 }
 
 // MFI - Master File Identification
 // The Technical Steward for the MFI segment is CQ.
 type MFI struct {
-	MasterFileIdentifier            CE `hl7:"1,required"`
-	MasterFileApplicationIdentifier HD `hl7:"2"`
-	FileLevelEventCode              ID `hl7:"3,required"`
-	EnteredDateTime                 TS `hl7:"4"`
-	EffectiveDateTime               TS `hl7:"5"`
-	ResponseLevelCode               ID `hl7:"6,required"`
+	MasterFileIdentifier            *CE `hl7:"1,required"`
+	MasterFileApplicationIdentifier *HD `hl7:"2"`
+	FileLevelEventCode              *ID `hl7:"3,required"`
+	EnteredDateTime                 *TS `hl7:"4"`
+	EffectiveDateTime               *TS `hl7:"5"`
+	ResponseLevelCode               *ID `hl7:"6,required"`
+}
+
+func NewMFI() *MFI {
+	return &MFI{}
+}
+
+func (s *MFI) Validate() error {
+
+	if s.MasterFileIdentifier == nil {
+		return fmt.Errorf("MFI.MasterFileIdentifier is required")
+	}
+	if s.MasterFileIdentifier != nil {
+		if err := s.MasterFileIdentifier.Validate(); err != nil {
+			return fmt.Errorf("MFI.MasterFileIdentifier: %w", err)
+		}
+	}
+
+	if s.MasterFileApplicationIdentifier != nil {
+		if err := s.MasterFileApplicationIdentifier.Validate(); err != nil {
+			return fmt.Errorf("MFI.MasterFileApplicationIdentifier: %w", err)
+		}
+	}
+
+	if s.FileLevelEventCode == nil {
+		return fmt.Errorf("MFI.FileLevelEventCode is required")
+	}
+	if string(*s.FileLevelEventCode) == "" {
+		return fmt.Errorf("MFI.FileLevelEventCode is empty")
+	}
+
+	if s.EnteredDateTime != nil {
+		if err := s.EnteredDateTime.Validate(); err != nil {
+			return fmt.Errorf("MFI.EnteredDateTime: %w", err)
+		}
+	}
+
+	if s.EffectiveDateTime != nil {
+		if err := s.EffectiveDateTime.Validate(); err != nil {
+			return fmt.Errorf("MFI.EffectiveDateTime: %w", err)
+		}
+	}
+
+	if s.ResponseLevelCode == nil {
+		return fmt.Errorf("MFI.ResponseLevelCode is required")
+	}
+	if string(*s.ResponseLevelCode) == "" {
+		return fmt.Errorf("MFI.ResponseLevelCode is empty")
+	}
+
+	return nil
+}
+
+func (s *MFI) SetMasterFileIdentifier(v *CE) *MFI {
+	s.MasterFileIdentifier = v
+	return s
+}
+
+func (s *MFI) SetMasterFileApplicationIdentifier(v *HD) *MFI {
+	s.MasterFileApplicationIdentifier = v
+	return s
+}
+
+func (s *MFI) SetFileLevelEventCode(v *ID) *MFI {
+	s.FileLevelEventCode = v
+	return s
+}
+
+func (s *MFI) SetEnteredDateTime(v *TS) *MFI {
+	s.EnteredDateTime = v
+	return s
+}
+
+func (s *MFI) SetEffectiveDateTime(v *TS) *MFI {
+	s.EffectiveDateTime = v
+	return s
+}
+
+func (s *MFI) SetResponseLevelCode(v *ID) *MFI {
+	s.ResponseLevelCode = v
+	return s
 }
 
 // MRG - Merge Patient Information
@@ -1219,114 +10022,959 @@ type MFI struct {
 type MRG struct {
 	PriorPatientIdentifierList []CX  `hl7:"1,required"`
 	PriorAlternatePatientID    []CX  `hl7:"2"`
-	PriorPatientAccountNumber  CX    `hl7:"3"`
-	PriorPatientID             CX    `hl7:"4"`
-	PriorVisitNumber           CX    `hl7:"5"`
-	PriorAlternateVisitID      CX    `hl7:"6"`
+	PriorPatientAccountNumber  *CX   `hl7:"3"`
+	PriorPatientID             *CX   `hl7:"4"`
+	PriorVisitNumber           *CX   `hl7:"5"`
+	PriorAlternateVisitID      *CX   `hl7:"6"`
 	PriorPatientName           []XPN `hl7:"7"`
+}
+
+func NewMRG() *MRG {
+	return &MRG{}
+}
+
+func (s *MRG) Validate() error {
+
+	if len(s.PriorPatientIdentifierList) == 0 {
+		return fmt.Errorf("MRG.PriorPatientIdentifierList is required")
+	}
+	for _, item := range s.PriorPatientIdentifierList {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("MRG.PriorPatientIdentifierList: %w", err)
+		}
+	}
+
+	for _, item := range s.PriorAlternatePatientID {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("MRG.PriorAlternatePatientID: %w", err)
+		}
+	}
+
+	if s.PriorPatientAccountNumber != nil {
+		if err := s.PriorPatientAccountNumber.Validate(); err != nil {
+			return fmt.Errorf("MRG.PriorPatientAccountNumber: %w", err)
+		}
+	}
+
+	if s.PriorPatientID != nil {
+		if err := s.PriorPatientID.Validate(); err != nil {
+			return fmt.Errorf("MRG.PriorPatientID: %w", err)
+		}
+	}
+
+	if s.PriorVisitNumber != nil {
+		if err := s.PriorVisitNumber.Validate(); err != nil {
+			return fmt.Errorf("MRG.PriorVisitNumber: %w", err)
+		}
+	}
+
+	if s.PriorAlternateVisitID != nil {
+		if err := s.PriorAlternateVisitID.Validate(); err != nil {
+			return fmt.Errorf("MRG.PriorAlternateVisitID: %w", err)
+		}
+	}
+
+	for _, item := range s.PriorPatientName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("MRG.PriorPatientName: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *MRG) AddPriorPatientIdentifierList(v CX) *MRG {
+	s.PriorPatientIdentifierList = append(s.PriorPatientIdentifierList, v)
+	return s
+}
+
+func (s *MRG) AddPriorAlternatePatientID(v CX) *MRG {
+	s.PriorAlternatePatientID = append(s.PriorAlternatePatientID, v)
+	return s
+}
+
+func (s *MRG) SetPriorPatientAccountNumber(v *CX) *MRG {
+	s.PriorPatientAccountNumber = v
+	return s
+}
+
+func (s *MRG) SetPriorPatientID(v *CX) *MRG {
+	s.PriorPatientID = v
+	return s
+}
+
+func (s *MRG) SetPriorVisitNumber(v *CX) *MRG {
+	s.PriorVisitNumber = v
+	return s
+}
+
+func (s *MRG) SetPriorAlternateVisitID(v *CX) *MRG {
+	s.PriorAlternateVisitID = v
+	return s
+}
+
+func (s *MRG) AddPriorPatientName(v XPN) *MRG {
+	s.PriorPatientName = append(s.PriorPatientName, v)
+	return s
 }
 
 // MSA - Message Acknowledgment
 // The MSA segment contains information sent while acknowledging another message.
 type MSA struct {
-	AcknowledgmentCode        ID `hl7:"1,required"`
-	MessageControlID          ST `hl7:"2,required"`
-	TextMessage               ST `hl7:"3"`
-	ExpectedSequenceNumber    NM `hl7:"4"`
-	DelayedAcknowledgmentType ST `hl7:"5"`
-	ErrorCondition            CE `hl7:"6"`
+	AcknowledgmentCode        *ID `hl7:"1,required"`
+	MessageControlID          *ST `hl7:"2,required"`
+	TextMessage               *ST `hl7:"3"`
+	ExpectedSequenceNumber    *NM `hl7:"4"`
+	DelayedAcknowledgmentType *ST `hl7:"5"`
+	ErrorCondition            *CE `hl7:"6"`
+}
+
+func NewMSA() *MSA {
+	return &MSA{}
+}
+
+func (s *MSA) Validate() error {
+
+	if s.AcknowledgmentCode == nil {
+		return fmt.Errorf("MSA.AcknowledgmentCode is required")
+	}
+	if string(*s.AcknowledgmentCode) == "" {
+		return fmt.Errorf("MSA.AcknowledgmentCode is empty")
+	}
+
+	if s.MessageControlID == nil {
+		return fmt.Errorf("MSA.MessageControlID is required")
+	}
+	if string(*s.MessageControlID) == "" {
+		return fmt.Errorf("MSA.MessageControlID is empty")
+	}
+
+	if s.ErrorCondition != nil {
+		if err := s.ErrorCondition.Validate(); err != nil {
+			return fmt.Errorf("MSA.ErrorCondition: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *MSA) SetAcknowledgmentCode(v *ID) *MSA {
+	s.AcknowledgmentCode = v
+	return s
+}
+
+func (s *MSA) SetMessageControlID(v *ST) *MSA {
+	s.MessageControlID = v
+	return s
+}
+
+func (s *MSA) SetTextMessage(v *ST) *MSA {
+	s.TextMessage = v
+	return s
+}
+
+func (s *MSA) SetExpectedSequenceNumber(v *NM) *MSA {
+	s.ExpectedSequenceNumber = v
+	return s
+}
+
+func (s *MSA) SetDelayedAcknowledgmentType(v *ST) *MSA {
+	s.DelayedAcknowledgmentType = v
+	return s
+}
+
+func (s *MSA) SetErrorCondition(v *CE) *MSA {
+	s.ErrorCondition = v
+	return s
 }
 
 // MSH - Message Header
 // The MSH segment defines the intent, source, destination, and some specifics of the syntax of a message.
 type MSH struct {
-	FieldSeparator                      ST   `hl7:"1,required"`
-	EncodingCharacters                  ST   `hl7:"2,required"`
-	SendingApplication                  HD   `hl7:"3"`
-	SendingFacility                     HD   `hl7:"4"`
-	ReceivingApplication                HD   `hl7:"5"`
-	ReceivingFacility                   HD   `hl7:"6"`
-	DateTimeOfMessage                   TS   `hl7:"7,required"`
-	Security                            ST   `hl7:"8"`
-	MessageType                         MSG  `hl7:"9,required"`
-	MessageControlID                    ST   `hl7:"10,required"`
-	ProcessingID                        PT   `hl7:"11,required"`
-	VersionID                           VID  `hl7:"12,required"`
-	SequenceNumber                      NM   `hl7:"13"`
-	ContinuationPointer                 ST   `hl7:"14"`
-	AcceptAcknowledgmentType            ID   `hl7:"15"`
-	ApplicationAcknowledgmentType       ID   `hl7:"16"`
-	CountryCode                         ID   `hl7:"17"`
+	FieldSeparator                      *ST  `hl7:"1,required"`
+	EncodingCharacters                  *ST  `hl7:"2,required"`
+	SendingApplication                  *HD  `hl7:"3"`
+	SendingFacility                     *HD  `hl7:"4"`
+	ReceivingApplication                *HD  `hl7:"5"`
+	ReceivingFacility                   *HD  `hl7:"6"`
+	DateTimeOfMessage                   *TS  `hl7:"7,required"`
+	Security                            *ST  `hl7:"8"`
+	MessageType                         *MSG `hl7:"9,required"`
+	MessageControlID                    *ST  `hl7:"10,required"`
+	ProcessingID                        *PT  `hl7:"11,required"`
+	VersionID                           *VID `hl7:"12,required"`
+	SequenceNumber                      *NM  `hl7:"13"`
+	ContinuationPointer                 *ST  `hl7:"14"`
+	AcceptAcknowledgmentType            *ID  `hl7:"15"`
+	ApplicationAcknowledgmentType       *ID  `hl7:"16"`
+	CountryCode                         *ID  `hl7:"17"`
 	CharacterSet                        []ID `hl7:"18"`
-	PrincipalLanguageOfMessage          CE   `hl7:"19"`
-	AlternateCharacterSetHandlingScheme ID   `hl7:"20"`
+	PrincipalLanguageOfMessage          *CE  `hl7:"19"`
+	AlternateCharacterSetHandlingScheme *ID  `hl7:"20"`
 	MessageProfileIdentifier            []EI `hl7:"21"`
+}
+
+func NewMSH(msgType *MSG) *MSH {
+	return &MSH{
+		FieldSeparator:     NewST("|"),
+		EncodingCharacters: NewST("^~\\&"),
+		DateTimeOfMessage:  NewTS().SetTime(time.Now().Format("20060102150405")),
+		MessageType:        msgType,
+		MessageControlID:   NewST(uuid.NewString()),
+		ProcessingID:       NewPT().SetProcessingId("P"),
+		VersionID:          NewVID().SetVersionId("2.5"),
+	}
+}
+
+func (s *MSH) Validate() error {
+
+	if s.FieldSeparator == nil {
+		return fmt.Errorf("MSH.FieldSeparator is required")
+	}
+	if string(*s.FieldSeparator) == "" {
+		return fmt.Errorf("MSH.FieldSeparator is empty")
+	}
+
+	if s.EncodingCharacters == nil {
+		return fmt.Errorf("MSH.EncodingCharacters is required")
+	}
+	if string(*s.EncodingCharacters) == "" {
+		return fmt.Errorf("MSH.EncodingCharacters is empty")
+	}
+
+	if s.SendingApplication != nil {
+		if err := s.SendingApplication.Validate(); err != nil {
+			return fmt.Errorf("MSH.SendingApplication: %w", err)
+		}
+	}
+
+	if s.SendingFacility != nil {
+		if err := s.SendingFacility.Validate(); err != nil {
+			return fmt.Errorf("MSH.SendingFacility: %w", err)
+		}
+	}
+
+	if s.ReceivingApplication != nil {
+		if err := s.ReceivingApplication.Validate(); err != nil {
+			return fmt.Errorf("MSH.ReceivingApplication: %w", err)
+		}
+	}
+
+	if s.ReceivingFacility != nil {
+		if err := s.ReceivingFacility.Validate(); err != nil {
+			return fmt.Errorf("MSH.ReceivingFacility: %w", err)
+		}
+	}
+
+	if s.DateTimeOfMessage == nil {
+		return fmt.Errorf("MSH.DateTimeOfMessage is required")
+	}
+	if s.DateTimeOfMessage != nil {
+		if err := s.DateTimeOfMessage.Validate(); err != nil {
+			return fmt.Errorf("MSH.DateTimeOfMessage: %w", err)
+		}
+	}
+
+	if s.MessageType == nil {
+		return fmt.Errorf("MSH.MessageType is required")
+	}
+	if s.MessageType != nil {
+		if err := s.MessageType.Validate(); err != nil {
+			return fmt.Errorf("MSH.MessageType: %w", err)
+		}
+	}
+
+	if s.MessageControlID == nil {
+		return fmt.Errorf("MSH.MessageControlID is required")
+	}
+	if string(*s.MessageControlID) == "" {
+		return fmt.Errorf("MSH.MessageControlID is empty")
+	}
+
+	if s.ProcessingID == nil {
+		return fmt.Errorf("MSH.ProcessingID is required")
+	}
+	if s.ProcessingID != nil {
+		if err := s.ProcessingID.Validate(); err != nil {
+			return fmt.Errorf("MSH.ProcessingID: %w", err)
+		}
+	}
+
+	if s.VersionID == nil {
+		return fmt.Errorf("MSH.VersionID is required")
+	}
+	if s.VersionID != nil {
+		if err := s.VersionID.Validate(); err != nil {
+			return fmt.Errorf("MSH.VersionID: %w", err)
+		}
+	}
+
+	for _, item := range s.CharacterSet {
+		if string(item) == "" {
+			return fmt.Errorf("MSH.CharacterSet item is empty")
+		}
+	}
+
+	if s.PrincipalLanguageOfMessage != nil {
+		if err := s.PrincipalLanguageOfMessage.Validate(); err != nil {
+			return fmt.Errorf("MSH.PrincipalLanguageOfMessage: %w", err)
+		}
+	}
+
+	for _, item := range s.MessageProfileIdentifier {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("MSH.MessageProfileIdentifier: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *MSH) SetFieldSeparator(v *ST) *MSH {
+	s.FieldSeparator = v
+	return s
+}
+
+func (s *MSH) SetEncodingCharacters(v *ST) *MSH {
+	s.EncodingCharacters = v
+	return s
+}
+
+func (s *MSH) SetSendingApplication(v *HD) *MSH {
+	s.SendingApplication = v
+	return s
+}
+
+func (s *MSH) SetSendingFacility(v *HD) *MSH {
+	s.SendingFacility = v
+	return s
+}
+
+func (s *MSH) SetReceivingApplication(v *HD) *MSH {
+	s.ReceivingApplication = v
+	return s
+}
+
+func (s *MSH) SetReceivingFacility(v *HD) *MSH {
+	s.ReceivingFacility = v
+	return s
+}
+
+func (s *MSH) SetDateTimeOfMessage(v *TS) *MSH {
+	s.DateTimeOfMessage = v
+	return s
+}
+
+func (s *MSH) SetSecurity(v *ST) *MSH {
+	s.Security = v
+	return s
+}
+
+func (s *MSH) SetMessageType(v *MSG) *MSH {
+	s.MessageType = v
+	return s
+}
+
+func (s *MSH) SetMessageControlID(v *ST) *MSH {
+	s.MessageControlID = v
+	return s
+}
+
+func (s *MSH) SetProcessingID(v *PT) *MSH {
+	s.ProcessingID = v
+	return s
+}
+
+func (s *MSH) SetVersionID(v *VID) *MSH {
+	s.VersionID = v
+	return s
+}
+
+func (s *MSH) SetSequenceNumber(v *NM) *MSH {
+	s.SequenceNumber = v
+	return s
+}
+
+func (s *MSH) SetContinuationPointer(v *ST) *MSH {
+	s.ContinuationPointer = v
+	return s
+}
+
+func (s *MSH) SetAcceptAcknowledgmentType(v *ID) *MSH {
+	s.AcceptAcknowledgmentType = v
+	return s
+}
+
+func (s *MSH) SetApplicationAcknowledgmentType(v *ID) *MSH {
+	s.ApplicationAcknowledgmentType = v
+	return s
+}
+
+func (s *MSH) SetCountryCode(v *ID) *MSH {
+	s.CountryCode = v
+	return s
+}
+
+func (s *MSH) AddCharacterSet(v ID) *MSH {
+	s.CharacterSet = append(s.CharacterSet, v)
+	return s
+}
+
+func (s *MSH) SetPrincipalLanguageOfMessage(v *CE) *MSH {
+	s.PrincipalLanguageOfMessage = v
+	return s
+}
+
+func (s *MSH) SetAlternateCharacterSetHandlingScheme(v *ID) *MSH {
+	s.AlternateCharacterSetHandlingScheme = v
+	return s
+}
+
+func (s *MSH) AddMessageProfileIdentifier(v EI) *MSH {
+	s.MessageProfileIdentifier = append(s.MessageProfileIdentifier, v)
+	return s
 }
 
 // NCK - System Clock
 // The NCK segment is used to allow the various applications on the network to synchronize their system clocks (system date and time).
 type NCK struct {
-	SystemDateTime TS `hl7:"1,required"`
+	SystemDateTime *TS `hl7:"1,required"`
+}
+
+func NewNCK() *NCK {
+	return &NCK{}
+}
+
+func (s *NCK) Validate() error {
+
+	if s.SystemDateTime == nil {
+		return fmt.Errorf("NCK.SystemDateTime is required")
+	}
+	if s.SystemDateTime != nil {
+		if err := s.SystemDateTime.Validate(); err != nil {
+			return fmt.Errorf("NCK.SystemDateTime: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *NCK) SetSystemDateTime(v *TS) *NCK {
+	s.SystemDateTime = v
+	return s
 }
 
 // NDS - Notification Detail
 // The equipment notification detail segment is the data necessary to maintain an adequate audit trail as well as notifications of events, (e.g., alarms that have occurred on a particular piece of equipment.
 type NDS struct {
-	NotificationReferenceNumber NM `hl7:"1,required"`
-	NotificationDateTime        TS `hl7:"2,required"`
-	NotificationAlertSeverity   CE `hl7:"3,required"`
-	NotificationCode            CE `hl7:"4,required"`
+	NotificationReferenceNumber *NM `hl7:"1,required"`
+	NotificationDateTime        *TS `hl7:"2,required"`
+	NotificationAlertSeverity   *CE `hl7:"3,required"`
+	NotificationCode            *CE `hl7:"4,required"`
+}
+
+func NewNDS() *NDS {
+	return &NDS{}
+}
+
+func (s *NDS) Validate() error {
+
+	if s.NotificationReferenceNumber == nil {
+		return fmt.Errorf("NDS.NotificationReferenceNumber is required")
+	}
+	if string(*s.NotificationReferenceNumber) == "" {
+		return fmt.Errorf("NDS.NotificationReferenceNumber is empty")
+	}
+
+	if s.NotificationDateTime == nil {
+		return fmt.Errorf("NDS.NotificationDateTime is required")
+	}
+	if s.NotificationDateTime != nil {
+		if err := s.NotificationDateTime.Validate(); err != nil {
+			return fmt.Errorf("NDS.NotificationDateTime: %w", err)
+		}
+	}
+
+	if s.NotificationAlertSeverity == nil {
+		return fmt.Errorf("NDS.NotificationAlertSeverity is required")
+	}
+	if s.NotificationAlertSeverity != nil {
+		if err := s.NotificationAlertSeverity.Validate(); err != nil {
+			return fmt.Errorf("NDS.NotificationAlertSeverity: %w", err)
+		}
+	}
+
+	if s.NotificationCode == nil {
+		return fmt.Errorf("NDS.NotificationCode is required")
+	}
+	if s.NotificationCode != nil {
+		if err := s.NotificationCode.Validate(); err != nil {
+			return fmt.Errorf("NDS.NotificationCode: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *NDS) SetNotificationReferenceNumber(v *NM) *NDS {
+	s.NotificationReferenceNumber = v
+	return s
+}
+
+func (s *NDS) SetNotificationDateTime(v *TS) *NDS {
+	s.NotificationDateTime = v
+	return s
+}
+
+func (s *NDS) SetNotificationAlertSeverity(v *CE) *NDS {
+	s.NotificationAlertSeverity = v
+	return s
+}
+
+func (s *NDS) SetNotificationCode(v *CE) *NDS {
+	s.NotificationCode = v
+	return s
 }
 
 // NK1 - Next of Kin / Associated Parties
 // The NK1 segment contains information about the patients other related parties. Any associated parties may be identified. Utilizing NK1-1 - set ID, multiple NK1 segments can be sent to patient accounts.
 type NK1 struct {
-	SetIDNK1                                 SI    `hl7:"1,required"`
+	SetIDNK1                                 *SI   `hl7:"1,required"`
 	NKName                                   []XPN `hl7:"2"`
-	Relationship                             CE    `hl7:"3"`
+	Relationship                             *CE   `hl7:"3"`
 	Address                                  []XAD `hl7:"4"`
 	PhoneNumber                              []XTN `hl7:"5"`
 	BusinessPhoneNumber                      []XTN `hl7:"6"`
-	ContactRole                              CE    `hl7:"7"`
-	StartDate                                DT    `hl7:"8"`
-	EndDate                                  DT    `hl7:"9"`
-	NextOfKinAssociatedPartiesJobTitle       ST    `hl7:"10"`
-	NextOfKinAssociatedPartiesJobCodeClass   JCC   `hl7:"11"`
-	NextOfKinAssociatedPartiesEmployeeNumber CX    `hl7:"12"`
+	ContactRole                              *CE   `hl7:"7"`
+	StartDate                                *DT   `hl7:"8"`
+	EndDate                                  *DT   `hl7:"9"`
+	NextOfKinAssociatedPartiesJobTitle       *ST   `hl7:"10"`
+	NextOfKinAssociatedPartiesJobCodeClass   *JCC  `hl7:"11"`
+	NextOfKinAssociatedPartiesEmployeeNumber *CX   `hl7:"12"`
 	OrganizationNameNK1                      []XON `hl7:"13"`
-	MaritalStatus                            CE    `hl7:"14"`
-	AdministrativeSex                        IS    `hl7:"15"`
-	DateTimeOfBirth                          TS    `hl7:"16"`
+	MaritalStatus                            *CE   `hl7:"14"`
+	AdministrativeSex                        *IS   `hl7:"15"`
+	DateTimeOfBirth                          *TS   `hl7:"16"`
 	LivingDependency                         []IS  `hl7:"17"`
 	AmbulatoryStatus                         []IS  `hl7:"18"`
 	Citizenship                              []CE  `hl7:"19"`
-	PrimaryLanguage                          CE    `hl7:"20"`
-	LivingArrangement                        IS    `hl7:"21"`
-	PublicityCode                            CE    `hl7:"22"`
-	ProtectionIndicator                      ID    `hl7:"23"`
-	StudentIndicator                         IS    `hl7:"24"`
-	Religion                                 CE    `hl7:"25"`
+	PrimaryLanguage                          *CE   `hl7:"20"`
+	LivingArrangement                        *IS   `hl7:"21"`
+	PublicityCode                            *CE   `hl7:"22"`
+	ProtectionIndicator                      *ID   `hl7:"23"`
+	StudentIndicator                         *IS   `hl7:"24"`
+	Religion                                 *CE   `hl7:"25"`
 	MotherSMaidenName                        []XPN `hl7:"26"`
-	Nationality                              CE    `hl7:"27"`
+	Nationality                              *CE   `hl7:"27"`
 	EthnicGroup                              []CE  `hl7:"28"`
 	ContactReason                            []CE  `hl7:"29"`
 	ContactPersonSName                       []XPN `hl7:"30"`
 	ContactPersonSTelephoneNumber            []XTN `hl7:"31"`
 	ContactPersonSAddress                    []XAD `hl7:"32"`
 	NextOfKinAssociatedPartySIdentifiers     []CX  `hl7:"33"`
-	JobStatus                                IS    `hl7:"34"`
+	JobStatus                                *IS   `hl7:"34"`
 	Race                                     []CE  `hl7:"35"`
-	Handicap                                 IS    `hl7:"36"`
-	ContactPersonSocialSecurityNumber        ST    `hl7:"37"`
-	NextOfKinBirthPlace                      ST    `hl7:"38"`
-	VIPIndicator                             IS    `hl7:"39"`
+	Handicap                                 *IS   `hl7:"36"`
+	ContactPersonSocialSecurityNumber        *ST   `hl7:"37"`
+	NextOfKinBirthPlace                      *ST   `hl7:"38"`
+	VIPIndicator                             *IS   `hl7:"39"`
+}
+
+func NewNK1() *NK1 {
+	return &NK1{}
+}
+
+func (s *NK1) Validate() error {
+
+	if s.SetIDNK1 == nil {
+		return fmt.Errorf("NK1.SetIDNK1 is required")
+	}
+	if string(*s.SetIDNK1) == "" {
+		return fmt.Errorf("NK1.SetIDNK1 is empty")
+	}
+
+	for _, item := range s.NKName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("NK1.NKName: %w", err)
+		}
+	}
+
+	if s.Relationship != nil {
+		if err := s.Relationship.Validate(); err != nil {
+			return fmt.Errorf("NK1.Relationship: %w", err)
+		}
+	}
+
+	for _, item := range s.Address {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("NK1.Address: %w", err)
+		}
+	}
+
+	for _, item := range s.PhoneNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("NK1.PhoneNumber: %w", err)
+		}
+	}
+
+	for _, item := range s.BusinessPhoneNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("NK1.BusinessPhoneNumber: %w", err)
+		}
+	}
+
+	if s.ContactRole != nil {
+		if err := s.ContactRole.Validate(); err != nil {
+			return fmt.Errorf("NK1.ContactRole: %w", err)
+		}
+	}
+
+	if s.NextOfKinAssociatedPartiesJobCodeClass != nil {
+		if err := s.NextOfKinAssociatedPartiesJobCodeClass.Validate(); err != nil {
+			return fmt.Errorf("NK1.NextOfKinAssociatedPartiesJobCodeClass: %w", err)
+		}
+	}
+
+	if s.NextOfKinAssociatedPartiesEmployeeNumber != nil {
+		if err := s.NextOfKinAssociatedPartiesEmployeeNumber.Validate(); err != nil {
+			return fmt.Errorf("NK1.NextOfKinAssociatedPartiesEmployeeNumber: %w", err)
+		}
+	}
+
+	for _, item := range s.OrganizationNameNK1 {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("NK1.OrganizationNameNK1: %w", err)
+		}
+	}
+
+	if s.MaritalStatus != nil {
+		if err := s.MaritalStatus.Validate(); err != nil {
+			return fmt.Errorf("NK1.MaritalStatus: %w", err)
+		}
+	}
+
+	if s.DateTimeOfBirth != nil {
+		if err := s.DateTimeOfBirth.Validate(); err != nil {
+			return fmt.Errorf("NK1.DateTimeOfBirth: %w", err)
+		}
+	}
+
+	for _, item := range s.LivingDependency {
+		if string(item) == "" {
+			return fmt.Errorf("NK1.LivingDependency item is empty")
+		}
+	}
+
+	for _, item := range s.AmbulatoryStatus {
+		if string(item) == "" {
+			return fmt.Errorf("NK1.AmbulatoryStatus item is empty")
+		}
+	}
+
+	for _, item := range s.Citizenship {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("NK1.Citizenship: %w", err)
+		}
+	}
+
+	if s.PrimaryLanguage != nil {
+		if err := s.PrimaryLanguage.Validate(); err != nil {
+			return fmt.Errorf("NK1.PrimaryLanguage: %w", err)
+		}
+	}
+
+	if s.PublicityCode != nil {
+		if err := s.PublicityCode.Validate(); err != nil {
+			return fmt.Errorf("NK1.PublicityCode: %w", err)
+		}
+	}
+
+	if s.Religion != nil {
+		if err := s.Religion.Validate(); err != nil {
+			return fmt.Errorf("NK1.Religion: %w", err)
+		}
+	}
+
+	for _, item := range s.MotherSMaidenName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("NK1.MotherSMaidenName: %w", err)
+		}
+	}
+
+	if s.Nationality != nil {
+		if err := s.Nationality.Validate(); err != nil {
+			return fmt.Errorf("NK1.Nationality: %w", err)
+		}
+	}
+
+	for _, item := range s.EthnicGroup {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("NK1.EthnicGroup: %w", err)
+		}
+	}
+
+	for _, item := range s.ContactReason {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("NK1.ContactReason: %w", err)
+		}
+	}
+
+	for _, item := range s.ContactPersonSName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("NK1.ContactPersonSName: %w", err)
+		}
+	}
+
+	for _, item := range s.ContactPersonSTelephoneNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("NK1.ContactPersonSTelephoneNumber: %w", err)
+		}
+	}
+
+	for _, item := range s.ContactPersonSAddress {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("NK1.ContactPersonSAddress: %w", err)
+		}
+	}
+
+	for _, item := range s.NextOfKinAssociatedPartySIdentifiers {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("NK1.NextOfKinAssociatedPartySIdentifiers: %w", err)
+		}
+	}
+
+	for _, item := range s.Race {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("NK1.Race: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *NK1) SetSetIDNK1(v *SI) *NK1 {
+	s.SetIDNK1 = v
+	return s
+}
+
+func (s *NK1) AddNKName(v XPN) *NK1 {
+	s.NKName = append(s.NKName, v)
+	return s
+}
+
+func (s *NK1) SetRelationship(v *CE) *NK1 {
+	s.Relationship = v
+	return s
+}
+
+func (s *NK1) AddAddress(v XAD) *NK1 {
+	s.Address = append(s.Address, v)
+	return s
+}
+
+func (s *NK1) AddPhoneNumber(v XTN) *NK1 {
+	s.PhoneNumber = append(s.PhoneNumber, v)
+	return s
+}
+
+func (s *NK1) AddBusinessPhoneNumber(v XTN) *NK1 {
+	s.BusinessPhoneNumber = append(s.BusinessPhoneNumber, v)
+	return s
+}
+
+func (s *NK1) SetContactRole(v *CE) *NK1 {
+	s.ContactRole = v
+	return s
+}
+
+func (s *NK1) SetStartDate(v *DT) *NK1 {
+	s.StartDate = v
+	return s
+}
+
+func (s *NK1) SetEndDate(v *DT) *NK1 {
+	s.EndDate = v
+	return s
+}
+
+func (s *NK1) SetNextOfKinAssociatedPartiesJobTitle(v *ST) *NK1 {
+	s.NextOfKinAssociatedPartiesJobTitle = v
+	return s
+}
+
+func (s *NK1) SetNextOfKinAssociatedPartiesJobCodeClass(v *JCC) *NK1 {
+	s.NextOfKinAssociatedPartiesJobCodeClass = v
+	return s
+}
+
+func (s *NK1) SetNextOfKinAssociatedPartiesEmployeeNumber(v *CX) *NK1 {
+	s.NextOfKinAssociatedPartiesEmployeeNumber = v
+	return s
+}
+
+func (s *NK1) AddOrganizationNameNK1(v XON) *NK1 {
+	s.OrganizationNameNK1 = append(s.OrganizationNameNK1, v)
+	return s
+}
+
+func (s *NK1) SetMaritalStatus(v *CE) *NK1 {
+	s.MaritalStatus = v
+	return s
+}
+
+func (s *NK1) SetAdministrativeSex(v *IS) *NK1 {
+	s.AdministrativeSex = v
+	return s
+}
+
+func (s *NK1) SetDateTimeOfBirth(v *TS) *NK1 {
+	s.DateTimeOfBirth = v
+	return s
+}
+
+func (s *NK1) AddLivingDependency(v IS) *NK1 {
+	s.LivingDependency = append(s.LivingDependency, v)
+	return s
+}
+
+func (s *NK1) AddAmbulatoryStatus(v IS) *NK1 {
+	s.AmbulatoryStatus = append(s.AmbulatoryStatus, v)
+	return s
+}
+
+func (s *NK1) AddCitizenship(v CE) *NK1 {
+	s.Citizenship = append(s.Citizenship, v)
+	return s
+}
+
+func (s *NK1) SetPrimaryLanguage(v *CE) *NK1 {
+	s.PrimaryLanguage = v
+	return s
+}
+
+func (s *NK1) SetLivingArrangement(v *IS) *NK1 {
+	s.LivingArrangement = v
+	return s
+}
+
+func (s *NK1) SetPublicityCode(v *CE) *NK1 {
+	s.PublicityCode = v
+	return s
+}
+
+func (s *NK1) SetProtectionIndicator(v *ID) *NK1 {
+	s.ProtectionIndicator = v
+	return s
+}
+
+func (s *NK1) SetStudentIndicator(v *IS) *NK1 {
+	s.StudentIndicator = v
+	return s
+}
+
+func (s *NK1) SetReligion(v *CE) *NK1 {
+	s.Religion = v
+	return s
+}
+
+func (s *NK1) AddMotherSMaidenName(v XPN) *NK1 {
+	s.MotherSMaidenName = append(s.MotherSMaidenName, v)
+	return s
+}
+
+func (s *NK1) SetNationality(v *CE) *NK1 {
+	s.Nationality = v
+	return s
+}
+
+func (s *NK1) AddEthnicGroup(v CE) *NK1 {
+	s.EthnicGroup = append(s.EthnicGroup, v)
+	return s
+}
+
+func (s *NK1) AddContactReason(v CE) *NK1 {
+	s.ContactReason = append(s.ContactReason, v)
+	return s
+}
+
+func (s *NK1) AddContactPersonSName(v XPN) *NK1 {
+	s.ContactPersonSName = append(s.ContactPersonSName, v)
+	return s
+}
+
+func (s *NK1) AddContactPersonSTelephoneNumber(v XTN) *NK1 {
+	s.ContactPersonSTelephoneNumber = append(s.ContactPersonSTelephoneNumber, v)
+	return s
+}
+
+func (s *NK1) AddContactPersonSAddress(v XAD) *NK1 {
+	s.ContactPersonSAddress = append(s.ContactPersonSAddress, v)
+	return s
+}
+
+func (s *NK1) AddNextOfKinAssociatedPartySIdentifiers(v CX) *NK1 {
+	s.NextOfKinAssociatedPartySIdentifiers = append(s.NextOfKinAssociatedPartySIdentifiers, v)
+	return s
+}
+
+func (s *NK1) SetJobStatus(v *IS) *NK1 {
+	s.JobStatus = v
+	return s
+}
+
+func (s *NK1) AddRace(v CE) *NK1 {
+	s.Race = append(s.Race, v)
+	return s
+}
+
+func (s *NK1) SetHandicap(v *IS) *NK1 {
+	s.Handicap = v
+	return s
+}
+
+func (s *NK1) SetContactPersonSocialSecurityNumber(v *ST) *NK1 {
+	s.ContactPersonSocialSecurityNumber = v
+	return s
+}
+
+func (s *NK1) SetNextOfKinBirthPlace(v *ST) *NK1 {
+	s.NextOfKinBirthPlace = v
+	return s
+}
+
+func (s *NK1) SetVIPIndicator(v *IS) *NK1 {
+	s.VIPIndicator = v
+	return s
 }
 
 // NPU - Bed Status Update
 // The NPU segment allows the updating of census (bed status) data without sending patient-specific data. An example might include changing the status of a bed from housekeeping to unoccupied.
 type NPU struct {
-	BedLocation PL `hl7:"1,required"`
-	BedStatus   IS `hl7:"2"`
+	BedLocation *PL `hl7:"1,required"`
+	BedStatus   *IS `hl7:"2"`
+}
+
+func NewNPU() *NPU {
+	return &NPU{}
+}
+
+func (s *NPU) Validate() error {
+
+	if s.BedLocation == nil {
+		return fmt.Errorf("NPU.BedLocation is required")
+	}
+	if s.BedLocation != nil {
+		if err := s.BedLocation.Validate(); err != nil {
+			return fmt.Errorf("NPU.BedLocation: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *NPU) SetBedLocation(v *PL) *NPU {
+	s.BedLocation = v
+	return s
+}
+
+func (s *NPU) SetBedStatus(v *IS) *NPU {
+	s.BedStatus = v
+	return s
 }
 
 // NSC - Application Status Change
@@ -1338,15 +10986,99 @@ type NPU struct {
 //
 // Fields 2-3, 6-7. Entirely site-defined.
 type NSC struct {
-	ApplicationChangeType IS `hl7:"1,required"`
-	CurrentCPU            ST `hl7:"2"`
-	CurrentFileserver     ST `hl7:"3"`
-	CurrentApplication    HD `hl7:"4"`
-	CurrentFacility       HD `hl7:"5"`
-	NewCPU                ST `hl7:"6"`
-	NewFileserver         ST `hl7:"7"`
-	NewApplication        HD `hl7:"8"`
-	NewFacility           HD `hl7:"9"`
+	ApplicationChangeType *IS `hl7:"1,required"`
+	CurrentCPU            *ST `hl7:"2"`
+	CurrentFileserver     *ST `hl7:"3"`
+	CurrentApplication    *HD `hl7:"4"`
+	CurrentFacility       *HD `hl7:"5"`
+	NewCPU                *ST `hl7:"6"`
+	NewFileserver         *ST `hl7:"7"`
+	NewApplication        *HD `hl7:"8"`
+	NewFacility           *HD `hl7:"9"`
+}
+
+func NewNSC() *NSC {
+	return &NSC{}
+}
+
+func (s *NSC) Validate() error {
+
+	if s.ApplicationChangeType == nil {
+		return fmt.Errorf("NSC.ApplicationChangeType is required")
+	}
+	if string(*s.ApplicationChangeType) == "" {
+		return fmt.Errorf("NSC.ApplicationChangeType is empty")
+	}
+
+	if s.CurrentApplication != nil {
+		if err := s.CurrentApplication.Validate(); err != nil {
+			return fmt.Errorf("NSC.CurrentApplication: %w", err)
+		}
+	}
+
+	if s.CurrentFacility != nil {
+		if err := s.CurrentFacility.Validate(); err != nil {
+			return fmt.Errorf("NSC.CurrentFacility: %w", err)
+		}
+	}
+
+	if s.NewApplication != nil {
+		if err := s.NewApplication.Validate(); err != nil {
+			return fmt.Errorf("NSC.NewApplication: %w", err)
+		}
+	}
+
+	if s.NewFacility != nil {
+		if err := s.NewFacility.Validate(); err != nil {
+			return fmt.Errorf("NSC.NewFacility: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *NSC) SetApplicationChangeType(v *IS) *NSC {
+	s.ApplicationChangeType = v
+	return s
+}
+
+func (s *NSC) SetCurrentCPU(v *ST) *NSC {
+	s.CurrentCPU = v
+	return s
+}
+
+func (s *NSC) SetCurrentFileserver(v *ST) *NSC {
+	s.CurrentFileserver = v
+	return s
+}
+
+func (s *NSC) SetCurrentApplication(v *HD) *NSC {
+	s.CurrentApplication = v
+	return s
+}
+
+func (s *NSC) SetCurrentFacility(v *HD) *NSC {
+	s.CurrentFacility = v
+	return s
+}
+
+func (s *NSC) SetNewCPU(v *ST) *NSC {
+	s.NewCPU = v
+	return s
+}
+
+func (s *NSC) SetNewFileserver(v *ST) *NSC {
+	s.NewFileserver = v
+	return s
+}
+
+func (s *NSC) SetNewApplication(v *HD) *NSC {
+	s.NewApplication = v
+	return s
+}
+
+func (s *NSC) SetNewFacility(v *HD) *NSC {
+	s.NewFacility = v
+	return s
 }
 
 // NST - Application control level statistics
@@ -1354,84 +11086,688 @@ type NSC struct {
 //
 // Usage Notes: Fields 2-15.  These are all marked optional since the statistics kept on a particular link and negotiated between the two systems in question will vary.  Not all values will apply to each system.  Some values are concerned with the type of port, and some values pertain to the lower level protocol.
 type NST struct {
-	StatisticsAvailable           ID `hl7:"1,required"`
-	SourceIdentifier              ST `hl7:"2"`
-	SourceType                    ID `hl7:"3"`
-	StatisticsStart               TS `hl7:"4"`
-	StatisticsEnd                 TS `hl7:"5"`
-	ReceiveCharacterCount         NM `hl7:"6"`
-	SendCharacterCount            NM `hl7:"7"`
-	MessagesReceived              NM `hl7:"8"`
-	MessagesSent                  NM `hl7:"9"`
-	ChecksumErrorsReceived        NM `hl7:"10"`
-	LengthErrorsReceived          NM `hl7:"11"`
-	OtherErrorsReceived           NM `hl7:"12"`
-	ConnectTimeouts               NM `hl7:"13"`
-	ReceiveTimeouts               NM `hl7:"14"`
-	ApplicationControlLevelErrors NM `hl7:"15"`
+	StatisticsAvailable           *ID `hl7:"1,required"`
+	SourceIdentifier              *ST `hl7:"2"`
+	SourceType                    *ID `hl7:"3"`
+	StatisticsStart               *TS `hl7:"4"`
+	StatisticsEnd                 *TS `hl7:"5"`
+	ReceiveCharacterCount         *NM `hl7:"6"`
+	SendCharacterCount            *NM `hl7:"7"`
+	MessagesReceived              *NM `hl7:"8"`
+	MessagesSent                  *NM `hl7:"9"`
+	ChecksumErrorsReceived        *NM `hl7:"10"`
+	LengthErrorsReceived          *NM `hl7:"11"`
+	OtherErrorsReceived           *NM `hl7:"12"`
+	ConnectTimeouts               *NM `hl7:"13"`
+	ReceiveTimeouts               *NM `hl7:"14"`
+	ApplicationControlLevelErrors *NM `hl7:"15"`
+}
+
+func NewNST() *NST {
+	return &NST{}
+}
+
+func (s *NST) Validate() error {
+
+	if s.StatisticsAvailable == nil {
+		return fmt.Errorf("NST.StatisticsAvailable is required")
+	}
+	if string(*s.StatisticsAvailable) == "" {
+		return fmt.Errorf("NST.StatisticsAvailable is empty")
+	}
+
+	if s.StatisticsStart != nil {
+		if err := s.StatisticsStart.Validate(); err != nil {
+			return fmt.Errorf("NST.StatisticsStart: %w", err)
+		}
+	}
+
+	if s.StatisticsEnd != nil {
+		if err := s.StatisticsEnd.Validate(); err != nil {
+			return fmt.Errorf("NST.StatisticsEnd: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *NST) SetStatisticsAvailable(v *ID) *NST {
+	s.StatisticsAvailable = v
+	return s
+}
+
+func (s *NST) SetSourceIdentifier(v *ST) *NST {
+	s.SourceIdentifier = v
+	return s
+}
+
+func (s *NST) SetSourceType(v *ID) *NST {
+	s.SourceType = v
+	return s
+}
+
+func (s *NST) SetStatisticsStart(v *TS) *NST {
+	s.StatisticsStart = v
+	return s
+}
+
+func (s *NST) SetStatisticsEnd(v *TS) *NST {
+	s.StatisticsEnd = v
+	return s
+}
+
+func (s *NST) SetReceiveCharacterCount(v *NM) *NST {
+	s.ReceiveCharacterCount = v
+	return s
+}
+
+func (s *NST) SetSendCharacterCount(v *NM) *NST {
+	s.SendCharacterCount = v
+	return s
+}
+
+func (s *NST) SetMessagesReceived(v *NM) *NST {
+	s.MessagesReceived = v
+	return s
+}
+
+func (s *NST) SetMessagesSent(v *NM) *NST {
+	s.MessagesSent = v
+	return s
+}
+
+func (s *NST) SetChecksumErrorsReceived(v *NM) *NST {
+	s.ChecksumErrorsReceived = v
+	return s
+}
+
+func (s *NST) SetLengthErrorsReceived(v *NM) *NST {
+	s.LengthErrorsReceived = v
+	return s
+}
+
+func (s *NST) SetOtherErrorsReceived(v *NM) *NST {
+	s.OtherErrorsReceived = v
+	return s
+}
+
+func (s *NST) SetConnectTimeouts(v *NM) *NST {
+	s.ConnectTimeouts = v
+	return s
+}
+
+func (s *NST) SetReceiveTimeouts(v *NM) *NST {
+	s.ReceiveTimeouts = v
+	return s
+}
+
+func (s *NST) SetApplicationControlLevelErrors(v *NM) *NST {
+	s.ApplicationControlLevelErrors = v
+	return s
 }
 
 // NTE - Notes and Comments
 // The NTE segment is defined here for inclusion in messages defined in other chapters. It is commonly used for sending notes and comments.
 type NTE struct {
-	SetIDNTE        SI   `hl7:"1"`
-	SourceOfComment ID   `hl7:"2"`
+	SetIDNTE        *SI  `hl7:"1"`
+	SourceOfComment *ID  `hl7:"2"`
 	Comment         []FT `hl7:"3"`
-	CommentType     CE   `hl7:"4"`
+	CommentType     *CE  `hl7:"4"`
+}
+
+func NewNTE() *NTE {
+	return &NTE{}
+}
+
+func (s *NTE) Validate() error {
+
+	for _, item := range s.Comment {
+		if string(item) == "" {
+			return fmt.Errorf("NTE.Comment item is empty")
+		}
+	}
+
+	if s.CommentType != nil {
+		if err := s.CommentType.Validate(); err != nil {
+			return fmt.Errorf("NTE.CommentType: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *NTE) SetSetIDNTE(v *SI) *NTE {
+	s.SetIDNTE = v
+	return s
+}
+
+func (s *NTE) SetSourceOfComment(v *ID) *NTE {
+	s.SourceOfComment = v
+	return s
+}
+
+func (s *NTE) AddComment(v FT) *NTE {
+	s.Comment = append(s.Comment, v)
+	return s
+}
+
+func (s *NTE) SetCommentType(v *CE) *NTE {
+	s.CommentType = v
+	return s
 }
 
 // OBR - Observation Request
 // The Observation Request (OBR) segment is used to transmit information specific to an order for a diagnostic study or observation, physical exam, or assessment.
 type OBR struct {
-	SetIDOBR                                   SI    `hl7:"1"`
-	PlacerOrderNumber                          EI    `hl7:"2"`
-	FillerOrderNumber                          EI    `hl7:"3"`
-	UniversalServiceIdentifier                 CE    `hl7:"4,required"`
-	PriorityOBR                                ID    `hl7:"5"`
-	RequestedDateTime                          TS    `hl7:"6"`
-	ObservationDateTime                        TS    `hl7:"7"`
-	ObservationEndDateTime                     TS    `hl7:"8"`
-	CollectionVolume                           CQ    `hl7:"9"`
+	SetIDOBR                                   *SI   `hl7:"1"`
+	PlacerOrderNumber                          *EI   `hl7:"2"`
+	FillerOrderNumber                          *EI   `hl7:"3"`
+	UniversalServiceIdentifier                 *CE   `hl7:"4,required"`
+	PriorityOBR                                *ID   `hl7:"5"`
+	RequestedDateTime                          *TS   `hl7:"6"`
+	ObservationDateTime                        *TS   `hl7:"7"`
+	ObservationEndDateTime                     *TS   `hl7:"8"`
+	CollectionVolume                           *CQ   `hl7:"9"`
 	CollectorIdentifier                        []XCN `hl7:"10"`
-	SpecimenActionCode                         ID    `hl7:"11"`
-	DangerCode                                 CE    `hl7:"12"`
-	RelevantClinicalInformation                ST    `hl7:"13"`
-	SpecimenReceivedDateTime                   TS    `hl7:"14"`
-	SpecimenSource                             SPS   `hl7:"15"`
+	SpecimenActionCode                         *ID   `hl7:"11"`
+	DangerCode                                 *CE   `hl7:"12"`
+	RelevantClinicalInformation                *ST   `hl7:"13"`
+	SpecimenReceivedDateTime                   *TS   `hl7:"14"`
+	SpecimenSource                             *SPS  `hl7:"15"`
 	OrderingProvider                           []XCN `hl7:"16"`
 	OrderCallbackPhoneNumber                   []XTN `hl7:"17"`
-	PlacerField1                               ST    `hl7:"18"`
-	PlacerField2                               ST    `hl7:"19"`
-	FillerField1                               ST    `hl7:"20"`
-	FillerField2                               ST    `hl7:"21"`
-	ResultsRptStatusChngDateTime               TS    `hl7:"22"`
-	ChargeToPractice                           MOC   `hl7:"23"`
-	DiagnosticServSectID                       ID    `hl7:"24"`
-	ResultStatus                               ID    `hl7:"25"`
-	ParentResult                               PRL   `hl7:"26"`
+	PlacerField1                               *ST   `hl7:"18"`
+	PlacerField2                               *ST   `hl7:"19"`
+	FillerField1                               *ST   `hl7:"20"`
+	FillerField2                               *ST   `hl7:"21"`
+	ResultsRptStatusChngDateTime               *TS   `hl7:"22"`
+	ChargeToPractice                           *MOC  `hl7:"23"`
+	DiagnosticServSectID                       *ID   `hl7:"24"`
+	ResultStatus                               *ID   `hl7:"25"`
+	ParentResult                               *PRL  `hl7:"26"`
 	QuantityTiming                             []TQ  `hl7:"27"`
 	ResultCopiesTo                             []XCN `hl7:"28"`
-	Parent                                     EIP   `hl7:"29"`
-	TransportationMode                         ID    `hl7:"30"`
+	Parent                                     *EIP  `hl7:"29"`
+	TransportationMode                         *ID   `hl7:"30"`
 	ReasonForStudy                             []CE  `hl7:"31"`
-	PrincipalResultInterpreter                 NDL   `hl7:"32"`
+	PrincipalResultInterpreter                 *NDL  `hl7:"32"`
 	AssistantResultInterpreter                 []NDL `hl7:"33"`
 	Technician                                 []NDL `hl7:"34"`
 	Transcriptionist                           []NDL `hl7:"35"`
-	ScheduledDateTime                          TS    `hl7:"36"`
-	NumberOfSampleContainers                   NM    `hl7:"37"`
+	ScheduledDateTime                          *TS   `hl7:"36"`
+	NumberOfSampleContainers                   *NM   `hl7:"37"`
 	TransportLogisticsOfCollectedSample        []CE  `hl7:"38"`
 	CollectorSComment                          []CE  `hl7:"39"`
-	TransportArrangementResponsibility         CE    `hl7:"40"`
-	TransportArranged                          ID    `hl7:"41"`
-	EscortRequired                             ID    `hl7:"42"`
+	TransportArrangementResponsibility         *CE   `hl7:"40"`
+	TransportArranged                          *ID   `hl7:"41"`
+	EscortRequired                             *ID   `hl7:"42"`
 	PlannedPatientTransportComment             []CE  `hl7:"43"`
-	ProcedureCode                              CE    `hl7:"44"`
+	ProcedureCode                              *CE   `hl7:"44"`
 	ProcedureCodeModifier                      []CE  `hl7:"45"`
 	PlacerSupplementalServiceInformation       []CE  `hl7:"46"`
 	FillerSupplementalServiceInformation       []CE  `hl7:"47"`
-	MedicallyNecessaryDuplicateProcedureReason CWE   `hl7:"48"`
-	ResultHandling                             IS    `hl7:"49"`
+	MedicallyNecessaryDuplicateProcedureReason *CWE  `hl7:"48"`
+	ResultHandling                             *IS   `hl7:"49"`
+}
+
+func NewOBR() *OBR {
+	return &OBR{}
+}
+
+func (s *OBR) Validate() error {
+
+	if s.PlacerOrderNumber != nil {
+		if err := s.PlacerOrderNumber.Validate(); err != nil {
+			return fmt.Errorf("OBR.PlacerOrderNumber: %w", err)
+		}
+	}
+
+	if s.FillerOrderNumber != nil {
+		if err := s.FillerOrderNumber.Validate(); err != nil {
+			return fmt.Errorf("OBR.FillerOrderNumber: %w", err)
+		}
+	}
+
+	if s.UniversalServiceIdentifier == nil {
+		return fmt.Errorf("OBR.UniversalServiceIdentifier is required")
+	}
+	if s.UniversalServiceIdentifier != nil {
+		if err := s.UniversalServiceIdentifier.Validate(); err != nil {
+			return fmt.Errorf("OBR.UniversalServiceIdentifier: %w", err)
+		}
+	}
+
+	if s.RequestedDateTime != nil {
+		if err := s.RequestedDateTime.Validate(); err != nil {
+			return fmt.Errorf("OBR.RequestedDateTime: %w", err)
+		}
+	}
+
+	if s.ObservationDateTime != nil {
+		if err := s.ObservationDateTime.Validate(); err != nil {
+			return fmt.Errorf("OBR.ObservationDateTime: %w", err)
+		}
+	}
+
+	if s.ObservationEndDateTime != nil {
+		if err := s.ObservationEndDateTime.Validate(); err != nil {
+			return fmt.Errorf("OBR.ObservationEndDateTime: %w", err)
+		}
+	}
+
+	if s.CollectionVolume != nil {
+		if err := s.CollectionVolume.Validate(); err != nil {
+			return fmt.Errorf("OBR.CollectionVolume: %w", err)
+		}
+	}
+
+	for _, item := range s.CollectorIdentifier {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OBR.CollectorIdentifier: %w", err)
+		}
+	}
+
+	if s.DangerCode != nil {
+		if err := s.DangerCode.Validate(); err != nil {
+			return fmt.Errorf("OBR.DangerCode: %w", err)
+		}
+	}
+
+	if s.SpecimenReceivedDateTime != nil {
+		if err := s.SpecimenReceivedDateTime.Validate(); err != nil {
+			return fmt.Errorf("OBR.SpecimenReceivedDateTime: %w", err)
+		}
+	}
+
+	if s.SpecimenSource != nil {
+		if err := s.SpecimenSource.Validate(); err != nil {
+			return fmt.Errorf("OBR.SpecimenSource: %w", err)
+		}
+	}
+
+	for _, item := range s.OrderingProvider {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OBR.OrderingProvider: %w", err)
+		}
+	}
+
+	for _, item := range s.OrderCallbackPhoneNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OBR.OrderCallbackPhoneNumber: %w", err)
+		}
+	}
+
+	if s.ResultsRptStatusChngDateTime != nil {
+		if err := s.ResultsRptStatusChngDateTime.Validate(); err != nil {
+			return fmt.Errorf("OBR.ResultsRptStatusChngDateTime: %w", err)
+		}
+	}
+
+	if s.ChargeToPractice != nil {
+		if err := s.ChargeToPractice.Validate(); err != nil {
+			return fmt.Errorf("OBR.ChargeToPractice: %w", err)
+		}
+	}
+
+	if s.ParentResult != nil {
+		if err := s.ParentResult.Validate(); err != nil {
+			return fmt.Errorf("OBR.ParentResult: %w", err)
+		}
+	}
+
+	for _, item := range s.QuantityTiming {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OBR.QuantityTiming: %w", err)
+		}
+	}
+
+	for _, item := range s.ResultCopiesTo {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OBR.ResultCopiesTo: %w", err)
+		}
+	}
+
+	if s.Parent != nil {
+		if err := s.Parent.Validate(); err != nil {
+			return fmt.Errorf("OBR.Parent: %w", err)
+		}
+	}
+
+	for _, item := range s.ReasonForStudy {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OBR.ReasonForStudy: %w", err)
+		}
+	}
+
+	if s.PrincipalResultInterpreter != nil {
+		if err := s.PrincipalResultInterpreter.Validate(); err != nil {
+			return fmt.Errorf("OBR.PrincipalResultInterpreter: %w", err)
+		}
+	}
+
+	for _, item := range s.AssistantResultInterpreter {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OBR.AssistantResultInterpreter: %w", err)
+		}
+	}
+
+	for _, item := range s.Technician {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OBR.Technician: %w", err)
+		}
+	}
+
+	for _, item := range s.Transcriptionist {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OBR.Transcriptionist: %w", err)
+		}
+	}
+
+	if s.ScheduledDateTime != nil {
+		if err := s.ScheduledDateTime.Validate(); err != nil {
+			return fmt.Errorf("OBR.ScheduledDateTime: %w", err)
+		}
+	}
+
+	for _, item := range s.TransportLogisticsOfCollectedSample {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OBR.TransportLogisticsOfCollectedSample: %w", err)
+		}
+	}
+
+	for _, item := range s.CollectorSComment {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OBR.CollectorSComment: %w", err)
+		}
+	}
+
+	if s.TransportArrangementResponsibility != nil {
+		if err := s.TransportArrangementResponsibility.Validate(); err != nil {
+			return fmt.Errorf("OBR.TransportArrangementResponsibility: %w", err)
+		}
+	}
+
+	for _, item := range s.PlannedPatientTransportComment {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OBR.PlannedPatientTransportComment: %w", err)
+		}
+	}
+
+	if s.ProcedureCode != nil {
+		if err := s.ProcedureCode.Validate(); err != nil {
+			return fmt.Errorf("OBR.ProcedureCode: %w", err)
+		}
+	}
+
+	for _, item := range s.ProcedureCodeModifier {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OBR.ProcedureCodeModifier: %w", err)
+		}
+	}
+
+	for _, item := range s.PlacerSupplementalServiceInformation {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OBR.PlacerSupplementalServiceInformation: %w", err)
+		}
+	}
+
+	for _, item := range s.FillerSupplementalServiceInformation {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OBR.FillerSupplementalServiceInformation: %w", err)
+		}
+	}
+
+	if s.MedicallyNecessaryDuplicateProcedureReason != nil {
+		if err := s.MedicallyNecessaryDuplicateProcedureReason.Validate(); err != nil {
+			return fmt.Errorf("OBR.MedicallyNecessaryDuplicateProcedureReason: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *OBR) SetSetIDOBR(v *SI) *OBR {
+	s.SetIDOBR = v
+	return s
+}
+
+func (s *OBR) SetPlacerOrderNumber(v *EI) *OBR {
+	s.PlacerOrderNumber = v
+	return s
+}
+
+func (s *OBR) SetFillerOrderNumber(v *EI) *OBR {
+	s.FillerOrderNumber = v
+	return s
+}
+
+func (s *OBR) SetUniversalServiceIdentifier(v *CE) *OBR {
+	s.UniversalServiceIdentifier = v
+	return s
+}
+
+func (s *OBR) SetPriorityOBR(v *ID) *OBR {
+	s.PriorityOBR = v
+	return s
+}
+
+func (s *OBR) SetRequestedDateTime(v *TS) *OBR {
+	s.RequestedDateTime = v
+	return s
+}
+
+func (s *OBR) SetObservationDateTime(v *TS) *OBR {
+	s.ObservationDateTime = v
+	return s
+}
+
+func (s *OBR) SetObservationEndDateTime(v *TS) *OBR {
+	s.ObservationEndDateTime = v
+	return s
+}
+
+func (s *OBR) SetCollectionVolume(v *CQ) *OBR {
+	s.CollectionVolume = v
+	return s
+}
+
+func (s *OBR) AddCollectorIdentifier(v XCN) *OBR {
+	s.CollectorIdentifier = append(s.CollectorIdentifier, v)
+	return s
+}
+
+func (s *OBR) SetSpecimenActionCode(v *ID) *OBR {
+	s.SpecimenActionCode = v
+	return s
+}
+
+func (s *OBR) SetDangerCode(v *CE) *OBR {
+	s.DangerCode = v
+	return s
+}
+
+func (s *OBR) SetRelevantClinicalInformation(v *ST) *OBR {
+	s.RelevantClinicalInformation = v
+	return s
+}
+
+func (s *OBR) SetSpecimenReceivedDateTime(v *TS) *OBR {
+	s.SpecimenReceivedDateTime = v
+	return s
+}
+
+func (s *OBR) SetSpecimenSource(v *SPS) *OBR {
+	s.SpecimenSource = v
+	return s
+}
+
+func (s *OBR) AddOrderingProvider(v XCN) *OBR {
+	s.OrderingProvider = append(s.OrderingProvider, v)
+	return s
+}
+
+func (s *OBR) AddOrderCallbackPhoneNumber(v XTN) *OBR {
+	s.OrderCallbackPhoneNumber = append(s.OrderCallbackPhoneNumber, v)
+	return s
+}
+
+func (s *OBR) SetPlacerField1(v *ST) *OBR {
+	s.PlacerField1 = v
+	return s
+}
+
+func (s *OBR) SetPlacerField2(v *ST) *OBR {
+	s.PlacerField2 = v
+	return s
+}
+
+func (s *OBR) SetFillerField1(v *ST) *OBR {
+	s.FillerField1 = v
+	return s
+}
+
+func (s *OBR) SetFillerField2(v *ST) *OBR {
+	s.FillerField2 = v
+	return s
+}
+
+func (s *OBR) SetResultsRptStatusChngDateTime(v *TS) *OBR {
+	s.ResultsRptStatusChngDateTime = v
+	return s
+}
+
+func (s *OBR) SetChargeToPractice(v *MOC) *OBR {
+	s.ChargeToPractice = v
+	return s
+}
+
+func (s *OBR) SetDiagnosticServSectID(v *ID) *OBR {
+	s.DiagnosticServSectID = v
+	return s
+}
+
+func (s *OBR) SetResultStatus(v *ID) *OBR {
+	s.ResultStatus = v
+	return s
+}
+
+func (s *OBR) SetParentResult(v *PRL) *OBR {
+	s.ParentResult = v
+	return s
+}
+
+func (s *OBR) AddQuantityTiming(v TQ) *OBR {
+	s.QuantityTiming = append(s.QuantityTiming, v)
+	return s
+}
+
+func (s *OBR) AddResultCopiesTo(v XCN) *OBR {
+	s.ResultCopiesTo = append(s.ResultCopiesTo, v)
+	return s
+}
+
+func (s *OBR) SetParent(v *EIP) *OBR {
+	s.Parent = v
+	return s
+}
+
+func (s *OBR) SetTransportationMode(v *ID) *OBR {
+	s.TransportationMode = v
+	return s
+}
+
+func (s *OBR) AddReasonForStudy(v CE) *OBR {
+	s.ReasonForStudy = append(s.ReasonForStudy, v)
+	return s
+}
+
+func (s *OBR) SetPrincipalResultInterpreter(v *NDL) *OBR {
+	s.PrincipalResultInterpreter = v
+	return s
+}
+
+func (s *OBR) AddAssistantResultInterpreter(v NDL) *OBR {
+	s.AssistantResultInterpreter = append(s.AssistantResultInterpreter, v)
+	return s
+}
+
+func (s *OBR) AddTechnician(v NDL) *OBR {
+	s.Technician = append(s.Technician, v)
+	return s
+}
+
+func (s *OBR) AddTranscriptionist(v NDL) *OBR {
+	s.Transcriptionist = append(s.Transcriptionist, v)
+	return s
+}
+
+func (s *OBR) SetScheduledDateTime(v *TS) *OBR {
+	s.ScheduledDateTime = v
+	return s
+}
+
+func (s *OBR) SetNumberOfSampleContainers(v *NM) *OBR {
+	s.NumberOfSampleContainers = v
+	return s
+}
+
+func (s *OBR) AddTransportLogisticsOfCollectedSample(v CE) *OBR {
+	s.TransportLogisticsOfCollectedSample = append(s.TransportLogisticsOfCollectedSample, v)
+	return s
+}
+
+func (s *OBR) AddCollectorSComment(v CE) *OBR {
+	s.CollectorSComment = append(s.CollectorSComment, v)
+	return s
+}
+
+func (s *OBR) SetTransportArrangementResponsibility(v *CE) *OBR {
+	s.TransportArrangementResponsibility = v
+	return s
+}
+
+func (s *OBR) SetTransportArranged(v *ID) *OBR {
+	s.TransportArranged = v
+	return s
+}
+
+func (s *OBR) SetEscortRequired(v *ID) *OBR {
+	s.EscortRequired = v
+	return s
+}
+
+func (s *OBR) AddPlannedPatientTransportComment(v CE) *OBR {
+	s.PlannedPatientTransportComment = append(s.PlannedPatientTransportComment, v)
+	return s
+}
+
+func (s *OBR) SetProcedureCode(v *CE) *OBR {
+	s.ProcedureCode = v
+	return s
+}
+
+func (s *OBR) AddProcedureCodeModifier(v CE) *OBR {
+	s.ProcedureCodeModifier = append(s.ProcedureCodeModifier, v)
+	return s
+}
+
+func (s *OBR) AddPlacerSupplementalServiceInformation(v CE) *OBR {
+	s.PlacerSupplementalServiceInformation = append(s.PlacerSupplementalServiceInformation, v)
+	return s
+}
+
+func (s *OBR) AddFillerSupplementalServiceInformation(v CE) *OBR {
+	s.FillerSupplementalServiceInformation = append(s.FillerSupplementalServiceInformation, v)
+	return s
+}
+
+func (s *OBR) SetMedicallyNecessaryDuplicateProcedureReason(v *CWE) *OBR {
+	s.MedicallyNecessaryDuplicateProcedureReason = v
+	return s
+}
+
+func (s *OBR) SetResultHandling(v *IS) *OBR {
+	s.ResultHandling = v
+	return s
 }
 
 // OBX - Observation/Result
@@ -1439,184 +11775,1477 @@ type OBR struct {
 //
 // Its principal mission is to carry information about observations in report messages.  But the OBX can also be part of an observation order.  In this case, the OBX carries clinical information needed by the filler to interpret the observation the filler makes.  For example, an OBX is needed to report the inspired oxygen on an order for a blood oxygen to a blood gas lab, or to report the menstrual phase information which should be included on an order for a pap smear to a cytology lab.  Appendix 7A includes codes for identifying many of pieces of information needed by observation producing services to properly interpret a test result.  OBX is also found in other HL7 messages that need to include patient clinical information.
 type OBX struct {
-	SetIDOBX                      SI       `hl7:"1"`
-	ValueType                     ID       `hl7:"2"`
-	ObservationIdentifier         CE       `hl7:"3,required"`
-	ObservationSubID              ST       `hl7:"4"`
+	SetIDOBX                      *SI      `hl7:"1"`
+	ValueType                     *ID      `hl7:"2"`
+	ObservationIdentifier         *CE      `hl7:"3,required"`
+	ObservationSubID              *ST      `hl7:"4"`
 	ObservationValue              []VARIES `hl7:"5"`
-	Units                         CE       `hl7:"6"`
-	ReferencesRange               ST       `hl7:"7"`
+	Units                         *CE      `hl7:"6"`
+	ReferencesRange               *ST      `hl7:"7"`
 	AbnormalFlags                 []IS     `hl7:"8"`
-	Probability                   NM       `hl7:"9"`
+	Probability                   *NM      `hl7:"9"`
 	NatureOfAbnormalTest          []ID     `hl7:"10"`
-	ObservationResultStatus       ID       `hl7:"11,required"`
-	EffectiveDateOfReferenceRange TS       `hl7:"12"`
-	UserDefinedAccessChecks       ST       `hl7:"13"`
-	DateTimeOfTheObservation      TS       `hl7:"14"`
-	ProducerSID                   CE       `hl7:"15"`
+	ObservationResultStatus       *ID      `hl7:"11,required"`
+	EffectiveDateOfReferenceRange *TS      `hl7:"12"`
+	UserDefinedAccessChecks       *ST      `hl7:"13"`
+	DateTimeOfTheObservation      *TS      `hl7:"14"`
+	ProducerSID                   *CE      `hl7:"15"`
 	ResponsibleObserver           []XCN    `hl7:"16"`
 	ObservationMethod             []CE     `hl7:"17"`
 	EquipmentInstanceIdentifier   []EI     `hl7:"18"`
-	DateTimeOfTheAnalysis         TS       `hl7:"19"`
+	DateTimeOfTheAnalysis         *TS      `hl7:"19"`
+}
+
+func NewOBX() *OBX {
+	return &OBX{}
+}
+
+func (s *OBX) Validate() error {
+
+	if s.ObservationIdentifier == nil {
+		return fmt.Errorf("OBX.ObservationIdentifier is required")
+	}
+	if s.ObservationIdentifier != nil {
+		if err := s.ObservationIdentifier.Validate(); err != nil {
+			return fmt.Errorf("OBX.ObservationIdentifier: %w", err)
+		}
+	}
+
+	for _, item := range s.ObservationValue {
+		if string(item) == "" {
+			return fmt.Errorf("OBX.ObservationValue item is empty")
+		}
+	}
+
+	if s.Units != nil {
+		if err := s.Units.Validate(); err != nil {
+			return fmt.Errorf("OBX.Units: %w", err)
+		}
+	}
+
+	for _, item := range s.AbnormalFlags {
+		if string(item) == "" {
+			return fmt.Errorf("OBX.AbnormalFlags item is empty")
+		}
+	}
+
+	for _, item := range s.NatureOfAbnormalTest {
+		if string(item) == "" {
+			return fmt.Errorf("OBX.NatureOfAbnormalTest item is empty")
+		}
+	}
+
+	if s.ObservationResultStatus == nil {
+		return fmt.Errorf("OBX.ObservationResultStatus is required")
+	}
+	if string(*s.ObservationResultStatus) == "" {
+		return fmt.Errorf("OBX.ObservationResultStatus is empty")
+	}
+
+	if s.EffectiveDateOfReferenceRange != nil {
+		if err := s.EffectiveDateOfReferenceRange.Validate(); err != nil {
+			return fmt.Errorf("OBX.EffectiveDateOfReferenceRange: %w", err)
+		}
+	}
+
+	if s.DateTimeOfTheObservation != nil {
+		if err := s.DateTimeOfTheObservation.Validate(); err != nil {
+			return fmt.Errorf("OBX.DateTimeOfTheObservation: %w", err)
+		}
+	}
+
+	if s.ProducerSID != nil {
+		if err := s.ProducerSID.Validate(); err != nil {
+			return fmt.Errorf("OBX.ProducerSID: %w", err)
+		}
+	}
+
+	for _, item := range s.ResponsibleObserver {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OBX.ResponsibleObserver: %w", err)
+		}
+	}
+
+	for _, item := range s.ObservationMethod {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OBX.ObservationMethod: %w", err)
+		}
+	}
+
+	for _, item := range s.EquipmentInstanceIdentifier {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OBX.EquipmentInstanceIdentifier: %w", err)
+		}
+	}
+
+	if s.DateTimeOfTheAnalysis != nil {
+		if err := s.DateTimeOfTheAnalysis.Validate(); err != nil {
+			return fmt.Errorf("OBX.DateTimeOfTheAnalysis: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *OBX) SetSetIDOBX(v *SI) *OBX {
+	s.SetIDOBX = v
+	return s
+}
+
+func (s *OBX) SetValueType(v *ID) *OBX {
+	s.ValueType = v
+	return s
+}
+
+func (s *OBX) SetObservationIdentifier(v *CE) *OBX {
+	s.ObservationIdentifier = v
+	return s
+}
+
+func (s *OBX) SetObservationSubID(v *ST) *OBX {
+	s.ObservationSubID = v
+	return s
+}
+
+func (s *OBX) AddObservationValue(v VARIES) *OBX {
+	s.ObservationValue = append(s.ObservationValue, v)
+	return s
+}
+
+func (s *OBX) SetUnits(v *CE) *OBX {
+	s.Units = v
+	return s
+}
+
+func (s *OBX) SetReferencesRange(v *ST) *OBX {
+	s.ReferencesRange = v
+	return s
+}
+
+func (s *OBX) AddAbnormalFlags(v IS) *OBX {
+	s.AbnormalFlags = append(s.AbnormalFlags, v)
+	return s
+}
+
+func (s *OBX) SetProbability(v *NM) *OBX {
+	s.Probability = v
+	return s
+}
+
+func (s *OBX) AddNatureOfAbnormalTest(v ID) *OBX {
+	s.NatureOfAbnormalTest = append(s.NatureOfAbnormalTest, v)
+	return s
+}
+
+func (s *OBX) SetObservationResultStatus(v *ID) *OBX {
+	s.ObservationResultStatus = v
+	return s
+}
+
+func (s *OBX) SetEffectiveDateOfReferenceRange(v *TS) *OBX {
+	s.EffectiveDateOfReferenceRange = v
+	return s
+}
+
+func (s *OBX) SetUserDefinedAccessChecks(v *ST) *OBX {
+	s.UserDefinedAccessChecks = v
+	return s
+}
+
+func (s *OBX) SetDateTimeOfTheObservation(v *TS) *OBX {
+	s.DateTimeOfTheObservation = v
+	return s
+}
+
+func (s *OBX) SetProducerSID(v *CE) *OBX {
+	s.ProducerSID = v
+	return s
+}
+
+func (s *OBX) AddResponsibleObserver(v XCN) *OBX {
+	s.ResponsibleObserver = append(s.ResponsibleObserver, v)
+	return s
+}
+
+func (s *OBX) AddObservationMethod(v CE) *OBX {
+	s.ObservationMethod = append(s.ObservationMethod, v)
+	return s
+}
+
+func (s *OBX) AddEquipmentInstanceIdentifier(v EI) *OBX {
+	s.EquipmentInstanceIdentifier = append(s.EquipmentInstanceIdentifier, v)
+	return s
+}
+
+func (s *OBX) SetDateTimeOfTheAnalysis(v *TS) *OBX {
+	s.DateTimeOfTheAnalysis = v
+	return s
 }
 
 // ODS - Dietary Orders, Supplements, and Preferences
 // The ORC sequence items of interest to ODS are ORC-1-order control, ORC-2-placer order number, ORC-3-filler order number, ORC-7-quantity/timing, ORC-9-date/time of transaction, ORC-10-entered by, and ORC-11-verified by. For ORC-1-order control, the values may be New (NW), Cancel (CA), Discontinue Order Request (DC), Change (XO), Hold Order Request (HD), and Release Previous Hold (RL). The HD and RL codes could stop service for a specified length of time. ORC-7-quantity/timing should be used to specify whether an order is continuous or for one service period only. It is also useful for supplements which are part of a diet but only delivered, say, every day at night.
 type ODS struct {
-	Type_                          ID   `hl7:"1,required"`
+	Type_                          *ID  `hl7:"1,required"`
 	ServicePeriod                  []CE `hl7:"2"`
 	DietSupplementOrPreferenceCode []CE `hl7:"3,required"`
 	TextInstruction                []ST `hl7:"4"`
 }
 
+func NewODS() *ODS {
+	return &ODS{}
+}
+
+func (s *ODS) Validate() error {
+
+	if s.Type_ == nil {
+		return fmt.Errorf("ODS.Type_ is required")
+	}
+	if string(*s.Type_) == "" {
+		return fmt.Errorf("ODS.Type_ is empty")
+	}
+
+	for _, item := range s.ServicePeriod {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("ODS.ServicePeriod: %w", err)
+		}
+	}
+
+	if len(s.DietSupplementOrPreferenceCode) == 0 {
+		return fmt.Errorf("ODS.DietSupplementOrPreferenceCode is required")
+	}
+	for _, item := range s.DietSupplementOrPreferenceCode {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("ODS.DietSupplementOrPreferenceCode: %w", err)
+		}
+	}
+
+	for _, item := range s.TextInstruction {
+		if string(item) == "" {
+			return fmt.Errorf("ODS.TextInstruction item is empty")
+		}
+	}
+	return nil
+}
+
+func (s *ODS) SetType_(v *ID) *ODS {
+	s.Type_ = v
+	return s
+}
+
+func (s *ODS) AddServicePeriod(v CE) *ODS {
+	s.ServicePeriod = append(s.ServicePeriod, v)
+	return s
+}
+
+func (s *ODS) AddDietSupplementOrPreferenceCode(v CE) *ODS {
+	s.DietSupplementOrPreferenceCode = append(s.DietSupplementOrPreferenceCode, v)
+	return s
+}
+
+func (s *ODS) AddTextInstruction(v ST) *ODS {
+	s.TextInstruction = append(s.TextInstruction, v)
+	return s
+}
+
 // ODT - Diet Tray Instructions
 // This segment addresses tray instructions. These are independent of diet codes, supplements, and preferences and therefore get separate order numbers.
 type ODT struct {
-	TrayType        CE   `hl7:"1,required"`
+	TrayType        *CE  `hl7:"1,required"`
 	ServicePeriod   []CE `hl7:"2"`
-	TextInstruction ST   `hl7:"3"`
+	TextInstruction *ST  `hl7:"3"`
+}
+
+func NewODT() *ODT {
+	return &ODT{}
+}
+
+func (s *ODT) Validate() error {
+
+	if s.TrayType == nil {
+		return fmt.Errorf("ODT.TrayType is required")
+	}
+	if s.TrayType != nil {
+		if err := s.TrayType.Validate(); err != nil {
+			return fmt.Errorf("ODT.TrayType: %w", err)
+		}
+	}
+
+	for _, item := range s.ServicePeriod {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("ODT.ServicePeriod: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *ODT) SetTrayType(v *CE) *ODT {
+	s.TrayType = v
+	return s
+}
+
+func (s *ODT) AddServicePeriod(v CE) *ODT {
+	s.ServicePeriod = append(s.ServicePeriod, v)
+	return s
+}
+
+func (s *ODT) SetTextInstruction(v *ST) *ODT {
+	s.TextInstruction = v
+	return s
 }
 
 // OM1 - General Segment
 // The OM1 segment contains the attributes that apply to the definition of most observations.  This segment also contains the field attributes that specify what additional segments might also be defined for this observation.
 type OM1 struct {
-	SequenceNumberTestObservationMasterFile                NM    `hl7:"1,required"`
-	ProducerSServiceTestObservationID                      CE    `hl7:"2,required"`
+	SequenceNumberTestObservationMasterFile                *NM   `hl7:"1,required"`
+	ProducerSServiceTestObservationID                      *CE   `hl7:"2,required"`
 	PermittedDataTypes                                     []ID  `hl7:"3"`
-	SpecimenRequired                                       ID    `hl7:"4,required"`
-	ProducerID                                             CE    `hl7:"5,required"`
-	ObservationDescription                                 TX    `hl7:"6"`
-	OtherServiceTestObservationIDsForTheObservation        CE    `hl7:"7"`
+	SpecimenRequired                                       *ID   `hl7:"4,required"`
+	ProducerID                                             *CE   `hl7:"5,required"`
+	ObservationDescription                                 *TX   `hl7:"6"`
+	OtherServiceTestObservationIDsForTheObservation        *CE   `hl7:"7"`
 	OtherNames                                             []ST  `hl7:"8,required"`
-	PreferredReportNameForTheObservation                   ST    `hl7:"9"`
-	PreferredShortNameOrMnemonicForObservation             ST    `hl7:"10"`
-	PreferredLongNameForTheObservation                     ST    `hl7:"11"`
-	Orderability                                           ID    `hl7:"12"`
+	PreferredReportNameForTheObservation                   *ST   `hl7:"9"`
+	PreferredShortNameOrMnemonicForObservation             *ST   `hl7:"10"`
+	PreferredLongNameForTheObservation                     *ST   `hl7:"11"`
+	Orderability                                           *ID   `hl7:"12"`
 	IdentityOfInstrumentUsedToPerformThisStudy             []CE  `hl7:"13"`
 	CodedRepresentationOfMethod                            []CE  `hl7:"14"`
-	PortableDeviceIndicator                                ID    `hl7:"15"`
+	PortableDeviceIndicator                                *ID   `hl7:"15"`
 	ObservationProducingDepartmentSection                  []CE  `hl7:"16"`
-	TelephoneNumberOfSection                               XTN   `hl7:"17"`
-	NatureOfServiceTestObservation                         IS    `hl7:"18,required"`
-	ReportSubheader                                        CE    `hl7:"19"`
-	ReportDisplayOrder                                     ST    `hl7:"20"`
-	DateTimeStampForAnyChangeInDefinitionForTheObservation TS    `hl7:"21"`
-	EffectiveDateTimeOfChange                              TS    `hl7:"22"`
-	TypicalTurnAroundTime                                  NM    `hl7:"23"`
-	ProcessingTime                                         NM    `hl7:"24"`
+	TelephoneNumberOfSection                               *XTN  `hl7:"17"`
+	NatureOfServiceTestObservation                         *IS   `hl7:"18,required"`
+	ReportSubheader                                        *CE   `hl7:"19"`
+	ReportDisplayOrder                                     *ST   `hl7:"20"`
+	DateTimeStampForAnyChangeInDefinitionForTheObservation *TS   `hl7:"21"`
+	EffectiveDateTimeOfChange                              *TS   `hl7:"22"`
+	TypicalTurnAroundTime                                  *NM   `hl7:"23"`
+	ProcessingTime                                         *NM   `hl7:"24"`
 	ProcessingPriority                                     []ID  `hl7:"25"`
-	ReportingPriority                                      ID    `hl7:"26"`
+	ReportingPriority                                      *ID   `hl7:"26"`
 	OutsideSiteSWhereObservationMayBePerformed             []CE  `hl7:"27"`
 	AddressOfOutsideSiteS                                  []XAD `hl7:"28"`
-	PhoneNumberOfOutsideSite                               XTN   `hl7:"29"`
-	ConfidentialityCode                                    CWE   `hl7:"30"`
-	ObservationsRequiredToInterpretTheObservation          CE    `hl7:"31"`
-	InterpretationOfObservations                           TX    `hl7:"32"`
-	ContraindicationsToObservations                        CE    `hl7:"33"`
+	PhoneNumberOfOutsideSite                               *XTN  `hl7:"29"`
+	ConfidentialityCode                                    *CWE  `hl7:"30"`
+	ObservationsRequiredToInterpretTheObservation          *CE   `hl7:"31"`
+	InterpretationOfObservations                           *TX   `hl7:"32"`
+	ContraindicationsToObservations                        *CE   `hl7:"33"`
 	ReflexTestsObservations                                []CE  `hl7:"34"`
-	RulesThatTriggerReflexTesting                          TX    `hl7:"35"`
-	FixedCannedMessage                                     CE    `hl7:"36"`
-	PatientPreparation                                     TX    `hl7:"37"`
-	ProcedureMedication                                    CE    `hl7:"38"`
-	FactorsThatMayAffectTheObservation                     TX    `hl7:"39"`
+	RulesThatTriggerReflexTesting                          *TX   `hl7:"35"`
+	FixedCannedMessage                                     *CE   `hl7:"36"`
+	PatientPreparation                                     *TX   `hl7:"37"`
+	ProcedureMedication                                    *CE   `hl7:"38"`
+	FactorsThatMayAffectTheObservation                     *TX   `hl7:"39"`
 	ServiceTestObservationPerformanceSchedule              []ST  `hl7:"40"`
-	DescriptionOfTestMethods                               TX    `hl7:"41"`
-	KindOfQuantityObserved                                 CE    `hl7:"42"`
-	PointVersusInterval                                    CE    `hl7:"43"`
-	ChallengeInformation                                   TX    `hl7:"44"`
-	RelationshipModifier                                   CE    `hl7:"45"`
-	TargetAnatomicSiteOfTest                               CE    `hl7:"46"`
-	ModalityOfImagingMeasurement                           CE    `hl7:"47"`
+	DescriptionOfTestMethods                               *TX   `hl7:"41"`
+	KindOfQuantityObserved                                 *CE   `hl7:"42"`
+	PointVersusInterval                                    *CE   `hl7:"43"`
+	ChallengeInformation                                   *TX   `hl7:"44"`
+	RelationshipModifier                                   *CE   `hl7:"45"`
+	TargetAnatomicSiteOfTest                               *CE   `hl7:"46"`
+	ModalityOfImagingMeasurement                           *CE   `hl7:"47"`
+}
+
+func NewOM1() *OM1 {
+	return &OM1{}
+}
+
+func (s *OM1) Validate() error {
+
+	if s.SequenceNumberTestObservationMasterFile == nil {
+		return fmt.Errorf("OM1.SequenceNumberTestObservationMasterFile is required")
+	}
+	if string(*s.SequenceNumberTestObservationMasterFile) == "" {
+		return fmt.Errorf("OM1.SequenceNumberTestObservationMasterFile is empty")
+	}
+
+	if s.ProducerSServiceTestObservationID == nil {
+		return fmt.Errorf("OM1.ProducerSServiceTestObservationID is required")
+	}
+	if s.ProducerSServiceTestObservationID != nil {
+		if err := s.ProducerSServiceTestObservationID.Validate(); err != nil {
+			return fmt.Errorf("OM1.ProducerSServiceTestObservationID: %w", err)
+		}
+	}
+
+	for _, item := range s.PermittedDataTypes {
+		if string(item) == "" {
+			return fmt.Errorf("OM1.PermittedDataTypes item is empty")
+		}
+	}
+
+	if s.SpecimenRequired == nil {
+		return fmt.Errorf("OM1.SpecimenRequired is required")
+	}
+	if string(*s.SpecimenRequired) == "" {
+		return fmt.Errorf("OM1.SpecimenRequired is empty")
+	}
+
+	if s.ProducerID == nil {
+		return fmt.Errorf("OM1.ProducerID is required")
+	}
+	if s.ProducerID != nil {
+		if err := s.ProducerID.Validate(); err != nil {
+			return fmt.Errorf("OM1.ProducerID: %w", err)
+		}
+	}
+
+	if s.OtherServiceTestObservationIDsForTheObservation != nil {
+		if err := s.OtherServiceTestObservationIDsForTheObservation.Validate(); err != nil {
+			return fmt.Errorf("OM1.OtherServiceTestObservationIDsForTheObservation: %w", err)
+		}
+	}
+
+	if len(s.OtherNames) == 0 {
+		return fmt.Errorf("OM1.OtherNames is required")
+	}
+	for _, item := range s.OtherNames {
+		if string(item) == "" {
+			return fmt.Errorf("OM1.OtherNames item is empty")
+		}
+	}
+
+	for _, item := range s.IdentityOfInstrumentUsedToPerformThisStudy {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OM1.IdentityOfInstrumentUsedToPerformThisStudy: %w", err)
+		}
+	}
+
+	for _, item := range s.CodedRepresentationOfMethod {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OM1.CodedRepresentationOfMethod: %w", err)
+		}
+	}
+
+	for _, item := range s.ObservationProducingDepartmentSection {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OM1.ObservationProducingDepartmentSection: %w", err)
+		}
+	}
+
+	if s.TelephoneNumberOfSection != nil {
+		if err := s.TelephoneNumberOfSection.Validate(); err != nil {
+			return fmt.Errorf("OM1.TelephoneNumberOfSection: %w", err)
+		}
+	}
+
+	if s.NatureOfServiceTestObservation == nil {
+		return fmt.Errorf("OM1.NatureOfServiceTestObservation is required")
+	}
+	if string(*s.NatureOfServiceTestObservation) == "" {
+		return fmt.Errorf("OM1.NatureOfServiceTestObservation is empty")
+	}
+
+	if s.ReportSubheader != nil {
+		if err := s.ReportSubheader.Validate(); err != nil {
+			return fmt.Errorf("OM1.ReportSubheader: %w", err)
+		}
+	}
+
+	if s.DateTimeStampForAnyChangeInDefinitionForTheObservation != nil {
+		if err := s.DateTimeStampForAnyChangeInDefinitionForTheObservation.Validate(); err != nil {
+			return fmt.Errorf("OM1.DateTimeStampForAnyChangeInDefinitionForTheObservation: %w", err)
+		}
+	}
+
+	if s.EffectiveDateTimeOfChange != nil {
+		if err := s.EffectiveDateTimeOfChange.Validate(); err != nil {
+			return fmt.Errorf("OM1.EffectiveDateTimeOfChange: %w", err)
+		}
+	}
+
+	for _, item := range s.ProcessingPriority {
+		if string(item) == "" {
+			return fmt.Errorf("OM1.ProcessingPriority item is empty")
+		}
+	}
+
+	for _, item := range s.OutsideSiteSWhereObservationMayBePerformed {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OM1.OutsideSiteSWhereObservationMayBePerformed: %w", err)
+		}
+	}
+
+	for _, item := range s.AddressOfOutsideSiteS {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OM1.AddressOfOutsideSiteS: %w", err)
+		}
+	}
+
+	if s.PhoneNumberOfOutsideSite != nil {
+		if err := s.PhoneNumberOfOutsideSite.Validate(); err != nil {
+			return fmt.Errorf("OM1.PhoneNumberOfOutsideSite: %w", err)
+		}
+	}
+
+	if s.ConfidentialityCode != nil {
+		if err := s.ConfidentialityCode.Validate(); err != nil {
+			return fmt.Errorf("OM1.ConfidentialityCode: %w", err)
+		}
+	}
+
+	if s.ObservationsRequiredToInterpretTheObservation != nil {
+		if err := s.ObservationsRequiredToInterpretTheObservation.Validate(); err != nil {
+			return fmt.Errorf("OM1.ObservationsRequiredToInterpretTheObservation: %w", err)
+		}
+	}
+
+	if s.ContraindicationsToObservations != nil {
+		if err := s.ContraindicationsToObservations.Validate(); err != nil {
+			return fmt.Errorf("OM1.ContraindicationsToObservations: %w", err)
+		}
+	}
+
+	for _, item := range s.ReflexTestsObservations {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OM1.ReflexTestsObservations: %w", err)
+		}
+	}
+
+	if s.FixedCannedMessage != nil {
+		if err := s.FixedCannedMessage.Validate(); err != nil {
+			return fmt.Errorf("OM1.FixedCannedMessage: %w", err)
+		}
+	}
+
+	if s.ProcedureMedication != nil {
+		if err := s.ProcedureMedication.Validate(); err != nil {
+			return fmt.Errorf("OM1.ProcedureMedication: %w", err)
+		}
+	}
+
+	for _, item := range s.ServiceTestObservationPerformanceSchedule {
+		if string(item) == "" {
+			return fmt.Errorf("OM1.ServiceTestObservationPerformanceSchedule item is empty")
+		}
+	}
+
+	if s.KindOfQuantityObserved != nil {
+		if err := s.KindOfQuantityObserved.Validate(); err != nil {
+			return fmt.Errorf("OM1.KindOfQuantityObserved: %w", err)
+		}
+	}
+
+	if s.PointVersusInterval != nil {
+		if err := s.PointVersusInterval.Validate(); err != nil {
+			return fmt.Errorf("OM1.PointVersusInterval: %w", err)
+		}
+	}
+
+	if s.RelationshipModifier != nil {
+		if err := s.RelationshipModifier.Validate(); err != nil {
+			return fmt.Errorf("OM1.RelationshipModifier: %w", err)
+		}
+	}
+
+	if s.TargetAnatomicSiteOfTest != nil {
+		if err := s.TargetAnatomicSiteOfTest.Validate(); err != nil {
+			return fmt.Errorf("OM1.TargetAnatomicSiteOfTest: %w", err)
+		}
+	}
+
+	if s.ModalityOfImagingMeasurement != nil {
+		if err := s.ModalityOfImagingMeasurement.Validate(); err != nil {
+			return fmt.Errorf("OM1.ModalityOfImagingMeasurement: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *OM1) SetSequenceNumberTestObservationMasterFile(v *NM) *OM1 {
+	s.SequenceNumberTestObservationMasterFile = v
+	return s
+}
+
+func (s *OM1) SetProducerSServiceTestObservationID(v *CE) *OM1 {
+	s.ProducerSServiceTestObservationID = v
+	return s
+}
+
+func (s *OM1) AddPermittedDataTypes(v ID) *OM1 {
+	s.PermittedDataTypes = append(s.PermittedDataTypes, v)
+	return s
+}
+
+func (s *OM1) SetSpecimenRequired(v *ID) *OM1 {
+	s.SpecimenRequired = v
+	return s
+}
+
+func (s *OM1) SetProducerID(v *CE) *OM1 {
+	s.ProducerID = v
+	return s
+}
+
+func (s *OM1) SetObservationDescription(v *TX) *OM1 {
+	s.ObservationDescription = v
+	return s
+}
+
+func (s *OM1) SetOtherServiceTestObservationIDsForTheObservation(v *CE) *OM1 {
+	s.OtherServiceTestObservationIDsForTheObservation = v
+	return s
+}
+
+func (s *OM1) AddOtherNames(v ST) *OM1 {
+	s.OtherNames = append(s.OtherNames, v)
+	return s
+}
+
+func (s *OM1) SetPreferredReportNameForTheObservation(v *ST) *OM1 {
+	s.PreferredReportNameForTheObservation = v
+	return s
+}
+
+func (s *OM1) SetPreferredShortNameOrMnemonicForObservation(v *ST) *OM1 {
+	s.PreferredShortNameOrMnemonicForObservation = v
+	return s
+}
+
+func (s *OM1) SetPreferredLongNameForTheObservation(v *ST) *OM1 {
+	s.PreferredLongNameForTheObservation = v
+	return s
+}
+
+func (s *OM1) SetOrderability(v *ID) *OM1 {
+	s.Orderability = v
+	return s
+}
+
+func (s *OM1) AddIdentityOfInstrumentUsedToPerformThisStudy(v CE) *OM1 {
+	s.IdentityOfInstrumentUsedToPerformThisStudy = append(s.IdentityOfInstrumentUsedToPerformThisStudy, v)
+	return s
+}
+
+func (s *OM1) AddCodedRepresentationOfMethod(v CE) *OM1 {
+	s.CodedRepresentationOfMethod = append(s.CodedRepresentationOfMethod, v)
+	return s
+}
+
+func (s *OM1) SetPortableDeviceIndicator(v *ID) *OM1 {
+	s.PortableDeviceIndicator = v
+	return s
+}
+
+func (s *OM1) AddObservationProducingDepartmentSection(v CE) *OM1 {
+	s.ObservationProducingDepartmentSection = append(s.ObservationProducingDepartmentSection, v)
+	return s
+}
+
+func (s *OM1) SetTelephoneNumberOfSection(v *XTN) *OM1 {
+	s.TelephoneNumberOfSection = v
+	return s
+}
+
+func (s *OM1) SetNatureOfServiceTestObservation(v *IS) *OM1 {
+	s.NatureOfServiceTestObservation = v
+	return s
+}
+
+func (s *OM1) SetReportSubheader(v *CE) *OM1 {
+	s.ReportSubheader = v
+	return s
+}
+
+func (s *OM1) SetReportDisplayOrder(v *ST) *OM1 {
+	s.ReportDisplayOrder = v
+	return s
+}
+
+func (s *OM1) SetDateTimeStampForAnyChangeInDefinitionForTheObservation(v *TS) *OM1 {
+	s.DateTimeStampForAnyChangeInDefinitionForTheObservation = v
+	return s
+}
+
+func (s *OM1) SetEffectiveDateTimeOfChange(v *TS) *OM1 {
+	s.EffectiveDateTimeOfChange = v
+	return s
+}
+
+func (s *OM1) SetTypicalTurnAroundTime(v *NM) *OM1 {
+	s.TypicalTurnAroundTime = v
+	return s
+}
+
+func (s *OM1) SetProcessingTime(v *NM) *OM1 {
+	s.ProcessingTime = v
+	return s
+}
+
+func (s *OM1) AddProcessingPriority(v ID) *OM1 {
+	s.ProcessingPriority = append(s.ProcessingPriority, v)
+	return s
+}
+
+func (s *OM1) SetReportingPriority(v *ID) *OM1 {
+	s.ReportingPriority = v
+	return s
+}
+
+func (s *OM1) AddOutsideSiteSWhereObservationMayBePerformed(v CE) *OM1 {
+	s.OutsideSiteSWhereObservationMayBePerformed = append(s.OutsideSiteSWhereObservationMayBePerformed, v)
+	return s
+}
+
+func (s *OM1) AddAddressOfOutsideSiteS(v XAD) *OM1 {
+	s.AddressOfOutsideSiteS = append(s.AddressOfOutsideSiteS, v)
+	return s
+}
+
+func (s *OM1) SetPhoneNumberOfOutsideSite(v *XTN) *OM1 {
+	s.PhoneNumberOfOutsideSite = v
+	return s
+}
+
+func (s *OM1) SetConfidentialityCode(v *CWE) *OM1 {
+	s.ConfidentialityCode = v
+	return s
+}
+
+func (s *OM1) SetObservationsRequiredToInterpretTheObservation(v *CE) *OM1 {
+	s.ObservationsRequiredToInterpretTheObservation = v
+	return s
+}
+
+func (s *OM1) SetInterpretationOfObservations(v *TX) *OM1 {
+	s.InterpretationOfObservations = v
+	return s
+}
+
+func (s *OM1) SetContraindicationsToObservations(v *CE) *OM1 {
+	s.ContraindicationsToObservations = v
+	return s
+}
+
+func (s *OM1) AddReflexTestsObservations(v CE) *OM1 {
+	s.ReflexTestsObservations = append(s.ReflexTestsObservations, v)
+	return s
+}
+
+func (s *OM1) SetRulesThatTriggerReflexTesting(v *TX) *OM1 {
+	s.RulesThatTriggerReflexTesting = v
+	return s
+}
+
+func (s *OM1) SetFixedCannedMessage(v *CE) *OM1 {
+	s.FixedCannedMessage = v
+	return s
+}
+
+func (s *OM1) SetPatientPreparation(v *TX) *OM1 {
+	s.PatientPreparation = v
+	return s
+}
+
+func (s *OM1) SetProcedureMedication(v *CE) *OM1 {
+	s.ProcedureMedication = v
+	return s
+}
+
+func (s *OM1) SetFactorsThatMayAffectTheObservation(v *TX) *OM1 {
+	s.FactorsThatMayAffectTheObservation = v
+	return s
+}
+
+func (s *OM1) AddServiceTestObservationPerformanceSchedule(v ST) *OM1 {
+	s.ServiceTestObservationPerformanceSchedule = append(s.ServiceTestObservationPerformanceSchedule, v)
+	return s
+}
+
+func (s *OM1) SetDescriptionOfTestMethods(v *TX) *OM1 {
+	s.DescriptionOfTestMethods = v
+	return s
+}
+
+func (s *OM1) SetKindOfQuantityObserved(v *CE) *OM1 {
+	s.KindOfQuantityObserved = v
+	return s
+}
+
+func (s *OM1) SetPointVersusInterval(v *CE) *OM1 {
+	s.PointVersusInterval = v
+	return s
+}
+
+func (s *OM1) SetChallengeInformation(v *TX) *OM1 {
+	s.ChallengeInformation = v
+	return s
+}
+
+func (s *OM1) SetRelationshipModifier(v *CE) *OM1 {
+	s.RelationshipModifier = v
+	return s
+}
+
+func (s *OM1) SetTargetAnatomicSiteOfTest(v *CE) *OM1 {
+	s.TargetAnatomicSiteOfTest = v
+	return s
+}
+
+func (s *OM1) SetModalityOfImagingMeasurement(v *CE) *OM1 {
+	s.ModalityOfImagingMeasurement = v
+	return s
 }
 
 // OM2 - Numeric Observation
 // This segment contains the attributes of observations with continuous values (including those with data types of numeric, date, or time stamp).  It can be applied to observation batteries of type A and C (see OM1-18 - Nature of Service/Test/Observation)
 type OM2 struct {
-	SequenceNumberTestObservationMasterFile              NM    `hl7:"1"`
-	UnitsOfMeasure                                       CE    `hl7:"2"`
+	SequenceNumberTestObservationMasterFile              *NM   `hl7:"1"`
+	UnitsOfMeasure                                       *CE   `hl7:"2"`
 	RangeOfDecimalPrecision                              []NM  `hl7:"3"`
-	CorrespondingSIUnitsOfMeasure                        CE    `hl7:"4"`
-	SIConversionFactor                                   TX    `hl7:"5"`
+	CorrespondingSIUnitsOfMeasure                        *CE   `hl7:"4"`
+	SIConversionFactor                                   *TX   `hl7:"5"`
 	ReferenceNormalRangeOrdinalAndContinuousObservations []RFR `hl7:"6"`
 	CriticalRangeForOrdinalAndContinuousObservations     []RFR `hl7:"7"`
-	AbsoluteRangeForOrdinalAndContinuousObservations     RFR   `hl7:"8"`
+	AbsoluteRangeForOrdinalAndContinuousObservations     *RFR  `hl7:"8"`
 	DeltaCheckCriteria                                   []DLT `hl7:"9"`
-	MinimumMeaningfulIncrements                          NM    `hl7:"10"`
+	MinimumMeaningfulIncrements                          *NM   `hl7:"10"`
+}
+
+func NewOM2() *OM2 {
+	return &OM2{}
+}
+
+func (s *OM2) Validate() error {
+
+	if s.UnitsOfMeasure != nil {
+		if err := s.UnitsOfMeasure.Validate(); err != nil {
+			return fmt.Errorf("OM2.UnitsOfMeasure: %w", err)
+		}
+	}
+
+	for _, item := range s.RangeOfDecimalPrecision {
+		if string(item) == "" {
+			return fmt.Errorf("OM2.RangeOfDecimalPrecision item is empty")
+		}
+	}
+
+	if s.CorrespondingSIUnitsOfMeasure != nil {
+		if err := s.CorrespondingSIUnitsOfMeasure.Validate(); err != nil {
+			return fmt.Errorf("OM2.CorrespondingSIUnitsOfMeasure: %w", err)
+		}
+	}
+
+	for _, item := range s.ReferenceNormalRangeOrdinalAndContinuousObservations {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OM2.ReferenceNormalRangeOrdinalAndContinuousObservations: %w", err)
+		}
+	}
+
+	for _, item := range s.CriticalRangeForOrdinalAndContinuousObservations {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OM2.CriticalRangeForOrdinalAndContinuousObservations: %w", err)
+		}
+	}
+
+	if s.AbsoluteRangeForOrdinalAndContinuousObservations != nil {
+		if err := s.AbsoluteRangeForOrdinalAndContinuousObservations.Validate(); err != nil {
+			return fmt.Errorf("OM2.AbsoluteRangeForOrdinalAndContinuousObservations: %w", err)
+		}
+	}
+
+	for _, item := range s.DeltaCheckCriteria {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OM2.DeltaCheckCriteria: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *OM2) SetSequenceNumberTestObservationMasterFile(v *NM) *OM2 {
+	s.SequenceNumberTestObservationMasterFile = v
+	return s
+}
+
+func (s *OM2) SetUnitsOfMeasure(v *CE) *OM2 {
+	s.UnitsOfMeasure = v
+	return s
+}
+
+func (s *OM2) AddRangeOfDecimalPrecision(v NM) *OM2 {
+	s.RangeOfDecimalPrecision = append(s.RangeOfDecimalPrecision, v)
+	return s
+}
+
+func (s *OM2) SetCorrespondingSIUnitsOfMeasure(v *CE) *OM2 {
+	s.CorrespondingSIUnitsOfMeasure = v
+	return s
+}
+
+func (s *OM2) SetSIConversionFactor(v *TX) *OM2 {
+	s.SIConversionFactor = v
+	return s
+}
+
+func (s *OM2) AddReferenceNormalRangeOrdinalAndContinuousObservations(v RFR) *OM2 {
+	s.ReferenceNormalRangeOrdinalAndContinuousObservations = append(s.ReferenceNormalRangeOrdinalAndContinuousObservations, v)
+	return s
+}
+
+func (s *OM2) AddCriticalRangeForOrdinalAndContinuousObservations(v RFR) *OM2 {
+	s.CriticalRangeForOrdinalAndContinuousObservations = append(s.CriticalRangeForOrdinalAndContinuousObservations, v)
+	return s
+}
+
+func (s *OM2) SetAbsoluteRangeForOrdinalAndContinuousObservations(v *RFR) *OM2 {
+	s.AbsoluteRangeForOrdinalAndContinuousObservations = v
+	return s
+}
+
+func (s *OM2) AddDeltaCheckCriteria(v DLT) *OM2 {
+	s.DeltaCheckCriteria = append(s.DeltaCheckCriteria, v)
+	return s
+}
+
+func (s *OM2) SetMinimumMeaningfulIncrements(v *NM) *OM2 {
+	s.MinimumMeaningfulIncrements = v
+	return s
 }
 
 // OM3 - Categorical Service/Test/Observation
 // This segment applies to free text and other non-numeric data types.
 type OM3 struct {
-	SequenceNumberTestObservationMasterFile     NM   `hl7:"1"`
-	PreferredCodingSystem                       CE   `hl7:"2"`
-	ValidCodedAnswers                           CE   `hl7:"3"`
+	SequenceNumberTestObservationMasterFile     *NM  `hl7:"1"`
+	PreferredCodingSystem                       *CE  `hl7:"2"`
+	ValidCodedAnswers                           *CE  `hl7:"3"`
 	NormalTextCodesForCategoricalObservations   []CE `hl7:"4"`
 	AbnormalTextCodesForCategoricalObservations []CE `hl7:"5"`
 	CriticalTextCodesForCategoricalObservations []CE `hl7:"6"`
-	ValueType                                   ID   `hl7:"7"`
+	ValueType                                   *ID  `hl7:"7"`
+}
+
+func NewOM3() *OM3 {
+	return &OM3{}
+}
+
+func (s *OM3) Validate() error {
+
+	if s.PreferredCodingSystem != nil {
+		if err := s.PreferredCodingSystem.Validate(); err != nil {
+			return fmt.Errorf("OM3.PreferredCodingSystem: %w", err)
+		}
+	}
+
+	if s.ValidCodedAnswers != nil {
+		if err := s.ValidCodedAnswers.Validate(); err != nil {
+			return fmt.Errorf("OM3.ValidCodedAnswers: %w", err)
+		}
+	}
+
+	for _, item := range s.NormalTextCodesForCategoricalObservations {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OM3.NormalTextCodesForCategoricalObservations: %w", err)
+		}
+	}
+
+	for _, item := range s.AbnormalTextCodesForCategoricalObservations {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OM3.AbnormalTextCodesForCategoricalObservations: %w", err)
+		}
+	}
+
+	for _, item := range s.CriticalTextCodesForCategoricalObservations {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OM3.CriticalTextCodesForCategoricalObservations: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *OM3) SetSequenceNumberTestObservationMasterFile(v *NM) *OM3 {
+	s.SequenceNumberTestObservationMasterFile = v
+	return s
+}
+
+func (s *OM3) SetPreferredCodingSystem(v *CE) *OM3 {
+	s.PreferredCodingSystem = v
+	return s
+}
+
+func (s *OM3) SetValidCodedAnswers(v *CE) *OM3 {
+	s.ValidCodedAnswers = v
+	return s
+}
+
+func (s *OM3) AddNormalTextCodesForCategoricalObservations(v CE) *OM3 {
+	s.NormalTextCodesForCategoricalObservations = append(s.NormalTextCodesForCategoricalObservations, v)
+	return s
+}
+
+func (s *OM3) AddAbnormalTextCodesForCategoricalObservations(v CE) *OM3 {
+	s.AbnormalTextCodesForCategoricalObservations = append(s.AbnormalTextCodesForCategoricalObservations, v)
+	return s
+}
+
+func (s *OM3) AddCriticalTextCodesForCategoricalObservations(v CE) *OM3 {
+	s.CriticalTextCodesForCategoricalObservations = append(s.CriticalTextCodesForCategoricalObservations, v)
+	return s
+}
+
+func (s *OM3) SetValueType(v *ID) *OM3 {
+	s.ValueType = v
+	return s
 }
 
 // OM4 - Observations that Require Specimens
 // This segment applies to observations/batteries that require a specimen for their performance.  When an observation or battery requires multiple specimens for their performance (e.g., creatinine clearance requires a 24-hour urine specimen and a serum specimen), multiple segments may be included, one for each specimen type.
 type OM4 struct {
-	SequenceNumberTestObservationMasterFile NM   `hl7:"1"`
-	DerivedSpecimen                         ID   `hl7:"2"`
-	ContainerDescription                    TX   `hl7:"3"`
-	ContainerVolume                         NM   `hl7:"4"`
-	ContainerUnits                          CE   `hl7:"5"`
-	Specimen                                CE   `hl7:"6"`
-	Additive                                CWE  `hl7:"7"`
-	Preparation                             TX   `hl7:"8"`
-	SpecialHandlingRequirements             TX   `hl7:"9"`
-	NormalCollectionVolume                  CQ   `hl7:"10"`
-	MinimumCollectionVolume                 CQ   `hl7:"11"`
-	SpecimenRequirements                    TX   `hl7:"12"`
+	SequenceNumberTestObservationMasterFile *NM  `hl7:"1"`
+	DerivedSpecimen                         *ID  `hl7:"2"`
+	ContainerDescription                    *TX  `hl7:"3"`
+	ContainerVolume                         *NM  `hl7:"4"`
+	ContainerUnits                          *CE  `hl7:"5"`
+	Specimen                                *CE  `hl7:"6"`
+	Additive                                *CWE `hl7:"7"`
+	Preparation                             *TX  `hl7:"8"`
+	SpecialHandlingRequirements             *TX  `hl7:"9"`
+	NormalCollectionVolume                  *CQ  `hl7:"10"`
+	MinimumCollectionVolume                 *CQ  `hl7:"11"`
+	SpecimenRequirements                    *TX  `hl7:"12"`
 	SpecimenPriorities                      []ID `hl7:"13"`
-	SpecimenRetentionTime                   CQ   `hl7:"14"`
+	SpecimenRetentionTime                   *CQ  `hl7:"14"`
+}
+
+func NewOM4() *OM4 {
+	return &OM4{}
+}
+
+func (s *OM4) Validate() error {
+
+	if s.ContainerUnits != nil {
+		if err := s.ContainerUnits.Validate(); err != nil {
+			return fmt.Errorf("OM4.ContainerUnits: %w", err)
+		}
+	}
+
+	if s.Specimen != nil {
+		if err := s.Specimen.Validate(); err != nil {
+			return fmt.Errorf("OM4.Specimen: %w", err)
+		}
+	}
+
+	if s.Additive != nil {
+		if err := s.Additive.Validate(); err != nil {
+			return fmt.Errorf("OM4.Additive: %w", err)
+		}
+	}
+
+	if s.NormalCollectionVolume != nil {
+		if err := s.NormalCollectionVolume.Validate(); err != nil {
+			return fmt.Errorf("OM4.NormalCollectionVolume: %w", err)
+		}
+	}
+
+	if s.MinimumCollectionVolume != nil {
+		if err := s.MinimumCollectionVolume.Validate(); err != nil {
+			return fmt.Errorf("OM4.MinimumCollectionVolume: %w", err)
+		}
+	}
+
+	for _, item := range s.SpecimenPriorities {
+		if string(item) == "" {
+			return fmt.Errorf("OM4.SpecimenPriorities item is empty")
+		}
+	}
+
+	if s.SpecimenRetentionTime != nil {
+		if err := s.SpecimenRetentionTime.Validate(); err != nil {
+			return fmt.Errorf("OM4.SpecimenRetentionTime: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *OM4) SetSequenceNumberTestObservationMasterFile(v *NM) *OM4 {
+	s.SequenceNumberTestObservationMasterFile = v
+	return s
+}
+
+func (s *OM4) SetDerivedSpecimen(v *ID) *OM4 {
+	s.DerivedSpecimen = v
+	return s
+}
+
+func (s *OM4) SetContainerDescription(v *TX) *OM4 {
+	s.ContainerDescription = v
+	return s
+}
+
+func (s *OM4) SetContainerVolume(v *NM) *OM4 {
+	s.ContainerVolume = v
+	return s
+}
+
+func (s *OM4) SetContainerUnits(v *CE) *OM4 {
+	s.ContainerUnits = v
+	return s
+}
+
+func (s *OM4) SetSpecimen(v *CE) *OM4 {
+	s.Specimen = v
+	return s
+}
+
+func (s *OM4) SetAdditive(v *CWE) *OM4 {
+	s.Additive = v
+	return s
+}
+
+func (s *OM4) SetPreparation(v *TX) *OM4 {
+	s.Preparation = v
+	return s
+}
+
+func (s *OM4) SetSpecialHandlingRequirements(v *TX) *OM4 {
+	s.SpecialHandlingRequirements = v
+	return s
+}
+
+func (s *OM4) SetNormalCollectionVolume(v *CQ) *OM4 {
+	s.NormalCollectionVolume = v
+	return s
+}
+
+func (s *OM4) SetMinimumCollectionVolume(v *CQ) *OM4 {
+	s.MinimumCollectionVolume = v
+	return s
+}
+
+func (s *OM4) SetSpecimenRequirements(v *TX) *OM4 {
+	s.SpecimenRequirements = v
+	return s
+}
+
+func (s *OM4) AddSpecimenPriorities(v ID) *OM4 {
+	s.SpecimenPriorities = append(s.SpecimenPriorities, v)
+	return s
+}
+
+func (s *OM4) SetSpecimenRetentionTime(v *CQ) *OM4 {
+	s.SpecimenRetentionTime = v
+	return s
 }
 
 // OM5 - Observation Batteries (Sets)
 // This segment contains the information about batteries and supersets (a nature code of F, P or S, as described in OM1-18 - Nature of Service/Test/Observation).
 type OM5 struct {
-	SequenceNumberTestObservationMasterFile            NM   `hl7:"1"`
+	SequenceNumberTestObservationMasterFile            *NM  `hl7:"1"`
 	TestObservationsIncludedWithinAnOrderedTestBattery []CE `hl7:"2"`
-	ObservationIDSuffixes                              ST   `hl7:"3"`
+	ObservationIDSuffixes                              *ST  `hl7:"3"`
+}
+
+func NewOM5() *OM5 {
+	return &OM5{}
+}
+
+func (s *OM5) Validate() error {
+
+	for _, item := range s.TestObservationsIncludedWithinAnOrderedTestBattery {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OM5.TestObservationsIncludedWithinAnOrderedTestBattery: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *OM5) SetSequenceNumberTestObservationMasterFile(v *NM) *OM5 {
+	s.SequenceNumberTestObservationMasterFile = v
+	return s
+}
+
+func (s *OM5) AddTestObservationsIncludedWithinAnOrderedTestBattery(v CE) *OM5 {
+	s.TestObservationsIncludedWithinAnOrderedTestBattery = append(s.TestObservationsIncludedWithinAnOrderedTestBattery, v)
+	return s
+}
+
+func (s *OM5) SetObservationIDSuffixes(v *ST) *OM5 {
+	s.ObservationIDSuffixes = v
+	return s
 }
 
 // OM6 - Observations that are Calculated from Other Observations
 // This segment contains the information about quantities that are derived from one or more other quantities or direct observations by mathematical or logical means.
 type OM6 struct {
-	SequenceNumberTestObservationMasterFile NM `hl7:"1"`
-	DerivationRule                          TX `hl7:"2"`
+	SequenceNumberTestObservationMasterFile *NM `hl7:"1"`
+	DerivationRule                          *TX `hl7:"2"`
+}
+
+func NewOM6() *OM6 {
+	return &OM6{}
+}
+
+func (s *OM6) Validate() error {
+
+	return nil
+}
+
+func (s *OM6) SetSequenceNumberTestObservationMasterFile(v *NM) *OM6 {
+	s.SequenceNumberTestObservationMasterFile = v
+	return s
+}
+
+func (s *OM6) SetDerivationRule(v *TX) *OM6 {
+	s.DerivationRule = v
+	return s
 }
 
 // OM7 - Additional Basic Attributes
 // The OM7 segment contains additional basic attributes that apply to the definition of most observations/services.
 type OM7 struct {
-	SequenceNumberTestObservationMasterFile NM   `hl7:"1,required"`
-	UniversalServiceIdentifier              CE   `hl7:"2,required"`
+	SequenceNumberTestObservationMasterFile *NM  `hl7:"1,required"`
+	UniversalServiceIdentifier              *CE  `hl7:"2,required"`
 	CategoryIdentifier                      []CE `hl7:"3"`
-	CategoryDescription                     TX   `hl7:"4"`
+	CategoryDescription                     *TX  `hl7:"4"`
 	CategorySynonym                         []ST `hl7:"5"`
-	EffectiveTestServiceStartDateTime       TS   `hl7:"6"`
-	EffectiveTestServiceEndDateTime         TS   `hl7:"7"`
-	TestServiceDefaultDurationQuantity      NM   `hl7:"8"`
-	TestServiceDefaultDurationUnits         CE   `hl7:"9"`
-	TestServiceDefaultFrequency             IS   `hl7:"10"`
-	ConsentIndicator                        ID   `hl7:"11"`
-	ConsentIdentifier                       CE   `hl7:"12"`
-	ConsentEffectiveStartDateTime           TS   `hl7:"13"`
-	ConsentEffectiveEndDateTime             TS   `hl7:"14"`
-	ConsentIntervalQuantity                 NM   `hl7:"15"`
-	ConsentIntervalUnits                    CE   `hl7:"16"`
-	ConsentWaitingPeriodQuantity            NM   `hl7:"17"`
-	ConsentWaitingPeriodUnits               CE   `hl7:"18"`
-	EffectiveDateTimeOfChange               TS   `hl7:"19"`
-	EnteredBy                               XCN  `hl7:"20"`
+	EffectiveTestServiceStartDateTime       *TS  `hl7:"6"`
+	EffectiveTestServiceEndDateTime         *TS  `hl7:"7"`
+	TestServiceDefaultDurationQuantity      *NM  `hl7:"8"`
+	TestServiceDefaultDurationUnits         *CE  `hl7:"9"`
+	TestServiceDefaultFrequency             *IS  `hl7:"10"`
+	ConsentIndicator                        *ID  `hl7:"11"`
+	ConsentIdentifier                       *CE  `hl7:"12"`
+	ConsentEffectiveStartDateTime           *TS  `hl7:"13"`
+	ConsentEffectiveEndDateTime             *TS  `hl7:"14"`
+	ConsentIntervalQuantity                 *NM  `hl7:"15"`
+	ConsentIntervalUnits                    *CE  `hl7:"16"`
+	ConsentWaitingPeriodQuantity            *NM  `hl7:"17"`
+	ConsentWaitingPeriodUnits               *CE  `hl7:"18"`
+	EffectiveDateTimeOfChange               *TS  `hl7:"19"`
+	EnteredBy                               *XCN `hl7:"20"`
 	OrderableAtLocation                     []PL `hl7:"21"`
-	FormularyStatus                         IS   `hl7:"22"`
-	SpecialOrderIndicator                   ID   `hl7:"23"`
+	FormularyStatus                         *IS  `hl7:"22"`
+	SpecialOrderIndicator                   *ID  `hl7:"23"`
 	PrimaryKeyValueCDM                      []CE `hl7:"24"`
+}
+
+func NewOM7() *OM7 {
+	return &OM7{}
+}
+
+func (s *OM7) Validate() error {
+
+	if s.SequenceNumberTestObservationMasterFile == nil {
+		return fmt.Errorf("OM7.SequenceNumberTestObservationMasterFile is required")
+	}
+	if string(*s.SequenceNumberTestObservationMasterFile) == "" {
+		return fmt.Errorf("OM7.SequenceNumberTestObservationMasterFile is empty")
+	}
+
+	if s.UniversalServiceIdentifier == nil {
+		return fmt.Errorf("OM7.UniversalServiceIdentifier is required")
+	}
+	if s.UniversalServiceIdentifier != nil {
+		if err := s.UniversalServiceIdentifier.Validate(); err != nil {
+			return fmt.Errorf("OM7.UniversalServiceIdentifier: %w", err)
+		}
+	}
+
+	for _, item := range s.CategoryIdentifier {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OM7.CategoryIdentifier: %w", err)
+		}
+	}
+
+	for _, item := range s.CategorySynonym {
+		if string(item) == "" {
+			return fmt.Errorf("OM7.CategorySynonym item is empty")
+		}
+	}
+
+	if s.EffectiveTestServiceStartDateTime != nil {
+		if err := s.EffectiveTestServiceStartDateTime.Validate(); err != nil {
+			return fmt.Errorf("OM7.EffectiveTestServiceStartDateTime: %w", err)
+		}
+	}
+
+	if s.EffectiveTestServiceEndDateTime != nil {
+		if err := s.EffectiveTestServiceEndDateTime.Validate(); err != nil {
+			return fmt.Errorf("OM7.EffectiveTestServiceEndDateTime: %w", err)
+		}
+	}
+
+	if s.TestServiceDefaultDurationUnits != nil {
+		if err := s.TestServiceDefaultDurationUnits.Validate(); err != nil {
+			return fmt.Errorf("OM7.TestServiceDefaultDurationUnits: %w", err)
+		}
+	}
+
+	if s.ConsentIdentifier != nil {
+		if err := s.ConsentIdentifier.Validate(); err != nil {
+			return fmt.Errorf("OM7.ConsentIdentifier: %w", err)
+		}
+	}
+
+	if s.ConsentEffectiveStartDateTime != nil {
+		if err := s.ConsentEffectiveStartDateTime.Validate(); err != nil {
+			return fmt.Errorf("OM7.ConsentEffectiveStartDateTime: %w", err)
+		}
+	}
+
+	if s.ConsentEffectiveEndDateTime != nil {
+		if err := s.ConsentEffectiveEndDateTime.Validate(); err != nil {
+			return fmt.Errorf("OM7.ConsentEffectiveEndDateTime: %w", err)
+		}
+	}
+
+	if s.ConsentIntervalUnits != nil {
+		if err := s.ConsentIntervalUnits.Validate(); err != nil {
+			return fmt.Errorf("OM7.ConsentIntervalUnits: %w", err)
+		}
+	}
+
+	if s.ConsentWaitingPeriodUnits != nil {
+		if err := s.ConsentWaitingPeriodUnits.Validate(); err != nil {
+			return fmt.Errorf("OM7.ConsentWaitingPeriodUnits: %w", err)
+		}
+	}
+
+	if s.EffectiveDateTimeOfChange != nil {
+		if err := s.EffectiveDateTimeOfChange.Validate(); err != nil {
+			return fmt.Errorf("OM7.EffectiveDateTimeOfChange: %w", err)
+		}
+	}
+
+	if s.EnteredBy != nil {
+		if err := s.EnteredBy.Validate(); err != nil {
+			return fmt.Errorf("OM7.EnteredBy: %w", err)
+		}
+	}
+
+	for _, item := range s.OrderableAtLocation {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OM7.OrderableAtLocation: %w", err)
+		}
+	}
+
+	for _, item := range s.PrimaryKeyValueCDM {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("OM7.PrimaryKeyValueCDM: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *OM7) SetSequenceNumberTestObservationMasterFile(v *NM) *OM7 {
+	s.SequenceNumberTestObservationMasterFile = v
+	return s
+}
+
+func (s *OM7) SetUniversalServiceIdentifier(v *CE) *OM7 {
+	s.UniversalServiceIdentifier = v
+	return s
+}
+
+func (s *OM7) AddCategoryIdentifier(v CE) *OM7 {
+	s.CategoryIdentifier = append(s.CategoryIdentifier, v)
+	return s
+}
+
+func (s *OM7) SetCategoryDescription(v *TX) *OM7 {
+	s.CategoryDescription = v
+	return s
+}
+
+func (s *OM7) AddCategorySynonym(v ST) *OM7 {
+	s.CategorySynonym = append(s.CategorySynonym, v)
+	return s
+}
+
+func (s *OM7) SetEffectiveTestServiceStartDateTime(v *TS) *OM7 {
+	s.EffectiveTestServiceStartDateTime = v
+	return s
+}
+
+func (s *OM7) SetEffectiveTestServiceEndDateTime(v *TS) *OM7 {
+	s.EffectiveTestServiceEndDateTime = v
+	return s
+}
+
+func (s *OM7) SetTestServiceDefaultDurationQuantity(v *NM) *OM7 {
+	s.TestServiceDefaultDurationQuantity = v
+	return s
+}
+
+func (s *OM7) SetTestServiceDefaultDurationUnits(v *CE) *OM7 {
+	s.TestServiceDefaultDurationUnits = v
+	return s
+}
+
+func (s *OM7) SetTestServiceDefaultFrequency(v *IS) *OM7 {
+	s.TestServiceDefaultFrequency = v
+	return s
+}
+
+func (s *OM7) SetConsentIndicator(v *ID) *OM7 {
+	s.ConsentIndicator = v
+	return s
+}
+
+func (s *OM7) SetConsentIdentifier(v *CE) *OM7 {
+	s.ConsentIdentifier = v
+	return s
+}
+
+func (s *OM7) SetConsentEffectiveStartDateTime(v *TS) *OM7 {
+	s.ConsentEffectiveStartDateTime = v
+	return s
+}
+
+func (s *OM7) SetConsentEffectiveEndDateTime(v *TS) *OM7 {
+	s.ConsentEffectiveEndDateTime = v
+	return s
+}
+
+func (s *OM7) SetConsentIntervalQuantity(v *NM) *OM7 {
+	s.ConsentIntervalQuantity = v
+	return s
+}
+
+func (s *OM7) SetConsentIntervalUnits(v *CE) *OM7 {
+	s.ConsentIntervalUnits = v
+	return s
+}
+
+func (s *OM7) SetConsentWaitingPeriodQuantity(v *NM) *OM7 {
+	s.ConsentWaitingPeriodQuantity = v
+	return s
+}
+
+func (s *OM7) SetConsentWaitingPeriodUnits(v *CE) *OM7 {
+	s.ConsentWaitingPeriodUnits = v
+	return s
+}
+
+func (s *OM7) SetEffectiveDateTimeOfChange(v *TS) *OM7 {
+	s.EffectiveDateTimeOfChange = v
+	return s
+}
+
+func (s *OM7) SetEnteredBy(v *XCN) *OM7 {
+	s.EnteredBy = v
+	return s
+}
+
+func (s *OM7) AddOrderableAtLocation(v PL) *OM7 {
+	s.OrderableAtLocation = append(s.OrderableAtLocation, v)
+	return s
+}
+
+func (s *OM7) SetFormularyStatus(v *IS) *OM7 {
+	s.FormularyStatus = v
+	return s
+}
+
+func (s *OM7) SetSpecialOrderIndicator(v *ID) *OM7 {
+	s.SpecialOrderIndicator = v
+	return s
+}
+
+func (s *OM7) AddPrimaryKeyValueCDM(v CE) *OM7 {
+	s.PrimaryKeyValueCDM = append(s.PrimaryKeyValueCDM, v)
+	return s
 }
 
 // ORC - Common Order
@@ -1626,53 +13255,504 @@ type OM7 struct {
 //
 // If details are not needed for the order, the order detail segment may be omitted.  For example, to place an order on hold, one would transmit an ORC with the following fields completed: ORC-1-order control with a value of HD, ORC-2-placer order number, and ORC-3-filler order number.
 type ORC struct {
-	OrderControl                            ID    `hl7:"1,required"`
-	PlacerOrderNumber                       EI    `hl7:"2"`
-	FillerOrderNumber                       EI    `hl7:"3"`
-	PlacerGroupNumber                       EI    `hl7:"4"`
-	OrderStatus                             ID    `hl7:"5"`
-	ResponseFlag                            ID    `hl7:"6"`
+	OrderControl                            *ID   `hl7:"1,required"`
+	PlacerOrderNumber                       *EI   `hl7:"2"`
+	FillerOrderNumber                       *EI   `hl7:"3"`
+	PlacerGroupNumber                       *EI   `hl7:"4"`
+	OrderStatus                             *ID   `hl7:"5"`
+	ResponseFlag                            *ID   `hl7:"6"`
 	QuantityTiming                          []TQ  `hl7:"7"`
-	ParentOrder                             EIP   `hl7:"8"`
-	DateTimeOfTransaction                   TS    `hl7:"9"`
+	ParentOrder                             *EIP  `hl7:"8"`
+	DateTimeOfTransaction                   *TS   `hl7:"9"`
 	EnteredBy                               []XCN `hl7:"10"`
 	VerifiedBy                              []XCN `hl7:"11"`
 	OrderingProvider                        []XCN `hl7:"12"`
-	EntererSLocation                        PL    `hl7:"13"`
+	EntererSLocation                        *PL   `hl7:"13"`
 	CallBackPhoneNumber                     []XTN `hl7:"14"`
-	OrderEffectiveDateTime                  TS    `hl7:"15"`
-	OrderControlCodeReason                  CE    `hl7:"16"`
-	EnteringOrganization                    CE    `hl7:"17"`
-	EnteringDevice                          CE    `hl7:"18"`
+	OrderEffectiveDateTime                  *TS   `hl7:"15"`
+	OrderControlCodeReason                  *CE   `hl7:"16"`
+	EnteringOrganization                    *CE   `hl7:"17"`
+	EnteringDevice                          *CE   `hl7:"18"`
 	ActionBy                                []XCN `hl7:"19"`
-	AdvancedBeneficiaryNoticeCode           CE    `hl7:"20"`
+	AdvancedBeneficiaryNoticeCode           *CE   `hl7:"20"`
 	OrderingFacilityName                    []XON `hl7:"21"`
 	OrderingFacilityAddress                 []XAD `hl7:"22"`
 	OrderingFacilityPhoneNumber             []XTN `hl7:"23"`
 	OrderingProviderAddress                 []XAD `hl7:"24"`
-	OrderStatusModifier                     CWE   `hl7:"25"`
-	AdvancedBeneficiaryNoticeOverrideReason CWE   `hl7:"26"`
-	FillerSExpectedAvailabilityDateTime     TS    `hl7:"27"`
-	ConfidentialityCode                     CWE   `hl7:"28"`
-	OrderType                               CWE   `hl7:"29"`
-	EntererAuthorizationMode                CNE   `hl7:"30"`
+	OrderStatusModifier                     *CWE  `hl7:"25"`
+	AdvancedBeneficiaryNoticeOverrideReason *CWE  `hl7:"26"`
+	FillerSExpectedAvailabilityDateTime     *TS   `hl7:"27"`
+	ConfidentialityCode                     *CWE  `hl7:"28"`
+	OrderType                               *CWE  `hl7:"29"`
+	EntererAuthorizationMode                *CNE  `hl7:"30"`
+}
+
+func NewORC() *ORC {
+	return &ORC{}
+}
+
+func (s *ORC) Validate() error {
+
+	if s.OrderControl == nil {
+		return fmt.Errorf("ORC.OrderControl is required")
+	}
+	if string(*s.OrderControl) == "" {
+		return fmt.Errorf("ORC.OrderControl is empty")
+	}
+
+	if s.PlacerOrderNumber != nil {
+		if err := s.PlacerOrderNumber.Validate(); err != nil {
+			return fmt.Errorf("ORC.PlacerOrderNumber: %w", err)
+		}
+	}
+
+	if s.FillerOrderNumber != nil {
+		if err := s.FillerOrderNumber.Validate(); err != nil {
+			return fmt.Errorf("ORC.FillerOrderNumber: %w", err)
+		}
+	}
+
+	if s.PlacerGroupNumber != nil {
+		if err := s.PlacerGroupNumber.Validate(); err != nil {
+			return fmt.Errorf("ORC.PlacerGroupNumber: %w", err)
+		}
+	}
+
+	for _, item := range s.QuantityTiming {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("ORC.QuantityTiming: %w", err)
+		}
+	}
+
+	if s.ParentOrder != nil {
+		if err := s.ParentOrder.Validate(); err != nil {
+			return fmt.Errorf("ORC.ParentOrder: %w", err)
+		}
+	}
+
+	if s.DateTimeOfTransaction != nil {
+		if err := s.DateTimeOfTransaction.Validate(); err != nil {
+			return fmt.Errorf("ORC.DateTimeOfTransaction: %w", err)
+		}
+	}
+
+	for _, item := range s.EnteredBy {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("ORC.EnteredBy: %w", err)
+		}
+	}
+
+	for _, item := range s.VerifiedBy {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("ORC.VerifiedBy: %w", err)
+		}
+	}
+
+	for _, item := range s.OrderingProvider {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("ORC.OrderingProvider: %w", err)
+		}
+	}
+
+	if s.EntererSLocation != nil {
+		if err := s.EntererSLocation.Validate(); err != nil {
+			return fmt.Errorf("ORC.EntererSLocation: %w", err)
+		}
+	}
+
+	for _, item := range s.CallBackPhoneNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("ORC.CallBackPhoneNumber: %w", err)
+		}
+	}
+
+	if s.OrderEffectiveDateTime != nil {
+		if err := s.OrderEffectiveDateTime.Validate(); err != nil {
+			return fmt.Errorf("ORC.OrderEffectiveDateTime: %w", err)
+		}
+	}
+
+	if s.OrderControlCodeReason != nil {
+		if err := s.OrderControlCodeReason.Validate(); err != nil {
+			return fmt.Errorf("ORC.OrderControlCodeReason: %w", err)
+		}
+	}
+
+	if s.EnteringOrganization != nil {
+		if err := s.EnteringOrganization.Validate(); err != nil {
+			return fmt.Errorf("ORC.EnteringOrganization: %w", err)
+		}
+	}
+
+	if s.EnteringDevice != nil {
+		if err := s.EnteringDevice.Validate(); err != nil {
+			return fmt.Errorf("ORC.EnteringDevice: %w", err)
+		}
+	}
+
+	for _, item := range s.ActionBy {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("ORC.ActionBy: %w", err)
+		}
+	}
+
+	if s.AdvancedBeneficiaryNoticeCode != nil {
+		if err := s.AdvancedBeneficiaryNoticeCode.Validate(); err != nil {
+			return fmt.Errorf("ORC.AdvancedBeneficiaryNoticeCode: %w", err)
+		}
+	}
+
+	for _, item := range s.OrderingFacilityName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("ORC.OrderingFacilityName: %w", err)
+		}
+	}
+
+	for _, item := range s.OrderingFacilityAddress {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("ORC.OrderingFacilityAddress: %w", err)
+		}
+	}
+
+	for _, item := range s.OrderingFacilityPhoneNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("ORC.OrderingFacilityPhoneNumber: %w", err)
+		}
+	}
+
+	for _, item := range s.OrderingProviderAddress {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("ORC.OrderingProviderAddress: %w", err)
+		}
+	}
+
+	if s.OrderStatusModifier != nil {
+		if err := s.OrderStatusModifier.Validate(); err != nil {
+			return fmt.Errorf("ORC.OrderStatusModifier: %w", err)
+		}
+	}
+
+	if s.AdvancedBeneficiaryNoticeOverrideReason != nil {
+		if err := s.AdvancedBeneficiaryNoticeOverrideReason.Validate(); err != nil {
+			return fmt.Errorf("ORC.AdvancedBeneficiaryNoticeOverrideReason: %w", err)
+		}
+	}
+
+	if s.FillerSExpectedAvailabilityDateTime != nil {
+		if err := s.FillerSExpectedAvailabilityDateTime.Validate(); err != nil {
+			return fmt.Errorf("ORC.FillerSExpectedAvailabilityDateTime: %w", err)
+		}
+	}
+
+	if s.ConfidentialityCode != nil {
+		if err := s.ConfidentialityCode.Validate(); err != nil {
+			return fmt.Errorf("ORC.ConfidentialityCode: %w", err)
+		}
+	}
+
+	if s.OrderType != nil {
+		if err := s.OrderType.Validate(); err != nil {
+			return fmt.Errorf("ORC.OrderType: %w", err)
+		}
+	}
+
+	if s.EntererAuthorizationMode != nil {
+		if err := s.EntererAuthorizationMode.Validate(); err != nil {
+			return fmt.Errorf("ORC.EntererAuthorizationMode: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *ORC) SetOrderControl(v *ID) *ORC {
+	s.OrderControl = v
+	return s
+}
+
+func (s *ORC) SetPlacerOrderNumber(v *EI) *ORC {
+	s.PlacerOrderNumber = v
+	return s
+}
+
+func (s *ORC) SetFillerOrderNumber(v *EI) *ORC {
+	s.FillerOrderNumber = v
+	return s
+}
+
+func (s *ORC) SetPlacerGroupNumber(v *EI) *ORC {
+	s.PlacerGroupNumber = v
+	return s
+}
+
+func (s *ORC) SetOrderStatus(v *ID) *ORC {
+	s.OrderStatus = v
+	return s
+}
+
+func (s *ORC) SetResponseFlag(v *ID) *ORC {
+	s.ResponseFlag = v
+	return s
+}
+
+func (s *ORC) AddQuantityTiming(v TQ) *ORC {
+	s.QuantityTiming = append(s.QuantityTiming, v)
+	return s
+}
+
+func (s *ORC) SetParentOrder(v *EIP) *ORC {
+	s.ParentOrder = v
+	return s
+}
+
+func (s *ORC) SetDateTimeOfTransaction(v *TS) *ORC {
+	s.DateTimeOfTransaction = v
+	return s
+}
+
+func (s *ORC) AddEnteredBy(v XCN) *ORC {
+	s.EnteredBy = append(s.EnteredBy, v)
+	return s
+}
+
+func (s *ORC) AddVerifiedBy(v XCN) *ORC {
+	s.VerifiedBy = append(s.VerifiedBy, v)
+	return s
+}
+
+func (s *ORC) AddOrderingProvider(v XCN) *ORC {
+	s.OrderingProvider = append(s.OrderingProvider, v)
+	return s
+}
+
+func (s *ORC) SetEntererSLocation(v *PL) *ORC {
+	s.EntererSLocation = v
+	return s
+}
+
+func (s *ORC) AddCallBackPhoneNumber(v XTN) *ORC {
+	s.CallBackPhoneNumber = append(s.CallBackPhoneNumber, v)
+	return s
+}
+
+func (s *ORC) SetOrderEffectiveDateTime(v *TS) *ORC {
+	s.OrderEffectiveDateTime = v
+	return s
+}
+
+func (s *ORC) SetOrderControlCodeReason(v *CE) *ORC {
+	s.OrderControlCodeReason = v
+	return s
+}
+
+func (s *ORC) SetEnteringOrganization(v *CE) *ORC {
+	s.EnteringOrganization = v
+	return s
+}
+
+func (s *ORC) SetEnteringDevice(v *CE) *ORC {
+	s.EnteringDevice = v
+	return s
+}
+
+func (s *ORC) AddActionBy(v XCN) *ORC {
+	s.ActionBy = append(s.ActionBy, v)
+	return s
+}
+
+func (s *ORC) SetAdvancedBeneficiaryNoticeCode(v *CE) *ORC {
+	s.AdvancedBeneficiaryNoticeCode = v
+	return s
+}
+
+func (s *ORC) AddOrderingFacilityName(v XON) *ORC {
+	s.OrderingFacilityName = append(s.OrderingFacilityName, v)
+	return s
+}
+
+func (s *ORC) AddOrderingFacilityAddress(v XAD) *ORC {
+	s.OrderingFacilityAddress = append(s.OrderingFacilityAddress, v)
+	return s
+}
+
+func (s *ORC) AddOrderingFacilityPhoneNumber(v XTN) *ORC {
+	s.OrderingFacilityPhoneNumber = append(s.OrderingFacilityPhoneNumber, v)
+	return s
+}
+
+func (s *ORC) AddOrderingProviderAddress(v XAD) *ORC {
+	s.OrderingProviderAddress = append(s.OrderingProviderAddress, v)
+	return s
+}
+
+func (s *ORC) SetOrderStatusModifier(v *CWE) *ORC {
+	s.OrderStatusModifier = v
+	return s
+}
+
+func (s *ORC) SetAdvancedBeneficiaryNoticeOverrideReason(v *CWE) *ORC {
+	s.AdvancedBeneficiaryNoticeOverrideReason = v
+	return s
+}
+
+func (s *ORC) SetFillerSExpectedAvailabilityDateTime(v *TS) *ORC {
+	s.FillerSExpectedAvailabilityDateTime = v
+	return s
+}
+
+func (s *ORC) SetConfidentialityCode(v *CWE) *ORC {
+	s.ConfidentialityCode = v
+	return s
+}
+
+func (s *ORC) SetOrderType(v *CWE) *ORC {
+	s.OrderType = v
+	return s
+}
+
+func (s *ORC) SetEntererAuthorizationMode(v *CNE) *ORC {
+	s.EntererAuthorizationMode = v
+	return s
 }
 
 // ORG - Practitioner Organization Unit
 // The ORG segment relates a practitioner to an organization unit and adds detailed information regarding the practitioner's practicing specialty in that organization unit. An ORG segment may optionally follow an STF segment. An ORG segment must always have been preceded by a corresponding STF segment. If no organization unit is specified, this segment is used to relate practitioners with their practicing specialties, including effective and end dates. When it is not necessary to record organization unit or dates associated with the practicing specialty, this data is recorded in PRA-3-Practitioner Category.
 type ORG struct {
-	SetIDORG                                   SI `hl7:"1,required"`
-	OrganizationUnitCode                       CE `hl7:"2"`
-	OrganizationUnitTypeCode                   CE `hl7:"3"`
-	PrimaryOrgUnitIndicator                    ID `hl7:"4"`
-	PractitionerOrgUnitIdentifier              CX `hl7:"5"`
-	HealthCareProviderTypeCode                 CE `hl7:"6"`
-	HealthCareProviderClassificationCode       CE `hl7:"7"`
-	HealthCareProviderAreaOfSpecializationCode CE `hl7:"8"`
-	EffectiveDateRange                         DR `hl7:"9"`
-	EmploymentStatusCode                       CE `hl7:"10"`
-	BoardApprovalIndicator                     ID `hl7:"11"`
-	PrimaryCarePhysicianIndicator              ID `hl7:"12"`
+	SetIDORG                                   *SI `hl7:"1,required"`
+	OrganizationUnitCode                       *CE `hl7:"2"`
+	OrganizationUnitTypeCode                   *CE `hl7:"3"`
+	PrimaryOrgUnitIndicator                    *ID `hl7:"4"`
+	PractitionerOrgUnitIdentifier              *CX `hl7:"5"`
+	HealthCareProviderTypeCode                 *CE `hl7:"6"`
+	HealthCareProviderClassificationCode       *CE `hl7:"7"`
+	HealthCareProviderAreaOfSpecializationCode *CE `hl7:"8"`
+	EffectiveDateRange                         *DR `hl7:"9"`
+	EmploymentStatusCode                       *CE `hl7:"10"`
+	BoardApprovalIndicator                     *ID `hl7:"11"`
+	PrimaryCarePhysicianIndicator              *ID `hl7:"12"`
+}
+
+func NewORG() *ORG {
+	return &ORG{}
+}
+
+func (s *ORG) Validate() error {
+
+	if s.SetIDORG == nil {
+		return fmt.Errorf("ORG.SetIDORG is required")
+	}
+	if string(*s.SetIDORG) == "" {
+		return fmt.Errorf("ORG.SetIDORG is empty")
+	}
+
+	if s.OrganizationUnitCode != nil {
+		if err := s.OrganizationUnitCode.Validate(); err != nil {
+			return fmt.Errorf("ORG.OrganizationUnitCode: %w", err)
+		}
+	}
+
+	if s.OrganizationUnitTypeCode != nil {
+		if err := s.OrganizationUnitTypeCode.Validate(); err != nil {
+			return fmt.Errorf("ORG.OrganizationUnitTypeCode: %w", err)
+		}
+	}
+
+	if s.PractitionerOrgUnitIdentifier != nil {
+		if err := s.PractitionerOrgUnitIdentifier.Validate(); err != nil {
+			return fmt.Errorf("ORG.PractitionerOrgUnitIdentifier: %w", err)
+		}
+	}
+
+	if s.HealthCareProviderTypeCode != nil {
+		if err := s.HealthCareProviderTypeCode.Validate(); err != nil {
+			return fmt.Errorf("ORG.HealthCareProviderTypeCode: %w", err)
+		}
+	}
+
+	if s.HealthCareProviderClassificationCode != nil {
+		if err := s.HealthCareProviderClassificationCode.Validate(); err != nil {
+			return fmt.Errorf("ORG.HealthCareProviderClassificationCode: %w", err)
+		}
+	}
+
+	if s.HealthCareProviderAreaOfSpecializationCode != nil {
+		if err := s.HealthCareProviderAreaOfSpecializationCode.Validate(); err != nil {
+			return fmt.Errorf("ORG.HealthCareProviderAreaOfSpecializationCode: %w", err)
+		}
+	}
+
+	if s.EffectiveDateRange != nil {
+		if err := s.EffectiveDateRange.Validate(); err != nil {
+			return fmt.Errorf("ORG.EffectiveDateRange: %w", err)
+		}
+	}
+
+	if s.EmploymentStatusCode != nil {
+		if err := s.EmploymentStatusCode.Validate(); err != nil {
+			return fmt.Errorf("ORG.EmploymentStatusCode: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *ORG) SetSetIDORG(v *SI) *ORG {
+	s.SetIDORG = v
+	return s
+}
+
+func (s *ORG) SetOrganizationUnitCode(v *CE) *ORG {
+	s.OrganizationUnitCode = v
+	return s
+}
+
+func (s *ORG) SetOrganizationUnitTypeCode(v *CE) *ORG {
+	s.OrganizationUnitTypeCode = v
+	return s
+}
+
+func (s *ORG) SetPrimaryOrgUnitIndicator(v *ID) *ORG {
+	s.PrimaryOrgUnitIndicator = v
+	return s
+}
+
+func (s *ORG) SetPractitionerOrgUnitIdentifier(v *CX) *ORG {
+	s.PractitionerOrgUnitIdentifier = v
+	return s
+}
+
+func (s *ORG) SetHealthCareProviderTypeCode(v *CE) *ORG {
+	s.HealthCareProviderTypeCode = v
+	return s
+}
+
+func (s *ORG) SetHealthCareProviderClassificationCode(v *CE) *ORG {
+	s.HealthCareProviderClassificationCode = v
+	return s
+}
+
+func (s *ORG) SetHealthCareProviderAreaOfSpecializationCode(v *CE) *ORG {
+	s.HealthCareProviderAreaOfSpecializationCode = v
+	return s
+}
+
+func (s *ORG) SetEffectiveDateRange(v *DR) *ORG {
+	s.EffectiveDateRange = v
+	return s
+}
+
+func (s *ORG) SetEmploymentStatusCode(v *CE) *ORG {
+	s.EmploymentStatusCode = v
+	return s
+}
+
+func (s *ORG) SetBoardApprovalIndicator(v *ID) *ORG {
+	s.BoardApprovalIndicator = v
+	return s
+}
+
+func (s *ORG) SetPrimaryCarePhysicianIndicator(v *ID) *ORG {
+	s.PrimaryCarePhysicianIndicator = v
+	return s
 }
 
 // OVR - Override Segment
@@ -1680,98 +13760,779 @@ type ORG struct {
 //
 // The following is an example of how the OVR segment might be used in a dispense message (RDS_O13): MSH PID PV1 {ORC RXE {RXR} RXD {RXR} <RXC> <NTE> <FT1> <OVR>}
 type OVR struct {
-	BusinessRuleOverrideType CWE `hl7:"1"`
-	BusinessRuleOverrideCode CWE `hl7:"2"`
-	OverrideComments         TX  `hl7:"3"`
-	OverrideEnteredBy        XCN `hl7:"4"`
-	OverrideAuthorizedBy     XCN `hl7:"5"`
+	BusinessRuleOverrideType *CWE `hl7:"1"`
+	BusinessRuleOverrideCode *CWE `hl7:"2"`
+	OverrideComments         *TX  `hl7:"3"`
+	OverrideEnteredBy        *XCN `hl7:"4"`
+	OverrideAuthorizedBy     *XCN `hl7:"5"`
+}
+
+func NewOVR() *OVR {
+	return &OVR{}
+}
+
+func (s *OVR) Validate() error {
+
+	if s.BusinessRuleOverrideType != nil {
+		if err := s.BusinessRuleOverrideType.Validate(); err != nil {
+			return fmt.Errorf("OVR.BusinessRuleOverrideType: %w", err)
+		}
+	}
+
+	if s.BusinessRuleOverrideCode != nil {
+		if err := s.BusinessRuleOverrideCode.Validate(); err != nil {
+			return fmt.Errorf("OVR.BusinessRuleOverrideCode: %w", err)
+		}
+	}
+
+	if s.OverrideEnteredBy != nil {
+		if err := s.OverrideEnteredBy.Validate(); err != nil {
+			return fmt.Errorf("OVR.OverrideEnteredBy: %w", err)
+		}
+	}
+
+	if s.OverrideAuthorizedBy != nil {
+		if err := s.OverrideAuthorizedBy.Validate(); err != nil {
+			return fmt.Errorf("OVR.OverrideAuthorizedBy: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *OVR) SetBusinessRuleOverrideType(v *CWE) *OVR {
+	s.BusinessRuleOverrideType = v
+	return s
+}
+
+func (s *OVR) SetBusinessRuleOverrideCode(v *CWE) *OVR {
+	s.BusinessRuleOverrideCode = v
+	return s
+}
+
+func (s *OVR) SetOverrideComments(v *TX) *OVR {
+	s.OverrideComments = v
+	return s
+}
+
+func (s *OVR) SetOverrideEnteredBy(v *XCN) *OVR {
+	s.OverrideEnteredBy = v
+	return s
+}
+
+func (s *OVR) SetOverrideAuthorizedBy(v *XCN) *OVR {
+	s.OverrideAuthorizedBy = v
+	return s
 }
 
 // PCR - Possible Causal Relationship
 // The PCR segment is used to communicate a potential or suspected relationship between a product (drug or device) or test and an event with detrimental effect on a patient. This segment identifies a potential causal relationship between the product identified in this segment and the event identified in the PEO segment.
 type PCR struct {
-	ImplicatedProduct                 CE   `hl7:"1,required"`
-	GenericProduct                    IS   `hl7:"2"`
-	ProductClass                      CE   `hl7:"3"`
-	TotalDurationOfTherapy            CQ   `hl7:"4"`
-	ProductManufactureDate            TS   `hl7:"5"`
-	ProductExpirationDate             TS   `hl7:"6"`
-	ProductImplantationDate           TS   `hl7:"7"`
-	ProductExplantationDate           TS   `hl7:"8"`
-	SingleUseDevice                   IS   `hl7:"9"`
-	IndicationForProductUse           CE   `hl7:"10"`
-	ProductProblem                    IS   `hl7:"11"`
+	ImplicatedProduct                 *CE  `hl7:"1,required"`
+	GenericProduct                    *IS  `hl7:"2"`
+	ProductClass                      *CE  `hl7:"3"`
+	TotalDurationOfTherapy            *CQ  `hl7:"4"`
+	ProductManufactureDate            *TS  `hl7:"5"`
+	ProductExpirationDate             *TS  `hl7:"6"`
+	ProductImplantationDate           *TS  `hl7:"7"`
+	ProductExplantationDate           *TS  `hl7:"8"`
+	SingleUseDevice                   *IS  `hl7:"9"`
+	IndicationForProductUse           *CE  `hl7:"10"`
+	ProductProblem                    *IS  `hl7:"11"`
 	ProductSerialLotNumber            []ST `hl7:"12"`
-	ProductAvailableForInspection     IS   `hl7:"13"`
-	ProductEvaluationPerformed        CE   `hl7:"14"`
-	ProductEvaluationStatus           CE   `hl7:"15"`
-	ProductEvaluationResults          CE   `hl7:"16"`
-	EvaluatedProductSource            ID   `hl7:"17"`
-	DateProductReturnedToManufacturer TS   `hl7:"18"`
-	DeviceOperatorQualifications      ID   `hl7:"19"`
-	RelatednessAssessment             ID   `hl7:"20"`
+	ProductAvailableForInspection     *IS  `hl7:"13"`
+	ProductEvaluationPerformed        *CE  `hl7:"14"`
+	ProductEvaluationStatus           *CE  `hl7:"15"`
+	ProductEvaluationResults          *CE  `hl7:"16"`
+	EvaluatedProductSource            *ID  `hl7:"17"`
+	DateProductReturnedToManufacturer *TS  `hl7:"18"`
+	DeviceOperatorQualifications      *ID  `hl7:"19"`
+	RelatednessAssessment             *ID  `hl7:"20"`
 	ActionTakenInResponseToTheEvent   []ID `hl7:"21"`
 	EventCausalityObservations        []ID `hl7:"22"`
 	IndirectExposureMechanism         []ID `hl7:"23"`
+}
+
+func NewPCR() *PCR {
+	return &PCR{}
+}
+
+func (s *PCR) Validate() error {
+
+	if s.ImplicatedProduct == nil {
+		return fmt.Errorf("PCR.ImplicatedProduct is required")
+	}
+	if s.ImplicatedProduct != nil {
+		if err := s.ImplicatedProduct.Validate(); err != nil {
+			return fmt.Errorf("PCR.ImplicatedProduct: %w", err)
+		}
+	}
+
+	if s.ProductClass != nil {
+		if err := s.ProductClass.Validate(); err != nil {
+			return fmt.Errorf("PCR.ProductClass: %w", err)
+		}
+	}
+
+	if s.TotalDurationOfTherapy != nil {
+		if err := s.TotalDurationOfTherapy.Validate(); err != nil {
+			return fmt.Errorf("PCR.TotalDurationOfTherapy: %w", err)
+		}
+	}
+
+	if s.ProductManufactureDate != nil {
+		if err := s.ProductManufactureDate.Validate(); err != nil {
+			return fmt.Errorf("PCR.ProductManufactureDate: %w", err)
+		}
+	}
+
+	if s.ProductExpirationDate != nil {
+		if err := s.ProductExpirationDate.Validate(); err != nil {
+			return fmt.Errorf("PCR.ProductExpirationDate: %w", err)
+		}
+	}
+
+	if s.ProductImplantationDate != nil {
+		if err := s.ProductImplantationDate.Validate(); err != nil {
+			return fmt.Errorf("PCR.ProductImplantationDate: %w", err)
+		}
+	}
+
+	if s.ProductExplantationDate != nil {
+		if err := s.ProductExplantationDate.Validate(); err != nil {
+			return fmt.Errorf("PCR.ProductExplantationDate: %w", err)
+		}
+	}
+
+	if s.IndicationForProductUse != nil {
+		if err := s.IndicationForProductUse.Validate(); err != nil {
+			return fmt.Errorf("PCR.IndicationForProductUse: %w", err)
+		}
+	}
+
+	for _, item := range s.ProductSerialLotNumber {
+		if string(item) == "" {
+			return fmt.Errorf("PCR.ProductSerialLotNumber item is empty")
+		}
+	}
+
+	if s.ProductEvaluationPerformed != nil {
+		if err := s.ProductEvaluationPerformed.Validate(); err != nil {
+			return fmt.Errorf("PCR.ProductEvaluationPerformed: %w", err)
+		}
+	}
+
+	if s.ProductEvaluationStatus != nil {
+		if err := s.ProductEvaluationStatus.Validate(); err != nil {
+			return fmt.Errorf("PCR.ProductEvaluationStatus: %w", err)
+		}
+	}
+
+	if s.ProductEvaluationResults != nil {
+		if err := s.ProductEvaluationResults.Validate(); err != nil {
+			return fmt.Errorf("PCR.ProductEvaluationResults: %w", err)
+		}
+	}
+
+	if s.DateProductReturnedToManufacturer != nil {
+		if err := s.DateProductReturnedToManufacturer.Validate(); err != nil {
+			return fmt.Errorf("PCR.DateProductReturnedToManufacturer: %w", err)
+		}
+	}
+
+	for _, item := range s.ActionTakenInResponseToTheEvent {
+		if string(item) == "" {
+			return fmt.Errorf("PCR.ActionTakenInResponseToTheEvent item is empty")
+		}
+	}
+
+	for _, item := range s.EventCausalityObservations {
+		if string(item) == "" {
+			return fmt.Errorf("PCR.EventCausalityObservations item is empty")
+		}
+	}
+
+	for _, item := range s.IndirectExposureMechanism {
+		if string(item) == "" {
+			return fmt.Errorf("PCR.IndirectExposureMechanism item is empty")
+		}
+	}
+	return nil
+}
+
+func (s *PCR) SetImplicatedProduct(v *CE) *PCR {
+	s.ImplicatedProduct = v
+	return s
+}
+
+func (s *PCR) SetGenericProduct(v *IS) *PCR {
+	s.GenericProduct = v
+	return s
+}
+
+func (s *PCR) SetProductClass(v *CE) *PCR {
+	s.ProductClass = v
+	return s
+}
+
+func (s *PCR) SetTotalDurationOfTherapy(v *CQ) *PCR {
+	s.TotalDurationOfTherapy = v
+	return s
+}
+
+func (s *PCR) SetProductManufactureDate(v *TS) *PCR {
+	s.ProductManufactureDate = v
+	return s
+}
+
+func (s *PCR) SetProductExpirationDate(v *TS) *PCR {
+	s.ProductExpirationDate = v
+	return s
+}
+
+func (s *PCR) SetProductImplantationDate(v *TS) *PCR {
+	s.ProductImplantationDate = v
+	return s
+}
+
+func (s *PCR) SetProductExplantationDate(v *TS) *PCR {
+	s.ProductExplantationDate = v
+	return s
+}
+
+func (s *PCR) SetSingleUseDevice(v *IS) *PCR {
+	s.SingleUseDevice = v
+	return s
+}
+
+func (s *PCR) SetIndicationForProductUse(v *CE) *PCR {
+	s.IndicationForProductUse = v
+	return s
+}
+
+func (s *PCR) SetProductProblem(v *IS) *PCR {
+	s.ProductProblem = v
+	return s
+}
+
+func (s *PCR) AddProductSerialLotNumber(v ST) *PCR {
+	s.ProductSerialLotNumber = append(s.ProductSerialLotNumber, v)
+	return s
+}
+
+func (s *PCR) SetProductAvailableForInspection(v *IS) *PCR {
+	s.ProductAvailableForInspection = v
+	return s
+}
+
+func (s *PCR) SetProductEvaluationPerformed(v *CE) *PCR {
+	s.ProductEvaluationPerformed = v
+	return s
+}
+
+func (s *PCR) SetProductEvaluationStatus(v *CE) *PCR {
+	s.ProductEvaluationStatus = v
+	return s
+}
+
+func (s *PCR) SetProductEvaluationResults(v *CE) *PCR {
+	s.ProductEvaluationResults = v
+	return s
+}
+
+func (s *PCR) SetEvaluatedProductSource(v *ID) *PCR {
+	s.EvaluatedProductSource = v
+	return s
+}
+
+func (s *PCR) SetDateProductReturnedToManufacturer(v *TS) *PCR {
+	s.DateProductReturnedToManufacturer = v
+	return s
+}
+
+func (s *PCR) SetDeviceOperatorQualifications(v *ID) *PCR {
+	s.DeviceOperatorQualifications = v
+	return s
+}
+
+func (s *PCR) SetRelatednessAssessment(v *ID) *PCR {
+	s.RelatednessAssessment = v
+	return s
+}
+
+func (s *PCR) AddActionTakenInResponseToTheEvent(v ID) *PCR {
+	s.ActionTakenInResponseToTheEvent = append(s.ActionTakenInResponseToTheEvent, v)
+	return s
+}
+
+func (s *PCR) AddEventCausalityObservations(v ID) *PCR {
+	s.EventCausalityObservations = append(s.EventCausalityObservations, v)
+	return s
+}
+
+func (s *PCR) AddIndirectExposureMechanism(v ID) *PCR {
+	s.IndirectExposureMechanism = append(s.IndirectExposureMechanism, v)
+	return s
 }
 
 // PD1 - Patient Additional Demographic
 // The patient additional demographic segment contains demographic information that is likely to change about the patient.
 type PD1 struct {
 	LivingDependency                        []IS  `hl7:"1"`
-	LivingArrangement                       IS    `hl7:"2"`
+	LivingArrangement                       *IS   `hl7:"2"`
 	PatientPrimaryFacility                  []XON `hl7:"3"`
 	PatientPrimaryCareProviderNameAndIDNo   []XCN `hl7:"4"`
-	StudentIndicator                        IS    `hl7:"5"`
-	Handicap                                IS    `hl7:"6"`
-	LivingWillCode                          IS    `hl7:"7"`
-	OrganDonorCode                          IS    `hl7:"8"`
-	SeparateBill                            ID    `hl7:"9"`
+	StudentIndicator                        *IS   `hl7:"5"`
+	Handicap                                *IS   `hl7:"6"`
+	LivingWillCode                          *IS   `hl7:"7"`
+	OrganDonorCode                          *IS   `hl7:"8"`
+	SeparateBill                            *ID   `hl7:"9"`
 	DuplicatePatient                        []CX  `hl7:"10"`
-	PublicityCode                           CE    `hl7:"11"`
-	ProtectionIndicator                     ID    `hl7:"12"`
-	ProtectionIndicatorEffectiveDate        DT    `hl7:"13"`
+	PublicityCode                           *CE   `hl7:"11"`
+	ProtectionIndicator                     *ID   `hl7:"12"`
+	ProtectionIndicatorEffectiveDate        *DT   `hl7:"13"`
 	PlaceOfWorship                          []XON `hl7:"14"`
 	AdvanceDirectiveCode                    []CE  `hl7:"15"`
-	ImmunizationRegistryStatus              IS    `hl7:"16"`
-	ImmunizationRegistryStatusEffectiveDate DT    `hl7:"17"`
-	PublicityCodeEffectiveDate              DT    `hl7:"18"`
-	MilitaryBranch                          IS    `hl7:"19"`
-	MilitaryRankGrade                       IS    `hl7:"20"`
-	MilitaryStatus                          IS    `hl7:"21"`
+	ImmunizationRegistryStatus              *IS   `hl7:"16"`
+	ImmunizationRegistryStatusEffectiveDate *DT   `hl7:"17"`
+	PublicityCodeEffectiveDate              *DT   `hl7:"18"`
+	MilitaryBranch                          *IS   `hl7:"19"`
+	MilitaryRankGrade                       *IS   `hl7:"20"`
+	MilitaryStatus                          *IS   `hl7:"21"`
+}
+
+func NewPD1() *PD1 {
+	return &PD1{}
+}
+
+func (s *PD1) Validate() error {
+
+	for _, item := range s.LivingDependency {
+		if string(item) == "" {
+			return fmt.Errorf("PD1.LivingDependency item is empty")
+		}
+	}
+
+	for _, item := range s.PatientPrimaryFacility {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PD1.PatientPrimaryFacility: %w", err)
+		}
+	}
+
+	for _, item := range s.PatientPrimaryCareProviderNameAndIDNo {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PD1.PatientPrimaryCareProviderNameAndIDNo: %w", err)
+		}
+	}
+
+	for _, item := range s.DuplicatePatient {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PD1.DuplicatePatient: %w", err)
+		}
+	}
+
+	if s.PublicityCode != nil {
+		if err := s.PublicityCode.Validate(); err != nil {
+			return fmt.Errorf("PD1.PublicityCode: %w", err)
+		}
+	}
+
+	for _, item := range s.PlaceOfWorship {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PD1.PlaceOfWorship: %w", err)
+		}
+	}
+
+	for _, item := range s.AdvanceDirectiveCode {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PD1.AdvanceDirectiveCode: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *PD1) AddLivingDependency(v IS) *PD1 {
+	s.LivingDependency = append(s.LivingDependency, v)
+	return s
+}
+
+func (s *PD1) SetLivingArrangement(v *IS) *PD1 {
+	s.LivingArrangement = v
+	return s
+}
+
+func (s *PD1) AddPatientPrimaryFacility(v XON) *PD1 {
+	s.PatientPrimaryFacility = append(s.PatientPrimaryFacility, v)
+	return s
+}
+
+func (s *PD1) AddPatientPrimaryCareProviderNameAndIDNo(v XCN) *PD1 {
+	s.PatientPrimaryCareProviderNameAndIDNo = append(s.PatientPrimaryCareProviderNameAndIDNo, v)
+	return s
+}
+
+func (s *PD1) SetStudentIndicator(v *IS) *PD1 {
+	s.StudentIndicator = v
+	return s
+}
+
+func (s *PD1) SetHandicap(v *IS) *PD1 {
+	s.Handicap = v
+	return s
+}
+
+func (s *PD1) SetLivingWillCode(v *IS) *PD1 {
+	s.LivingWillCode = v
+	return s
+}
+
+func (s *PD1) SetOrganDonorCode(v *IS) *PD1 {
+	s.OrganDonorCode = v
+	return s
+}
+
+func (s *PD1) SetSeparateBill(v *ID) *PD1 {
+	s.SeparateBill = v
+	return s
+}
+
+func (s *PD1) AddDuplicatePatient(v CX) *PD1 {
+	s.DuplicatePatient = append(s.DuplicatePatient, v)
+	return s
+}
+
+func (s *PD1) SetPublicityCode(v *CE) *PD1 {
+	s.PublicityCode = v
+	return s
+}
+
+func (s *PD1) SetProtectionIndicator(v *ID) *PD1 {
+	s.ProtectionIndicator = v
+	return s
+}
+
+func (s *PD1) SetProtectionIndicatorEffectiveDate(v *DT) *PD1 {
+	s.ProtectionIndicatorEffectiveDate = v
+	return s
+}
+
+func (s *PD1) AddPlaceOfWorship(v XON) *PD1 {
+	s.PlaceOfWorship = append(s.PlaceOfWorship, v)
+	return s
+}
+
+func (s *PD1) AddAdvanceDirectiveCode(v CE) *PD1 {
+	s.AdvanceDirectiveCode = append(s.AdvanceDirectiveCode, v)
+	return s
+}
+
+func (s *PD1) SetImmunizationRegistryStatus(v *IS) *PD1 {
+	s.ImmunizationRegistryStatus = v
+	return s
+}
+
+func (s *PD1) SetImmunizationRegistryStatusEffectiveDate(v *DT) *PD1 {
+	s.ImmunizationRegistryStatusEffectiveDate = v
+	return s
+}
+
+func (s *PD1) SetPublicityCodeEffectiveDate(v *DT) *PD1 {
+	s.PublicityCodeEffectiveDate = v
+	return s
+}
+
+func (s *PD1) SetMilitaryBranch(v *IS) *PD1 {
+	s.MilitaryBranch = v
+	return s
+}
+
+func (s *PD1) SetMilitaryRankGrade(v *IS) *PD1 {
+	s.MilitaryRankGrade = v
+	return s
+}
+
+func (s *PD1) SetMilitaryStatus(v *IS) *PD1 {
+	s.MilitaryStatus = v
+	return s
 }
 
 // PDA - Patient Death and Autopsy
 // This segment carries information on a patients death and possible autopsy.
 type PDA struct {
 	DeathCauseCode                 []CE `hl7:"1"`
-	DeathLocation                  PL   `hl7:"2"`
-	DeathCertifiedIndicator        ID   `hl7:"3"`
-	DeathCertificateSignedDateTime TS   `hl7:"4"`
-	DeathCertifiedBy               XCN  `hl7:"5"`
-	AutopsyIndicator               ID   `hl7:"6"`
-	AutopsyStartAndEndDateTime     DR   `hl7:"7"`
-	AutopsyPerformedBy             XCN  `hl7:"8"`
-	CoronerIndicator               ID   `hl7:"9"`
+	DeathLocation                  *PL  `hl7:"2"`
+	DeathCertifiedIndicator        *ID  `hl7:"3"`
+	DeathCertificateSignedDateTime *TS  `hl7:"4"`
+	DeathCertifiedBy               *XCN `hl7:"5"`
+	AutopsyIndicator               *ID  `hl7:"6"`
+	AutopsyStartAndEndDateTime     *DR  `hl7:"7"`
+	AutopsyPerformedBy             *XCN `hl7:"8"`
+	CoronerIndicator               *ID  `hl7:"9"`
+}
+
+func NewPDA() *PDA {
+	return &PDA{}
+}
+
+func (s *PDA) Validate() error {
+
+	for _, item := range s.DeathCauseCode {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PDA.DeathCauseCode: %w", err)
+		}
+	}
+
+	if s.DeathLocation != nil {
+		if err := s.DeathLocation.Validate(); err != nil {
+			return fmt.Errorf("PDA.DeathLocation: %w", err)
+		}
+	}
+
+	if s.DeathCertificateSignedDateTime != nil {
+		if err := s.DeathCertificateSignedDateTime.Validate(); err != nil {
+			return fmt.Errorf("PDA.DeathCertificateSignedDateTime: %w", err)
+		}
+	}
+
+	if s.DeathCertifiedBy != nil {
+		if err := s.DeathCertifiedBy.Validate(); err != nil {
+			return fmt.Errorf("PDA.DeathCertifiedBy: %w", err)
+		}
+	}
+
+	if s.AutopsyStartAndEndDateTime != nil {
+		if err := s.AutopsyStartAndEndDateTime.Validate(); err != nil {
+			return fmt.Errorf("PDA.AutopsyStartAndEndDateTime: %w", err)
+		}
+	}
+
+	if s.AutopsyPerformedBy != nil {
+		if err := s.AutopsyPerformedBy.Validate(); err != nil {
+			return fmt.Errorf("PDA.AutopsyPerformedBy: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *PDA) AddDeathCauseCode(v CE) *PDA {
+	s.DeathCauseCode = append(s.DeathCauseCode, v)
+	return s
+}
+
+func (s *PDA) SetDeathLocation(v *PL) *PDA {
+	s.DeathLocation = v
+	return s
+}
+
+func (s *PDA) SetDeathCertifiedIndicator(v *ID) *PDA {
+	s.DeathCertifiedIndicator = v
+	return s
+}
+
+func (s *PDA) SetDeathCertificateSignedDateTime(v *TS) *PDA {
+	s.DeathCertificateSignedDateTime = v
+	return s
+}
+
+func (s *PDA) SetDeathCertifiedBy(v *XCN) *PDA {
+	s.DeathCertifiedBy = v
+	return s
+}
+
+func (s *PDA) SetAutopsyIndicator(v *ID) *PDA {
+	s.AutopsyIndicator = v
+	return s
+}
+
+func (s *PDA) SetAutopsyStartAndEndDateTime(v *DR) *PDA {
+	s.AutopsyStartAndEndDateTime = v
+	return s
+}
+
+func (s *PDA) SetAutopsyPerformedBy(v *XCN) *PDA {
+	s.AutopsyPerformedBy = v
+	return s
+}
+
+func (s *PDA) SetCoronerIndicator(v *ID) *PDA {
+	s.CoronerIndicator = v
+	return s
 }
 
 // PDC - Product Detail Country
 type PDC struct {
 	ManufacturerDistributor []XON `hl7:"1,required"`
-	Country                 CE    `hl7:"2,required"`
-	BrandName               ST    `hl7:"3,required"`
-	DeviceFamilyName        ST    `hl7:"4"`
-	GenericName             CE    `hl7:"5"`
+	Country                 *CE   `hl7:"2,required"`
+	BrandName               *ST   `hl7:"3,required"`
+	DeviceFamilyName        *ST   `hl7:"4"`
+	GenericName             *CE   `hl7:"5"`
 	ModelIdentifier         []ST  `hl7:"6"`
-	CatalogueIdentifier     ST    `hl7:"7"`
+	CatalogueIdentifier     *ST   `hl7:"7"`
 	OtherIdentifier         []ST  `hl7:"8"`
-	ProductCode             CE    `hl7:"9"`
-	MarketingBasis          ID    `hl7:"10"`
-	MarketingApprovalID     ST    `hl7:"11"`
-	LabeledShelfLife        CQ    `hl7:"12"`
-	ExpectedShelfLife       CQ    `hl7:"13"`
-	DateFirstMarketed       TS    `hl7:"14"`
-	DateLastMarketed        TS    `hl7:"15"`
+	ProductCode             *CE   `hl7:"9"`
+	MarketingBasis          *ID   `hl7:"10"`
+	MarketingApprovalID     *ST   `hl7:"11"`
+	LabeledShelfLife        *CQ   `hl7:"12"`
+	ExpectedShelfLife       *CQ   `hl7:"13"`
+	DateFirstMarketed       *TS   `hl7:"14"`
+	DateLastMarketed        *TS   `hl7:"15"`
+}
+
+func NewPDC() *PDC {
+	return &PDC{}
+}
+
+func (s *PDC) Validate() error {
+
+	if len(s.ManufacturerDistributor) == 0 {
+		return fmt.Errorf("PDC.ManufacturerDistributor is required")
+	}
+	for _, item := range s.ManufacturerDistributor {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PDC.ManufacturerDistributor: %w", err)
+		}
+	}
+
+	if s.Country == nil {
+		return fmt.Errorf("PDC.Country is required")
+	}
+	if s.Country != nil {
+		if err := s.Country.Validate(); err != nil {
+			return fmt.Errorf("PDC.Country: %w", err)
+		}
+	}
+
+	if s.BrandName == nil {
+		return fmt.Errorf("PDC.BrandName is required")
+	}
+	if string(*s.BrandName) == "" {
+		return fmt.Errorf("PDC.BrandName is empty")
+	}
+
+	if s.GenericName != nil {
+		if err := s.GenericName.Validate(); err != nil {
+			return fmt.Errorf("PDC.GenericName: %w", err)
+		}
+	}
+
+	for _, item := range s.ModelIdentifier {
+		if string(item) == "" {
+			return fmt.Errorf("PDC.ModelIdentifier item is empty")
+		}
+	}
+
+	for _, item := range s.OtherIdentifier {
+		if string(item) == "" {
+			return fmt.Errorf("PDC.OtherIdentifier item is empty")
+		}
+	}
+
+	if s.ProductCode != nil {
+		if err := s.ProductCode.Validate(); err != nil {
+			return fmt.Errorf("PDC.ProductCode: %w", err)
+		}
+	}
+
+	if s.LabeledShelfLife != nil {
+		if err := s.LabeledShelfLife.Validate(); err != nil {
+			return fmt.Errorf("PDC.LabeledShelfLife: %w", err)
+		}
+	}
+
+	if s.ExpectedShelfLife != nil {
+		if err := s.ExpectedShelfLife.Validate(); err != nil {
+			return fmt.Errorf("PDC.ExpectedShelfLife: %w", err)
+		}
+	}
+
+	if s.DateFirstMarketed != nil {
+		if err := s.DateFirstMarketed.Validate(); err != nil {
+			return fmt.Errorf("PDC.DateFirstMarketed: %w", err)
+		}
+	}
+
+	if s.DateLastMarketed != nil {
+		if err := s.DateLastMarketed.Validate(); err != nil {
+			return fmt.Errorf("PDC.DateLastMarketed: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *PDC) AddManufacturerDistributor(v XON) *PDC {
+	s.ManufacturerDistributor = append(s.ManufacturerDistributor, v)
+	return s
+}
+
+func (s *PDC) SetCountry(v *CE) *PDC {
+	s.Country = v
+	return s
+}
+
+func (s *PDC) SetBrandName(v *ST) *PDC {
+	s.BrandName = v
+	return s
+}
+
+func (s *PDC) SetDeviceFamilyName(v *ST) *PDC {
+	s.DeviceFamilyName = v
+	return s
+}
+
+func (s *PDC) SetGenericName(v *CE) *PDC {
+	s.GenericName = v
+	return s
+}
+
+func (s *PDC) AddModelIdentifier(v ST) *PDC {
+	s.ModelIdentifier = append(s.ModelIdentifier, v)
+	return s
+}
+
+func (s *PDC) SetCatalogueIdentifier(v *ST) *PDC {
+	s.CatalogueIdentifier = v
+	return s
+}
+
+func (s *PDC) AddOtherIdentifier(v ST) *PDC {
+	s.OtherIdentifier = append(s.OtherIdentifier, v)
+	return s
+}
+
+func (s *PDC) SetProductCode(v *CE) *PDC {
+	s.ProductCode = v
+	return s
+}
+
+func (s *PDC) SetMarketingBasis(v *ID) *PDC {
+	s.MarketingBasis = v
+	return s
+}
+
+func (s *PDC) SetMarketingApprovalID(v *ST) *PDC {
+	s.MarketingApprovalID = v
+	return s
+}
+
+func (s *PDC) SetLabeledShelfLife(v *CQ) *PDC {
+	s.LabeledShelfLife = v
+	return s
+}
+
+func (s *PDC) SetExpectedShelfLife(v *CQ) *PDC {
+	s.ExpectedShelfLife = v
+	return s
+}
+
+func (s *PDC) SetDateFirstMarketed(v *TS) *PDC {
+	s.DateFirstMarketed = v
+	return s
+}
+
+func (s *PDC) SetDateLastMarketed(v *TS) *PDC {
+	s.DateLastMarketed = v
+	return s
 }
 
 // PEO - Product Experience Observation
@@ -1779,16 +14540,16 @@ type PDC struct {
 type PEO struct {
 	EventIdentifiersUsed                  []CE  `hl7:"1"`
 	EventSymptomDiagnosisCode             []CE  `hl7:"2"`
-	EventOnsetDateTime                    TS    `hl7:"3,required"`
-	EventExacerbationDateTime             TS    `hl7:"4"`
-	EventImprovedDateTime                 TS    `hl7:"5"`
-	EventEndedDataTime                    TS    `hl7:"6"`
+	EventOnsetDateTime                    *TS   `hl7:"3,required"`
+	EventExacerbationDateTime             *TS   `hl7:"4"`
+	EventImprovedDateTime                 *TS   `hl7:"5"`
+	EventEndedDataTime                    *TS   `hl7:"6"`
 	EventLocationOccurredAddress          []XAD `hl7:"7"`
 	EventQualification                    []ID  `hl7:"8"`
-	EventSerious                          ID    `hl7:"9"`
-	EventExpected                         ID    `hl7:"10"`
+	EventSerious                          *ID   `hl7:"9"`
+	EventExpected                         *ID   `hl7:"10"`
 	EventOutcome                          []ID  `hl7:"11"`
-	PatientOutcome                        ID    `hl7:"12"`
+	PatientOutcome                        *ID   `hl7:"12"`
 	EventDescriptionFromOthers            []FT  `hl7:"13"`
 	EventFromOriginalReporter             []FT  `hl7:"14"`
 	EventDescriptionFromPatient           []FT  `hl7:"15"`
@@ -1798,10 +14559,261 @@ type PEO struct {
 	PrimaryObserverName                   []XPN `hl7:"19"`
 	PrimaryObserverAddress                []XAD `hl7:"20"`
 	PrimaryObserverTelephone              []XTN `hl7:"21"`
-	PrimaryObserverSQualification         ID    `hl7:"22"`
-	ConfirmationProvidedBy                ID    `hl7:"23"`
-	PrimaryObserverAwareDateTime          TS    `hl7:"24"`
-	PrimaryObserverSIdentityMayBeDivulged ID    `hl7:"25"`
+	PrimaryObserverSQualification         *ID   `hl7:"22"`
+	ConfirmationProvidedBy                *ID   `hl7:"23"`
+	PrimaryObserverAwareDateTime          *TS   `hl7:"24"`
+	PrimaryObserverSIdentityMayBeDivulged *ID   `hl7:"25"`
+}
+
+func NewPEO() *PEO {
+	return &PEO{}
+}
+
+func (s *PEO) Validate() error {
+
+	for _, item := range s.EventIdentifiersUsed {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PEO.EventIdentifiersUsed: %w", err)
+		}
+	}
+
+	for _, item := range s.EventSymptomDiagnosisCode {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PEO.EventSymptomDiagnosisCode: %w", err)
+		}
+	}
+
+	if s.EventOnsetDateTime == nil {
+		return fmt.Errorf("PEO.EventOnsetDateTime is required")
+	}
+	if s.EventOnsetDateTime != nil {
+		if err := s.EventOnsetDateTime.Validate(); err != nil {
+			return fmt.Errorf("PEO.EventOnsetDateTime: %w", err)
+		}
+	}
+
+	if s.EventExacerbationDateTime != nil {
+		if err := s.EventExacerbationDateTime.Validate(); err != nil {
+			return fmt.Errorf("PEO.EventExacerbationDateTime: %w", err)
+		}
+	}
+
+	if s.EventImprovedDateTime != nil {
+		if err := s.EventImprovedDateTime.Validate(); err != nil {
+			return fmt.Errorf("PEO.EventImprovedDateTime: %w", err)
+		}
+	}
+
+	if s.EventEndedDataTime != nil {
+		if err := s.EventEndedDataTime.Validate(); err != nil {
+			return fmt.Errorf("PEO.EventEndedDataTime: %w", err)
+		}
+	}
+
+	for _, item := range s.EventLocationOccurredAddress {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PEO.EventLocationOccurredAddress: %w", err)
+		}
+	}
+
+	for _, item := range s.EventQualification {
+		if string(item) == "" {
+			return fmt.Errorf("PEO.EventQualification item is empty")
+		}
+	}
+
+	for _, item := range s.EventOutcome {
+		if string(item) == "" {
+			return fmt.Errorf("PEO.EventOutcome item is empty")
+		}
+	}
+
+	for _, item := range s.EventDescriptionFromOthers {
+		if string(item) == "" {
+			return fmt.Errorf("PEO.EventDescriptionFromOthers item is empty")
+		}
+	}
+
+	for _, item := range s.EventFromOriginalReporter {
+		if string(item) == "" {
+			return fmt.Errorf("PEO.EventFromOriginalReporter item is empty")
+		}
+	}
+
+	for _, item := range s.EventDescriptionFromPatient {
+		if string(item) == "" {
+			return fmt.Errorf("PEO.EventDescriptionFromPatient item is empty")
+		}
+	}
+
+	for _, item := range s.EventDescriptionFromPractitioner {
+		if string(item) == "" {
+			return fmt.Errorf("PEO.EventDescriptionFromPractitioner item is empty")
+		}
+	}
+
+	for _, item := range s.EventDescriptionFromAutopsy {
+		if string(item) == "" {
+			return fmt.Errorf("PEO.EventDescriptionFromAutopsy item is empty")
+		}
+	}
+
+	for _, item := range s.CauseOfDeath {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PEO.CauseOfDeath: %w", err)
+		}
+	}
+
+	for _, item := range s.PrimaryObserverName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PEO.PrimaryObserverName: %w", err)
+		}
+	}
+
+	for _, item := range s.PrimaryObserverAddress {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PEO.PrimaryObserverAddress: %w", err)
+		}
+	}
+
+	for _, item := range s.PrimaryObserverTelephone {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PEO.PrimaryObserverTelephone: %w", err)
+		}
+	}
+
+	if s.PrimaryObserverAwareDateTime != nil {
+		if err := s.PrimaryObserverAwareDateTime.Validate(); err != nil {
+			return fmt.Errorf("PEO.PrimaryObserverAwareDateTime: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *PEO) AddEventIdentifiersUsed(v CE) *PEO {
+	s.EventIdentifiersUsed = append(s.EventIdentifiersUsed, v)
+	return s
+}
+
+func (s *PEO) AddEventSymptomDiagnosisCode(v CE) *PEO {
+	s.EventSymptomDiagnosisCode = append(s.EventSymptomDiagnosisCode, v)
+	return s
+}
+
+func (s *PEO) SetEventOnsetDateTime(v *TS) *PEO {
+	s.EventOnsetDateTime = v
+	return s
+}
+
+func (s *PEO) SetEventExacerbationDateTime(v *TS) *PEO {
+	s.EventExacerbationDateTime = v
+	return s
+}
+
+func (s *PEO) SetEventImprovedDateTime(v *TS) *PEO {
+	s.EventImprovedDateTime = v
+	return s
+}
+
+func (s *PEO) SetEventEndedDataTime(v *TS) *PEO {
+	s.EventEndedDataTime = v
+	return s
+}
+
+func (s *PEO) AddEventLocationOccurredAddress(v XAD) *PEO {
+	s.EventLocationOccurredAddress = append(s.EventLocationOccurredAddress, v)
+	return s
+}
+
+func (s *PEO) AddEventQualification(v ID) *PEO {
+	s.EventQualification = append(s.EventQualification, v)
+	return s
+}
+
+func (s *PEO) SetEventSerious(v *ID) *PEO {
+	s.EventSerious = v
+	return s
+}
+
+func (s *PEO) SetEventExpected(v *ID) *PEO {
+	s.EventExpected = v
+	return s
+}
+
+func (s *PEO) AddEventOutcome(v ID) *PEO {
+	s.EventOutcome = append(s.EventOutcome, v)
+	return s
+}
+
+func (s *PEO) SetPatientOutcome(v *ID) *PEO {
+	s.PatientOutcome = v
+	return s
+}
+
+func (s *PEO) AddEventDescriptionFromOthers(v FT) *PEO {
+	s.EventDescriptionFromOthers = append(s.EventDescriptionFromOthers, v)
+	return s
+}
+
+func (s *PEO) AddEventFromOriginalReporter(v FT) *PEO {
+	s.EventFromOriginalReporter = append(s.EventFromOriginalReporter, v)
+	return s
+}
+
+func (s *PEO) AddEventDescriptionFromPatient(v FT) *PEO {
+	s.EventDescriptionFromPatient = append(s.EventDescriptionFromPatient, v)
+	return s
+}
+
+func (s *PEO) AddEventDescriptionFromPractitioner(v FT) *PEO {
+	s.EventDescriptionFromPractitioner = append(s.EventDescriptionFromPractitioner, v)
+	return s
+}
+
+func (s *PEO) AddEventDescriptionFromAutopsy(v FT) *PEO {
+	s.EventDescriptionFromAutopsy = append(s.EventDescriptionFromAutopsy, v)
+	return s
+}
+
+func (s *PEO) AddCauseOfDeath(v CE) *PEO {
+	s.CauseOfDeath = append(s.CauseOfDeath, v)
+	return s
+}
+
+func (s *PEO) AddPrimaryObserverName(v XPN) *PEO {
+	s.PrimaryObserverName = append(s.PrimaryObserverName, v)
+	return s
+}
+
+func (s *PEO) AddPrimaryObserverAddress(v XAD) *PEO {
+	s.PrimaryObserverAddress = append(s.PrimaryObserverAddress, v)
+	return s
+}
+
+func (s *PEO) AddPrimaryObserverTelephone(v XTN) *PEO {
+	s.PrimaryObserverTelephone = append(s.PrimaryObserverTelephone, v)
+	return s
+}
+
+func (s *PEO) SetPrimaryObserverSQualification(v *ID) *PEO {
+	s.PrimaryObserverSQualification = v
+	return s
+}
+
+func (s *PEO) SetConfirmationProvidedBy(v *ID) *PEO {
+	s.ConfirmationProvidedBy = v
+	return s
+}
+
+func (s *PEO) SetPrimaryObserverAwareDateTime(v *TS) *PEO {
+	s.PrimaryObserverAwareDateTime = v
+	return s
+}
+
+func (s *PEO) SetPrimaryObserverSIdentityMayBeDivulged(v *ID) *PEO {
+	s.PrimaryObserverSIdentityMayBeDivulged = v
+	return s
 }
 
 // PES - Product Experience Sender
@@ -1810,154 +14822,1415 @@ type PES struct {
 	SenderIndividualName   []XCN `hl7:"2"`
 	SenderAddress          []XAD `hl7:"3"`
 	SenderTelephone        []XTN `hl7:"4"`
-	SenderEventIdentifier  EI    `hl7:"5"`
-	SenderSequenceNumber   NM    `hl7:"6"`
+	SenderEventIdentifier  *EI   `hl7:"5"`
+	SenderSequenceNumber   *NM   `hl7:"6"`
 	SenderEventDescription []FT  `hl7:"7"`
-	SenderComment          FT    `hl7:"8"`
-	SenderAwareDateTime    TS    `hl7:"9"`
-	EventReportDate        TS    `hl7:"10,required"`
+	SenderComment          *FT   `hl7:"8"`
+	SenderAwareDateTime    *TS   `hl7:"9"`
+	EventReportDate        *TS   `hl7:"10,required"`
 	EventReportTimingType  []ID  `hl7:"11"`
-	EventReportSource      ID    `hl7:"12"`
+	EventReportSource      *ID   `hl7:"12"`
 	EventReportedTo        []ID  `hl7:"13"`
+}
+
+func NewPES() *PES {
+	return &PES{}
+}
+
+func (s *PES) Validate() error {
+
+	for _, item := range s.SenderOrganizationName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PES.SenderOrganizationName: %w", err)
+		}
+	}
+
+	for _, item := range s.SenderIndividualName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PES.SenderIndividualName: %w", err)
+		}
+	}
+
+	for _, item := range s.SenderAddress {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PES.SenderAddress: %w", err)
+		}
+	}
+
+	for _, item := range s.SenderTelephone {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PES.SenderTelephone: %w", err)
+		}
+	}
+
+	if s.SenderEventIdentifier != nil {
+		if err := s.SenderEventIdentifier.Validate(); err != nil {
+			return fmt.Errorf("PES.SenderEventIdentifier: %w", err)
+		}
+	}
+
+	for _, item := range s.SenderEventDescription {
+		if string(item) == "" {
+			return fmt.Errorf("PES.SenderEventDescription item is empty")
+		}
+	}
+
+	if s.SenderAwareDateTime != nil {
+		if err := s.SenderAwareDateTime.Validate(); err != nil {
+			return fmt.Errorf("PES.SenderAwareDateTime: %w", err)
+		}
+	}
+
+	if s.EventReportDate == nil {
+		return fmt.Errorf("PES.EventReportDate is required")
+	}
+	if s.EventReportDate != nil {
+		if err := s.EventReportDate.Validate(); err != nil {
+			return fmt.Errorf("PES.EventReportDate: %w", err)
+		}
+	}
+
+	for _, item := range s.EventReportTimingType {
+		if string(item) == "" {
+			return fmt.Errorf("PES.EventReportTimingType item is empty")
+		}
+	}
+
+	for _, item := range s.EventReportedTo {
+		if string(item) == "" {
+			return fmt.Errorf("PES.EventReportedTo item is empty")
+		}
+	}
+	return nil
+}
+
+func (s *PES) AddSenderOrganizationName(v XON) *PES {
+	s.SenderOrganizationName = append(s.SenderOrganizationName, v)
+	return s
+}
+
+func (s *PES) AddSenderIndividualName(v XCN) *PES {
+	s.SenderIndividualName = append(s.SenderIndividualName, v)
+	return s
+}
+
+func (s *PES) AddSenderAddress(v XAD) *PES {
+	s.SenderAddress = append(s.SenderAddress, v)
+	return s
+}
+
+func (s *PES) AddSenderTelephone(v XTN) *PES {
+	s.SenderTelephone = append(s.SenderTelephone, v)
+	return s
+}
+
+func (s *PES) SetSenderEventIdentifier(v *EI) *PES {
+	s.SenderEventIdentifier = v
+	return s
+}
+
+func (s *PES) SetSenderSequenceNumber(v *NM) *PES {
+	s.SenderSequenceNumber = v
+	return s
+}
+
+func (s *PES) AddSenderEventDescription(v FT) *PES {
+	s.SenderEventDescription = append(s.SenderEventDescription, v)
+	return s
+}
+
+func (s *PES) SetSenderComment(v *FT) *PES {
+	s.SenderComment = v
+	return s
+}
+
+func (s *PES) SetSenderAwareDateTime(v *TS) *PES {
+	s.SenderAwareDateTime = v
+	return s
+}
+
+func (s *PES) SetEventReportDate(v *TS) *PES {
+	s.EventReportDate = v
+	return s
+}
+
+func (s *PES) AddEventReportTimingType(v ID) *PES {
+	s.EventReportTimingType = append(s.EventReportTimingType, v)
+	return s
+}
+
+func (s *PES) SetEventReportSource(v *ID) *PES {
+	s.EventReportSource = v
+	return s
+}
+
+func (s *PES) AddEventReportedTo(v ID) *PES {
+	s.EventReportedTo = append(s.EventReportedTo, v)
+	return s
 }
 
 // PID - Patient Identification
 // The PID segment is used by all applications as the primary means of communicating patient identification information. This segment contains permanent patient identifying and demographic information that, for the most part, is not likely to change frequently.
 type PID struct {
-	SetIDPID                    SI    `hl7:"1"`
-	PatientID                   CX    `hl7:"2"`
+	SetIDPID                    *SI   `hl7:"1"`
+	PatientID                   *CX   `hl7:"2"`
 	PatientIdentifierList       []CX  `hl7:"3,required"`
 	AlternatePatientIDPID       []CX  `hl7:"4"`
 	PatientName                 []XPN `hl7:"5,required"`
 	MotherSMaidenName           []XPN `hl7:"6"`
-	DateTimeOfBirth             TS    `hl7:"7"`
-	AdministrativeSex           IS    `hl7:"8"`
+	DateTimeOfBirth             *TS   `hl7:"7"`
+	AdministrativeSex           *IS   `hl7:"8"`
 	PatientAlias                []XPN `hl7:"9"`
 	Race                        []CE  `hl7:"10"`
 	PatientAddress              []XAD `hl7:"11"`
-	CountyCode                  IS    `hl7:"12"`
+	CountyCode                  *IS   `hl7:"12"`
 	PhoneNumberHome             []XTN `hl7:"13"`
 	PhoneNumberBusiness         []XTN `hl7:"14"`
-	PrimaryLanguage             CE    `hl7:"15"`
-	MaritalStatus               CE    `hl7:"16"`
-	Religion                    CE    `hl7:"17"`
-	PatientAccountNumber        CX    `hl7:"18"`
-	SSNNumberPatient            ST    `hl7:"19"`
-	DriverSLicenseNumberPatient DLN   `hl7:"20"`
+	PrimaryLanguage             *CE   `hl7:"15"`
+	MaritalStatus               *CE   `hl7:"16"`
+	Religion                    *CE   `hl7:"17"`
+	PatientAccountNumber        *CX   `hl7:"18"`
+	SSNNumberPatient            *ST   `hl7:"19"`
+	DriverSLicenseNumberPatient *DLN  `hl7:"20"`
 	MotherSIdentifier           []CX  `hl7:"21"`
 	EthnicGroup                 []CE  `hl7:"22"`
-	BirthPlace                  ST    `hl7:"23"`
-	MultipleBirthIndicator      ID    `hl7:"24"`
-	BirthOrder                  NM    `hl7:"25"`
+	BirthPlace                  *ST   `hl7:"23"`
+	MultipleBirthIndicator      *ID   `hl7:"24"`
+	BirthOrder                  *NM   `hl7:"25"`
 	Citizenship                 []CE  `hl7:"26"`
-	VeteransMilitaryStatus      CE    `hl7:"27"`
-	Nationality                 CE    `hl7:"28"`
-	PatientDeathDateAndTime     TS    `hl7:"29"`
-	PatientDeathIndicator       ID    `hl7:"30"`
-	IdentityUnknownIndicator    ID    `hl7:"31"`
+	VeteransMilitaryStatus      *CE   `hl7:"27"`
+	Nationality                 *CE   `hl7:"28"`
+	PatientDeathDateAndTime     *TS   `hl7:"29"`
+	PatientDeathIndicator       *ID   `hl7:"30"`
+	IdentityUnknownIndicator    *ID   `hl7:"31"`
 	IdentityReliabilityCode     []IS  `hl7:"32"`
-	LastUpdateDateTime          TS    `hl7:"33"`
-	LastUpdateFacility          HD    `hl7:"34"`
-	SpeciesCode                 CE    `hl7:"35"`
-	BreedCode                   CE    `hl7:"36"`
-	Strain                      ST    `hl7:"37"`
+	LastUpdateDateTime          *TS   `hl7:"33"`
+	LastUpdateFacility          *HD   `hl7:"34"`
+	SpeciesCode                 *CE   `hl7:"35"`
+	BreedCode                   *CE   `hl7:"36"`
+	Strain                      *ST   `hl7:"37"`
 	ProductionClassCode         []CE  `hl7:"38"`
 	TribalCitizenship           []CWE `hl7:"39"`
+}
+
+func NewPID() *PID {
+	return &PID{}
+}
+
+func (s *PID) Validate() error {
+
+	if s.PatientID != nil {
+		if err := s.PatientID.Validate(); err != nil {
+			return fmt.Errorf("PID.PatientID: %w", err)
+		}
+	}
+
+	if len(s.PatientIdentifierList) == 0 {
+		return fmt.Errorf("PID.PatientIdentifierList is required")
+	}
+	for _, item := range s.PatientIdentifierList {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PID.PatientIdentifierList: %w", err)
+		}
+	}
+
+	for _, item := range s.AlternatePatientIDPID {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PID.AlternatePatientIDPID: %w", err)
+		}
+	}
+
+	if len(s.PatientName) == 0 {
+		return fmt.Errorf("PID.PatientName is required")
+	}
+	for _, item := range s.PatientName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PID.PatientName: %w", err)
+		}
+	}
+
+	for _, item := range s.MotherSMaidenName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PID.MotherSMaidenName: %w", err)
+		}
+	}
+
+	if s.DateTimeOfBirth != nil {
+		if err := s.DateTimeOfBirth.Validate(); err != nil {
+			return fmt.Errorf("PID.DateTimeOfBirth: %w", err)
+		}
+	}
+
+	for _, item := range s.PatientAlias {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PID.PatientAlias: %w", err)
+		}
+	}
+
+	for _, item := range s.Race {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PID.Race: %w", err)
+		}
+	}
+
+	for _, item := range s.PatientAddress {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PID.PatientAddress: %w", err)
+		}
+	}
+
+	for _, item := range s.PhoneNumberHome {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PID.PhoneNumberHome: %w", err)
+		}
+	}
+
+	for _, item := range s.PhoneNumberBusiness {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PID.PhoneNumberBusiness: %w", err)
+		}
+	}
+
+	if s.PrimaryLanguage != nil {
+		if err := s.PrimaryLanguage.Validate(); err != nil {
+			return fmt.Errorf("PID.PrimaryLanguage: %w", err)
+		}
+	}
+
+	if s.MaritalStatus != nil {
+		if err := s.MaritalStatus.Validate(); err != nil {
+			return fmt.Errorf("PID.MaritalStatus: %w", err)
+		}
+	}
+
+	if s.Religion != nil {
+		if err := s.Religion.Validate(); err != nil {
+			return fmt.Errorf("PID.Religion: %w", err)
+		}
+	}
+
+	if s.PatientAccountNumber != nil {
+		if err := s.PatientAccountNumber.Validate(); err != nil {
+			return fmt.Errorf("PID.PatientAccountNumber: %w", err)
+		}
+	}
+
+	if s.DriverSLicenseNumberPatient != nil {
+		if err := s.DriverSLicenseNumberPatient.Validate(); err != nil {
+			return fmt.Errorf("PID.DriverSLicenseNumberPatient: %w", err)
+		}
+	}
+
+	for _, item := range s.MotherSIdentifier {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PID.MotherSIdentifier: %w", err)
+		}
+	}
+
+	for _, item := range s.EthnicGroup {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PID.EthnicGroup: %w", err)
+		}
+	}
+
+	for _, item := range s.Citizenship {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PID.Citizenship: %w", err)
+		}
+	}
+
+	if s.VeteransMilitaryStatus != nil {
+		if err := s.VeteransMilitaryStatus.Validate(); err != nil {
+			return fmt.Errorf("PID.VeteransMilitaryStatus: %w", err)
+		}
+	}
+
+	if s.Nationality != nil {
+		if err := s.Nationality.Validate(); err != nil {
+			return fmt.Errorf("PID.Nationality: %w", err)
+		}
+	}
+
+	if s.PatientDeathDateAndTime != nil {
+		if err := s.PatientDeathDateAndTime.Validate(); err != nil {
+			return fmt.Errorf("PID.PatientDeathDateAndTime: %w", err)
+		}
+	}
+
+	for _, item := range s.IdentityReliabilityCode {
+		if string(item) == "" {
+			return fmt.Errorf("PID.IdentityReliabilityCode item is empty")
+		}
+	}
+
+	if s.LastUpdateDateTime != nil {
+		if err := s.LastUpdateDateTime.Validate(); err != nil {
+			return fmt.Errorf("PID.LastUpdateDateTime: %w", err)
+		}
+	}
+
+	if s.LastUpdateFacility != nil {
+		if err := s.LastUpdateFacility.Validate(); err != nil {
+			return fmt.Errorf("PID.LastUpdateFacility: %w", err)
+		}
+	}
+
+	if s.SpeciesCode != nil {
+		if err := s.SpeciesCode.Validate(); err != nil {
+			return fmt.Errorf("PID.SpeciesCode: %w", err)
+		}
+	}
+
+	if s.BreedCode != nil {
+		if err := s.BreedCode.Validate(); err != nil {
+			return fmt.Errorf("PID.BreedCode: %w", err)
+		}
+	}
+
+	for _, item := range s.ProductionClassCode {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PID.ProductionClassCode: %w", err)
+		}
+	}
+
+	for _, item := range s.TribalCitizenship {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PID.TribalCitizenship: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *PID) SetSetIDPID(v *SI) *PID {
+	s.SetIDPID = v
+	return s
+}
+
+func (s *PID) SetPatientID(v *CX) *PID {
+	s.PatientID = v
+	return s
+}
+
+func (s *PID) AddPatientIdentifierList(v CX) *PID {
+	s.PatientIdentifierList = append(s.PatientIdentifierList, v)
+	return s
+}
+
+func (s *PID) AddAlternatePatientIDPID(v CX) *PID {
+	s.AlternatePatientIDPID = append(s.AlternatePatientIDPID, v)
+	return s
+}
+
+func (s *PID) AddPatientName(v XPN) *PID {
+	s.PatientName = append(s.PatientName, v)
+	return s
+}
+
+func (s *PID) AddMotherSMaidenName(v XPN) *PID {
+	s.MotherSMaidenName = append(s.MotherSMaidenName, v)
+	return s
+}
+
+func (s *PID) SetDateTimeOfBirth(v *TS) *PID {
+	s.DateTimeOfBirth = v
+	return s
+}
+
+func (s *PID) SetAdministrativeSex(v *IS) *PID {
+	s.AdministrativeSex = v
+	return s
+}
+
+func (s *PID) AddPatientAlias(v XPN) *PID {
+	s.PatientAlias = append(s.PatientAlias, v)
+	return s
+}
+
+func (s *PID) AddRace(v CE) *PID {
+	s.Race = append(s.Race, v)
+	return s
+}
+
+func (s *PID) AddPatientAddress(v XAD) *PID {
+	s.PatientAddress = append(s.PatientAddress, v)
+	return s
+}
+
+func (s *PID) SetCountyCode(v *IS) *PID {
+	s.CountyCode = v
+	return s
+}
+
+func (s *PID) AddPhoneNumberHome(v XTN) *PID {
+	s.PhoneNumberHome = append(s.PhoneNumberHome, v)
+	return s
+}
+
+func (s *PID) AddPhoneNumberBusiness(v XTN) *PID {
+	s.PhoneNumberBusiness = append(s.PhoneNumberBusiness, v)
+	return s
+}
+
+func (s *PID) SetPrimaryLanguage(v *CE) *PID {
+	s.PrimaryLanguage = v
+	return s
+}
+
+func (s *PID) SetMaritalStatus(v *CE) *PID {
+	s.MaritalStatus = v
+	return s
+}
+
+func (s *PID) SetReligion(v *CE) *PID {
+	s.Religion = v
+	return s
+}
+
+func (s *PID) SetPatientAccountNumber(v *CX) *PID {
+	s.PatientAccountNumber = v
+	return s
+}
+
+func (s *PID) SetSSNNumberPatient(v *ST) *PID {
+	s.SSNNumberPatient = v
+	return s
+}
+
+func (s *PID) SetDriverSLicenseNumberPatient(v *DLN) *PID {
+	s.DriverSLicenseNumberPatient = v
+	return s
+}
+
+func (s *PID) AddMotherSIdentifier(v CX) *PID {
+	s.MotherSIdentifier = append(s.MotherSIdentifier, v)
+	return s
+}
+
+func (s *PID) AddEthnicGroup(v CE) *PID {
+	s.EthnicGroup = append(s.EthnicGroup, v)
+	return s
+}
+
+func (s *PID) SetBirthPlace(v *ST) *PID {
+	s.BirthPlace = v
+	return s
+}
+
+func (s *PID) SetMultipleBirthIndicator(v *ID) *PID {
+	s.MultipleBirthIndicator = v
+	return s
+}
+
+func (s *PID) SetBirthOrder(v *NM) *PID {
+	s.BirthOrder = v
+	return s
+}
+
+func (s *PID) AddCitizenship(v CE) *PID {
+	s.Citizenship = append(s.Citizenship, v)
+	return s
+}
+
+func (s *PID) SetVeteransMilitaryStatus(v *CE) *PID {
+	s.VeteransMilitaryStatus = v
+	return s
+}
+
+func (s *PID) SetNationality(v *CE) *PID {
+	s.Nationality = v
+	return s
+}
+
+func (s *PID) SetPatientDeathDateAndTime(v *TS) *PID {
+	s.PatientDeathDateAndTime = v
+	return s
+}
+
+func (s *PID) SetPatientDeathIndicator(v *ID) *PID {
+	s.PatientDeathIndicator = v
+	return s
+}
+
+func (s *PID) SetIdentityUnknownIndicator(v *ID) *PID {
+	s.IdentityUnknownIndicator = v
+	return s
+}
+
+func (s *PID) AddIdentityReliabilityCode(v IS) *PID {
+	s.IdentityReliabilityCode = append(s.IdentityReliabilityCode, v)
+	return s
+}
+
+func (s *PID) SetLastUpdateDateTime(v *TS) *PID {
+	s.LastUpdateDateTime = v
+	return s
+}
+
+func (s *PID) SetLastUpdateFacility(v *HD) *PID {
+	s.LastUpdateFacility = v
+	return s
+}
+
+func (s *PID) SetSpeciesCode(v *CE) *PID {
+	s.SpeciesCode = v
+	return s
+}
+
+func (s *PID) SetBreedCode(v *CE) *PID {
+	s.BreedCode = v
+	return s
+}
+
+func (s *PID) SetStrain(v *ST) *PID {
+	s.Strain = v
+	return s
+}
+
+func (s *PID) AddProductionClassCode(v CE) *PID {
+	s.ProductionClassCode = append(s.ProductionClassCode, v)
+	return s
+}
+
+func (s *PID) AddTribalCitizenship(v CWE) *PID {
+	s.TribalCitizenship = append(s.TribalCitizenship, v)
+	return s
 }
 
 // PR1 - Procedures
 // The PR1 segment contains information relative to various types of procedures that can be performed on a patient. The PR1 segment can be used to send procedure information, for example: Surgical, Nuclear Medicine, X-ray with contrast, etc. The PR1 segment is used to send multiple procedures, for example, for medical records encoding or for billing systems.
 type PR1 struct {
-	SetIDPR1                SI    `hl7:"1,required"`
-	ProcedureCodingMethod   IS    `hl7:"2"`
-	ProcedureCode           CE    `hl7:"3,required"`
-	ProcedureDescription    ST    `hl7:"4"`
-	ProcedureDateTime       TS    `hl7:"5,required"`
-	ProcedureFunctionalType IS    `hl7:"6"`
-	ProcedureMinutes        NM    `hl7:"7"`
+	SetIDPR1                *SI   `hl7:"1,required"`
+	ProcedureCodingMethod   *IS   `hl7:"2"`
+	ProcedureCode           *CE   `hl7:"3,required"`
+	ProcedureDescription    *ST   `hl7:"4"`
+	ProcedureDateTime       *TS   `hl7:"5,required"`
+	ProcedureFunctionalType *IS   `hl7:"6"`
+	ProcedureMinutes        *NM   `hl7:"7"`
 	Anesthesiologist        []XCN `hl7:"8"`
-	AnesthesiaCode          IS    `hl7:"9"`
-	AnesthesiaMinutes       NM    `hl7:"10"`
+	AnesthesiaCode          *IS   `hl7:"9"`
+	AnesthesiaMinutes       *NM   `hl7:"10"`
 	Surgeon                 []XCN `hl7:"11"`
 	ProcedurePractitioner   []XCN `hl7:"12"`
-	ConsentCode             CE    `hl7:"13"`
-	ProcedurePriority       ID    `hl7:"14"`
-	AssociatedDiagnosisCode CE    `hl7:"15"`
+	ConsentCode             *CE   `hl7:"13"`
+	ProcedurePriority       *ID   `hl7:"14"`
+	AssociatedDiagnosisCode *CE   `hl7:"15"`
 	ProcedureCodeModifier   []CE  `hl7:"16"`
-	ProcedureDRGType        IS    `hl7:"17"`
+	ProcedureDRGType        *IS   `hl7:"17"`
 	TissueTypeCode          []CE  `hl7:"18"`
-	ProcedureIdentifier     EI    `hl7:"19"`
-	ProcedureActionCode     ID    `hl7:"20"`
+	ProcedureIdentifier     *EI   `hl7:"19"`
+	ProcedureActionCode     *ID   `hl7:"20"`
+}
+
+func NewPR1() *PR1 {
+	return &PR1{}
+}
+
+func (s *PR1) Validate() error {
+
+	if s.SetIDPR1 == nil {
+		return fmt.Errorf("PR1.SetIDPR1 is required")
+	}
+	if string(*s.SetIDPR1) == "" {
+		return fmt.Errorf("PR1.SetIDPR1 is empty")
+	}
+
+	if s.ProcedureCode == nil {
+		return fmt.Errorf("PR1.ProcedureCode is required")
+	}
+	if s.ProcedureCode != nil {
+		if err := s.ProcedureCode.Validate(); err != nil {
+			return fmt.Errorf("PR1.ProcedureCode: %w", err)
+		}
+	}
+
+	if s.ProcedureDateTime == nil {
+		return fmt.Errorf("PR1.ProcedureDateTime is required")
+	}
+	if s.ProcedureDateTime != nil {
+		if err := s.ProcedureDateTime.Validate(); err != nil {
+			return fmt.Errorf("PR1.ProcedureDateTime: %w", err)
+		}
+	}
+
+	for _, item := range s.Anesthesiologist {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PR1.Anesthesiologist: %w", err)
+		}
+	}
+
+	for _, item := range s.Surgeon {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PR1.Surgeon: %w", err)
+		}
+	}
+
+	for _, item := range s.ProcedurePractitioner {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PR1.ProcedurePractitioner: %w", err)
+		}
+	}
+
+	if s.ConsentCode != nil {
+		if err := s.ConsentCode.Validate(); err != nil {
+			return fmt.Errorf("PR1.ConsentCode: %w", err)
+		}
+	}
+
+	if s.AssociatedDiagnosisCode != nil {
+		if err := s.AssociatedDiagnosisCode.Validate(); err != nil {
+			return fmt.Errorf("PR1.AssociatedDiagnosisCode: %w", err)
+		}
+	}
+
+	for _, item := range s.ProcedureCodeModifier {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PR1.ProcedureCodeModifier: %w", err)
+		}
+	}
+
+	for _, item := range s.TissueTypeCode {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PR1.TissueTypeCode: %w", err)
+		}
+	}
+
+	if s.ProcedureIdentifier != nil {
+		if err := s.ProcedureIdentifier.Validate(); err != nil {
+			return fmt.Errorf("PR1.ProcedureIdentifier: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *PR1) SetSetIDPR1(v *SI) *PR1 {
+	s.SetIDPR1 = v
+	return s
+}
+
+func (s *PR1) SetProcedureCodingMethod(v *IS) *PR1 {
+	s.ProcedureCodingMethod = v
+	return s
+}
+
+func (s *PR1) SetProcedureCode(v *CE) *PR1 {
+	s.ProcedureCode = v
+	return s
+}
+
+func (s *PR1) SetProcedureDescription(v *ST) *PR1 {
+	s.ProcedureDescription = v
+	return s
+}
+
+func (s *PR1) SetProcedureDateTime(v *TS) *PR1 {
+	s.ProcedureDateTime = v
+	return s
+}
+
+func (s *PR1) SetProcedureFunctionalType(v *IS) *PR1 {
+	s.ProcedureFunctionalType = v
+	return s
+}
+
+func (s *PR1) SetProcedureMinutes(v *NM) *PR1 {
+	s.ProcedureMinutes = v
+	return s
+}
+
+func (s *PR1) AddAnesthesiologist(v XCN) *PR1 {
+	s.Anesthesiologist = append(s.Anesthesiologist, v)
+	return s
+}
+
+func (s *PR1) SetAnesthesiaCode(v *IS) *PR1 {
+	s.AnesthesiaCode = v
+	return s
+}
+
+func (s *PR1) SetAnesthesiaMinutes(v *NM) *PR1 {
+	s.AnesthesiaMinutes = v
+	return s
+}
+
+func (s *PR1) AddSurgeon(v XCN) *PR1 {
+	s.Surgeon = append(s.Surgeon, v)
+	return s
+}
+
+func (s *PR1) AddProcedurePractitioner(v XCN) *PR1 {
+	s.ProcedurePractitioner = append(s.ProcedurePractitioner, v)
+	return s
+}
+
+func (s *PR1) SetConsentCode(v *CE) *PR1 {
+	s.ConsentCode = v
+	return s
+}
+
+func (s *PR1) SetProcedurePriority(v *ID) *PR1 {
+	s.ProcedurePriority = v
+	return s
+}
+
+func (s *PR1) SetAssociatedDiagnosisCode(v *CE) *PR1 {
+	s.AssociatedDiagnosisCode = v
+	return s
+}
+
+func (s *PR1) AddProcedureCodeModifier(v CE) *PR1 {
+	s.ProcedureCodeModifier = append(s.ProcedureCodeModifier, v)
+	return s
+}
+
+func (s *PR1) SetProcedureDRGType(v *IS) *PR1 {
+	s.ProcedureDRGType = v
+	return s
+}
+
+func (s *PR1) AddTissueTypeCode(v CE) *PR1 {
+	s.TissueTypeCode = append(s.TissueTypeCode, v)
+	return s
+}
+
+func (s *PR1) SetProcedureIdentifier(v *EI) *PR1 {
+	s.ProcedureIdentifier = v
+	return s
+}
+
+func (s *PR1) SetProcedureActionCode(v *ID) *PR1 {
+	s.ProcedureActionCode = v
+	return s
 }
 
 // PRA - Practitioner Detail
 // The PRA segment adds detailed medical practitioner information to the personnel identified by the STF segment.  A PRA segment may optionally follow an STF segment.  A PRA segment must always have been preceded by a corresponding STF segment.  The PRA segment may also be used for staff who work in healthcare who are not practitioners, but need to be certified, e.g., “medical records staff.”
 type PRA struct {
-	PrimaryKeyValuePRA                        CE    `hl7:"1"`
+	PrimaryKeyValuePRA                        *CE   `hl7:"1"`
 	PractitionerGroup                         []CE  `hl7:"2"`
 	PractitionerCategory                      []IS  `hl7:"3"`
-	ProviderBilling                           ID    `hl7:"4"`
+	ProviderBilling                           *ID   `hl7:"4"`
 	Specialty                                 []SPD `hl7:"5"`
 	PractitionerIDNumbers                     []PLN `hl7:"6"`
 	Privileges                                []PIP `hl7:"7"`
-	DateEnteredPractice                       DT    `hl7:"8"`
-	Institution                               CE    `hl7:"9"`
-	DateLeftPractice                          DT    `hl7:"10"`
+	DateEnteredPractice                       *DT   `hl7:"8"`
+	Institution                               *CE   `hl7:"9"`
+	DateLeftPractice                          *DT   `hl7:"10"`
 	GovernmentReimbursementBillingEligibility []CE  `hl7:"11"`
-	SetIDPRA                                  SI    `hl7:"12"`
+	SetIDPRA                                  *SI   `hl7:"12"`
+}
+
+func NewPRA() *PRA {
+	return &PRA{}
+}
+
+func (s *PRA) Validate() error {
+
+	if s.PrimaryKeyValuePRA != nil {
+		if err := s.PrimaryKeyValuePRA.Validate(); err != nil {
+			return fmt.Errorf("PRA.PrimaryKeyValuePRA: %w", err)
+		}
+	}
+
+	for _, item := range s.PractitionerGroup {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PRA.PractitionerGroup: %w", err)
+		}
+	}
+
+	for _, item := range s.PractitionerCategory {
+		if string(item) == "" {
+			return fmt.Errorf("PRA.PractitionerCategory item is empty")
+		}
+	}
+
+	for _, item := range s.Specialty {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PRA.Specialty: %w", err)
+		}
+	}
+
+	for _, item := range s.PractitionerIDNumbers {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PRA.PractitionerIDNumbers: %w", err)
+		}
+	}
+
+	for _, item := range s.Privileges {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PRA.Privileges: %w", err)
+		}
+	}
+
+	if s.Institution != nil {
+		if err := s.Institution.Validate(); err != nil {
+			return fmt.Errorf("PRA.Institution: %w", err)
+		}
+	}
+
+	for _, item := range s.GovernmentReimbursementBillingEligibility {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PRA.GovernmentReimbursementBillingEligibility: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *PRA) SetPrimaryKeyValuePRA(v *CE) *PRA {
+	s.PrimaryKeyValuePRA = v
+	return s
+}
+
+func (s *PRA) AddPractitionerGroup(v CE) *PRA {
+	s.PractitionerGroup = append(s.PractitionerGroup, v)
+	return s
+}
+
+func (s *PRA) AddPractitionerCategory(v IS) *PRA {
+	s.PractitionerCategory = append(s.PractitionerCategory, v)
+	return s
+}
+
+func (s *PRA) SetProviderBilling(v *ID) *PRA {
+	s.ProviderBilling = v
+	return s
+}
+
+func (s *PRA) AddSpecialty(v SPD) *PRA {
+	s.Specialty = append(s.Specialty, v)
+	return s
+}
+
+func (s *PRA) AddPractitionerIDNumbers(v PLN) *PRA {
+	s.PractitionerIDNumbers = append(s.PractitionerIDNumbers, v)
+	return s
+}
+
+func (s *PRA) AddPrivileges(v PIP) *PRA {
+	s.Privileges = append(s.Privileges, v)
+	return s
+}
+
+func (s *PRA) SetDateEnteredPractice(v *DT) *PRA {
+	s.DateEnteredPractice = v
+	return s
+}
+
+func (s *PRA) SetInstitution(v *CE) *PRA {
+	s.Institution = v
+	return s
+}
+
+func (s *PRA) SetDateLeftPractice(v *DT) *PRA {
+	s.DateLeftPractice = v
+	return s
+}
+
+func (s *PRA) AddGovernmentReimbursementBillingEligibility(v CE) *PRA {
+	s.GovernmentReimbursementBillingEligibility = append(s.GovernmentReimbursementBillingEligibility, v)
+	return s
+}
+
+func (s *PRA) SetSetIDPRA(v *SI) *PRA {
+	s.SetIDPRA = v
+	return s
 }
 
 // PRB - Problem Details
 // The problem detail segment contains the data necessary to add, update, correct, and delete the problems of a given individual.
 type PRB struct {
-	ActionCode                                        ID   `hl7:"1,required"`
-	ActionDateTime                                    TS   `hl7:"2,required"`
-	ProblemID                                         CE   `hl7:"3,required"`
-	ProblemInstanceID                                 EI   `hl7:"4,required"`
-	EpisodeOfCareID                                   EI   `hl7:"5"`
-	ProblemListPriority                               NM   `hl7:"6"`
-	ProblemEstablishedDateTime                        TS   `hl7:"7"`
-	AnticipatedProblemResolutionDateTime              TS   `hl7:"8"`
-	ActualProblemResolutionDateTime                   TS   `hl7:"9"`
-	ProblemClassification                             CE   `hl7:"10"`
+	ActionCode                                        *ID  `hl7:"1,required"`
+	ActionDateTime                                    *TS  `hl7:"2,required"`
+	ProblemID                                         *CE  `hl7:"3,required"`
+	ProblemInstanceID                                 *EI  `hl7:"4,required"`
+	EpisodeOfCareID                                   *EI  `hl7:"5"`
+	ProblemListPriority                               *NM  `hl7:"6"`
+	ProblemEstablishedDateTime                        *TS  `hl7:"7"`
+	AnticipatedProblemResolutionDateTime              *TS  `hl7:"8"`
+	ActualProblemResolutionDateTime                   *TS  `hl7:"9"`
+	ProblemClassification                             *CE  `hl7:"10"`
 	ProblemManagementDiscipline                       []CE `hl7:"11"`
-	ProblemPersistence                                CE   `hl7:"12"`
-	ProblemConfirmationStatus                         CE   `hl7:"13"`
-	ProblemLifeCycleStatus                            CE   `hl7:"14"`
-	ProblemLifeCycleStatusDateTime                    TS   `hl7:"15"`
-	ProblemDateOfOnset                                TS   `hl7:"16"`
-	ProblemOnsetText                                  ST   `hl7:"17"`
-	ProblemRanking                                    CE   `hl7:"18"`
-	CertaintyOfProblem01                              CE   `hl7:"19"`
-	ProbabilityOfProblem                              NM   `hl7:"20"`
-	IndividualAwarenessOfProblem                      CE   `hl7:"21"`
-	ProblemPrognosis                                  CE   `hl7:"22"`
-	IndividualAwarenessOfPrognosis                    CE   `hl7:"23"`
-	FamilySignificantOtherAwarenessOfProblemPrognosis ST   `hl7:"24"`
-	SecuritySensitivity                               CE   `hl7:"25"`
+	ProblemPersistence                                *CE  `hl7:"12"`
+	ProblemConfirmationStatus                         *CE  `hl7:"13"`
+	ProblemLifeCycleStatus                            *CE  `hl7:"14"`
+	ProblemLifeCycleStatusDateTime                    *TS  `hl7:"15"`
+	ProblemDateOfOnset                                *TS  `hl7:"16"`
+	ProblemOnsetText                                  *ST  `hl7:"17"`
+	ProblemRanking                                    *CE  `hl7:"18"`
+	CertaintyOfProblem01                              *CE  `hl7:"19"`
+	ProbabilityOfProblem                              *NM  `hl7:"20"`
+	IndividualAwarenessOfProblem                      *CE  `hl7:"21"`
+	ProblemPrognosis                                  *CE  `hl7:"22"`
+	IndividualAwarenessOfPrognosis                    *CE  `hl7:"23"`
+	FamilySignificantOtherAwarenessOfProblemPrognosis *ST  `hl7:"24"`
+	SecuritySensitivity                               *CE  `hl7:"25"`
+}
+
+func NewPRB() *PRB {
+	return &PRB{}
+}
+
+func (s *PRB) Validate() error {
+
+	if s.ActionCode == nil {
+		return fmt.Errorf("PRB.ActionCode is required")
+	}
+	if string(*s.ActionCode) == "" {
+		return fmt.Errorf("PRB.ActionCode is empty")
+	}
+
+	if s.ActionDateTime == nil {
+		return fmt.Errorf("PRB.ActionDateTime is required")
+	}
+	if s.ActionDateTime != nil {
+		if err := s.ActionDateTime.Validate(); err != nil {
+			return fmt.Errorf("PRB.ActionDateTime: %w", err)
+		}
+	}
+
+	if s.ProblemID == nil {
+		return fmt.Errorf("PRB.ProblemID is required")
+	}
+	if s.ProblemID != nil {
+		if err := s.ProblemID.Validate(); err != nil {
+			return fmt.Errorf("PRB.ProblemID: %w", err)
+		}
+	}
+
+	if s.ProblemInstanceID == nil {
+		return fmt.Errorf("PRB.ProblemInstanceID is required")
+	}
+	if s.ProblemInstanceID != nil {
+		if err := s.ProblemInstanceID.Validate(); err != nil {
+			return fmt.Errorf("PRB.ProblemInstanceID: %w", err)
+		}
+	}
+
+	if s.EpisodeOfCareID != nil {
+		if err := s.EpisodeOfCareID.Validate(); err != nil {
+			return fmt.Errorf("PRB.EpisodeOfCareID: %w", err)
+		}
+	}
+
+	if s.ProblemEstablishedDateTime != nil {
+		if err := s.ProblemEstablishedDateTime.Validate(); err != nil {
+			return fmt.Errorf("PRB.ProblemEstablishedDateTime: %w", err)
+		}
+	}
+
+	if s.AnticipatedProblemResolutionDateTime != nil {
+		if err := s.AnticipatedProblemResolutionDateTime.Validate(); err != nil {
+			return fmt.Errorf("PRB.AnticipatedProblemResolutionDateTime: %w", err)
+		}
+	}
+
+	if s.ActualProblemResolutionDateTime != nil {
+		if err := s.ActualProblemResolutionDateTime.Validate(); err != nil {
+			return fmt.Errorf("PRB.ActualProblemResolutionDateTime: %w", err)
+		}
+	}
+
+	if s.ProblemClassification != nil {
+		if err := s.ProblemClassification.Validate(); err != nil {
+			return fmt.Errorf("PRB.ProblemClassification: %w", err)
+		}
+	}
+
+	for _, item := range s.ProblemManagementDiscipline {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PRB.ProblemManagementDiscipline: %w", err)
+		}
+	}
+
+	if s.ProblemPersistence != nil {
+		if err := s.ProblemPersistence.Validate(); err != nil {
+			return fmt.Errorf("PRB.ProblemPersistence: %w", err)
+		}
+	}
+
+	if s.ProblemConfirmationStatus != nil {
+		if err := s.ProblemConfirmationStatus.Validate(); err != nil {
+			return fmt.Errorf("PRB.ProblemConfirmationStatus: %w", err)
+		}
+	}
+
+	if s.ProblemLifeCycleStatus != nil {
+		if err := s.ProblemLifeCycleStatus.Validate(); err != nil {
+			return fmt.Errorf("PRB.ProblemLifeCycleStatus: %w", err)
+		}
+	}
+
+	if s.ProblemLifeCycleStatusDateTime != nil {
+		if err := s.ProblemLifeCycleStatusDateTime.Validate(); err != nil {
+			return fmt.Errorf("PRB.ProblemLifeCycleStatusDateTime: %w", err)
+		}
+	}
+
+	if s.ProblemDateOfOnset != nil {
+		if err := s.ProblemDateOfOnset.Validate(); err != nil {
+			return fmt.Errorf("PRB.ProblemDateOfOnset: %w", err)
+		}
+	}
+
+	if s.ProblemRanking != nil {
+		if err := s.ProblemRanking.Validate(); err != nil {
+			return fmt.Errorf("PRB.ProblemRanking: %w", err)
+		}
+	}
+
+	if s.CertaintyOfProblem01 != nil {
+		if err := s.CertaintyOfProblem01.Validate(); err != nil {
+			return fmt.Errorf("PRB.CertaintyOfProblem01: %w", err)
+		}
+	}
+
+	if s.IndividualAwarenessOfProblem != nil {
+		if err := s.IndividualAwarenessOfProblem.Validate(); err != nil {
+			return fmt.Errorf("PRB.IndividualAwarenessOfProblem: %w", err)
+		}
+	}
+
+	if s.ProblemPrognosis != nil {
+		if err := s.ProblemPrognosis.Validate(); err != nil {
+			return fmt.Errorf("PRB.ProblemPrognosis: %w", err)
+		}
+	}
+
+	if s.IndividualAwarenessOfPrognosis != nil {
+		if err := s.IndividualAwarenessOfPrognosis.Validate(); err != nil {
+			return fmt.Errorf("PRB.IndividualAwarenessOfPrognosis: %w", err)
+		}
+	}
+
+	if s.SecuritySensitivity != nil {
+		if err := s.SecuritySensitivity.Validate(); err != nil {
+			return fmt.Errorf("PRB.SecuritySensitivity: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *PRB) SetActionCode(v *ID) *PRB {
+	s.ActionCode = v
+	return s
+}
+
+func (s *PRB) SetActionDateTime(v *TS) *PRB {
+	s.ActionDateTime = v
+	return s
+}
+
+func (s *PRB) SetProblemID(v *CE) *PRB {
+	s.ProblemID = v
+	return s
+}
+
+func (s *PRB) SetProblemInstanceID(v *EI) *PRB {
+	s.ProblemInstanceID = v
+	return s
+}
+
+func (s *PRB) SetEpisodeOfCareID(v *EI) *PRB {
+	s.EpisodeOfCareID = v
+	return s
+}
+
+func (s *PRB) SetProblemListPriority(v *NM) *PRB {
+	s.ProblemListPriority = v
+	return s
+}
+
+func (s *PRB) SetProblemEstablishedDateTime(v *TS) *PRB {
+	s.ProblemEstablishedDateTime = v
+	return s
+}
+
+func (s *PRB) SetAnticipatedProblemResolutionDateTime(v *TS) *PRB {
+	s.AnticipatedProblemResolutionDateTime = v
+	return s
+}
+
+func (s *PRB) SetActualProblemResolutionDateTime(v *TS) *PRB {
+	s.ActualProblemResolutionDateTime = v
+	return s
+}
+
+func (s *PRB) SetProblemClassification(v *CE) *PRB {
+	s.ProblemClassification = v
+	return s
+}
+
+func (s *PRB) AddProblemManagementDiscipline(v CE) *PRB {
+	s.ProblemManagementDiscipline = append(s.ProblemManagementDiscipline, v)
+	return s
+}
+
+func (s *PRB) SetProblemPersistence(v *CE) *PRB {
+	s.ProblemPersistence = v
+	return s
+}
+
+func (s *PRB) SetProblemConfirmationStatus(v *CE) *PRB {
+	s.ProblemConfirmationStatus = v
+	return s
+}
+
+func (s *PRB) SetProblemLifeCycleStatus(v *CE) *PRB {
+	s.ProblemLifeCycleStatus = v
+	return s
+}
+
+func (s *PRB) SetProblemLifeCycleStatusDateTime(v *TS) *PRB {
+	s.ProblemLifeCycleStatusDateTime = v
+	return s
+}
+
+func (s *PRB) SetProblemDateOfOnset(v *TS) *PRB {
+	s.ProblemDateOfOnset = v
+	return s
+}
+
+func (s *PRB) SetProblemOnsetText(v *ST) *PRB {
+	s.ProblemOnsetText = v
+	return s
+}
+
+func (s *PRB) SetProblemRanking(v *CE) *PRB {
+	s.ProblemRanking = v
+	return s
+}
+
+func (s *PRB) SetCertaintyOfProblem01(v *CE) *PRB {
+	s.CertaintyOfProblem01 = v
+	return s
+}
+
+func (s *PRB) SetProbabilityOfProblem(v *NM) *PRB {
+	s.ProbabilityOfProblem = v
+	return s
+}
+
+func (s *PRB) SetIndividualAwarenessOfProblem(v *CE) *PRB {
+	s.IndividualAwarenessOfProblem = v
+	return s
+}
+
+func (s *PRB) SetProblemPrognosis(v *CE) *PRB {
+	s.ProblemPrognosis = v
+	return s
+}
+
+func (s *PRB) SetIndividualAwarenessOfPrognosis(v *CE) *PRB {
+	s.IndividualAwarenessOfPrognosis = v
+	return s
+}
+
+func (s *PRB) SetFamilySignificantOtherAwarenessOfProblemPrognosis(v *ST) *PRB {
+	s.FamilySignificantOtherAwarenessOfProblemPrognosis = v
+	return s
+}
+
+func (s *PRB) SetSecuritySensitivity(v *CE) *PRB {
+	s.SecuritySensitivity = v
+	return s
 }
 
 // PRC - Pricing
 // The PRC segment contains the pricing information for the preceding CDM segment’s chargeable item.  It contains the fields which, for the same chargeable item, might vary depending upon facility or department or patient type.  The preceding CDM segment contains the fields which, for one chargeable item, remain the same across facilities, departments, and patient types.
 type PRC struct {
-	PrimaryKeyValuePRC  CE   `hl7:"1,required"`
+	PrimaryKeyValuePRC  *CE  `hl7:"1,required"`
 	FacilityIDPRC       []CE `hl7:"2"`
 	Department          []CE `hl7:"3"`
 	ValidPatientClasses []IS `hl7:"4"`
 	Price               []CP `hl7:"5"`
 	Formula             []ST `hl7:"6"`
-	MinimumQuantity     NM   `hl7:"7"`
-	MaximumQuantity     NM   `hl7:"8"`
-	MinimumPrice        MO   `hl7:"9"`
-	MaximumPrice        MO   `hl7:"10"`
-	EffectiveStartDate  TS   `hl7:"11"`
-	EffectiveEndDate    TS   `hl7:"12"`
-	PriceOverrideFlag   IS   `hl7:"13"`
+	MinimumQuantity     *NM  `hl7:"7"`
+	MaximumQuantity     *NM  `hl7:"8"`
+	MinimumPrice        *MO  `hl7:"9"`
+	MaximumPrice        *MO  `hl7:"10"`
+	EffectiveStartDate  *TS  `hl7:"11"`
+	EffectiveEndDate    *TS  `hl7:"12"`
+	PriceOverrideFlag   *IS  `hl7:"13"`
 	BillingCategory     []CE `hl7:"14"`
-	ChargeableFlag      ID   `hl7:"15"`
-	ActiveInactiveFlag  ID   `hl7:"16"`
-	Cost                MO   `hl7:"17"`
-	ChargeOnIndicator   IS   `hl7:"18"`
+	ChargeableFlag      *ID  `hl7:"15"`
+	ActiveInactiveFlag  *ID  `hl7:"16"`
+	Cost                *MO  `hl7:"17"`
+	ChargeOnIndicator   *IS  `hl7:"18"`
+}
+
+func NewPRC() *PRC {
+	return &PRC{}
+}
+
+func (s *PRC) Validate() error {
+
+	if s.PrimaryKeyValuePRC == nil {
+		return fmt.Errorf("PRC.PrimaryKeyValuePRC is required")
+	}
+	if s.PrimaryKeyValuePRC != nil {
+		if err := s.PrimaryKeyValuePRC.Validate(); err != nil {
+			return fmt.Errorf("PRC.PrimaryKeyValuePRC: %w", err)
+		}
+	}
+
+	for _, item := range s.FacilityIDPRC {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PRC.FacilityIDPRC: %w", err)
+		}
+	}
+
+	for _, item := range s.Department {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PRC.Department: %w", err)
+		}
+	}
+
+	for _, item := range s.ValidPatientClasses {
+		if string(item) == "" {
+			return fmt.Errorf("PRC.ValidPatientClasses item is empty")
+		}
+	}
+
+	for _, item := range s.Price {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PRC.Price: %w", err)
+		}
+	}
+
+	for _, item := range s.Formula {
+		if string(item) == "" {
+			return fmt.Errorf("PRC.Formula item is empty")
+		}
+	}
+
+	if s.MinimumPrice != nil {
+		if err := s.MinimumPrice.Validate(); err != nil {
+			return fmt.Errorf("PRC.MinimumPrice: %w", err)
+		}
+	}
+
+	if s.MaximumPrice != nil {
+		if err := s.MaximumPrice.Validate(); err != nil {
+			return fmt.Errorf("PRC.MaximumPrice: %w", err)
+		}
+	}
+
+	if s.EffectiveStartDate != nil {
+		if err := s.EffectiveStartDate.Validate(); err != nil {
+			return fmt.Errorf("PRC.EffectiveStartDate: %w", err)
+		}
+	}
+
+	if s.EffectiveEndDate != nil {
+		if err := s.EffectiveEndDate.Validate(); err != nil {
+			return fmt.Errorf("PRC.EffectiveEndDate: %w", err)
+		}
+	}
+
+	for _, item := range s.BillingCategory {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PRC.BillingCategory: %w", err)
+		}
+	}
+
+	if s.Cost != nil {
+		if err := s.Cost.Validate(); err != nil {
+			return fmt.Errorf("PRC.Cost: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *PRC) SetPrimaryKeyValuePRC(v *CE) *PRC {
+	s.PrimaryKeyValuePRC = v
+	return s
+}
+
+func (s *PRC) AddFacilityIDPRC(v CE) *PRC {
+	s.FacilityIDPRC = append(s.FacilityIDPRC, v)
+	return s
+}
+
+func (s *PRC) AddDepartment(v CE) *PRC {
+	s.Department = append(s.Department, v)
+	return s
+}
+
+func (s *PRC) AddValidPatientClasses(v IS) *PRC {
+	s.ValidPatientClasses = append(s.ValidPatientClasses, v)
+	return s
+}
+
+func (s *PRC) AddPrice(v CP) *PRC {
+	s.Price = append(s.Price, v)
+	return s
+}
+
+func (s *PRC) AddFormula(v ST) *PRC {
+	s.Formula = append(s.Formula, v)
+	return s
+}
+
+func (s *PRC) SetMinimumQuantity(v *NM) *PRC {
+	s.MinimumQuantity = v
+	return s
+}
+
+func (s *PRC) SetMaximumQuantity(v *NM) *PRC {
+	s.MaximumQuantity = v
+	return s
+}
+
+func (s *PRC) SetMinimumPrice(v *MO) *PRC {
+	s.MinimumPrice = v
+	return s
+}
+
+func (s *PRC) SetMaximumPrice(v *MO) *PRC {
+	s.MaximumPrice = v
+	return s
+}
+
+func (s *PRC) SetEffectiveStartDate(v *TS) *PRC {
+	s.EffectiveStartDate = v
+	return s
+}
+
+func (s *PRC) SetEffectiveEndDate(v *TS) *PRC {
+	s.EffectiveEndDate = v
+	return s
+}
+
+func (s *PRC) SetPriceOverrideFlag(v *IS) *PRC {
+	s.PriceOverrideFlag = v
+	return s
+}
+
+func (s *PRC) AddBillingCategory(v CE) *PRC {
+	s.BillingCategory = append(s.BillingCategory, v)
+	return s
+}
+
+func (s *PRC) SetChargeableFlag(v *ID) *PRC {
+	s.ChargeableFlag = v
+	return s
+}
+
+func (s *PRC) SetActiveInactiveFlag(v *ID) *PRC {
+	s.ActiveInactiveFlag = v
+	return s
+}
+
+func (s *PRC) SetCost(v *MO) *PRC {
+	s.Cost = v
+	return s
+}
+
+func (s *PRC) SetChargeOnIndicator(v *IS) *PRC {
+	s.ChargeOnIndicator = v
+	return s
 }
 
 // PRD - Provider Data
@@ -1966,178 +16239,1412 @@ type PRD struct {
 	ProviderRole                     []CE  `hl7:"1,required"`
 	ProviderName                     []XPN `hl7:"2"`
 	ProviderAddress                  []XAD `hl7:"3"`
-	ProviderLocation                 PL    `hl7:"4"`
+	ProviderLocation                 *PL   `hl7:"4"`
 	ProviderCommunicationInformation []XTN `hl7:"5"`
-	PreferredMethodOfContact         CE    `hl7:"6"`
+	PreferredMethodOfContact         *CE   `hl7:"6"`
 	ProviderIdentifiers              []PLN `hl7:"7"`
-	EffectiveStartDateOfProviderRole TS    `hl7:"8"`
-	EffectiveEndDateOfProviderRole   TS    `hl7:"9"`
+	EffectiveStartDateOfProviderRole *TS   `hl7:"8"`
+	EffectiveEndDateOfProviderRole   *TS   `hl7:"9"`
+}
+
+func NewPRD() *PRD {
+	return &PRD{}
+}
+
+func (s *PRD) Validate() error {
+
+	if len(s.ProviderRole) == 0 {
+		return fmt.Errorf("PRD.ProviderRole is required")
+	}
+	for _, item := range s.ProviderRole {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PRD.ProviderRole: %w", err)
+		}
+	}
+
+	for _, item := range s.ProviderName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PRD.ProviderName: %w", err)
+		}
+	}
+
+	for _, item := range s.ProviderAddress {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PRD.ProviderAddress: %w", err)
+		}
+	}
+
+	if s.ProviderLocation != nil {
+		if err := s.ProviderLocation.Validate(); err != nil {
+			return fmt.Errorf("PRD.ProviderLocation: %w", err)
+		}
+	}
+
+	for _, item := range s.ProviderCommunicationInformation {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PRD.ProviderCommunicationInformation: %w", err)
+		}
+	}
+
+	if s.PreferredMethodOfContact != nil {
+		if err := s.PreferredMethodOfContact.Validate(); err != nil {
+			return fmt.Errorf("PRD.PreferredMethodOfContact: %w", err)
+		}
+	}
+
+	for _, item := range s.ProviderIdentifiers {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PRD.ProviderIdentifiers: %w", err)
+		}
+	}
+
+	if s.EffectiveStartDateOfProviderRole != nil {
+		if err := s.EffectiveStartDateOfProviderRole.Validate(); err != nil {
+			return fmt.Errorf("PRD.EffectiveStartDateOfProviderRole: %w", err)
+		}
+	}
+
+	if s.EffectiveEndDateOfProviderRole != nil {
+		if err := s.EffectiveEndDateOfProviderRole.Validate(); err != nil {
+			return fmt.Errorf("PRD.EffectiveEndDateOfProviderRole: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *PRD) AddProviderRole(v CE) *PRD {
+	s.ProviderRole = append(s.ProviderRole, v)
+	return s
+}
+
+func (s *PRD) AddProviderName(v XPN) *PRD {
+	s.ProviderName = append(s.ProviderName, v)
+	return s
+}
+
+func (s *PRD) AddProviderAddress(v XAD) *PRD {
+	s.ProviderAddress = append(s.ProviderAddress, v)
+	return s
+}
+
+func (s *PRD) SetProviderLocation(v *PL) *PRD {
+	s.ProviderLocation = v
+	return s
+}
+
+func (s *PRD) AddProviderCommunicationInformation(v XTN) *PRD {
+	s.ProviderCommunicationInformation = append(s.ProviderCommunicationInformation, v)
+	return s
+}
+
+func (s *PRD) SetPreferredMethodOfContact(v *CE) *PRD {
+	s.PreferredMethodOfContact = v
+	return s
+}
+
+func (s *PRD) AddProviderIdentifiers(v PLN) *PRD {
+	s.ProviderIdentifiers = append(s.ProviderIdentifiers, v)
+	return s
+}
+
+func (s *PRD) SetEffectiveStartDateOfProviderRole(v *TS) *PRD {
+	s.EffectiveStartDateOfProviderRole = v
+	return s
+}
+
+func (s *PRD) SetEffectiveEndDateOfProviderRole(v *TS) *PRD {
+	s.EffectiveEndDateOfProviderRole = v
+	return s
 }
 
 // PSH - Product Summary Header
 type PSH struct {
-	ReportType                                         ST   `hl7:"1,required"`
-	ReportFormIdentifier                               ST   `hl7:"2"`
-	ReportDate                                         TS   `hl7:"3,required"`
-	ReportIntervalStartDate                            TS   `hl7:"4"`
-	ReportIntervalEndDate                              TS   `hl7:"5"`
-	QuantityManufactured                               CQ   `hl7:"6"`
-	QuantityDistributed                                CQ   `hl7:"7"`
-	QuantityDistributedMethod                          ID   `hl7:"8"`
-	QuantityDistributedComment                         FT   `hl7:"9"`
-	QuantityInUse                                      CQ   `hl7:"10"`
-	QuantityInUseMethod                                ID   `hl7:"11"`
-	QuantityInUseComment                               FT   `hl7:"12"`
+	ReportType                                         *ST  `hl7:"1,required"`
+	ReportFormIdentifier                               *ST  `hl7:"2"`
+	ReportDate                                         *TS  `hl7:"3,required"`
+	ReportIntervalStartDate                            *TS  `hl7:"4"`
+	ReportIntervalEndDate                              *TS  `hl7:"5"`
+	QuantityManufactured                               *CQ  `hl7:"6"`
+	QuantityDistributed                                *CQ  `hl7:"7"`
+	QuantityDistributedMethod                          *ID  `hl7:"8"`
+	QuantityDistributedComment                         *FT  `hl7:"9"`
+	QuantityInUse                                      *CQ  `hl7:"10"`
+	QuantityInUseMethod                                *ID  `hl7:"11"`
+	QuantityInUseComment                               *FT  `hl7:"12"`
 	NumberOfProductExperienceReportsFiledByFacility    []NM `hl7:"13"`
 	NumberOfProductExperienceReportsFiledByDistributor []NM `hl7:"14"`
+}
+
+func NewPSH() *PSH {
+	return &PSH{}
+}
+
+func (s *PSH) Validate() error {
+
+	if s.ReportType == nil {
+		return fmt.Errorf("PSH.ReportType is required")
+	}
+	if string(*s.ReportType) == "" {
+		return fmt.Errorf("PSH.ReportType is empty")
+	}
+
+	if s.ReportDate == nil {
+		return fmt.Errorf("PSH.ReportDate is required")
+	}
+	if s.ReportDate != nil {
+		if err := s.ReportDate.Validate(); err != nil {
+			return fmt.Errorf("PSH.ReportDate: %w", err)
+		}
+	}
+
+	if s.ReportIntervalStartDate != nil {
+		if err := s.ReportIntervalStartDate.Validate(); err != nil {
+			return fmt.Errorf("PSH.ReportIntervalStartDate: %w", err)
+		}
+	}
+
+	if s.ReportIntervalEndDate != nil {
+		if err := s.ReportIntervalEndDate.Validate(); err != nil {
+			return fmt.Errorf("PSH.ReportIntervalEndDate: %w", err)
+		}
+	}
+
+	if s.QuantityManufactured != nil {
+		if err := s.QuantityManufactured.Validate(); err != nil {
+			return fmt.Errorf("PSH.QuantityManufactured: %w", err)
+		}
+	}
+
+	if s.QuantityDistributed != nil {
+		if err := s.QuantityDistributed.Validate(); err != nil {
+			return fmt.Errorf("PSH.QuantityDistributed: %w", err)
+		}
+	}
+
+	if s.QuantityInUse != nil {
+		if err := s.QuantityInUse.Validate(); err != nil {
+			return fmt.Errorf("PSH.QuantityInUse: %w", err)
+		}
+	}
+
+	for _, item := range s.NumberOfProductExperienceReportsFiledByFacility {
+		if string(item) == "" {
+			return fmt.Errorf("PSH.NumberOfProductExperienceReportsFiledByFacility item is empty")
+		}
+	}
+
+	for _, item := range s.NumberOfProductExperienceReportsFiledByDistributor {
+		if string(item) == "" {
+			return fmt.Errorf("PSH.NumberOfProductExperienceReportsFiledByDistributor item is empty")
+		}
+	}
+	return nil
+}
+
+func (s *PSH) SetReportType(v *ST) *PSH {
+	s.ReportType = v
+	return s
+}
+
+func (s *PSH) SetReportFormIdentifier(v *ST) *PSH {
+	s.ReportFormIdentifier = v
+	return s
+}
+
+func (s *PSH) SetReportDate(v *TS) *PSH {
+	s.ReportDate = v
+	return s
+}
+
+func (s *PSH) SetReportIntervalStartDate(v *TS) *PSH {
+	s.ReportIntervalStartDate = v
+	return s
+}
+
+func (s *PSH) SetReportIntervalEndDate(v *TS) *PSH {
+	s.ReportIntervalEndDate = v
+	return s
+}
+
+func (s *PSH) SetQuantityManufactured(v *CQ) *PSH {
+	s.QuantityManufactured = v
+	return s
+}
+
+func (s *PSH) SetQuantityDistributed(v *CQ) *PSH {
+	s.QuantityDistributed = v
+	return s
+}
+
+func (s *PSH) SetQuantityDistributedMethod(v *ID) *PSH {
+	s.QuantityDistributedMethod = v
+	return s
+}
+
+func (s *PSH) SetQuantityDistributedComment(v *FT) *PSH {
+	s.QuantityDistributedComment = v
+	return s
+}
+
+func (s *PSH) SetQuantityInUse(v *CQ) *PSH {
+	s.QuantityInUse = v
+	return s
+}
+
+func (s *PSH) SetQuantityInUseMethod(v *ID) *PSH {
+	s.QuantityInUseMethod = v
+	return s
+}
+
+func (s *PSH) SetQuantityInUseComment(v *FT) *PSH {
+	s.QuantityInUseComment = v
+	return s
+}
+
+func (s *PSH) AddNumberOfProductExperienceReportsFiledByFacility(v NM) *PSH {
+	s.NumberOfProductExperienceReportsFiledByFacility = append(s.NumberOfProductExperienceReportsFiledByFacility, v)
+	return s
+}
+
+func (s *PSH) AddNumberOfProductExperienceReportsFiledByDistributor(v NM) *PSH {
+	s.NumberOfProductExperienceReportsFiledByDistributor = append(s.NumberOfProductExperienceReportsFiledByDistributor, v)
+	return s
 }
 
 // PTH - Pathway
 // The pathway segment contains the data necessary to add, update, correct, and delete from the record pathways that are utilized to address an individuals health care.
 type PTH struct {
-	ActionCode                           ID `hl7:"1,required"`
-	PathwayID                            CE `hl7:"2,required"`
-	PathwayInstanceID                    EI `hl7:"3,required"`
-	PathwayEstablishedDateTime           TS `hl7:"4,required"`
-	PathwayLifeCycleStatus               CE `hl7:"5"`
-	ChangePathwayLifeCycleStatusDateTime TS `hl7:"6"`
+	ActionCode                           *ID `hl7:"1,required"`
+	PathwayID                            *CE `hl7:"2,required"`
+	PathwayInstanceID                    *EI `hl7:"3,required"`
+	PathwayEstablishedDateTime           *TS `hl7:"4,required"`
+	PathwayLifeCycleStatus               *CE `hl7:"5"`
+	ChangePathwayLifeCycleStatusDateTime *TS `hl7:"6"`
+}
+
+func NewPTH() *PTH {
+	return &PTH{}
+}
+
+func (s *PTH) Validate() error {
+
+	if s.ActionCode == nil {
+		return fmt.Errorf("PTH.ActionCode is required")
+	}
+	if string(*s.ActionCode) == "" {
+		return fmt.Errorf("PTH.ActionCode is empty")
+	}
+
+	if s.PathwayID == nil {
+		return fmt.Errorf("PTH.PathwayID is required")
+	}
+	if s.PathwayID != nil {
+		if err := s.PathwayID.Validate(); err != nil {
+			return fmt.Errorf("PTH.PathwayID: %w", err)
+		}
+	}
+
+	if s.PathwayInstanceID == nil {
+		return fmt.Errorf("PTH.PathwayInstanceID is required")
+	}
+	if s.PathwayInstanceID != nil {
+		if err := s.PathwayInstanceID.Validate(); err != nil {
+			return fmt.Errorf("PTH.PathwayInstanceID: %w", err)
+		}
+	}
+
+	if s.PathwayEstablishedDateTime == nil {
+		return fmt.Errorf("PTH.PathwayEstablishedDateTime is required")
+	}
+	if s.PathwayEstablishedDateTime != nil {
+		if err := s.PathwayEstablishedDateTime.Validate(); err != nil {
+			return fmt.Errorf("PTH.PathwayEstablishedDateTime: %w", err)
+		}
+	}
+
+	if s.PathwayLifeCycleStatus != nil {
+		if err := s.PathwayLifeCycleStatus.Validate(); err != nil {
+			return fmt.Errorf("PTH.PathwayLifeCycleStatus: %w", err)
+		}
+	}
+
+	if s.ChangePathwayLifeCycleStatusDateTime != nil {
+		if err := s.ChangePathwayLifeCycleStatusDateTime.Validate(); err != nil {
+			return fmt.Errorf("PTH.ChangePathwayLifeCycleStatusDateTime: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *PTH) SetActionCode(v *ID) *PTH {
+	s.ActionCode = v
+	return s
+}
+
+func (s *PTH) SetPathwayID(v *CE) *PTH {
+	s.PathwayID = v
+	return s
+}
+
+func (s *PTH) SetPathwayInstanceID(v *EI) *PTH {
+	s.PathwayInstanceID = v
+	return s
+}
+
+func (s *PTH) SetPathwayEstablishedDateTime(v *TS) *PTH {
+	s.PathwayEstablishedDateTime = v
+	return s
+}
+
+func (s *PTH) SetPathwayLifeCycleStatus(v *CE) *PTH {
+	s.PathwayLifeCycleStatus = v
+	return s
+}
+
+func (s *PTH) SetChangePathwayLifeCycleStatusDateTime(v *TS) *PTH {
+	s.ChangePathwayLifeCycleStatusDateTime = v
+	return s
 }
 
 // PV1 - Patient Visit
 // The PV1 segment is used by Registration/Patient Administration applications to communicate information on an account or visit-specific basis. The default is to send account level data. To use this segment for visit level data PV1-51 - Visit Indicator must be valued to V. The value of PV-51 affects the level of data being sent on the PV1, PV2, and any other segments that are part of the associated PV1 hierarchy (e.g. ROL, DG1, or OBX).
 type PV1 struct {
-	SetIDPV1                SI    `hl7:"1"`
-	PatientClass            IS    `hl7:"2,required"`
-	AssignedPatientLocation PL    `hl7:"3"`
-	AdmissionType           IS    `hl7:"4"`
-	PreadmitNumber          CX    `hl7:"5"`
-	PriorPatientLocation    PL    `hl7:"6"`
+	SetIDPV1                *SI   `hl7:"1"`
+	PatientClass            *IS   `hl7:"2,required"`
+	AssignedPatientLocation *PL   `hl7:"3"`
+	AdmissionType           *IS   `hl7:"4"`
+	PreadmitNumber          *CX   `hl7:"5"`
+	PriorPatientLocation    *PL   `hl7:"6"`
 	AttendingDoctor         []XCN `hl7:"7"`
 	ReferringDoctor         []XCN `hl7:"8"`
 	ConsultingDoctor        []XCN `hl7:"9"`
-	HospitalService         IS    `hl7:"10"`
-	TemporaryLocation       PL    `hl7:"11"`
-	PreadmitTestIndicator   IS    `hl7:"12"`
-	ReAdmissionIndicator    IS    `hl7:"13"`
-	AdmitSource             IS    `hl7:"14"`
+	HospitalService         *IS   `hl7:"10"`
+	TemporaryLocation       *PL   `hl7:"11"`
+	PreadmitTestIndicator   *IS   `hl7:"12"`
+	ReAdmissionIndicator    *IS   `hl7:"13"`
+	AdmitSource             *IS   `hl7:"14"`
 	AmbulatoryStatus        []IS  `hl7:"15"`
-	VIPIndicator            IS    `hl7:"16"`
+	VIPIndicator            *IS   `hl7:"16"`
 	AdmittingDoctor         []XCN `hl7:"17"`
-	PatientType             IS    `hl7:"18"`
-	VisitNumber             CX    `hl7:"19"`
+	PatientType             *IS   `hl7:"18"`
+	VisitNumber             *CX   `hl7:"19"`
 	FinancialClass          []FC  `hl7:"20"`
-	ChargePriceIndicator    IS    `hl7:"21"`
-	CourtesyCode            IS    `hl7:"22"`
-	CreditRating            IS    `hl7:"23"`
+	ChargePriceIndicator    *IS   `hl7:"21"`
+	CourtesyCode            *IS   `hl7:"22"`
+	CreditRating            *IS   `hl7:"23"`
 	ContractCode            []IS  `hl7:"24"`
 	ContractEffectiveDate   []DT  `hl7:"25"`
 	ContractAmount          []NM  `hl7:"26"`
 	ContractPeriod          []NM  `hl7:"27"`
-	InterestCode            IS    `hl7:"28"`
-	TransferToBadDebtCode   IS    `hl7:"29"`
-	TransferToBadDebtDate   DT    `hl7:"30"`
-	BadDebtAgencyCode       IS    `hl7:"31"`
-	BadDebtTransferAmount   NM    `hl7:"32"`
-	BadDebtRecoveryAmount   NM    `hl7:"33"`
-	DeleteAccountIndicator  IS    `hl7:"34"`
-	DeleteAccountDate       DT    `hl7:"35"`
-	DischargeDisposition    IS    `hl7:"36"`
-	DischargedToLocation    DLD   `hl7:"37"`
-	DietType                CE    `hl7:"38"`
-	ServicingFacility       IS    `hl7:"39"`
-	BedStatus               IS    `hl7:"40"`
-	AccountStatus           IS    `hl7:"41"`
-	PendingLocation         PL    `hl7:"42"`
-	PriorTemporaryLocation  PL    `hl7:"43"`
-	AdmitDateTime           TS    `hl7:"44"`
+	InterestCode            *IS   `hl7:"28"`
+	TransferToBadDebtCode   *IS   `hl7:"29"`
+	TransferToBadDebtDate   *DT   `hl7:"30"`
+	BadDebtAgencyCode       *IS   `hl7:"31"`
+	BadDebtTransferAmount   *NM   `hl7:"32"`
+	BadDebtRecoveryAmount   *NM   `hl7:"33"`
+	DeleteAccountIndicator  *IS   `hl7:"34"`
+	DeleteAccountDate       *DT   `hl7:"35"`
+	DischargeDisposition    *IS   `hl7:"36"`
+	DischargedToLocation    *DLD  `hl7:"37"`
+	DietType                *CE   `hl7:"38"`
+	ServicingFacility       *IS   `hl7:"39"`
+	BedStatus               *IS   `hl7:"40"`
+	AccountStatus           *IS   `hl7:"41"`
+	PendingLocation         *PL   `hl7:"42"`
+	PriorTemporaryLocation  *PL   `hl7:"43"`
+	AdmitDateTime           *TS   `hl7:"44"`
 	DischargeDateTime       []TS  `hl7:"45"`
-	CurrentPatientBalance   NM    `hl7:"46"`
-	TotalCharges            NM    `hl7:"47"`
-	TotalAdjustments        NM    `hl7:"48"`
-	TotalPayments           NM    `hl7:"49"`
-	AlternateVisitID        CX    `hl7:"50"`
-	VisitIndicator          IS    `hl7:"51"`
+	CurrentPatientBalance   *NM   `hl7:"46"`
+	TotalCharges            *NM   `hl7:"47"`
+	TotalAdjustments        *NM   `hl7:"48"`
+	TotalPayments           *NM   `hl7:"49"`
+	AlternateVisitID        *CX   `hl7:"50"`
+	VisitIndicator          *IS   `hl7:"51"`
 	OtherHealthcareProvider []XCN `hl7:"52"`
+}
+
+func NewPV1() *PV1 {
+	return &PV1{}
+}
+
+func (s *PV1) Validate() error {
+
+	if s.PatientClass == nil {
+		return fmt.Errorf("PV1.PatientClass is required")
+	}
+	if string(*s.PatientClass) == "" {
+		return fmt.Errorf("PV1.PatientClass is empty")
+	}
+
+	if s.AssignedPatientLocation != nil {
+		if err := s.AssignedPatientLocation.Validate(); err != nil {
+			return fmt.Errorf("PV1.AssignedPatientLocation: %w", err)
+		}
+	}
+
+	if s.PreadmitNumber != nil {
+		if err := s.PreadmitNumber.Validate(); err != nil {
+			return fmt.Errorf("PV1.PreadmitNumber: %w", err)
+		}
+	}
+
+	if s.PriorPatientLocation != nil {
+		if err := s.PriorPatientLocation.Validate(); err != nil {
+			return fmt.Errorf("PV1.PriorPatientLocation: %w", err)
+		}
+	}
+
+	for _, item := range s.AttendingDoctor {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PV1.AttendingDoctor: %w", err)
+		}
+	}
+
+	for _, item := range s.ReferringDoctor {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PV1.ReferringDoctor: %w", err)
+		}
+	}
+
+	for _, item := range s.ConsultingDoctor {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PV1.ConsultingDoctor: %w", err)
+		}
+	}
+
+	if s.TemporaryLocation != nil {
+		if err := s.TemporaryLocation.Validate(); err != nil {
+			return fmt.Errorf("PV1.TemporaryLocation: %w", err)
+		}
+	}
+
+	for _, item := range s.AmbulatoryStatus {
+		if string(item) == "" {
+			return fmt.Errorf("PV1.AmbulatoryStatus item is empty")
+		}
+	}
+
+	for _, item := range s.AdmittingDoctor {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PV1.AdmittingDoctor: %w", err)
+		}
+	}
+
+	if s.VisitNumber != nil {
+		if err := s.VisitNumber.Validate(); err != nil {
+			return fmt.Errorf("PV1.VisitNumber: %w", err)
+		}
+	}
+
+	for _, item := range s.FinancialClass {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PV1.FinancialClass: %w", err)
+		}
+	}
+
+	for _, item := range s.ContractCode {
+		if string(item) == "" {
+			return fmt.Errorf("PV1.ContractCode item is empty")
+		}
+	}
+
+	for _, item := range s.ContractEffectiveDate {
+		if string(item) == "" {
+			return fmt.Errorf("PV1.ContractEffectiveDate item is empty")
+		}
+	}
+
+	for _, item := range s.ContractAmount {
+		if string(item) == "" {
+			return fmt.Errorf("PV1.ContractAmount item is empty")
+		}
+	}
+
+	for _, item := range s.ContractPeriod {
+		if string(item) == "" {
+			return fmt.Errorf("PV1.ContractPeriod item is empty")
+		}
+	}
+
+	if s.DischargedToLocation != nil {
+		if err := s.DischargedToLocation.Validate(); err != nil {
+			return fmt.Errorf("PV1.DischargedToLocation: %w", err)
+		}
+	}
+
+	if s.DietType != nil {
+		if err := s.DietType.Validate(); err != nil {
+			return fmt.Errorf("PV1.DietType: %w", err)
+		}
+	}
+
+	if s.PendingLocation != nil {
+		if err := s.PendingLocation.Validate(); err != nil {
+			return fmt.Errorf("PV1.PendingLocation: %w", err)
+		}
+	}
+
+	if s.PriorTemporaryLocation != nil {
+		if err := s.PriorTemporaryLocation.Validate(); err != nil {
+			return fmt.Errorf("PV1.PriorTemporaryLocation: %w", err)
+		}
+	}
+
+	if s.AdmitDateTime != nil {
+		if err := s.AdmitDateTime.Validate(); err != nil {
+			return fmt.Errorf("PV1.AdmitDateTime: %w", err)
+		}
+	}
+
+	for _, item := range s.DischargeDateTime {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PV1.DischargeDateTime: %w", err)
+		}
+	}
+
+	if s.AlternateVisitID != nil {
+		if err := s.AlternateVisitID.Validate(); err != nil {
+			return fmt.Errorf("PV1.AlternateVisitID: %w", err)
+		}
+	}
+
+	for _, item := range s.OtherHealthcareProvider {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PV1.OtherHealthcareProvider: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *PV1) SetSetIDPV1(v *SI) *PV1 {
+	s.SetIDPV1 = v
+	return s
+}
+
+func (s *PV1) SetPatientClass(v *IS) *PV1 {
+	s.PatientClass = v
+	return s
+}
+
+func (s *PV1) SetAssignedPatientLocation(v *PL) *PV1 {
+	s.AssignedPatientLocation = v
+	return s
+}
+
+func (s *PV1) SetAdmissionType(v *IS) *PV1 {
+	s.AdmissionType = v
+	return s
+}
+
+func (s *PV1) SetPreadmitNumber(v *CX) *PV1 {
+	s.PreadmitNumber = v
+	return s
+}
+
+func (s *PV1) SetPriorPatientLocation(v *PL) *PV1 {
+	s.PriorPatientLocation = v
+	return s
+}
+
+func (s *PV1) AddAttendingDoctor(v XCN) *PV1 {
+	s.AttendingDoctor = append(s.AttendingDoctor, v)
+	return s
+}
+
+func (s *PV1) AddReferringDoctor(v XCN) *PV1 {
+	s.ReferringDoctor = append(s.ReferringDoctor, v)
+	return s
+}
+
+func (s *PV1) AddConsultingDoctor(v XCN) *PV1 {
+	s.ConsultingDoctor = append(s.ConsultingDoctor, v)
+	return s
+}
+
+func (s *PV1) SetHospitalService(v *IS) *PV1 {
+	s.HospitalService = v
+	return s
+}
+
+func (s *PV1) SetTemporaryLocation(v *PL) *PV1 {
+	s.TemporaryLocation = v
+	return s
+}
+
+func (s *PV1) SetPreadmitTestIndicator(v *IS) *PV1 {
+	s.PreadmitTestIndicator = v
+	return s
+}
+
+func (s *PV1) SetReAdmissionIndicator(v *IS) *PV1 {
+	s.ReAdmissionIndicator = v
+	return s
+}
+
+func (s *PV1) SetAdmitSource(v *IS) *PV1 {
+	s.AdmitSource = v
+	return s
+}
+
+func (s *PV1) AddAmbulatoryStatus(v IS) *PV1 {
+	s.AmbulatoryStatus = append(s.AmbulatoryStatus, v)
+	return s
+}
+
+func (s *PV1) SetVIPIndicator(v *IS) *PV1 {
+	s.VIPIndicator = v
+	return s
+}
+
+func (s *PV1) AddAdmittingDoctor(v XCN) *PV1 {
+	s.AdmittingDoctor = append(s.AdmittingDoctor, v)
+	return s
+}
+
+func (s *PV1) SetPatientType(v *IS) *PV1 {
+	s.PatientType = v
+	return s
+}
+
+func (s *PV1) SetVisitNumber(v *CX) *PV1 {
+	s.VisitNumber = v
+	return s
+}
+
+func (s *PV1) AddFinancialClass(v FC) *PV1 {
+	s.FinancialClass = append(s.FinancialClass, v)
+	return s
+}
+
+func (s *PV1) SetChargePriceIndicator(v *IS) *PV1 {
+	s.ChargePriceIndicator = v
+	return s
+}
+
+func (s *PV1) SetCourtesyCode(v *IS) *PV1 {
+	s.CourtesyCode = v
+	return s
+}
+
+func (s *PV1) SetCreditRating(v *IS) *PV1 {
+	s.CreditRating = v
+	return s
+}
+
+func (s *PV1) AddContractCode(v IS) *PV1 {
+	s.ContractCode = append(s.ContractCode, v)
+	return s
+}
+
+func (s *PV1) AddContractEffectiveDate(v DT) *PV1 {
+	s.ContractEffectiveDate = append(s.ContractEffectiveDate, v)
+	return s
+}
+
+func (s *PV1) AddContractAmount(v NM) *PV1 {
+	s.ContractAmount = append(s.ContractAmount, v)
+	return s
+}
+
+func (s *PV1) AddContractPeriod(v NM) *PV1 {
+	s.ContractPeriod = append(s.ContractPeriod, v)
+	return s
+}
+
+func (s *PV1) SetInterestCode(v *IS) *PV1 {
+	s.InterestCode = v
+	return s
+}
+
+func (s *PV1) SetTransferToBadDebtCode(v *IS) *PV1 {
+	s.TransferToBadDebtCode = v
+	return s
+}
+
+func (s *PV1) SetTransferToBadDebtDate(v *DT) *PV1 {
+	s.TransferToBadDebtDate = v
+	return s
+}
+
+func (s *PV1) SetBadDebtAgencyCode(v *IS) *PV1 {
+	s.BadDebtAgencyCode = v
+	return s
+}
+
+func (s *PV1) SetBadDebtTransferAmount(v *NM) *PV1 {
+	s.BadDebtTransferAmount = v
+	return s
+}
+
+func (s *PV1) SetBadDebtRecoveryAmount(v *NM) *PV1 {
+	s.BadDebtRecoveryAmount = v
+	return s
+}
+
+func (s *PV1) SetDeleteAccountIndicator(v *IS) *PV1 {
+	s.DeleteAccountIndicator = v
+	return s
+}
+
+func (s *PV1) SetDeleteAccountDate(v *DT) *PV1 {
+	s.DeleteAccountDate = v
+	return s
+}
+
+func (s *PV1) SetDischargeDisposition(v *IS) *PV1 {
+	s.DischargeDisposition = v
+	return s
+}
+
+func (s *PV1) SetDischargedToLocation(v *DLD) *PV1 {
+	s.DischargedToLocation = v
+	return s
+}
+
+func (s *PV1) SetDietType(v *CE) *PV1 {
+	s.DietType = v
+	return s
+}
+
+func (s *PV1) SetServicingFacility(v *IS) *PV1 {
+	s.ServicingFacility = v
+	return s
+}
+
+func (s *PV1) SetBedStatus(v *IS) *PV1 {
+	s.BedStatus = v
+	return s
+}
+
+func (s *PV1) SetAccountStatus(v *IS) *PV1 {
+	s.AccountStatus = v
+	return s
+}
+
+func (s *PV1) SetPendingLocation(v *PL) *PV1 {
+	s.PendingLocation = v
+	return s
+}
+
+func (s *PV1) SetPriorTemporaryLocation(v *PL) *PV1 {
+	s.PriorTemporaryLocation = v
+	return s
+}
+
+func (s *PV1) SetAdmitDateTime(v *TS) *PV1 {
+	s.AdmitDateTime = v
+	return s
+}
+
+func (s *PV1) AddDischargeDateTime(v TS) *PV1 {
+	s.DischargeDateTime = append(s.DischargeDateTime, v)
+	return s
+}
+
+func (s *PV1) SetCurrentPatientBalance(v *NM) *PV1 {
+	s.CurrentPatientBalance = v
+	return s
+}
+
+func (s *PV1) SetTotalCharges(v *NM) *PV1 {
+	s.TotalCharges = v
+	return s
+}
+
+func (s *PV1) SetTotalAdjustments(v *NM) *PV1 {
+	s.TotalAdjustments = v
+	return s
+}
+
+func (s *PV1) SetTotalPayments(v *NM) *PV1 {
+	s.TotalPayments = v
+	return s
+}
+
+func (s *PV1) SetAlternateVisitID(v *CX) *PV1 {
+	s.AlternateVisitID = v
+	return s
+}
+
+func (s *PV1) SetVisitIndicator(v *IS) *PV1 {
+	s.VisitIndicator = v
+	return s
+}
+
+func (s *PV1) AddOtherHealthcareProvider(v XCN) *PV1 {
+	s.OtherHealthcareProvider = append(s.OtherHealthcareProvider, v)
+	return s
 }
 
 // PV2 - Patient Visit - Additional Information
 // The PV2 segment is a continuation of information contained on the PV1 segment.
 type PV2 struct {
-	PriorPendingLocation                PL    `hl7:"1"`
-	AccommodationCode                   CE    `hl7:"2"`
-	AdmitReason                         CE    `hl7:"3"`
-	TransferReason                      CE    `hl7:"4"`
+	PriorPendingLocation                *PL   `hl7:"1"`
+	AccommodationCode                   *CE   `hl7:"2"`
+	AdmitReason                         *CE   `hl7:"3"`
+	TransferReason                      *CE   `hl7:"4"`
 	PatientValuables                    []ST  `hl7:"5"`
-	PatientValuablesLocation            ST    `hl7:"6"`
+	PatientValuablesLocation            *ST   `hl7:"6"`
 	VisitUserCode                       []IS  `hl7:"7"`
-	ExpectedAdmitDateTime               TS    `hl7:"8"`
-	ExpectedDischargeDateTime           TS    `hl7:"9"`
-	EstimatedLengthOfInpatientStay      NM    `hl7:"10"`
-	ActualLengthOfInpatientStay         NM    `hl7:"11"`
-	VisitDescription                    ST    `hl7:"12"`
+	ExpectedAdmitDateTime               *TS   `hl7:"8"`
+	ExpectedDischargeDateTime           *TS   `hl7:"9"`
+	EstimatedLengthOfInpatientStay      *NM   `hl7:"10"`
+	ActualLengthOfInpatientStay         *NM   `hl7:"11"`
+	VisitDescription                    *ST   `hl7:"12"`
 	ReferralSourceCode                  []XCN `hl7:"13"`
-	PreviousServiceDate                 DT    `hl7:"14"`
-	EmploymentIllnessRelatedIndicator   ID    `hl7:"15"`
-	PurgeStatusCode                     IS    `hl7:"16"`
-	PurgeStatusDate                     DT    `hl7:"17"`
-	SpecialProgramCode                  IS    `hl7:"18"`
-	RetentionIndicator                  ID    `hl7:"19"`
-	ExpectedNumberOfInsurancePlans      NM    `hl7:"20"`
-	VisitPublicityCode                  IS    `hl7:"21"`
-	VisitProtectionIndicator            ID    `hl7:"22"`
+	PreviousServiceDate                 *DT   `hl7:"14"`
+	EmploymentIllnessRelatedIndicator   *ID   `hl7:"15"`
+	PurgeStatusCode                     *IS   `hl7:"16"`
+	PurgeStatusDate                     *DT   `hl7:"17"`
+	SpecialProgramCode                  *IS   `hl7:"18"`
+	RetentionIndicator                  *ID   `hl7:"19"`
+	ExpectedNumberOfInsurancePlans      *NM   `hl7:"20"`
+	VisitPublicityCode                  *IS   `hl7:"21"`
+	VisitProtectionIndicator            *ID   `hl7:"22"`
 	ClinicOrganizationName              []XON `hl7:"23"`
-	PatientStatusCode                   IS    `hl7:"24"`
-	VisitPriorityCode                   IS    `hl7:"25"`
-	PreviousTreatmentDate               DT    `hl7:"26"`
-	ExpectedDischargeDisposition        IS    `hl7:"27"`
-	SignatureOnFileDate                 DT    `hl7:"28"`
-	FirstSimilarIllnessDate             DT    `hl7:"29"`
-	PatientChargeAdjustmentCode         CE    `hl7:"30"`
-	RecurringServiceCode                IS    `hl7:"31"`
-	BillingMediaCode                    ID    `hl7:"32"`
-	ExpectedSurgeryDateAndTime          TS    `hl7:"33"`
-	MilitaryPartnershipCode             ID    `hl7:"34"`
-	MilitaryNonAvailabilityCode         ID    `hl7:"35"`
-	NewbornBabyIndicator                ID    `hl7:"36"`
-	BabyDetainedIndicator               ID    `hl7:"37"`
-	ModeOfArrivalCode                   CE    `hl7:"38"`
+	PatientStatusCode                   *IS   `hl7:"24"`
+	VisitPriorityCode                   *IS   `hl7:"25"`
+	PreviousTreatmentDate               *DT   `hl7:"26"`
+	ExpectedDischargeDisposition        *IS   `hl7:"27"`
+	SignatureOnFileDate                 *DT   `hl7:"28"`
+	FirstSimilarIllnessDate             *DT   `hl7:"29"`
+	PatientChargeAdjustmentCode         *CE   `hl7:"30"`
+	RecurringServiceCode                *IS   `hl7:"31"`
+	BillingMediaCode                    *ID   `hl7:"32"`
+	ExpectedSurgeryDateAndTime          *TS   `hl7:"33"`
+	MilitaryPartnershipCode             *ID   `hl7:"34"`
+	MilitaryNonAvailabilityCode         *ID   `hl7:"35"`
+	NewbornBabyIndicator                *ID   `hl7:"36"`
+	BabyDetainedIndicator               *ID   `hl7:"37"`
+	ModeOfArrivalCode                   *CE   `hl7:"38"`
 	RecreationalDrugUseCode             []CE  `hl7:"39"`
-	AdmissionLevelOfCareCode            CE    `hl7:"40"`
+	AdmissionLevelOfCareCode            *CE   `hl7:"40"`
 	PrecautionCode                      []CE  `hl7:"41"`
-	PatientConditionCode                CE    `hl7:"42"`
-	LivingWillCode                      IS    `hl7:"43"`
-	OrganDonorCode                      IS    `hl7:"44"`
+	PatientConditionCode                *CE   `hl7:"42"`
+	LivingWillCode                      *IS   `hl7:"43"`
+	OrganDonorCode                      *IS   `hl7:"44"`
 	AdvanceDirectiveCode                []CE  `hl7:"45"`
-	PatientStatusEffectiveDate          DT    `hl7:"46"`
-	ExpectedLOAReturnDateTime           TS    `hl7:"47"`
-	ExpectedPreAdmissionTestingDateTime TS    `hl7:"48"`
+	PatientStatusEffectiveDate          *DT   `hl7:"46"`
+	ExpectedLOAReturnDateTime           *TS   `hl7:"47"`
+	ExpectedPreAdmissionTestingDateTime *TS   `hl7:"48"`
 	NotifyClergyCode                    []IS  `hl7:"49"`
+}
+
+func NewPV2() *PV2 {
+	return &PV2{}
+}
+
+func (s *PV2) Validate() error {
+
+	if s.PriorPendingLocation != nil {
+		if err := s.PriorPendingLocation.Validate(); err != nil {
+			return fmt.Errorf("PV2.PriorPendingLocation: %w", err)
+		}
+	}
+
+	if s.AccommodationCode != nil {
+		if err := s.AccommodationCode.Validate(); err != nil {
+			return fmt.Errorf("PV2.AccommodationCode: %w", err)
+		}
+	}
+
+	if s.AdmitReason != nil {
+		if err := s.AdmitReason.Validate(); err != nil {
+			return fmt.Errorf("PV2.AdmitReason: %w", err)
+		}
+	}
+
+	if s.TransferReason != nil {
+		if err := s.TransferReason.Validate(); err != nil {
+			return fmt.Errorf("PV2.TransferReason: %w", err)
+		}
+	}
+
+	for _, item := range s.PatientValuables {
+		if string(item) == "" {
+			return fmt.Errorf("PV2.PatientValuables item is empty")
+		}
+	}
+
+	for _, item := range s.VisitUserCode {
+		if string(item) == "" {
+			return fmt.Errorf("PV2.VisitUserCode item is empty")
+		}
+	}
+
+	if s.ExpectedAdmitDateTime != nil {
+		if err := s.ExpectedAdmitDateTime.Validate(); err != nil {
+			return fmt.Errorf("PV2.ExpectedAdmitDateTime: %w", err)
+		}
+	}
+
+	if s.ExpectedDischargeDateTime != nil {
+		if err := s.ExpectedDischargeDateTime.Validate(); err != nil {
+			return fmt.Errorf("PV2.ExpectedDischargeDateTime: %w", err)
+		}
+	}
+
+	for _, item := range s.ReferralSourceCode {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PV2.ReferralSourceCode: %w", err)
+		}
+	}
+
+	for _, item := range s.ClinicOrganizationName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PV2.ClinicOrganizationName: %w", err)
+		}
+	}
+
+	if s.PatientChargeAdjustmentCode != nil {
+		if err := s.PatientChargeAdjustmentCode.Validate(); err != nil {
+			return fmt.Errorf("PV2.PatientChargeAdjustmentCode: %w", err)
+		}
+	}
+
+	if s.ExpectedSurgeryDateAndTime != nil {
+		if err := s.ExpectedSurgeryDateAndTime.Validate(); err != nil {
+			return fmt.Errorf("PV2.ExpectedSurgeryDateAndTime: %w", err)
+		}
+	}
+
+	if s.ModeOfArrivalCode != nil {
+		if err := s.ModeOfArrivalCode.Validate(); err != nil {
+			return fmt.Errorf("PV2.ModeOfArrivalCode: %w", err)
+		}
+	}
+
+	for _, item := range s.RecreationalDrugUseCode {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PV2.RecreationalDrugUseCode: %w", err)
+		}
+	}
+
+	if s.AdmissionLevelOfCareCode != nil {
+		if err := s.AdmissionLevelOfCareCode.Validate(); err != nil {
+			return fmt.Errorf("PV2.AdmissionLevelOfCareCode: %w", err)
+		}
+	}
+
+	for _, item := range s.PrecautionCode {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PV2.PrecautionCode: %w", err)
+		}
+	}
+
+	if s.PatientConditionCode != nil {
+		if err := s.PatientConditionCode.Validate(); err != nil {
+			return fmt.Errorf("PV2.PatientConditionCode: %w", err)
+		}
+	}
+
+	for _, item := range s.AdvanceDirectiveCode {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("PV2.AdvanceDirectiveCode: %w", err)
+		}
+	}
+
+	if s.ExpectedLOAReturnDateTime != nil {
+		if err := s.ExpectedLOAReturnDateTime.Validate(); err != nil {
+			return fmt.Errorf("PV2.ExpectedLOAReturnDateTime: %w", err)
+		}
+	}
+
+	if s.ExpectedPreAdmissionTestingDateTime != nil {
+		if err := s.ExpectedPreAdmissionTestingDateTime.Validate(); err != nil {
+			return fmt.Errorf("PV2.ExpectedPreAdmissionTestingDateTime: %w", err)
+		}
+	}
+
+	for _, item := range s.NotifyClergyCode {
+		if string(item) == "" {
+			return fmt.Errorf("PV2.NotifyClergyCode item is empty")
+		}
+	}
+	return nil
+}
+
+func (s *PV2) SetPriorPendingLocation(v *PL) *PV2 {
+	s.PriorPendingLocation = v
+	return s
+}
+
+func (s *PV2) SetAccommodationCode(v *CE) *PV2 {
+	s.AccommodationCode = v
+	return s
+}
+
+func (s *PV2) SetAdmitReason(v *CE) *PV2 {
+	s.AdmitReason = v
+	return s
+}
+
+func (s *PV2) SetTransferReason(v *CE) *PV2 {
+	s.TransferReason = v
+	return s
+}
+
+func (s *PV2) AddPatientValuables(v ST) *PV2 {
+	s.PatientValuables = append(s.PatientValuables, v)
+	return s
+}
+
+func (s *PV2) SetPatientValuablesLocation(v *ST) *PV2 {
+	s.PatientValuablesLocation = v
+	return s
+}
+
+func (s *PV2) AddVisitUserCode(v IS) *PV2 {
+	s.VisitUserCode = append(s.VisitUserCode, v)
+	return s
+}
+
+func (s *PV2) SetExpectedAdmitDateTime(v *TS) *PV2 {
+	s.ExpectedAdmitDateTime = v
+	return s
+}
+
+func (s *PV2) SetExpectedDischargeDateTime(v *TS) *PV2 {
+	s.ExpectedDischargeDateTime = v
+	return s
+}
+
+func (s *PV2) SetEstimatedLengthOfInpatientStay(v *NM) *PV2 {
+	s.EstimatedLengthOfInpatientStay = v
+	return s
+}
+
+func (s *PV2) SetActualLengthOfInpatientStay(v *NM) *PV2 {
+	s.ActualLengthOfInpatientStay = v
+	return s
+}
+
+func (s *PV2) SetVisitDescription(v *ST) *PV2 {
+	s.VisitDescription = v
+	return s
+}
+
+func (s *PV2) AddReferralSourceCode(v XCN) *PV2 {
+	s.ReferralSourceCode = append(s.ReferralSourceCode, v)
+	return s
+}
+
+func (s *PV2) SetPreviousServiceDate(v *DT) *PV2 {
+	s.PreviousServiceDate = v
+	return s
+}
+
+func (s *PV2) SetEmploymentIllnessRelatedIndicator(v *ID) *PV2 {
+	s.EmploymentIllnessRelatedIndicator = v
+	return s
+}
+
+func (s *PV2) SetPurgeStatusCode(v *IS) *PV2 {
+	s.PurgeStatusCode = v
+	return s
+}
+
+func (s *PV2) SetPurgeStatusDate(v *DT) *PV2 {
+	s.PurgeStatusDate = v
+	return s
+}
+
+func (s *PV2) SetSpecialProgramCode(v *IS) *PV2 {
+	s.SpecialProgramCode = v
+	return s
+}
+
+func (s *PV2) SetRetentionIndicator(v *ID) *PV2 {
+	s.RetentionIndicator = v
+	return s
+}
+
+func (s *PV2) SetExpectedNumberOfInsurancePlans(v *NM) *PV2 {
+	s.ExpectedNumberOfInsurancePlans = v
+	return s
+}
+
+func (s *PV2) SetVisitPublicityCode(v *IS) *PV2 {
+	s.VisitPublicityCode = v
+	return s
+}
+
+func (s *PV2) SetVisitProtectionIndicator(v *ID) *PV2 {
+	s.VisitProtectionIndicator = v
+	return s
+}
+
+func (s *PV2) AddClinicOrganizationName(v XON) *PV2 {
+	s.ClinicOrganizationName = append(s.ClinicOrganizationName, v)
+	return s
+}
+
+func (s *PV2) SetPatientStatusCode(v *IS) *PV2 {
+	s.PatientStatusCode = v
+	return s
+}
+
+func (s *PV2) SetVisitPriorityCode(v *IS) *PV2 {
+	s.VisitPriorityCode = v
+	return s
+}
+
+func (s *PV2) SetPreviousTreatmentDate(v *DT) *PV2 {
+	s.PreviousTreatmentDate = v
+	return s
+}
+
+func (s *PV2) SetExpectedDischargeDisposition(v *IS) *PV2 {
+	s.ExpectedDischargeDisposition = v
+	return s
+}
+
+func (s *PV2) SetSignatureOnFileDate(v *DT) *PV2 {
+	s.SignatureOnFileDate = v
+	return s
+}
+
+func (s *PV2) SetFirstSimilarIllnessDate(v *DT) *PV2 {
+	s.FirstSimilarIllnessDate = v
+	return s
+}
+
+func (s *PV2) SetPatientChargeAdjustmentCode(v *CE) *PV2 {
+	s.PatientChargeAdjustmentCode = v
+	return s
+}
+
+func (s *PV2) SetRecurringServiceCode(v *IS) *PV2 {
+	s.RecurringServiceCode = v
+	return s
+}
+
+func (s *PV2) SetBillingMediaCode(v *ID) *PV2 {
+	s.BillingMediaCode = v
+	return s
+}
+
+func (s *PV2) SetExpectedSurgeryDateAndTime(v *TS) *PV2 {
+	s.ExpectedSurgeryDateAndTime = v
+	return s
+}
+
+func (s *PV2) SetMilitaryPartnershipCode(v *ID) *PV2 {
+	s.MilitaryPartnershipCode = v
+	return s
+}
+
+func (s *PV2) SetMilitaryNonAvailabilityCode(v *ID) *PV2 {
+	s.MilitaryNonAvailabilityCode = v
+	return s
+}
+
+func (s *PV2) SetNewbornBabyIndicator(v *ID) *PV2 {
+	s.NewbornBabyIndicator = v
+	return s
+}
+
+func (s *PV2) SetBabyDetainedIndicator(v *ID) *PV2 {
+	s.BabyDetainedIndicator = v
+	return s
+}
+
+func (s *PV2) SetModeOfArrivalCode(v *CE) *PV2 {
+	s.ModeOfArrivalCode = v
+	return s
+}
+
+func (s *PV2) AddRecreationalDrugUseCode(v CE) *PV2 {
+	s.RecreationalDrugUseCode = append(s.RecreationalDrugUseCode, v)
+	return s
+}
+
+func (s *PV2) SetAdmissionLevelOfCareCode(v *CE) *PV2 {
+	s.AdmissionLevelOfCareCode = v
+	return s
+}
+
+func (s *PV2) AddPrecautionCode(v CE) *PV2 {
+	s.PrecautionCode = append(s.PrecautionCode, v)
+	return s
+}
+
+func (s *PV2) SetPatientConditionCode(v *CE) *PV2 {
+	s.PatientConditionCode = v
+	return s
+}
+
+func (s *PV2) SetLivingWillCode(v *IS) *PV2 {
+	s.LivingWillCode = v
+	return s
+}
+
+func (s *PV2) SetOrganDonorCode(v *IS) *PV2 {
+	s.OrganDonorCode = v
+	return s
+}
+
+func (s *PV2) AddAdvanceDirectiveCode(v CE) *PV2 {
+	s.AdvanceDirectiveCode = append(s.AdvanceDirectiveCode, v)
+	return s
+}
+
+func (s *PV2) SetPatientStatusEffectiveDate(v *DT) *PV2 {
+	s.PatientStatusEffectiveDate = v
+	return s
+}
+
+func (s *PV2) SetExpectedLOAReturnDateTime(v *TS) *PV2 {
+	s.ExpectedLOAReturnDateTime = v
+	return s
+}
+
+func (s *PV2) SetExpectedPreAdmissionTestingDateTime(v *TS) *PV2 {
+	s.ExpectedPreAdmissionTestingDateTime = v
+	return s
+}
+
+func (s *PV2) AddNotifyClergyCode(v IS) *PV2 {
+	s.NotifyClergyCode = append(s.NotifyClergyCode, v)
+	return s
 }
 
 // QAK - Query Acknowledgment
 // The QAK segment contains information sent with responses to a query. Although the QAK segment is required in the responses to the enhanced queries, it may appear as an optional segment placed after the (optional) ERR segment in any query response (message) to any original mode query.
 type QAK struct {
-	QueryTag            ST `hl7:"1"`
-	QueryResponseStatus ID `hl7:"2"`
-	MessageQueryName    CE `hl7:"3"`
-	HitCount            NM `hl7:"4"`
-	ThisPayload         NM `hl7:"5"`
-	HitsRemaining       NM `hl7:"6"`
+	QueryTag            *ST `hl7:"1"`
+	QueryResponseStatus *ID `hl7:"2"`
+	MessageQueryName    *CE `hl7:"3"`
+	HitCount            *NM `hl7:"4"`
+	ThisPayload         *NM `hl7:"5"`
+	HitsRemaining       *NM `hl7:"6"`
+}
+
+func NewQAK() *QAK {
+	return &QAK{}
+}
+
+func (s *QAK) Validate() error {
+
+	if s.MessageQueryName != nil {
+		if err := s.MessageQueryName.Validate(); err != nil {
+			return fmt.Errorf("QAK.MessageQueryName: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *QAK) SetQueryTag(v *ST) *QAK {
+	s.QueryTag = v
+	return s
+}
+
+func (s *QAK) SetQueryResponseStatus(v *ID) *QAK {
+	s.QueryResponseStatus = v
+	return s
+}
+
+func (s *QAK) SetMessageQueryName(v *CE) *QAK {
+	s.MessageQueryName = v
+	return s
+}
+
+func (s *QAK) SetHitCount(v *NM) *QAK {
+	s.HitCount = v
+	return s
+}
+
+func (s *QAK) SetThisPayload(v *NM) *QAK {
+	s.ThisPayload = v
+	return s
+}
+
+func (s *QAK) SetHitsRemaining(v *NM) *QAK {
+	s.HitsRemaining = v
+	return s
 }
 
 // QID - Query Identification
 // The QID segment contains the information necessary to uniquely identify a query. Its primary use is in query cancellation or subscription cancellation.
 type QID struct {
-	QueryTag         ST `hl7:"1,required"`
-	MessageQueryName CE `hl7:"2,required"`
+	QueryTag         *ST `hl7:"1,required"`
+	MessageQueryName *CE `hl7:"2,required"`
+}
+
+func NewQID() *QID {
+	return &QID{}
+}
+
+func (s *QID) Validate() error {
+
+	if s.QueryTag == nil {
+		return fmt.Errorf("QID.QueryTag is required")
+	}
+	if string(*s.QueryTag) == "" {
+		return fmt.Errorf("QID.QueryTag is empty")
+	}
+
+	if s.MessageQueryName == nil {
+		return fmt.Errorf("QID.MessageQueryName is required")
+	}
+	if s.MessageQueryName != nil {
+		if err := s.MessageQueryName.Validate(); err != nil {
+			return fmt.Errorf("QID.MessageQueryName: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *QID) SetQueryTag(v *ST) *QID {
+	s.QueryTag = v
+	return s
+}
+
+func (s *QID) SetMessageQueryName(v *CE) *QID {
+	s.MessageQueryName = v
+	return s
 }
 
 // QPD - Query Parameter Definition
 // The QPD segment defines the parameters of the query.
 type QPD struct {
-	MessageQueryName                 CE     `hl7:"1,required"`
-	QueryTag                         ST     `hl7:"2"`
-	UserParametersInSuccessiveFields VARIES `hl7:"3"`
+	MessageQueryName                 *CE     `hl7:"1,required"`
+	QueryTag                         *ST     `hl7:"2"`
+	UserParametersInSuccessiveFields *VARIES `hl7:"3"`
+}
+
+func NewQPD() *QPD {
+	return &QPD{}
+}
+
+func (s *QPD) Validate() error {
+
+	if s.MessageQueryName == nil {
+		return fmt.Errorf("QPD.MessageQueryName is required")
+	}
+	if s.MessageQueryName != nil {
+		if err := s.MessageQueryName.Validate(); err != nil {
+			return fmt.Errorf("QPD.MessageQueryName: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *QPD) SetMessageQueryName(v *CE) *QPD {
+	s.MessageQueryName = v
+	return s
+}
+
+func (s *QPD) SetQueryTag(v *ST) *QPD {
+	s.QueryTag = v
+	return s
+}
+
+func (s *QPD) SetUserParametersInSuccessiveFields(v *VARIES) *QPD {
+	s.UserParametersInSuccessiveFields = v
+	return s
 }
 
 // QRD - Original-Style Query Definition
@@ -2145,18 +17652,165 @@ type QPD struct {
 //
 // The QRD segment is used to define a query.
 type QRD struct {
-	QueryDateTime            TS    `hl7:"1,required"`
-	QueryFormatCode          ID    `hl7:"2,required"`
-	QueryPriority            ID    `hl7:"3,required"`
-	QueryID                  ST    `hl7:"4,required"`
-	DeferredResponseType     ID    `hl7:"5"`
-	DeferredResponseDateTime TS    `hl7:"6"`
-	QuantityLimitedRequest   CQ    `hl7:"7,required"`
+	QueryDateTime            *TS   `hl7:"1,required"`
+	QueryFormatCode          *ID   `hl7:"2,required"`
+	QueryPriority            *ID   `hl7:"3,required"`
+	QueryID                  *ST   `hl7:"4,required"`
+	DeferredResponseType     *ID   `hl7:"5"`
+	DeferredResponseDateTime *TS   `hl7:"6"`
+	QuantityLimitedRequest   *CQ   `hl7:"7,required"`
 	WhoSubjectFilter         []XCN `hl7:"8,required"`
 	WhatSubjectFilter        []CE  `hl7:"9,required"`
 	WhatDepartmentDataCode   []CE  `hl7:"10,required"`
 	WhatDataCodeValueQual    []VR  `hl7:"11"`
-	QueryResultsLevel        ID    `hl7:"12"`
+	QueryResultsLevel        *ID   `hl7:"12"`
+}
+
+func NewQRD() *QRD {
+	return &QRD{}
+}
+
+func (s *QRD) Validate() error {
+
+	if s.QueryDateTime == nil {
+		return fmt.Errorf("QRD.QueryDateTime is required")
+	}
+	if s.QueryDateTime != nil {
+		if err := s.QueryDateTime.Validate(); err != nil {
+			return fmt.Errorf("QRD.QueryDateTime: %w", err)
+		}
+	}
+
+	if s.QueryFormatCode == nil {
+		return fmt.Errorf("QRD.QueryFormatCode is required")
+	}
+	if string(*s.QueryFormatCode) == "" {
+		return fmt.Errorf("QRD.QueryFormatCode is empty")
+	}
+
+	if s.QueryPriority == nil {
+		return fmt.Errorf("QRD.QueryPriority is required")
+	}
+	if string(*s.QueryPriority) == "" {
+		return fmt.Errorf("QRD.QueryPriority is empty")
+	}
+
+	if s.QueryID == nil {
+		return fmt.Errorf("QRD.QueryID is required")
+	}
+	if string(*s.QueryID) == "" {
+		return fmt.Errorf("QRD.QueryID is empty")
+	}
+
+	if s.DeferredResponseDateTime != nil {
+		if err := s.DeferredResponseDateTime.Validate(); err != nil {
+			return fmt.Errorf("QRD.DeferredResponseDateTime: %w", err)
+		}
+	}
+
+	if s.QuantityLimitedRequest == nil {
+		return fmt.Errorf("QRD.QuantityLimitedRequest is required")
+	}
+	if s.QuantityLimitedRequest != nil {
+		if err := s.QuantityLimitedRequest.Validate(); err != nil {
+			return fmt.Errorf("QRD.QuantityLimitedRequest: %w", err)
+		}
+	}
+
+	if len(s.WhoSubjectFilter) == 0 {
+		return fmt.Errorf("QRD.WhoSubjectFilter is required")
+	}
+	for _, item := range s.WhoSubjectFilter {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("QRD.WhoSubjectFilter: %w", err)
+		}
+	}
+
+	if len(s.WhatSubjectFilter) == 0 {
+		return fmt.Errorf("QRD.WhatSubjectFilter is required")
+	}
+	for _, item := range s.WhatSubjectFilter {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("QRD.WhatSubjectFilter: %w", err)
+		}
+	}
+
+	if len(s.WhatDepartmentDataCode) == 0 {
+		return fmt.Errorf("QRD.WhatDepartmentDataCode is required")
+	}
+	for _, item := range s.WhatDepartmentDataCode {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("QRD.WhatDepartmentDataCode: %w", err)
+		}
+	}
+
+	for _, item := range s.WhatDataCodeValueQual {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("QRD.WhatDataCodeValueQual: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *QRD) SetQueryDateTime(v *TS) *QRD {
+	s.QueryDateTime = v
+	return s
+}
+
+func (s *QRD) SetQueryFormatCode(v *ID) *QRD {
+	s.QueryFormatCode = v
+	return s
+}
+
+func (s *QRD) SetQueryPriority(v *ID) *QRD {
+	s.QueryPriority = v
+	return s
+}
+
+func (s *QRD) SetQueryID(v *ST) *QRD {
+	s.QueryID = v
+	return s
+}
+
+func (s *QRD) SetDeferredResponseType(v *ID) *QRD {
+	s.DeferredResponseType = v
+	return s
+}
+
+func (s *QRD) SetDeferredResponseDateTime(v *TS) *QRD {
+	s.DeferredResponseDateTime = v
+	return s
+}
+
+func (s *QRD) SetQuantityLimitedRequest(v *CQ) *QRD {
+	s.QuantityLimitedRequest = v
+	return s
+}
+
+func (s *QRD) AddWhoSubjectFilter(v XCN) *QRD {
+	s.WhoSubjectFilter = append(s.WhoSubjectFilter, v)
+	return s
+}
+
+func (s *QRD) AddWhatSubjectFilter(v CE) *QRD {
+	s.WhatSubjectFilter = append(s.WhatSubjectFilter, v)
+	return s
+}
+
+func (s *QRD) AddWhatDepartmentDataCode(v CE) *QRD {
+	s.WhatDepartmentDataCode = append(s.WhatDepartmentDataCode, v)
+	return s
+}
+
+func (s *QRD) AddWhatDataCodeValueQual(v VR) *QRD {
+	s.WhatDataCodeValueQual = append(s.WhatDataCodeValueQual, v)
+	return s
+}
+
+func (s *QRD) SetQueryResultsLevel(v *ID) *QRD {
+	s.QueryResultsLevel = v
+	return s
 }
 
 // QRF - Original style query filter
@@ -2165,64 +17819,475 @@ type QRD struct {
 // The QRF segment is used with the QRD segment to further refine the content of an original style query.
 type QRF struct {
 	WhereSubjectFilter           []ST `hl7:"1,required"`
-	WhenDataStartDateTime        TS   `hl7:"2"`
-	WhenDataEndDateTime          TS   `hl7:"3"`
+	WhenDataStartDateTime        *TS  `hl7:"2"`
+	WhenDataEndDateTime          *TS  `hl7:"3"`
 	WhatUserQualifier            []ST `hl7:"4"`
 	OtherQRYSubjectFilter        []ST `hl7:"5"`
 	WhichDateTimeQualifier       []ID `hl7:"6"`
 	WhichDateTimeStatusQualifier []ID `hl7:"7"`
 	DateTimeSelectionQualifier   []ID `hl7:"8"`
-	WhenQuantityTimingQualifier  TQ   `hl7:"9"`
-	SearchConfidenceThreshold    NM   `hl7:"10"`
+	WhenQuantityTimingQualifier  *TQ  `hl7:"9"`
+	SearchConfidenceThreshold    *NM  `hl7:"10"`
+}
+
+func NewQRF() *QRF {
+	return &QRF{}
+}
+
+func (s *QRF) Validate() error {
+
+	if len(s.WhereSubjectFilter) == 0 {
+		return fmt.Errorf("QRF.WhereSubjectFilter is required")
+	}
+	for _, item := range s.WhereSubjectFilter {
+		if string(item) == "" {
+			return fmt.Errorf("QRF.WhereSubjectFilter item is empty")
+		}
+	}
+
+	if s.WhenDataStartDateTime != nil {
+		if err := s.WhenDataStartDateTime.Validate(); err != nil {
+			return fmt.Errorf("QRF.WhenDataStartDateTime: %w", err)
+		}
+	}
+
+	if s.WhenDataEndDateTime != nil {
+		if err := s.WhenDataEndDateTime.Validate(); err != nil {
+			return fmt.Errorf("QRF.WhenDataEndDateTime: %w", err)
+		}
+	}
+
+	for _, item := range s.WhatUserQualifier {
+		if string(item) == "" {
+			return fmt.Errorf("QRF.WhatUserQualifier item is empty")
+		}
+	}
+
+	for _, item := range s.OtherQRYSubjectFilter {
+		if string(item) == "" {
+			return fmt.Errorf("QRF.OtherQRYSubjectFilter item is empty")
+		}
+	}
+
+	for _, item := range s.WhichDateTimeQualifier {
+		if string(item) == "" {
+			return fmt.Errorf("QRF.WhichDateTimeQualifier item is empty")
+		}
+	}
+
+	for _, item := range s.WhichDateTimeStatusQualifier {
+		if string(item) == "" {
+			return fmt.Errorf("QRF.WhichDateTimeStatusQualifier item is empty")
+		}
+	}
+
+	for _, item := range s.DateTimeSelectionQualifier {
+		if string(item) == "" {
+			return fmt.Errorf("QRF.DateTimeSelectionQualifier item is empty")
+		}
+	}
+
+	if s.WhenQuantityTimingQualifier != nil {
+		if err := s.WhenQuantityTimingQualifier.Validate(); err != nil {
+			return fmt.Errorf("QRF.WhenQuantityTimingQualifier: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *QRF) AddWhereSubjectFilter(v ST) *QRF {
+	s.WhereSubjectFilter = append(s.WhereSubjectFilter, v)
+	return s
+}
+
+func (s *QRF) SetWhenDataStartDateTime(v *TS) *QRF {
+	s.WhenDataStartDateTime = v
+	return s
+}
+
+func (s *QRF) SetWhenDataEndDateTime(v *TS) *QRF {
+	s.WhenDataEndDateTime = v
+	return s
+}
+
+func (s *QRF) AddWhatUserQualifier(v ST) *QRF {
+	s.WhatUserQualifier = append(s.WhatUserQualifier, v)
+	return s
+}
+
+func (s *QRF) AddOtherQRYSubjectFilter(v ST) *QRF {
+	s.OtherQRYSubjectFilter = append(s.OtherQRYSubjectFilter, v)
+	return s
+}
+
+func (s *QRF) AddWhichDateTimeQualifier(v ID) *QRF {
+	s.WhichDateTimeQualifier = append(s.WhichDateTimeQualifier, v)
+	return s
+}
+
+func (s *QRF) AddWhichDateTimeStatusQualifier(v ID) *QRF {
+	s.WhichDateTimeStatusQualifier = append(s.WhichDateTimeStatusQualifier, v)
+	return s
+}
+
+func (s *QRF) AddDateTimeSelectionQualifier(v ID) *QRF {
+	s.DateTimeSelectionQualifier = append(s.DateTimeSelectionQualifier, v)
+	return s
+}
+
+func (s *QRF) SetWhenQuantityTimingQualifier(v *TQ) *QRF {
+	s.WhenQuantityTimingQualifier = v
+	return s
+}
+
+func (s *QRF) SetSearchConfidenceThreshold(v *NM) *QRF {
+	s.SearchConfidenceThreshold = v
+	return s
 }
 
 // QRI - Query Response Instance
 // The QRI segment is used to indicate the weight match for a returned record (where the responding system employs a numeric algorithm) and/or the match reason code (where the responding system uses rules or other match options).
 type QRI struct {
-	CandidateConfidence NM   `hl7:"1"`
+	CandidateConfidence *NM  `hl7:"1"`
 	MatchReasonCode     []IS `hl7:"2"`
-	AlgorithmDescriptor CE   `hl7:"3"`
+	AlgorithmDescriptor *CE  `hl7:"3"`
+}
+
+func NewQRI() *QRI {
+	return &QRI{}
+}
+
+func (s *QRI) Validate() error {
+
+	for _, item := range s.MatchReasonCode {
+		if string(item) == "" {
+			return fmt.Errorf("QRI.MatchReasonCode item is empty")
+		}
+	}
+
+	if s.AlgorithmDescriptor != nil {
+		if err := s.AlgorithmDescriptor.Validate(); err != nil {
+			return fmt.Errorf("QRI.AlgorithmDescriptor: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *QRI) SetCandidateConfidence(v *NM) *QRI {
+	s.CandidateConfidence = v
+	return s
+}
+
+func (s *QRI) AddMatchReasonCode(v IS) *QRI {
+	s.MatchReasonCode = append(s.MatchReasonCode, v)
+	return s
+}
+
+func (s *QRI) SetAlgorithmDescriptor(v *CE) *QRI {
+	s.AlgorithmDescriptor = v
+	return s
 }
 
 // RCP - Response Control Parameter
 // The RCP segment is used to restrict the amount of data that should be returned in response to query.
 type RCP struct {
-	QueryPriority            ID    `hl7:"1"`
-	QuantityLimitedRequest   CQ    `hl7:"2"`
-	ResponseModality         CE    `hl7:"3"`
-	ExecutionAndDeliveryTime TS    `hl7:"4"`
-	ModifyIndicator          ID    `hl7:"5"`
+	QueryPriority            *ID   `hl7:"1"`
+	QuantityLimitedRequest   *CQ   `hl7:"2"`
+	ResponseModality         *CE   `hl7:"3"`
+	ExecutionAndDeliveryTime *TS   `hl7:"4"`
+	ModifyIndicator          *ID   `hl7:"5"`
 	SortByField              []SRT `hl7:"6"`
 	SegmentGroupInclusion    []ID  `hl7:"7"`
+}
+
+func NewRCP() *RCP {
+	return &RCP{}
+}
+
+func (s *RCP) Validate() error {
+
+	if s.QuantityLimitedRequest != nil {
+		if err := s.QuantityLimitedRequest.Validate(); err != nil {
+			return fmt.Errorf("RCP.QuantityLimitedRequest: %w", err)
+		}
+	}
+
+	if s.ResponseModality != nil {
+		if err := s.ResponseModality.Validate(); err != nil {
+			return fmt.Errorf("RCP.ResponseModality: %w", err)
+		}
+	}
+
+	if s.ExecutionAndDeliveryTime != nil {
+		if err := s.ExecutionAndDeliveryTime.Validate(); err != nil {
+			return fmt.Errorf("RCP.ExecutionAndDeliveryTime: %w", err)
+		}
+	}
+
+	for _, item := range s.SortByField {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RCP.SortByField: %w", err)
+		}
+	}
+
+	for _, item := range s.SegmentGroupInclusion {
+		if string(item) == "" {
+			return fmt.Errorf("RCP.SegmentGroupInclusion item is empty")
+		}
+	}
+	return nil
+}
+
+func (s *RCP) SetQueryPriority(v *ID) *RCP {
+	s.QueryPriority = v
+	return s
+}
+
+func (s *RCP) SetQuantityLimitedRequest(v *CQ) *RCP {
+	s.QuantityLimitedRequest = v
+	return s
+}
+
+func (s *RCP) SetResponseModality(v *CE) *RCP {
+	s.ResponseModality = v
+	return s
+}
+
+func (s *RCP) SetExecutionAndDeliveryTime(v *TS) *RCP {
+	s.ExecutionAndDeliveryTime = v
+	return s
+}
+
+func (s *RCP) SetModifyIndicator(v *ID) *RCP {
+	s.ModifyIndicator = v
+	return s
+}
+
+func (s *RCP) AddSortByField(v SRT) *RCP {
+	s.SortByField = append(s.SortByField, v)
+	return s
+}
+
+func (s *RCP) AddSegmentGroupInclusion(v ID) *RCP {
+	s.SegmentGroupInclusion = append(s.SegmentGroupInclusion, v)
+	return s
 }
 
 // RDF - Table Row Definition
 // The RDF segment defines the content of the row data segments (RDT) in the tabular response (RTB).
 type RDF struct {
-	NumberOfColumnsPerRow NM    `hl7:"1,required"`
+	NumberOfColumnsPerRow *NM   `hl7:"1,required"`
 	ColumnDescription     []RCD `hl7:"2,required"`
+}
+
+func NewRDF() *RDF {
+	return &RDF{}
+}
+
+func (s *RDF) Validate() error {
+
+	if s.NumberOfColumnsPerRow == nil {
+		return fmt.Errorf("RDF.NumberOfColumnsPerRow is required")
+	}
+	if string(*s.NumberOfColumnsPerRow) == "" {
+		return fmt.Errorf("RDF.NumberOfColumnsPerRow is empty")
+	}
+
+	if len(s.ColumnDescription) == 0 {
+		return fmt.Errorf("RDF.ColumnDescription is required")
+	}
+	for _, item := range s.ColumnDescription {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RDF.ColumnDescription: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *RDF) SetNumberOfColumnsPerRow(v *NM) *RDF {
+	s.NumberOfColumnsPerRow = v
+	return s
+}
+
+func (s *RDF) AddColumnDescription(v RCD) *RDF {
+	s.ColumnDescription = append(s.ColumnDescription, v)
+	return s
 }
 
 // RDT - Table Row Data
 // The RDT segment contains the row data of the tabular data response message (TBR).
 type RDT struct {
-	ColumnValue VARIES `hl7:"1,required"`
+	ColumnValue *VARIES `hl7:"1,required"`
+}
+
+func NewRDT() *RDT {
+	return &RDT{}
+}
+
+func (s *RDT) Validate() error {
+
+	if s.ColumnValue == nil {
+		return fmt.Errorf("RDT.ColumnValue is required")
+	}
+	if string(*s.ColumnValue) == "" {
+		return fmt.Errorf("RDT.ColumnValue is empty")
+	}
+
+	return nil
+}
+
+func (s *RDT) SetColumnValue(v *VARIES) *RDT {
+	s.ColumnValue = v
+	return s
 }
 
 // RF1 - Referral Information
 // This segment represents information that may be useful when sending referrals from the referring provider to the referred-to provider.
 type RF1 struct {
-	ReferralStatus                CE   `hl7:"1"`
-	ReferralPriority              CE   `hl7:"2"`
-	ReferralType                  CE   `hl7:"3"`
+	ReferralStatus                *CE  `hl7:"1"`
+	ReferralPriority              *CE  `hl7:"2"`
+	ReferralType                  *CE  `hl7:"3"`
 	ReferralDisposition           []CE `hl7:"4"`
-	ReferralCategory              CE   `hl7:"5"`
-	OriginatingReferralIdentifier EI   `hl7:"6,required"`
-	EffectiveDate                 TS   `hl7:"7"`
-	ExpirationDate                TS   `hl7:"8"`
-	ProcessDate                   TS   `hl7:"9"`
+	ReferralCategory              *CE  `hl7:"5"`
+	OriginatingReferralIdentifier *EI  `hl7:"6,required"`
+	EffectiveDate                 *TS  `hl7:"7"`
+	ExpirationDate                *TS  `hl7:"8"`
+	ProcessDate                   *TS  `hl7:"9"`
 	ReferralReason                []CE `hl7:"10"`
 	ExternalReferralIdentifier    []EI `hl7:"11"`
+}
+
+func NewRF1() *RF1 {
+	return &RF1{}
+}
+
+func (s *RF1) Validate() error {
+
+	if s.ReferralStatus != nil {
+		if err := s.ReferralStatus.Validate(); err != nil {
+			return fmt.Errorf("RF1.ReferralStatus: %w", err)
+		}
+	}
+
+	if s.ReferralPriority != nil {
+		if err := s.ReferralPriority.Validate(); err != nil {
+			return fmt.Errorf("RF1.ReferralPriority: %w", err)
+		}
+	}
+
+	if s.ReferralType != nil {
+		if err := s.ReferralType.Validate(); err != nil {
+			return fmt.Errorf("RF1.ReferralType: %w", err)
+		}
+	}
+
+	for _, item := range s.ReferralDisposition {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RF1.ReferralDisposition: %w", err)
+		}
+	}
+
+	if s.ReferralCategory != nil {
+		if err := s.ReferralCategory.Validate(); err != nil {
+			return fmt.Errorf("RF1.ReferralCategory: %w", err)
+		}
+	}
+
+	if s.OriginatingReferralIdentifier == nil {
+		return fmt.Errorf("RF1.OriginatingReferralIdentifier is required")
+	}
+	if s.OriginatingReferralIdentifier != nil {
+		if err := s.OriginatingReferralIdentifier.Validate(); err != nil {
+			return fmt.Errorf("RF1.OriginatingReferralIdentifier: %w", err)
+		}
+	}
+
+	if s.EffectiveDate != nil {
+		if err := s.EffectiveDate.Validate(); err != nil {
+			return fmt.Errorf("RF1.EffectiveDate: %w", err)
+		}
+	}
+
+	if s.ExpirationDate != nil {
+		if err := s.ExpirationDate.Validate(); err != nil {
+			return fmt.Errorf("RF1.ExpirationDate: %w", err)
+		}
+	}
+
+	if s.ProcessDate != nil {
+		if err := s.ProcessDate.Validate(); err != nil {
+			return fmt.Errorf("RF1.ProcessDate: %w", err)
+		}
+	}
+
+	for _, item := range s.ReferralReason {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RF1.ReferralReason: %w", err)
+		}
+	}
+
+	for _, item := range s.ExternalReferralIdentifier {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RF1.ExternalReferralIdentifier: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *RF1) SetReferralStatus(v *CE) *RF1 {
+	s.ReferralStatus = v
+	return s
+}
+
+func (s *RF1) SetReferralPriority(v *CE) *RF1 {
+	s.ReferralPriority = v
+	return s
+}
+
+func (s *RF1) SetReferralType(v *CE) *RF1 {
+	s.ReferralType = v
+	return s
+}
+
+func (s *RF1) AddReferralDisposition(v CE) *RF1 {
+	s.ReferralDisposition = append(s.ReferralDisposition, v)
+	return s
+}
+
+func (s *RF1) SetReferralCategory(v *CE) *RF1 {
+	s.ReferralCategory = v
+	return s
+}
+
+func (s *RF1) SetOriginatingReferralIdentifier(v *EI) *RF1 {
+	s.OriginatingReferralIdentifier = v
+	return s
+}
+
+func (s *RF1) SetEffectiveDate(v *TS) *RF1 {
+	s.EffectiveDate = v
+	return s
+}
+
+func (s *RF1) SetExpirationDate(v *TS) *RF1 {
+	s.ExpirationDate = v
+	return s
+}
+
+func (s *RF1) SetProcessDate(v *TS) *RF1 {
+	s.ProcessDate = v
+	return s
+}
+
+func (s *RF1) AddReferralReason(v CE) *RF1 {
+	s.ReferralReason = append(s.ReferralReason, v)
+	return s
+}
+
+func (s *RF1) AddExternalReferralIdentifier(v EI) *RF1 {
+	s.ExternalReferralIdentifier = append(s.ExternalReferralIdentifier, v)
+	return s
 }
 
 // RGS - Resource Group
@@ -2230,347 +18295,3119 @@ type RF1 struct {
 //
 // If a message does not require any grouping of resources, then specify a single RGS in the message, and follow it with all of the Appointment Information segments for the scheduled event.   (At least one RGS segment is required in each message – even if no grouping of resources is required – to allow parsers to properly understand the message.)
 type RGS struct {
-	SetIDRGS          SI `hl7:"1,required"`
-	SegmentActionCode ID `hl7:"2"`
-	ResourceGroupID   CE `hl7:"3"`
+	SetIDRGS          *SI `hl7:"1,required"`
+	SegmentActionCode *ID `hl7:"2"`
+	ResourceGroupID   *CE `hl7:"3"`
+}
+
+func NewRGS() *RGS {
+	return &RGS{}
+}
+
+func (s *RGS) Validate() error {
+
+	if s.SetIDRGS == nil {
+		return fmt.Errorf("RGS.SetIDRGS is required")
+	}
+	if string(*s.SetIDRGS) == "" {
+		return fmt.Errorf("RGS.SetIDRGS is empty")
+	}
+
+	if s.ResourceGroupID != nil {
+		if err := s.ResourceGroupID.Validate(); err != nil {
+			return fmt.Errorf("RGS.ResourceGroupID: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *RGS) SetSetIDRGS(v *SI) *RGS {
+	s.SetIDRGS = v
+	return s
+}
+
+func (s *RGS) SetSegmentActionCode(v *ID) *RGS {
+	s.SegmentActionCode = v
+	return s
+}
+
+func (s *RGS) SetResourceGroupID(v *CE) *RGS {
+	s.ResourceGroupID = v
+	return s
 }
 
 // RMI - Risk Management Incident
 // The RMI segment is used to report an occurrence of an incident event pertaining or attaching to a patient encounter.
 type RMI struct {
-	RiskManagementIncidentCode CE `hl7:"1"`
-	DateTimeIncident           TS `hl7:"2"`
-	IncidentTypeCode           CE `hl7:"3"`
+	RiskManagementIncidentCode *CE `hl7:"1"`
+	DateTimeIncident           *TS `hl7:"2"`
+	IncidentTypeCode           *CE `hl7:"3"`
+}
+
+func NewRMI() *RMI {
+	return &RMI{}
+}
+
+func (s *RMI) Validate() error {
+
+	if s.RiskManagementIncidentCode != nil {
+		if err := s.RiskManagementIncidentCode.Validate(); err != nil {
+			return fmt.Errorf("RMI.RiskManagementIncidentCode: %w", err)
+		}
+	}
+
+	if s.DateTimeIncident != nil {
+		if err := s.DateTimeIncident.Validate(); err != nil {
+			return fmt.Errorf("RMI.DateTimeIncident: %w", err)
+		}
+	}
+
+	if s.IncidentTypeCode != nil {
+		if err := s.IncidentTypeCode.Validate(); err != nil {
+			return fmt.Errorf("RMI.IncidentTypeCode: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *RMI) SetRiskManagementIncidentCode(v *CE) *RMI {
+	s.RiskManagementIncidentCode = v
+	return s
+}
+
+func (s *RMI) SetDateTimeIncident(v *TS) *RMI {
+	s.DateTimeIncident = v
+	return s
+}
+
+func (s *RMI) SetIncidentTypeCode(v *CE) *RMI {
+	s.IncidentTypeCode = v
+	return s
 }
 
 // ROL - Role
 // The role segment contains the data necessary to add, update, correct, and delete from the record persons involved, as well as their functional involvement with the activity being transmitted.
 type ROL struct {
-	RoleInstanceID              EI    `hl7:"1"`
-	ActionCode                  ID    `hl7:"2,required"`
-	RoleROL                     CE    `hl7:"3,required"`
+	RoleInstanceID              *EI   `hl7:"1"`
+	ActionCode                  *ID   `hl7:"2,required"`
+	RoleROL                     *CE   `hl7:"3,required"`
 	RolePerson                  []XCN `hl7:"4,required"`
-	RoleBeginDateTime           TS    `hl7:"5"`
-	RoleEndDateTime             TS    `hl7:"6"`
-	RoleDuration                CE    `hl7:"7"`
-	RoleActionReason            CE    `hl7:"8"`
+	RoleBeginDateTime           *TS   `hl7:"5"`
+	RoleEndDateTime             *TS   `hl7:"6"`
+	RoleDuration                *CE   `hl7:"7"`
+	RoleActionReason            *CE   `hl7:"8"`
 	ProviderType                []CE  `hl7:"9"`
-	OrganizationUnitType        CE    `hl7:"10"`
+	OrganizationUnitType        *CE   `hl7:"10"`
 	OfficeHomeAddressBirthplace []XAD `hl7:"11"`
 	Phone                       []XTN `hl7:"12"`
+}
+
+func NewROL() *ROL {
+	return &ROL{}
+}
+
+func (s *ROL) Validate() error {
+
+	if s.RoleInstanceID != nil {
+		if err := s.RoleInstanceID.Validate(); err != nil {
+			return fmt.Errorf("ROL.RoleInstanceID: %w", err)
+		}
+	}
+
+	if s.ActionCode == nil {
+		return fmt.Errorf("ROL.ActionCode is required")
+	}
+	if string(*s.ActionCode) == "" {
+		return fmt.Errorf("ROL.ActionCode is empty")
+	}
+
+	if s.RoleROL == nil {
+		return fmt.Errorf("ROL.RoleROL is required")
+	}
+	if s.RoleROL != nil {
+		if err := s.RoleROL.Validate(); err != nil {
+			return fmt.Errorf("ROL.RoleROL: %w", err)
+		}
+	}
+
+	if len(s.RolePerson) == 0 {
+		return fmt.Errorf("ROL.RolePerson is required")
+	}
+	for _, item := range s.RolePerson {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("ROL.RolePerson: %w", err)
+		}
+	}
+
+	if s.RoleBeginDateTime != nil {
+		if err := s.RoleBeginDateTime.Validate(); err != nil {
+			return fmt.Errorf("ROL.RoleBeginDateTime: %w", err)
+		}
+	}
+
+	if s.RoleEndDateTime != nil {
+		if err := s.RoleEndDateTime.Validate(); err != nil {
+			return fmt.Errorf("ROL.RoleEndDateTime: %w", err)
+		}
+	}
+
+	if s.RoleDuration != nil {
+		if err := s.RoleDuration.Validate(); err != nil {
+			return fmt.Errorf("ROL.RoleDuration: %w", err)
+		}
+	}
+
+	if s.RoleActionReason != nil {
+		if err := s.RoleActionReason.Validate(); err != nil {
+			return fmt.Errorf("ROL.RoleActionReason: %w", err)
+		}
+	}
+
+	for _, item := range s.ProviderType {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("ROL.ProviderType: %w", err)
+		}
+	}
+
+	if s.OrganizationUnitType != nil {
+		if err := s.OrganizationUnitType.Validate(); err != nil {
+			return fmt.Errorf("ROL.OrganizationUnitType: %w", err)
+		}
+	}
+
+	for _, item := range s.OfficeHomeAddressBirthplace {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("ROL.OfficeHomeAddressBirthplace: %w", err)
+		}
+	}
+
+	for _, item := range s.Phone {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("ROL.Phone: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *ROL) SetRoleInstanceID(v *EI) *ROL {
+	s.RoleInstanceID = v
+	return s
+}
+
+func (s *ROL) SetActionCode(v *ID) *ROL {
+	s.ActionCode = v
+	return s
+}
+
+func (s *ROL) SetRoleROL(v *CE) *ROL {
+	s.RoleROL = v
+	return s
+}
+
+func (s *ROL) AddRolePerson(v XCN) *ROL {
+	s.RolePerson = append(s.RolePerson, v)
+	return s
+}
+
+func (s *ROL) SetRoleBeginDateTime(v *TS) *ROL {
+	s.RoleBeginDateTime = v
+	return s
+}
+
+func (s *ROL) SetRoleEndDateTime(v *TS) *ROL {
+	s.RoleEndDateTime = v
+	return s
+}
+
+func (s *ROL) SetRoleDuration(v *CE) *ROL {
+	s.RoleDuration = v
+	return s
+}
+
+func (s *ROL) SetRoleActionReason(v *CE) *ROL {
+	s.RoleActionReason = v
+	return s
+}
+
+func (s *ROL) AddProviderType(v CE) *ROL {
+	s.ProviderType = append(s.ProviderType, v)
+	return s
+}
+
+func (s *ROL) SetOrganizationUnitType(v *CE) *ROL {
+	s.OrganizationUnitType = v
+	return s
+}
+
+func (s *ROL) AddOfficeHomeAddressBirthplace(v XAD) *ROL {
+	s.OfficeHomeAddressBirthplace = append(s.OfficeHomeAddressBirthplace, v)
+	return s
+}
+
+func (s *ROL) AddPhone(v XTN) *ROL {
+	s.Phone = append(s.Phone, v)
+	return s
 }
 
 // RQ1 - Requisition Detail-1
 // RQ1 contains additional detail for each nonstock requisitioned item. This segment definition is paired with a preceding RQD segment.
 type RQ1 struct {
-	AnticipatedPrice       ST `hl7:"1"`
-	ManufacturerIdentifier CE `hl7:"2"`
-	ManufacturerSCatalog   ST `hl7:"3"`
-	VendorID               CE `hl7:"4"`
-	VendorCatalog          ST `hl7:"5"`
-	Taxable                ID `hl7:"6"`
-	SubstituteAllowed      ID `hl7:"7"`
+	AnticipatedPrice       *ST `hl7:"1"`
+	ManufacturerIdentifier *CE `hl7:"2"`
+	ManufacturerSCatalog   *ST `hl7:"3"`
+	VendorID               *CE `hl7:"4"`
+	VendorCatalog          *ST `hl7:"5"`
+	Taxable                *ID `hl7:"6"`
+	SubstituteAllowed      *ID `hl7:"7"`
+}
+
+func NewRQ1() *RQ1 {
+	return &RQ1{}
+}
+
+func (s *RQ1) Validate() error {
+
+	if s.ManufacturerIdentifier != nil {
+		if err := s.ManufacturerIdentifier.Validate(); err != nil {
+			return fmt.Errorf("RQ1.ManufacturerIdentifier: %w", err)
+		}
+	}
+
+	if s.VendorID != nil {
+		if err := s.VendorID.Validate(); err != nil {
+			return fmt.Errorf("RQ1.VendorID: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *RQ1) SetAnticipatedPrice(v *ST) *RQ1 {
+	s.AnticipatedPrice = v
+	return s
+}
+
+func (s *RQ1) SetManufacturerIdentifier(v *CE) *RQ1 {
+	s.ManufacturerIdentifier = v
+	return s
+}
+
+func (s *RQ1) SetManufacturerSCatalog(v *ST) *RQ1 {
+	s.ManufacturerSCatalog = v
+	return s
+}
+
+func (s *RQ1) SetVendorID(v *CE) *RQ1 {
+	s.VendorID = v
+	return s
+}
+
+func (s *RQ1) SetVendorCatalog(v *ST) *RQ1 {
+	s.VendorCatalog = v
+	return s
+}
+
+func (s *RQ1) SetTaxable(v *ID) *RQ1 {
+	s.Taxable = v
+	return s
+}
+
+func (s *RQ1) SetSubstituteAllowed(v *ID) *RQ1 {
+	s.SubstituteAllowed = v
+	return s
 }
 
 // RQD - Requisition Detail
 // RQD contains the detail for each requisitioned item.
 type RQD struct {
-	RequisitionLineNumber    SI `hl7:"1"`
-	ItemCodeInternal         CE `hl7:"2"`
-	ItemCodeExternal         CE `hl7:"3"`
-	HospitalItemCode         CE `hl7:"4"`
-	RequisitionQuantity      NM `hl7:"5"`
-	RequisitionUnitOfMeasure CE `hl7:"6"`
-	DeptCostCenter           IS `hl7:"7"`
-	ItemNaturalAccountCode   IS `hl7:"8"`
-	DeliverToID              CE `hl7:"9"`
-	DateNeeded               DT `hl7:"10"`
+	RequisitionLineNumber    *SI `hl7:"1"`
+	ItemCodeInternal         *CE `hl7:"2"`
+	ItemCodeExternal         *CE `hl7:"3"`
+	HospitalItemCode         *CE `hl7:"4"`
+	RequisitionQuantity      *NM `hl7:"5"`
+	RequisitionUnitOfMeasure *CE `hl7:"6"`
+	DeptCostCenter           *IS `hl7:"7"`
+	ItemNaturalAccountCode   *IS `hl7:"8"`
+	DeliverToID              *CE `hl7:"9"`
+	DateNeeded               *DT `hl7:"10"`
+}
+
+func NewRQD() *RQD {
+	return &RQD{}
+}
+
+func (s *RQD) Validate() error {
+
+	if s.ItemCodeInternal != nil {
+		if err := s.ItemCodeInternal.Validate(); err != nil {
+			return fmt.Errorf("RQD.ItemCodeInternal: %w", err)
+		}
+	}
+
+	if s.ItemCodeExternal != nil {
+		if err := s.ItemCodeExternal.Validate(); err != nil {
+			return fmt.Errorf("RQD.ItemCodeExternal: %w", err)
+		}
+	}
+
+	if s.HospitalItemCode != nil {
+		if err := s.HospitalItemCode.Validate(); err != nil {
+			return fmt.Errorf("RQD.HospitalItemCode: %w", err)
+		}
+	}
+
+	if s.RequisitionUnitOfMeasure != nil {
+		if err := s.RequisitionUnitOfMeasure.Validate(); err != nil {
+			return fmt.Errorf("RQD.RequisitionUnitOfMeasure: %w", err)
+		}
+	}
+
+	if s.DeliverToID != nil {
+		if err := s.DeliverToID.Validate(); err != nil {
+			return fmt.Errorf("RQD.DeliverToID: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *RQD) SetRequisitionLineNumber(v *SI) *RQD {
+	s.RequisitionLineNumber = v
+	return s
+}
+
+func (s *RQD) SetItemCodeInternal(v *CE) *RQD {
+	s.ItemCodeInternal = v
+	return s
+}
+
+func (s *RQD) SetItemCodeExternal(v *CE) *RQD {
+	s.ItemCodeExternal = v
+	return s
+}
+
+func (s *RQD) SetHospitalItemCode(v *CE) *RQD {
+	s.HospitalItemCode = v
+	return s
+}
+
+func (s *RQD) SetRequisitionQuantity(v *NM) *RQD {
+	s.RequisitionQuantity = v
+	return s
+}
+
+func (s *RQD) SetRequisitionUnitOfMeasure(v *CE) *RQD {
+	s.RequisitionUnitOfMeasure = v
+	return s
+}
+
+func (s *RQD) SetDeptCostCenter(v *IS) *RQD {
+	s.DeptCostCenter = v
+	return s
+}
+
+func (s *RQD) SetItemNaturalAccountCode(v *IS) *RQD {
+	s.ItemNaturalAccountCode = v
+	return s
+}
+
+func (s *RQD) SetDeliverToID(v *CE) *RQD {
+	s.DeliverToID = v
+	return s
+}
+
+func (s *RQD) SetDateNeeded(v *DT) *RQD {
+	s.DateNeeded = v
+	return s
 }
 
 // RXA - Pharmacy/Treatment Administration
 // The ORC must have the filler order number and the order control code RE. As a site-specific variant, the RXO and associated RXCs and/or the RXE (and associated RXCs) may be present if the receiving application needs any of their data. The RXA carries the administration data.
 type RXA struct {
-	GiveSubIDCounter                    NM    `hl7:"1,required"`
-	AdministrationSubIDCounter          NM    `hl7:"2,required"`
-	DateTimeStartOfAdministration       TS    `hl7:"3,required"`
-	DateTimeEndOfAdministration         TS    `hl7:"4,required"`
-	AdministeredCode                    CE    `hl7:"5,required"`
-	AdministeredAmount                  NM    `hl7:"6,required"`
-	AdministeredUnits                   CE    `hl7:"7"`
-	AdministeredDosageForm              CE    `hl7:"8"`
+	GiveSubIDCounter                    *NM   `hl7:"1,required"`
+	AdministrationSubIDCounter          *NM   `hl7:"2,required"`
+	DateTimeStartOfAdministration       *TS   `hl7:"3,required"`
+	DateTimeEndOfAdministration         *TS   `hl7:"4,required"`
+	AdministeredCode                    *CE   `hl7:"5,required"`
+	AdministeredAmount                  *NM   `hl7:"6,required"`
+	AdministeredUnits                   *CE   `hl7:"7"`
+	AdministeredDosageForm              *CE   `hl7:"8"`
 	AdministrationNotes                 []CE  `hl7:"9"`
 	AdministeringProvider               []XCN `hl7:"10"`
-	AdministeredAtLocation              LA2   `hl7:"11"`
-	AdministeredPerTimeUnit             ST    `hl7:"12"`
-	AdministeredStrength                NM    `hl7:"13"`
-	AdministeredStrengthUnits           CE    `hl7:"14"`
+	AdministeredAtLocation              *LA2  `hl7:"11"`
+	AdministeredPerTimeUnit             *ST   `hl7:"12"`
+	AdministeredStrength                *NM   `hl7:"13"`
+	AdministeredStrengthUnits           *CE   `hl7:"14"`
 	SubstanceLotNumber                  []ST  `hl7:"15"`
 	SubstanceExpirationDate             []TS  `hl7:"16"`
 	SubstanceManufacturerName           []CE  `hl7:"17"`
 	SubstanceTreatmentRefusalReason     []CE  `hl7:"18"`
 	Indication                          []CE  `hl7:"19"`
-	CompletionStatus                    ID    `hl7:"20"`
-	ActionCodeRXA                       ID    `hl7:"21"`
-	SystemEntryDateTime                 TS    `hl7:"22"`
-	AdministeredDrugStrengthVolume      NM    `hl7:"23"`
-	AdministeredDrugStrengthVolumeUnits CWE   `hl7:"24"`
-	AdministeredBarcodeIdentifier       CWE   `hl7:"25"`
-	PharmacyOrderType                   ID    `hl7:"26"`
+	CompletionStatus                    *ID   `hl7:"20"`
+	ActionCodeRXA                       *ID   `hl7:"21"`
+	SystemEntryDateTime                 *TS   `hl7:"22"`
+	AdministeredDrugStrengthVolume      *NM   `hl7:"23"`
+	AdministeredDrugStrengthVolumeUnits *CWE  `hl7:"24"`
+	AdministeredBarcodeIdentifier       *CWE  `hl7:"25"`
+	PharmacyOrderType                   *ID   `hl7:"26"`
+}
+
+func NewRXA() *RXA {
+	return &RXA{}
+}
+
+func (s *RXA) Validate() error {
+
+	if s.GiveSubIDCounter == nil {
+		return fmt.Errorf("RXA.GiveSubIDCounter is required")
+	}
+	if string(*s.GiveSubIDCounter) == "" {
+		return fmt.Errorf("RXA.GiveSubIDCounter is empty")
+	}
+
+	if s.AdministrationSubIDCounter == nil {
+		return fmt.Errorf("RXA.AdministrationSubIDCounter is required")
+	}
+	if string(*s.AdministrationSubIDCounter) == "" {
+		return fmt.Errorf("RXA.AdministrationSubIDCounter is empty")
+	}
+
+	if s.DateTimeStartOfAdministration == nil {
+		return fmt.Errorf("RXA.DateTimeStartOfAdministration is required")
+	}
+	if s.DateTimeStartOfAdministration != nil {
+		if err := s.DateTimeStartOfAdministration.Validate(); err != nil {
+			return fmt.Errorf("RXA.DateTimeStartOfAdministration: %w", err)
+		}
+	}
+
+	if s.DateTimeEndOfAdministration == nil {
+		return fmt.Errorf("RXA.DateTimeEndOfAdministration is required")
+	}
+	if s.DateTimeEndOfAdministration != nil {
+		if err := s.DateTimeEndOfAdministration.Validate(); err != nil {
+			return fmt.Errorf("RXA.DateTimeEndOfAdministration: %w", err)
+		}
+	}
+
+	if s.AdministeredCode == nil {
+		return fmt.Errorf("RXA.AdministeredCode is required")
+	}
+	if s.AdministeredCode != nil {
+		if err := s.AdministeredCode.Validate(); err != nil {
+			return fmt.Errorf("RXA.AdministeredCode: %w", err)
+		}
+	}
+
+	if s.AdministeredAmount == nil {
+		return fmt.Errorf("RXA.AdministeredAmount is required")
+	}
+	if string(*s.AdministeredAmount) == "" {
+		return fmt.Errorf("RXA.AdministeredAmount is empty")
+	}
+
+	if s.AdministeredUnits != nil {
+		if err := s.AdministeredUnits.Validate(); err != nil {
+			return fmt.Errorf("RXA.AdministeredUnits: %w", err)
+		}
+	}
+
+	if s.AdministeredDosageForm != nil {
+		if err := s.AdministeredDosageForm.Validate(); err != nil {
+			return fmt.Errorf("RXA.AdministeredDosageForm: %w", err)
+		}
+	}
+
+	for _, item := range s.AdministrationNotes {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RXA.AdministrationNotes: %w", err)
+		}
+	}
+
+	for _, item := range s.AdministeringProvider {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RXA.AdministeringProvider: %w", err)
+		}
+	}
+
+	if s.AdministeredAtLocation != nil {
+		if err := s.AdministeredAtLocation.Validate(); err != nil {
+			return fmt.Errorf("RXA.AdministeredAtLocation: %w", err)
+		}
+	}
+
+	if s.AdministeredStrengthUnits != nil {
+		if err := s.AdministeredStrengthUnits.Validate(); err != nil {
+			return fmt.Errorf("RXA.AdministeredStrengthUnits: %w", err)
+		}
+	}
+
+	for _, item := range s.SubstanceLotNumber {
+		if string(item) == "" {
+			return fmt.Errorf("RXA.SubstanceLotNumber item is empty")
+		}
+	}
+
+	for _, item := range s.SubstanceExpirationDate {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RXA.SubstanceExpirationDate: %w", err)
+		}
+	}
+
+	for _, item := range s.SubstanceManufacturerName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RXA.SubstanceManufacturerName: %w", err)
+		}
+	}
+
+	for _, item := range s.SubstanceTreatmentRefusalReason {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RXA.SubstanceTreatmentRefusalReason: %w", err)
+		}
+	}
+
+	for _, item := range s.Indication {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RXA.Indication: %w", err)
+		}
+	}
+
+	if s.SystemEntryDateTime != nil {
+		if err := s.SystemEntryDateTime.Validate(); err != nil {
+			return fmt.Errorf("RXA.SystemEntryDateTime: %w", err)
+		}
+	}
+
+	if s.AdministeredDrugStrengthVolumeUnits != nil {
+		if err := s.AdministeredDrugStrengthVolumeUnits.Validate(); err != nil {
+			return fmt.Errorf("RXA.AdministeredDrugStrengthVolumeUnits: %w", err)
+		}
+	}
+
+	if s.AdministeredBarcodeIdentifier != nil {
+		if err := s.AdministeredBarcodeIdentifier.Validate(); err != nil {
+			return fmt.Errorf("RXA.AdministeredBarcodeIdentifier: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *RXA) SetGiveSubIDCounter(v *NM) *RXA {
+	s.GiveSubIDCounter = v
+	return s
+}
+
+func (s *RXA) SetAdministrationSubIDCounter(v *NM) *RXA {
+	s.AdministrationSubIDCounter = v
+	return s
+}
+
+func (s *RXA) SetDateTimeStartOfAdministration(v *TS) *RXA {
+	s.DateTimeStartOfAdministration = v
+	return s
+}
+
+func (s *RXA) SetDateTimeEndOfAdministration(v *TS) *RXA {
+	s.DateTimeEndOfAdministration = v
+	return s
+}
+
+func (s *RXA) SetAdministeredCode(v *CE) *RXA {
+	s.AdministeredCode = v
+	return s
+}
+
+func (s *RXA) SetAdministeredAmount(v *NM) *RXA {
+	s.AdministeredAmount = v
+	return s
+}
+
+func (s *RXA) SetAdministeredUnits(v *CE) *RXA {
+	s.AdministeredUnits = v
+	return s
+}
+
+func (s *RXA) SetAdministeredDosageForm(v *CE) *RXA {
+	s.AdministeredDosageForm = v
+	return s
+}
+
+func (s *RXA) AddAdministrationNotes(v CE) *RXA {
+	s.AdministrationNotes = append(s.AdministrationNotes, v)
+	return s
+}
+
+func (s *RXA) AddAdministeringProvider(v XCN) *RXA {
+	s.AdministeringProvider = append(s.AdministeringProvider, v)
+	return s
+}
+
+func (s *RXA) SetAdministeredAtLocation(v *LA2) *RXA {
+	s.AdministeredAtLocation = v
+	return s
+}
+
+func (s *RXA) SetAdministeredPerTimeUnit(v *ST) *RXA {
+	s.AdministeredPerTimeUnit = v
+	return s
+}
+
+func (s *RXA) SetAdministeredStrength(v *NM) *RXA {
+	s.AdministeredStrength = v
+	return s
+}
+
+func (s *RXA) SetAdministeredStrengthUnits(v *CE) *RXA {
+	s.AdministeredStrengthUnits = v
+	return s
+}
+
+func (s *RXA) AddSubstanceLotNumber(v ST) *RXA {
+	s.SubstanceLotNumber = append(s.SubstanceLotNumber, v)
+	return s
+}
+
+func (s *RXA) AddSubstanceExpirationDate(v TS) *RXA {
+	s.SubstanceExpirationDate = append(s.SubstanceExpirationDate, v)
+	return s
+}
+
+func (s *RXA) AddSubstanceManufacturerName(v CE) *RXA {
+	s.SubstanceManufacturerName = append(s.SubstanceManufacturerName, v)
+	return s
+}
+
+func (s *RXA) AddSubstanceTreatmentRefusalReason(v CE) *RXA {
+	s.SubstanceTreatmentRefusalReason = append(s.SubstanceTreatmentRefusalReason, v)
+	return s
+}
+
+func (s *RXA) AddIndication(v CE) *RXA {
+	s.Indication = append(s.Indication, v)
+	return s
+}
+
+func (s *RXA) SetCompletionStatus(v *ID) *RXA {
+	s.CompletionStatus = v
+	return s
+}
+
+func (s *RXA) SetActionCodeRXA(v *ID) *RXA {
+	s.ActionCodeRXA = v
+	return s
+}
+
+func (s *RXA) SetSystemEntryDateTime(v *TS) *RXA {
+	s.SystemEntryDateTime = v
+	return s
+}
+
+func (s *RXA) SetAdministeredDrugStrengthVolume(v *NM) *RXA {
+	s.AdministeredDrugStrengthVolume = v
+	return s
+}
+
+func (s *RXA) SetAdministeredDrugStrengthVolumeUnits(v *CWE) *RXA {
+	s.AdministeredDrugStrengthVolumeUnits = v
+	return s
+}
+
+func (s *RXA) SetAdministeredBarcodeIdentifier(v *CWE) *RXA {
+	s.AdministeredBarcodeIdentifier = v
+	return s
+}
+
+func (s *RXA) SetPharmacyOrderType(v *ID) *RXA {
+	s.PharmacyOrderType = v
+	return s
 }
 
 // RXC - Pharmacy/Treatment Component Order
 // If the drug or treatment ordered with the RXO segment is a compound drug OR an IV solution, AND there is not a coded value for OBR-4-universal service ID , which specifies the components (base and all additives), then the components (the base and additives) are specified by two or more RXC segments. The policy of the pharmacy or treatment application on substitutions at the RXC level is identical to that for the RXO level.
 type RXC struct {
-	RXComponentType                  ID   `hl7:"1,required"`
-	ComponentCode                    CE   `hl7:"2,required"`
-	ComponentAmount                  NM   `hl7:"3,required"`
-	ComponentUnits                   CE   `hl7:"4,required"`
-	ComponentStrength                NM   `hl7:"5"`
-	ComponentStrengthUnits           CE   `hl7:"6"`
+	RXComponentType                  *ID  `hl7:"1,required"`
+	ComponentCode                    *CE  `hl7:"2,required"`
+	ComponentAmount                  *NM  `hl7:"3,required"`
+	ComponentUnits                   *CE  `hl7:"4,required"`
+	ComponentStrength                *NM  `hl7:"5"`
+	ComponentStrengthUnits           *CE  `hl7:"6"`
 	SupplementaryCode                []CE `hl7:"7"`
-	ComponentDrugStrengthVolume      NM   `hl7:"8"`
-	ComponentDrugStrengthVolumeUnits CWE  `hl7:"9"`
+	ComponentDrugStrengthVolume      *NM  `hl7:"8"`
+	ComponentDrugStrengthVolumeUnits *CWE `hl7:"9"`
+}
+
+func NewRXC() *RXC {
+	return &RXC{}
+}
+
+func (s *RXC) Validate() error {
+
+	if s.RXComponentType == nil {
+		return fmt.Errorf("RXC.RXComponentType is required")
+	}
+	if string(*s.RXComponentType) == "" {
+		return fmt.Errorf("RXC.RXComponentType is empty")
+	}
+
+	if s.ComponentCode == nil {
+		return fmt.Errorf("RXC.ComponentCode is required")
+	}
+	if s.ComponentCode != nil {
+		if err := s.ComponentCode.Validate(); err != nil {
+			return fmt.Errorf("RXC.ComponentCode: %w", err)
+		}
+	}
+
+	if s.ComponentAmount == nil {
+		return fmt.Errorf("RXC.ComponentAmount is required")
+	}
+	if string(*s.ComponentAmount) == "" {
+		return fmt.Errorf("RXC.ComponentAmount is empty")
+	}
+
+	if s.ComponentUnits == nil {
+		return fmt.Errorf("RXC.ComponentUnits is required")
+	}
+	if s.ComponentUnits != nil {
+		if err := s.ComponentUnits.Validate(); err != nil {
+			return fmt.Errorf("RXC.ComponentUnits: %w", err)
+		}
+	}
+
+	if s.ComponentStrengthUnits != nil {
+		if err := s.ComponentStrengthUnits.Validate(); err != nil {
+			return fmt.Errorf("RXC.ComponentStrengthUnits: %w", err)
+		}
+	}
+
+	for _, item := range s.SupplementaryCode {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RXC.SupplementaryCode: %w", err)
+		}
+	}
+
+	if s.ComponentDrugStrengthVolumeUnits != nil {
+		if err := s.ComponentDrugStrengthVolumeUnits.Validate(); err != nil {
+			return fmt.Errorf("RXC.ComponentDrugStrengthVolumeUnits: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *RXC) SetRXComponentType(v *ID) *RXC {
+	s.RXComponentType = v
+	return s
+}
+
+func (s *RXC) SetComponentCode(v *CE) *RXC {
+	s.ComponentCode = v
+	return s
+}
+
+func (s *RXC) SetComponentAmount(v *NM) *RXC {
+	s.ComponentAmount = v
+	return s
+}
+
+func (s *RXC) SetComponentUnits(v *CE) *RXC {
+	s.ComponentUnits = v
+	return s
+}
+
+func (s *RXC) SetComponentStrength(v *NM) *RXC {
+	s.ComponentStrength = v
+	return s
+}
+
+func (s *RXC) SetComponentStrengthUnits(v *CE) *RXC {
+	s.ComponentStrengthUnits = v
+	return s
+}
+
+func (s *RXC) AddSupplementaryCode(v CE) *RXC {
+	s.SupplementaryCode = append(s.SupplementaryCode, v)
+	return s
+}
+
+func (s *RXC) SetComponentDrugStrengthVolume(v *NM) *RXC {
+	s.ComponentDrugStrengthVolume = v
+	return s
+}
+
+func (s *RXC) SetComponentDrugStrengthVolumeUnits(v *CWE) *RXC {
+	s.ComponentDrugStrengthVolumeUnits = v
+	return s
 }
 
 // RXD - Pharmacy/Treatment Dispense
 type RXD struct {
-	DispenseSubIDCounter                                    NM    `hl7:"1,required"`
-	DispenseGiveCode                                        CE    `hl7:"2,required"`
-	DateTimeDispensed                                       TS    `hl7:"3,required"`
-	ActualDispenseAmount                                    NM    `hl7:"4,required"`
-	ActualDispenseUnits                                     CE    `hl7:"5"`
-	ActualDosageForm                                        CE    `hl7:"6"`
-	PrescriptionNumber                                      ST    `hl7:"7,required"`
-	NumberOfRefillsRemaining                                NM    `hl7:"8"`
+	DispenseSubIDCounter                                    *NM   `hl7:"1,required"`
+	DispenseGiveCode                                        *CE   `hl7:"2,required"`
+	DateTimeDispensed                                       *TS   `hl7:"3,required"`
+	ActualDispenseAmount                                    *NM   `hl7:"4,required"`
+	ActualDispenseUnits                                     *CE   `hl7:"5"`
+	ActualDosageForm                                        *CE   `hl7:"6"`
+	PrescriptionNumber                                      *ST   `hl7:"7,required"`
+	NumberOfRefillsRemaining                                *NM   `hl7:"8"`
 	DispenseNotes                                           []ST  `hl7:"9"`
 	DispensingProvider                                      []XCN `hl7:"10"`
-	SubstitutionStatus                                      ID    `hl7:"11"`
-	TotalDailyDose                                          CQ    `hl7:"12"`
-	DispenseToLocation                                      LA2   `hl7:"13"`
-	NeedsHumanReview                                        ID    `hl7:"14"`
+	SubstitutionStatus                                      *ID   `hl7:"11"`
+	TotalDailyDose                                          *CQ   `hl7:"12"`
+	DispenseToLocation                                      *LA2  `hl7:"13"`
+	NeedsHumanReview                                        *ID   `hl7:"14"`
 	PharmacyTreatmentSupplierSSpecialDispensingInstructions []CE  `hl7:"15"`
-	ActualStrength                                          NM    `hl7:"16"`
-	ActualStrengthUnit                                      CE    `hl7:"17"`
+	ActualStrength                                          *NM   `hl7:"16"`
+	ActualStrengthUnit                                      *CE   `hl7:"17"`
 	SubstanceLotNumber                                      []ST  `hl7:"18"`
 	SubstanceExpirationDate                                 []TS  `hl7:"19"`
 	SubstanceManufacturerName                               []CE  `hl7:"20"`
 	Indication                                              []CE  `hl7:"21"`
-	DispensePackageSize                                     NM    `hl7:"22"`
-	DispensePackageSizeUnit                                 CE    `hl7:"23"`
-	DispensePackageMethod                                   ID    `hl7:"24"`
+	DispensePackageSize                                     *NM   `hl7:"22"`
+	DispensePackageSizeUnit                                 *CE   `hl7:"23"`
+	DispensePackageMethod                                   *ID   `hl7:"24"`
 	SupplementaryCode                                       []CE  `hl7:"25"`
-	InitiatingLocation                                      CE    `hl7:"26"`
-	PackagingAssemblyLocation                               CE    `hl7:"27"`
-	ActualDrugStrengthVolume                                NM    `hl7:"28"`
-	ActualDrugStrengthVolumeUnits                           CWE   `hl7:"29"`
-	DispenseToPharmacy                                      CWE   `hl7:"30"`
-	DispenseToPharmacyAddress                               XAD   `hl7:"31"`
-	PharmacyOrderType                                       ID    `hl7:"32"`
-	DispenseType                                            CWE   `hl7:"33"`
+	InitiatingLocation                                      *CE   `hl7:"26"`
+	PackagingAssemblyLocation                               *CE   `hl7:"27"`
+	ActualDrugStrengthVolume                                *NM   `hl7:"28"`
+	ActualDrugStrengthVolumeUnits                           *CWE  `hl7:"29"`
+	DispenseToPharmacy                                      *CWE  `hl7:"30"`
+	DispenseToPharmacyAddress                               *XAD  `hl7:"31"`
+	PharmacyOrderType                                       *ID   `hl7:"32"`
+	DispenseType                                            *CWE  `hl7:"33"`
+}
+
+func NewRXD() *RXD {
+	return &RXD{}
+}
+
+func (s *RXD) Validate() error {
+
+	if s.DispenseSubIDCounter == nil {
+		return fmt.Errorf("RXD.DispenseSubIDCounter is required")
+	}
+	if string(*s.DispenseSubIDCounter) == "" {
+		return fmt.Errorf("RXD.DispenseSubIDCounter is empty")
+	}
+
+	if s.DispenseGiveCode == nil {
+		return fmt.Errorf("RXD.DispenseGiveCode is required")
+	}
+	if s.DispenseGiveCode != nil {
+		if err := s.DispenseGiveCode.Validate(); err != nil {
+			return fmt.Errorf("RXD.DispenseGiveCode: %w", err)
+		}
+	}
+
+	if s.DateTimeDispensed == nil {
+		return fmt.Errorf("RXD.DateTimeDispensed is required")
+	}
+	if s.DateTimeDispensed != nil {
+		if err := s.DateTimeDispensed.Validate(); err != nil {
+			return fmt.Errorf("RXD.DateTimeDispensed: %w", err)
+		}
+	}
+
+	if s.ActualDispenseAmount == nil {
+		return fmt.Errorf("RXD.ActualDispenseAmount is required")
+	}
+	if string(*s.ActualDispenseAmount) == "" {
+		return fmt.Errorf("RXD.ActualDispenseAmount is empty")
+	}
+
+	if s.ActualDispenseUnits != nil {
+		if err := s.ActualDispenseUnits.Validate(); err != nil {
+			return fmt.Errorf("RXD.ActualDispenseUnits: %w", err)
+		}
+	}
+
+	if s.ActualDosageForm != nil {
+		if err := s.ActualDosageForm.Validate(); err != nil {
+			return fmt.Errorf("RXD.ActualDosageForm: %w", err)
+		}
+	}
+
+	if s.PrescriptionNumber == nil {
+		return fmt.Errorf("RXD.PrescriptionNumber is required")
+	}
+	if string(*s.PrescriptionNumber) == "" {
+		return fmt.Errorf("RXD.PrescriptionNumber is empty")
+	}
+
+	for _, item := range s.DispenseNotes {
+		if string(item) == "" {
+			return fmt.Errorf("RXD.DispenseNotes item is empty")
+		}
+	}
+
+	for _, item := range s.DispensingProvider {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RXD.DispensingProvider: %w", err)
+		}
+	}
+
+	if s.TotalDailyDose != nil {
+		if err := s.TotalDailyDose.Validate(); err != nil {
+			return fmt.Errorf("RXD.TotalDailyDose: %w", err)
+		}
+	}
+
+	if s.DispenseToLocation != nil {
+		if err := s.DispenseToLocation.Validate(); err != nil {
+			return fmt.Errorf("RXD.DispenseToLocation: %w", err)
+		}
+	}
+
+	for _, item := range s.PharmacyTreatmentSupplierSSpecialDispensingInstructions {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RXD.PharmacyTreatmentSupplierSSpecialDispensingInstructions: %w", err)
+		}
+	}
+
+	if s.ActualStrengthUnit != nil {
+		if err := s.ActualStrengthUnit.Validate(); err != nil {
+			return fmt.Errorf("RXD.ActualStrengthUnit: %w", err)
+		}
+	}
+
+	for _, item := range s.SubstanceLotNumber {
+		if string(item) == "" {
+			return fmt.Errorf("RXD.SubstanceLotNumber item is empty")
+		}
+	}
+
+	for _, item := range s.SubstanceExpirationDate {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RXD.SubstanceExpirationDate: %w", err)
+		}
+	}
+
+	for _, item := range s.SubstanceManufacturerName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RXD.SubstanceManufacturerName: %w", err)
+		}
+	}
+
+	for _, item := range s.Indication {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RXD.Indication: %w", err)
+		}
+	}
+
+	if s.DispensePackageSizeUnit != nil {
+		if err := s.DispensePackageSizeUnit.Validate(); err != nil {
+			return fmt.Errorf("RXD.DispensePackageSizeUnit: %w", err)
+		}
+	}
+
+	for _, item := range s.SupplementaryCode {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RXD.SupplementaryCode: %w", err)
+		}
+	}
+
+	if s.InitiatingLocation != nil {
+		if err := s.InitiatingLocation.Validate(); err != nil {
+			return fmt.Errorf("RXD.InitiatingLocation: %w", err)
+		}
+	}
+
+	if s.PackagingAssemblyLocation != nil {
+		if err := s.PackagingAssemblyLocation.Validate(); err != nil {
+			return fmt.Errorf("RXD.PackagingAssemblyLocation: %w", err)
+		}
+	}
+
+	if s.ActualDrugStrengthVolumeUnits != nil {
+		if err := s.ActualDrugStrengthVolumeUnits.Validate(); err != nil {
+			return fmt.Errorf("RXD.ActualDrugStrengthVolumeUnits: %w", err)
+		}
+	}
+
+	if s.DispenseToPharmacy != nil {
+		if err := s.DispenseToPharmacy.Validate(); err != nil {
+			return fmt.Errorf("RXD.DispenseToPharmacy: %w", err)
+		}
+	}
+
+	if s.DispenseToPharmacyAddress != nil {
+		if err := s.DispenseToPharmacyAddress.Validate(); err != nil {
+			return fmt.Errorf("RXD.DispenseToPharmacyAddress: %w", err)
+		}
+	}
+
+	if s.DispenseType != nil {
+		if err := s.DispenseType.Validate(); err != nil {
+			return fmt.Errorf("RXD.DispenseType: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *RXD) SetDispenseSubIDCounter(v *NM) *RXD {
+	s.DispenseSubIDCounter = v
+	return s
+}
+
+func (s *RXD) SetDispenseGiveCode(v *CE) *RXD {
+	s.DispenseGiveCode = v
+	return s
+}
+
+func (s *RXD) SetDateTimeDispensed(v *TS) *RXD {
+	s.DateTimeDispensed = v
+	return s
+}
+
+func (s *RXD) SetActualDispenseAmount(v *NM) *RXD {
+	s.ActualDispenseAmount = v
+	return s
+}
+
+func (s *RXD) SetActualDispenseUnits(v *CE) *RXD {
+	s.ActualDispenseUnits = v
+	return s
+}
+
+func (s *RXD) SetActualDosageForm(v *CE) *RXD {
+	s.ActualDosageForm = v
+	return s
+}
+
+func (s *RXD) SetPrescriptionNumber(v *ST) *RXD {
+	s.PrescriptionNumber = v
+	return s
+}
+
+func (s *RXD) SetNumberOfRefillsRemaining(v *NM) *RXD {
+	s.NumberOfRefillsRemaining = v
+	return s
+}
+
+func (s *RXD) AddDispenseNotes(v ST) *RXD {
+	s.DispenseNotes = append(s.DispenseNotes, v)
+	return s
+}
+
+func (s *RXD) AddDispensingProvider(v XCN) *RXD {
+	s.DispensingProvider = append(s.DispensingProvider, v)
+	return s
+}
+
+func (s *RXD) SetSubstitutionStatus(v *ID) *RXD {
+	s.SubstitutionStatus = v
+	return s
+}
+
+func (s *RXD) SetTotalDailyDose(v *CQ) *RXD {
+	s.TotalDailyDose = v
+	return s
+}
+
+func (s *RXD) SetDispenseToLocation(v *LA2) *RXD {
+	s.DispenseToLocation = v
+	return s
+}
+
+func (s *RXD) SetNeedsHumanReview(v *ID) *RXD {
+	s.NeedsHumanReview = v
+	return s
+}
+
+func (s *RXD) AddPharmacyTreatmentSupplierSSpecialDispensingInstructions(v CE) *RXD {
+	s.PharmacyTreatmentSupplierSSpecialDispensingInstructions = append(s.PharmacyTreatmentSupplierSSpecialDispensingInstructions, v)
+	return s
+}
+
+func (s *RXD) SetActualStrength(v *NM) *RXD {
+	s.ActualStrength = v
+	return s
+}
+
+func (s *RXD) SetActualStrengthUnit(v *CE) *RXD {
+	s.ActualStrengthUnit = v
+	return s
+}
+
+func (s *RXD) AddSubstanceLotNumber(v ST) *RXD {
+	s.SubstanceLotNumber = append(s.SubstanceLotNumber, v)
+	return s
+}
+
+func (s *RXD) AddSubstanceExpirationDate(v TS) *RXD {
+	s.SubstanceExpirationDate = append(s.SubstanceExpirationDate, v)
+	return s
+}
+
+func (s *RXD) AddSubstanceManufacturerName(v CE) *RXD {
+	s.SubstanceManufacturerName = append(s.SubstanceManufacturerName, v)
+	return s
+}
+
+func (s *RXD) AddIndication(v CE) *RXD {
+	s.Indication = append(s.Indication, v)
+	return s
+}
+
+func (s *RXD) SetDispensePackageSize(v *NM) *RXD {
+	s.DispensePackageSize = v
+	return s
+}
+
+func (s *RXD) SetDispensePackageSizeUnit(v *CE) *RXD {
+	s.DispensePackageSizeUnit = v
+	return s
+}
+
+func (s *RXD) SetDispensePackageMethod(v *ID) *RXD {
+	s.DispensePackageMethod = v
+	return s
+}
+
+func (s *RXD) AddSupplementaryCode(v CE) *RXD {
+	s.SupplementaryCode = append(s.SupplementaryCode, v)
+	return s
+}
+
+func (s *RXD) SetInitiatingLocation(v *CE) *RXD {
+	s.InitiatingLocation = v
+	return s
+}
+
+func (s *RXD) SetPackagingAssemblyLocation(v *CE) *RXD {
+	s.PackagingAssemblyLocation = v
+	return s
+}
+
+func (s *RXD) SetActualDrugStrengthVolume(v *NM) *RXD {
+	s.ActualDrugStrengthVolume = v
+	return s
+}
+
+func (s *RXD) SetActualDrugStrengthVolumeUnits(v *CWE) *RXD {
+	s.ActualDrugStrengthVolumeUnits = v
+	return s
+}
+
+func (s *RXD) SetDispenseToPharmacy(v *CWE) *RXD {
+	s.DispenseToPharmacy = v
+	return s
+}
+
+func (s *RXD) SetDispenseToPharmacyAddress(v *XAD) *RXD {
+	s.DispenseToPharmacyAddress = v
+	return s
+}
+
+func (s *RXD) SetPharmacyOrderType(v *ID) *RXD {
+	s.PharmacyOrderType = v
+	return s
+}
+
+func (s *RXD) SetDispenseType(v *CWE) *RXD {
+	s.DispenseType = v
+	return s
 }
 
 // RXE - Pharmacy/Treatment Encoded Order
 // The RXE segment details the pharmacy or treatment application's encoding of the order. It also contains several pharmacy-specific order status fields, such as RXE-16-number of refills remaining, RXE-17-number of refills/doses dispensed, RXE-18-D/T of most recent refill or dose dispensed, and RXE-19-total daily dose.
 type RXE struct {
-	QuantityTiming                                          TQ    `hl7:"1"`
-	GiveCode                                                CE    `hl7:"2,required"`
-	GiveAmountMinimum                                       NM    `hl7:"3,required"`
-	GiveAmountMaximum                                       NM    `hl7:"4"`
-	GiveUnits                                               CE    `hl7:"5,required"`
-	GiveDosageForm                                          CE    `hl7:"6"`
+	QuantityTiming                                          *TQ   `hl7:"1"`
+	GiveCode                                                *CE   `hl7:"2,required"`
+	GiveAmountMinimum                                       *NM   `hl7:"3,required"`
+	GiveAmountMaximum                                       *NM   `hl7:"4"`
+	GiveUnits                                               *CE   `hl7:"5,required"`
+	GiveDosageForm                                          *CE   `hl7:"6"`
 	ProviderSAdministrationInstructions                     []CE  `hl7:"7"`
-	DeliverToLocation                                       LA1   `hl7:"8"`
-	SubstitutionStatus                                      ID    `hl7:"9"`
-	DispenseAmount                                          NM    `hl7:"10"`
-	DispenseUnits                                           CE    `hl7:"11"`
-	NumberOfRefills                                         NM    `hl7:"12"`
+	DeliverToLocation                                       *LA1  `hl7:"8"`
+	SubstitutionStatus                                      *ID   `hl7:"9"`
+	DispenseAmount                                          *NM   `hl7:"10"`
+	DispenseUnits                                           *CE   `hl7:"11"`
+	NumberOfRefills                                         *NM   `hl7:"12"`
 	OrderingProviderSDEANumber                              []XCN `hl7:"13"`
 	PharmacistTreatmentSupplierSVerifierID                  []XCN `hl7:"14"`
-	PrescriptionNumber                                      ST    `hl7:"15"`
-	NumberOfRefillsRemaining                                NM    `hl7:"16"`
-	NumberOfRefillsDosesDispensed                           NM    `hl7:"17"`
-	DTOfMostRecentRefillOrDoseDispensed                     TS    `hl7:"18"`
-	TotalDailyDose                                          CQ    `hl7:"19"`
-	NeedsHumanReview                                        ID    `hl7:"20"`
+	PrescriptionNumber                                      *ST   `hl7:"15"`
+	NumberOfRefillsRemaining                                *NM   `hl7:"16"`
+	NumberOfRefillsDosesDispensed                           *NM   `hl7:"17"`
+	DTOfMostRecentRefillOrDoseDispensed                     *TS   `hl7:"18"`
+	TotalDailyDose                                          *CQ   `hl7:"19"`
+	NeedsHumanReview                                        *ID   `hl7:"20"`
 	PharmacyTreatmentSupplierSSpecialDispensingInstructions []CE  `hl7:"21"`
-	GivePerTimeUnits                                        ST    `hl7:"22"`
-	GiveRateAmount                                          ST    `hl7:"23"`
-	GiveRateUnits                                           CE    `hl7:"24"`
-	GiveStrength                                            NM    `hl7:"25"`
-	GiveStrengthUnits                                       CE    `hl7:"26"`
+	GivePerTimeUnits                                        *ST   `hl7:"22"`
+	GiveRateAmount                                          *ST   `hl7:"23"`
+	GiveRateUnits                                           *CE   `hl7:"24"`
+	GiveStrength                                            *NM   `hl7:"25"`
+	GiveStrengthUnits                                       *CE   `hl7:"26"`
 	GiveIndication                                          []CE  `hl7:"27"`
-	DispensePackageSize                                     NM    `hl7:"28"`
-	DispensePackageSizeUnit                                 CE    `hl7:"29"`
-	DispensePackageMethod                                   ID    `hl7:"30"`
+	DispensePackageSize                                     *NM   `hl7:"28"`
+	DispensePackageSizeUnit                                 *CE   `hl7:"29"`
+	DispensePackageMethod                                   *ID   `hl7:"30"`
 	SupplementaryCode                                       []CE  `hl7:"31"`
-	OriginalOrderDateTime                                   TS    `hl7:"32"`
-	GiveDrugStrengthVolume                                  NM    `hl7:"33"`
-	GiveDrugStrengthVolumeUnits                             CWE   `hl7:"34"`
-	ControlledSubstanceSchedule                             CWE   `hl7:"35"`
-	FormularyStatus                                         ID    `hl7:"36"`
+	OriginalOrderDateTime                                   *TS   `hl7:"32"`
+	GiveDrugStrengthVolume                                  *NM   `hl7:"33"`
+	GiveDrugStrengthVolumeUnits                             *CWE  `hl7:"34"`
+	ControlledSubstanceSchedule                             *CWE  `hl7:"35"`
+	FormularyStatus                                         *ID   `hl7:"36"`
 	PharmaceuticalSubstanceAlternative                      []CWE `hl7:"37"`
-	PharmacyOfMostRecentFill                                CWE   `hl7:"38"`
-	InitialDispenseAmount                                   NM    `hl7:"39"`
-	DispensingPharmacy                                      CWE   `hl7:"40"`
-	DispensingPharmacyAddress                               XAD   `hl7:"41"`
-	DeliverToPatientLocation                                PL    `hl7:"42"`
-	DeliverToAddress                                        XAD   `hl7:"43"`
-	PharmacyOrderType                                       ID    `hl7:"44"`
+	PharmacyOfMostRecentFill                                *CWE  `hl7:"38"`
+	InitialDispenseAmount                                   *NM   `hl7:"39"`
+	DispensingPharmacy                                      *CWE  `hl7:"40"`
+	DispensingPharmacyAddress                               *XAD  `hl7:"41"`
+	DeliverToPatientLocation                                *PL   `hl7:"42"`
+	DeliverToAddress                                        *XAD  `hl7:"43"`
+	PharmacyOrderType                                       *ID   `hl7:"44"`
+}
+
+func NewRXE() *RXE {
+	return &RXE{}
+}
+
+func (s *RXE) Validate() error {
+
+	if s.QuantityTiming != nil {
+		if err := s.QuantityTiming.Validate(); err != nil {
+			return fmt.Errorf("RXE.QuantityTiming: %w", err)
+		}
+	}
+
+	if s.GiveCode == nil {
+		return fmt.Errorf("RXE.GiveCode is required")
+	}
+	if s.GiveCode != nil {
+		if err := s.GiveCode.Validate(); err != nil {
+			return fmt.Errorf("RXE.GiveCode: %w", err)
+		}
+	}
+
+	if s.GiveAmountMinimum == nil {
+		return fmt.Errorf("RXE.GiveAmountMinimum is required")
+	}
+	if string(*s.GiveAmountMinimum) == "" {
+		return fmt.Errorf("RXE.GiveAmountMinimum is empty")
+	}
+
+	if s.GiveUnits == nil {
+		return fmt.Errorf("RXE.GiveUnits is required")
+	}
+	if s.GiveUnits != nil {
+		if err := s.GiveUnits.Validate(); err != nil {
+			return fmt.Errorf("RXE.GiveUnits: %w", err)
+		}
+	}
+
+	if s.GiveDosageForm != nil {
+		if err := s.GiveDosageForm.Validate(); err != nil {
+			return fmt.Errorf("RXE.GiveDosageForm: %w", err)
+		}
+	}
+
+	for _, item := range s.ProviderSAdministrationInstructions {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RXE.ProviderSAdministrationInstructions: %w", err)
+		}
+	}
+
+	if s.DeliverToLocation != nil {
+		if err := s.DeliverToLocation.Validate(); err != nil {
+			return fmt.Errorf("RXE.DeliverToLocation: %w", err)
+		}
+	}
+
+	if s.DispenseUnits != nil {
+		if err := s.DispenseUnits.Validate(); err != nil {
+			return fmt.Errorf("RXE.DispenseUnits: %w", err)
+		}
+	}
+
+	for _, item := range s.OrderingProviderSDEANumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RXE.OrderingProviderSDEANumber: %w", err)
+		}
+	}
+
+	for _, item := range s.PharmacistTreatmentSupplierSVerifierID {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RXE.PharmacistTreatmentSupplierSVerifierID: %w", err)
+		}
+	}
+
+	if s.DTOfMostRecentRefillOrDoseDispensed != nil {
+		if err := s.DTOfMostRecentRefillOrDoseDispensed.Validate(); err != nil {
+			return fmt.Errorf("RXE.DTOfMostRecentRefillOrDoseDispensed: %w", err)
+		}
+	}
+
+	if s.TotalDailyDose != nil {
+		if err := s.TotalDailyDose.Validate(); err != nil {
+			return fmt.Errorf("RXE.TotalDailyDose: %w", err)
+		}
+	}
+
+	for _, item := range s.PharmacyTreatmentSupplierSSpecialDispensingInstructions {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RXE.PharmacyTreatmentSupplierSSpecialDispensingInstructions: %w", err)
+		}
+	}
+
+	if s.GiveRateUnits != nil {
+		if err := s.GiveRateUnits.Validate(); err != nil {
+			return fmt.Errorf("RXE.GiveRateUnits: %w", err)
+		}
+	}
+
+	if s.GiveStrengthUnits != nil {
+		if err := s.GiveStrengthUnits.Validate(); err != nil {
+			return fmt.Errorf("RXE.GiveStrengthUnits: %w", err)
+		}
+	}
+
+	for _, item := range s.GiveIndication {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RXE.GiveIndication: %w", err)
+		}
+	}
+
+	if s.DispensePackageSizeUnit != nil {
+		if err := s.DispensePackageSizeUnit.Validate(); err != nil {
+			return fmt.Errorf("RXE.DispensePackageSizeUnit: %w", err)
+		}
+	}
+
+	for _, item := range s.SupplementaryCode {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RXE.SupplementaryCode: %w", err)
+		}
+	}
+
+	if s.OriginalOrderDateTime != nil {
+		if err := s.OriginalOrderDateTime.Validate(); err != nil {
+			return fmt.Errorf("RXE.OriginalOrderDateTime: %w", err)
+		}
+	}
+
+	if s.GiveDrugStrengthVolumeUnits != nil {
+		if err := s.GiveDrugStrengthVolumeUnits.Validate(); err != nil {
+			return fmt.Errorf("RXE.GiveDrugStrengthVolumeUnits: %w", err)
+		}
+	}
+
+	if s.ControlledSubstanceSchedule != nil {
+		if err := s.ControlledSubstanceSchedule.Validate(); err != nil {
+			return fmt.Errorf("RXE.ControlledSubstanceSchedule: %w", err)
+		}
+	}
+
+	for _, item := range s.PharmaceuticalSubstanceAlternative {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RXE.PharmaceuticalSubstanceAlternative: %w", err)
+		}
+	}
+
+	if s.PharmacyOfMostRecentFill != nil {
+		if err := s.PharmacyOfMostRecentFill.Validate(); err != nil {
+			return fmt.Errorf("RXE.PharmacyOfMostRecentFill: %w", err)
+		}
+	}
+
+	if s.DispensingPharmacy != nil {
+		if err := s.DispensingPharmacy.Validate(); err != nil {
+			return fmt.Errorf("RXE.DispensingPharmacy: %w", err)
+		}
+	}
+
+	if s.DispensingPharmacyAddress != nil {
+		if err := s.DispensingPharmacyAddress.Validate(); err != nil {
+			return fmt.Errorf("RXE.DispensingPharmacyAddress: %w", err)
+		}
+	}
+
+	if s.DeliverToPatientLocation != nil {
+		if err := s.DeliverToPatientLocation.Validate(); err != nil {
+			return fmt.Errorf("RXE.DeliverToPatientLocation: %w", err)
+		}
+	}
+
+	if s.DeliverToAddress != nil {
+		if err := s.DeliverToAddress.Validate(); err != nil {
+			return fmt.Errorf("RXE.DeliverToAddress: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *RXE) SetQuantityTiming(v *TQ) *RXE {
+	s.QuantityTiming = v
+	return s
+}
+
+func (s *RXE) SetGiveCode(v *CE) *RXE {
+	s.GiveCode = v
+	return s
+}
+
+func (s *RXE) SetGiveAmountMinimum(v *NM) *RXE {
+	s.GiveAmountMinimum = v
+	return s
+}
+
+func (s *RXE) SetGiveAmountMaximum(v *NM) *RXE {
+	s.GiveAmountMaximum = v
+	return s
+}
+
+func (s *RXE) SetGiveUnits(v *CE) *RXE {
+	s.GiveUnits = v
+	return s
+}
+
+func (s *RXE) SetGiveDosageForm(v *CE) *RXE {
+	s.GiveDosageForm = v
+	return s
+}
+
+func (s *RXE) AddProviderSAdministrationInstructions(v CE) *RXE {
+	s.ProviderSAdministrationInstructions = append(s.ProviderSAdministrationInstructions, v)
+	return s
+}
+
+func (s *RXE) SetDeliverToLocation(v *LA1) *RXE {
+	s.DeliverToLocation = v
+	return s
+}
+
+func (s *RXE) SetSubstitutionStatus(v *ID) *RXE {
+	s.SubstitutionStatus = v
+	return s
+}
+
+func (s *RXE) SetDispenseAmount(v *NM) *RXE {
+	s.DispenseAmount = v
+	return s
+}
+
+func (s *RXE) SetDispenseUnits(v *CE) *RXE {
+	s.DispenseUnits = v
+	return s
+}
+
+func (s *RXE) SetNumberOfRefills(v *NM) *RXE {
+	s.NumberOfRefills = v
+	return s
+}
+
+func (s *RXE) AddOrderingProviderSDEANumber(v XCN) *RXE {
+	s.OrderingProviderSDEANumber = append(s.OrderingProviderSDEANumber, v)
+	return s
+}
+
+func (s *RXE) AddPharmacistTreatmentSupplierSVerifierID(v XCN) *RXE {
+	s.PharmacistTreatmentSupplierSVerifierID = append(s.PharmacistTreatmentSupplierSVerifierID, v)
+	return s
+}
+
+func (s *RXE) SetPrescriptionNumber(v *ST) *RXE {
+	s.PrescriptionNumber = v
+	return s
+}
+
+func (s *RXE) SetNumberOfRefillsRemaining(v *NM) *RXE {
+	s.NumberOfRefillsRemaining = v
+	return s
+}
+
+func (s *RXE) SetNumberOfRefillsDosesDispensed(v *NM) *RXE {
+	s.NumberOfRefillsDosesDispensed = v
+	return s
+}
+
+func (s *RXE) SetDTOfMostRecentRefillOrDoseDispensed(v *TS) *RXE {
+	s.DTOfMostRecentRefillOrDoseDispensed = v
+	return s
+}
+
+func (s *RXE) SetTotalDailyDose(v *CQ) *RXE {
+	s.TotalDailyDose = v
+	return s
+}
+
+func (s *RXE) SetNeedsHumanReview(v *ID) *RXE {
+	s.NeedsHumanReview = v
+	return s
+}
+
+func (s *RXE) AddPharmacyTreatmentSupplierSSpecialDispensingInstructions(v CE) *RXE {
+	s.PharmacyTreatmentSupplierSSpecialDispensingInstructions = append(s.PharmacyTreatmentSupplierSSpecialDispensingInstructions, v)
+	return s
+}
+
+func (s *RXE) SetGivePerTimeUnits(v *ST) *RXE {
+	s.GivePerTimeUnits = v
+	return s
+}
+
+func (s *RXE) SetGiveRateAmount(v *ST) *RXE {
+	s.GiveRateAmount = v
+	return s
+}
+
+func (s *RXE) SetGiveRateUnits(v *CE) *RXE {
+	s.GiveRateUnits = v
+	return s
+}
+
+func (s *RXE) SetGiveStrength(v *NM) *RXE {
+	s.GiveStrength = v
+	return s
+}
+
+func (s *RXE) SetGiveStrengthUnits(v *CE) *RXE {
+	s.GiveStrengthUnits = v
+	return s
+}
+
+func (s *RXE) AddGiveIndication(v CE) *RXE {
+	s.GiveIndication = append(s.GiveIndication, v)
+	return s
+}
+
+func (s *RXE) SetDispensePackageSize(v *NM) *RXE {
+	s.DispensePackageSize = v
+	return s
+}
+
+func (s *RXE) SetDispensePackageSizeUnit(v *CE) *RXE {
+	s.DispensePackageSizeUnit = v
+	return s
+}
+
+func (s *RXE) SetDispensePackageMethod(v *ID) *RXE {
+	s.DispensePackageMethod = v
+	return s
+}
+
+func (s *RXE) AddSupplementaryCode(v CE) *RXE {
+	s.SupplementaryCode = append(s.SupplementaryCode, v)
+	return s
+}
+
+func (s *RXE) SetOriginalOrderDateTime(v *TS) *RXE {
+	s.OriginalOrderDateTime = v
+	return s
+}
+
+func (s *RXE) SetGiveDrugStrengthVolume(v *NM) *RXE {
+	s.GiveDrugStrengthVolume = v
+	return s
+}
+
+func (s *RXE) SetGiveDrugStrengthVolumeUnits(v *CWE) *RXE {
+	s.GiveDrugStrengthVolumeUnits = v
+	return s
+}
+
+func (s *RXE) SetControlledSubstanceSchedule(v *CWE) *RXE {
+	s.ControlledSubstanceSchedule = v
+	return s
+}
+
+func (s *RXE) SetFormularyStatus(v *ID) *RXE {
+	s.FormularyStatus = v
+	return s
+}
+
+func (s *RXE) AddPharmaceuticalSubstanceAlternative(v CWE) *RXE {
+	s.PharmaceuticalSubstanceAlternative = append(s.PharmaceuticalSubstanceAlternative, v)
+	return s
+}
+
+func (s *RXE) SetPharmacyOfMostRecentFill(v *CWE) *RXE {
+	s.PharmacyOfMostRecentFill = v
+	return s
+}
+
+func (s *RXE) SetInitialDispenseAmount(v *NM) *RXE {
+	s.InitialDispenseAmount = v
+	return s
+}
+
+func (s *RXE) SetDispensingPharmacy(v *CWE) *RXE {
+	s.DispensingPharmacy = v
+	return s
+}
+
+func (s *RXE) SetDispensingPharmacyAddress(v *XAD) *RXE {
+	s.DispensingPharmacyAddress = v
+	return s
+}
+
+func (s *RXE) SetDeliverToPatientLocation(v *PL) *RXE {
+	s.DeliverToPatientLocation = v
+	return s
+}
+
+func (s *RXE) SetDeliverToAddress(v *XAD) *RXE {
+	s.DeliverToAddress = v
+	return s
+}
+
+func (s *RXE) SetPharmacyOrderType(v *ID) *RXE {
+	s.PharmacyOrderType = v
+	return s
 }
 
 // RXG - Pharmacy/Treatment Give
 type RXG struct {
-	GiveSubIDCounter                                            NM   `hl7:"1,required"`
-	DispenseSubIDCounter                                        NM   `hl7:"2"`
-	QuantityTiming                                              TQ   `hl7:"3"`
-	GiveCode                                                    CE   `hl7:"4,required"`
-	GiveAmountMinimum                                           NM   `hl7:"5,required"`
-	GiveAmountMaximum                                           NM   `hl7:"6"`
-	GiveUnits                                                   CE   `hl7:"7,required"`
-	GiveDosageForm                                              CE   `hl7:"8"`
+	GiveSubIDCounter                                            *NM  `hl7:"1,required"`
+	DispenseSubIDCounter                                        *NM  `hl7:"2"`
+	QuantityTiming                                              *TQ  `hl7:"3"`
+	GiveCode                                                    *CE  `hl7:"4,required"`
+	GiveAmountMinimum                                           *NM  `hl7:"5,required"`
+	GiveAmountMaximum                                           *NM  `hl7:"6"`
+	GiveUnits                                                   *CE  `hl7:"7,required"`
+	GiveDosageForm                                              *CE  `hl7:"8"`
 	AdministrationNotes                                         []CE `hl7:"9"`
-	SubstitutionStatus                                          ID   `hl7:"10"`
-	DispenseToLocation                                          LA2  `hl7:"11"`
-	NeedsHumanReview                                            ID   `hl7:"12"`
+	SubstitutionStatus                                          *ID  `hl7:"10"`
+	DispenseToLocation                                          *LA2 `hl7:"11"`
+	NeedsHumanReview                                            *ID  `hl7:"12"`
 	PharmacyTreatmentSupplierSSpecialAdministrationInstructions []CE `hl7:"13"`
-	GivePerTimeUnit                                             ST   `hl7:"14"`
-	GiveRateAmount                                              ST   `hl7:"15"`
-	GiveRateUnits                                               CE   `hl7:"16"`
-	GiveStrength                                                NM   `hl7:"17"`
-	GiveStrengthUnits                                           CE   `hl7:"18"`
+	GivePerTimeUnit                                             *ST  `hl7:"14"`
+	GiveRateAmount                                              *ST  `hl7:"15"`
+	GiveRateUnits                                               *CE  `hl7:"16"`
+	GiveStrength                                                *NM  `hl7:"17"`
+	GiveStrengthUnits                                           *CE  `hl7:"18"`
 	SubstanceLotNumber                                          []ST `hl7:"19"`
 	SubstanceExpirationDate                                     []TS `hl7:"20"`
 	SubstanceManufacturerName                                   []CE `hl7:"21"`
 	Indication                                                  []CE `hl7:"22"`
-	GiveDrugStrengthVolume                                      NM   `hl7:"23"`
-	GiveDrugStrengthVolumeUnits                                 CWE  `hl7:"24"`
-	GiveBarcodeIdentifier                                       CWE  `hl7:"25"`
-	PharmacyOrderType                                           ID   `hl7:"26"`
+	GiveDrugStrengthVolume                                      *NM  `hl7:"23"`
+	GiveDrugStrengthVolumeUnits                                 *CWE `hl7:"24"`
+	GiveBarcodeIdentifier                                       *CWE `hl7:"25"`
+	PharmacyOrderType                                           *ID  `hl7:"26"`
+}
+
+func NewRXG() *RXG {
+	return &RXG{}
+}
+
+func (s *RXG) Validate() error {
+
+	if s.GiveSubIDCounter == nil {
+		return fmt.Errorf("RXG.GiveSubIDCounter is required")
+	}
+	if string(*s.GiveSubIDCounter) == "" {
+		return fmt.Errorf("RXG.GiveSubIDCounter is empty")
+	}
+
+	if s.QuantityTiming != nil {
+		if err := s.QuantityTiming.Validate(); err != nil {
+			return fmt.Errorf("RXG.QuantityTiming: %w", err)
+		}
+	}
+
+	if s.GiveCode == nil {
+		return fmt.Errorf("RXG.GiveCode is required")
+	}
+	if s.GiveCode != nil {
+		if err := s.GiveCode.Validate(); err != nil {
+			return fmt.Errorf("RXG.GiveCode: %w", err)
+		}
+	}
+
+	if s.GiveAmountMinimum == nil {
+		return fmt.Errorf("RXG.GiveAmountMinimum is required")
+	}
+	if string(*s.GiveAmountMinimum) == "" {
+		return fmt.Errorf("RXG.GiveAmountMinimum is empty")
+	}
+
+	if s.GiveUnits == nil {
+		return fmt.Errorf("RXG.GiveUnits is required")
+	}
+	if s.GiveUnits != nil {
+		if err := s.GiveUnits.Validate(); err != nil {
+			return fmt.Errorf("RXG.GiveUnits: %w", err)
+		}
+	}
+
+	if s.GiveDosageForm != nil {
+		if err := s.GiveDosageForm.Validate(); err != nil {
+			return fmt.Errorf("RXG.GiveDosageForm: %w", err)
+		}
+	}
+
+	for _, item := range s.AdministrationNotes {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RXG.AdministrationNotes: %w", err)
+		}
+	}
+
+	if s.DispenseToLocation != nil {
+		if err := s.DispenseToLocation.Validate(); err != nil {
+			return fmt.Errorf("RXG.DispenseToLocation: %w", err)
+		}
+	}
+
+	for _, item := range s.PharmacyTreatmentSupplierSSpecialAdministrationInstructions {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RXG.PharmacyTreatmentSupplierSSpecialAdministrationInstructions: %w", err)
+		}
+	}
+
+	if s.GiveRateUnits != nil {
+		if err := s.GiveRateUnits.Validate(); err != nil {
+			return fmt.Errorf("RXG.GiveRateUnits: %w", err)
+		}
+	}
+
+	if s.GiveStrengthUnits != nil {
+		if err := s.GiveStrengthUnits.Validate(); err != nil {
+			return fmt.Errorf("RXG.GiveStrengthUnits: %w", err)
+		}
+	}
+
+	for _, item := range s.SubstanceLotNumber {
+		if string(item) == "" {
+			return fmt.Errorf("RXG.SubstanceLotNumber item is empty")
+		}
+	}
+
+	for _, item := range s.SubstanceExpirationDate {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RXG.SubstanceExpirationDate: %w", err)
+		}
+	}
+
+	for _, item := range s.SubstanceManufacturerName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RXG.SubstanceManufacturerName: %w", err)
+		}
+	}
+
+	for _, item := range s.Indication {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RXG.Indication: %w", err)
+		}
+	}
+
+	if s.GiveDrugStrengthVolumeUnits != nil {
+		if err := s.GiveDrugStrengthVolumeUnits.Validate(); err != nil {
+			return fmt.Errorf("RXG.GiveDrugStrengthVolumeUnits: %w", err)
+		}
+	}
+
+	if s.GiveBarcodeIdentifier != nil {
+		if err := s.GiveBarcodeIdentifier.Validate(); err != nil {
+			return fmt.Errorf("RXG.GiveBarcodeIdentifier: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *RXG) SetGiveSubIDCounter(v *NM) *RXG {
+	s.GiveSubIDCounter = v
+	return s
+}
+
+func (s *RXG) SetDispenseSubIDCounter(v *NM) *RXG {
+	s.DispenseSubIDCounter = v
+	return s
+}
+
+func (s *RXG) SetQuantityTiming(v *TQ) *RXG {
+	s.QuantityTiming = v
+	return s
+}
+
+func (s *RXG) SetGiveCode(v *CE) *RXG {
+	s.GiveCode = v
+	return s
+}
+
+func (s *RXG) SetGiveAmountMinimum(v *NM) *RXG {
+	s.GiveAmountMinimum = v
+	return s
+}
+
+func (s *RXG) SetGiveAmountMaximum(v *NM) *RXG {
+	s.GiveAmountMaximum = v
+	return s
+}
+
+func (s *RXG) SetGiveUnits(v *CE) *RXG {
+	s.GiveUnits = v
+	return s
+}
+
+func (s *RXG) SetGiveDosageForm(v *CE) *RXG {
+	s.GiveDosageForm = v
+	return s
+}
+
+func (s *RXG) AddAdministrationNotes(v CE) *RXG {
+	s.AdministrationNotes = append(s.AdministrationNotes, v)
+	return s
+}
+
+func (s *RXG) SetSubstitutionStatus(v *ID) *RXG {
+	s.SubstitutionStatus = v
+	return s
+}
+
+func (s *RXG) SetDispenseToLocation(v *LA2) *RXG {
+	s.DispenseToLocation = v
+	return s
+}
+
+func (s *RXG) SetNeedsHumanReview(v *ID) *RXG {
+	s.NeedsHumanReview = v
+	return s
+}
+
+func (s *RXG) AddPharmacyTreatmentSupplierSSpecialAdministrationInstructions(v CE) *RXG {
+	s.PharmacyTreatmentSupplierSSpecialAdministrationInstructions = append(s.PharmacyTreatmentSupplierSSpecialAdministrationInstructions, v)
+	return s
+}
+
+func (s *RXG) SetGivePerTimeUnit(v *ST) *RXG {
+	s.GivePerTimeUnit = v
+	return s
+}
+
+func (s *RXG) SetGiveRateAmount(v *ST) *RXG {
+	s.GiveRateAmount = v
+	return s
+}
+
+func (s *RXG) SetGiveRateUnits(v *CE) *RXG {
+	s.GiveRateUnits = v
+	return s
+}
+
+func (s *RXG) SetGiveStrength(v *NM) *RXG {
+	s.GiveStrength = v
+	return s
+}
+
+func (s *RXG) SetGiveStrengthUnits(v *CE) *RXG {
+	s.GiveStrengthUnits = v
+	return s
+}
+
+func (s *RXG) AddSubstanceLotNumber(v ST) *RXG {
+	s.SubstanceLotNumber = append(s.SubstanceLotNumber, v)
+	return s
+}
+
+func (s *RXG) AddSubstanceExpirationDate(v TS) *RXG {
+	s.SubstanceExpirationDate = append(s.SubstanceExpirationDate, v)
+	return s
+}
+
+func (s *RXG) AddSubstanceManufacturerName(v CE) *RXG {
+	s.SubstanceManufacturerName = append(s.SubstanceManufacturerName, v)
+	return s
+}
+
+func (s *RXG) AddIndication(v CE) *RXG {
+	s.Indication = append(s.Indication, v)
+	return s
+}
+
+func (s *RXG) SetGiveDrugStrengthVolume(v *NM) *RXG {
+	s.GiveDrugStrengthVolume = v
+	return s
+}
+
+func (s *RXG) SetGiveDrugStrengthVolumeUnits(v *CWE) *RXG {
+	s.GiveDrugStrengthVolumeUnits = v
+	return s
+}
+
+func (s *RXG) SetGiveBarcodeIdentifier(v *CWE) *RXG {
+	s.GiveBarcodeIdentifier = v
+	return s
+}
+
+func (s *RXG) SetPharmacyOrderType(v *ID) *RXG {
+	s.PharmacyOrderType = v
+	return s
 }
 
 // RXO - Pharmacy/Treatment Order
 // This is the "master" pharmacy/treatment order segment. It contains order data not specific to components or additives. Unlike the OBR, it does not contain status fields or other data that are results-only.
 type RXO struct {
-	RequestedGiveCode                      CE    `hl7:"1"`
-	RequestedGiveAmountMinimum             NM    `hl7:"2"`
-	RequestedGiveAmountMaximum             NM    `hl7:"3"`
-	RequestedGiveUnits                     CE    `hl7:"4"`
-	RequestedDosageForm                    CE    `hl7:"5"`
+	RequestedGiveCode                      *CE   `hl7:"1"`
+	RequestedGiveAmountMinimum             *NM   `hl7:"2"`
+	RequestedGiveAmountMaximum             *NM   `hl7:"3"`
+	RequestedGiveUnits                     *CE   `hl7:"4"`
+	RequestedDosageForm                    *CE   `hl7:"5"`
 	ProviderSPharmacyTreatmentInstructions []CE  `hl7:"6"`
 	ProviderSAdministrationInstructions    []CE  `hl7:"7"`
-	DeliverToLocation                      LA1   `hl7:"8"`
-	AllowSubstitutions                     ID    `hl7:"9"`
-	RequestedDispenseCode                  CE    `hl7:"10"`
-	RequestedDispenseAmount                NM    `hl7:"11"`
-	RequestedDispenseUnits                 CE    `hl7:"12"`
-	NumberOfRefills                        NM    `hl7:"13"`
+	DeliverToLocation                      *LA1  `hl7:"8"`
+	AllowSubstitutions                     *ID   `hl7:"9"`
+	RequestedDispenseCode                  *CE   `hl7:"10"`
+	RequestedDispenseAmount                *NM   `hl7:"11"`
+	RequestedDispenseUnits                 *CE   `hl7:"12"`
+	NumberOfRefills                        *NM   `hl7:"13"`
 	OrderingProviderSDEANumber             []XCN `hl7:"14"`
 	PharmacistTreatmentSupplierSVerifierID []XCN `hl7:"15"`
-	NeedsHumanReview                       ID    `hl7:"16"`
-	RequestedGivePerTimeUnit               ST    `hl7:"17"`
-	RequestedGiveStrength                  NM    `hl7:"18"`
-	RequestedGiveStrengthUnits             CE    `hl7:"19"`
+	NeedsHumanReview                       *ID   `hl7:"16"`
+	RequestedGivePerTimeUnit               *ST   `hl7:"17"`
+	RequestedGiveStrength                  *NM   `hl7:"18"`
+	RequestedGiveStrengthUnits             *CE   `hl7:"19"`
 	Indication                             []CE  `hl7:"20"`
-	RequestedGiveRateAmount                ST    `hl7:"21"`
-	RequestedGiveRateUnits                 CE    `hl7:"22"`
-	TotalDailyDose                         CQ    `hl7:"23"`
+	RequestedGiveRateAmount                *ST   `hl7:"21"`
+	RequestedGiveRateUnits                 *CE   `hl7:"22"`
+	TotalDailyDose                         *CQ   `hl7:"23"`
 	SupplementaryCode                      []CE  `hl7:"24"`
-	RequestedDrugStrengthVolume            NM    `hl7:"25"`
-	RequestedDrugStrengthVolumeUnits       CWE   `hl7:"26"`
-	PharmacyOrderType                      ID    `hl7:"27"`
-	DispensingInterval                     NM    `hl7:"28"`
+	RequestedDrugStrengthVolume            *NM   `hl7:"25"`
+	RequestedDrugStrengthVolumeUnits       *CWE  `hl7:"26"`
+	PharmacyOrderType                      *ID   `hl7:"27"`
+	DispensingInterval                     *NM   `hl7:"28"`
+}
+
+func NewRXO() *RXO {
+	return &RXO{}
+}
+
+func (s *RXO) Validate() error {
+
+	if s.RequestedGiveCode != nil {
+		if err := s.RequestedGiveCode.Validate(); err != nil {
+			return fmt.Errorf("RXO.RequestedGiveCode: %w", err)
+		}
+	}
+
+	if s.RequestedGiveUnits != nil {
+		if err := s.RequestedGiveUnits.Validate(); err != nil {
+			return fmt.Errorf("RXO.RequestedGiveUnits: %w", err)
+		}
+	}
+
+	if s.RequestedDosageForm != nil {
+		if err := s.RequestedDosageForm.Validate(); err != nil {
+			return fmt.Errorf("RXO.RequestedDosageForm: %w", err)
+		}
+	}
+
+	for _, item := range s.ProviderSPharmacyTreatmentInstructions {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RXO.ProviderSPharmacyTreatmentInstructions: %w", err)
+		}
+	}
+
+	for _, item := range s.ProviderSAdministrationInstructions {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RXO.ProviderSAdministrationInstructions: %w", err)
+		}
+	}
+
+	if s.DeliverToLocation != nil {
+		if err := s.DeliverToLocation.Validate(); err != nil {
+			return fmt.Errorf("RXO.DeliverToLocation: %w", err)
+		}
+	}
+
+	if s.RequestedDispenseCode != nil {
+		if err := s.RequestedDispenseCode.Validate(); err != nil {
+			return fmt.Errorf("RXO.RequestedDispenseCode: %w", err)
+		}
+	}
+
+	if s.RequestedDispenseUnits != nil {
+		if err := s.RequestedDispenseUnits.Validate(); err != nil {
+			return fmt.Errorf("RXO.RequestedDispenseUnits: %w", err)
+		}
+	}
+
+	for _, item := range s.OrderingProviderSDEANumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RXO.OrderingProviderSDEANumber: %w", err)
+		}
+	}
+
+	for _, item := range s.PharmacistTreatmentSupplierSVerifierID {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RXO.PharmacistTreatmentSupplierSVerifierID: %w", err)
+		}
+	}
+
+	if s.RequestedGiveStrengthUnits != nil {
+		if err := s.RequestedGiveStrengthUnits.Validate(); err != nil {
+			return fmt.Errorf("RXO.RequestedGiveStrengthUnits: %w", err)
+		}
+	}
+
+	for _, item := range s.Indication {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RXO.Indication: %w", err)
+		}
+	}
+
+	if s.RequestedGiveRateUnits != nil {
+		if err := s.RequestedGiveRateUnits.Validate(); err != nil {
+			return fmt.Errorf("RXO.RequestedGiveRateUnits: %w", err)
+		}
+	}
+
+	if s.TotalDailyDose != nil {
+		if err := s.TotalDailyDose.Validate(); err != nil {
+			return fmt.Errorf("RXO.TotalDailyDose: %w", err)
+		}
+	}
+
+	for _, item := range s.SupplementaryCode {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("RXO.SupplementaryCode: %w", err)
+		}
+	}
+
+	if s.RequestedDrugStrengthVolumeUnits != nil {
+		if err := s.RequestedDrugStrengthVolumeUnits.Validate(); err != nil {
+			return fmt.Errorf("RXO.RequestedDrugStrengthVolumeUnits: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *RXO) SetRequestedGiveCode(v *CE) *RXO {
+	s.RequestedGiveCode = v
+	return s
+}
+
+func (s *RXO) SetRequestedGiveAmountMinimum(v *NM) *RXO {
+	s.RequestedGiveAmountMinimum = v
+	return s
+}
+
+func (s *RXO) SetRequestedGiveAmountMaximum(v *NM) *RXO {
+	s.RequestedGiveAmountMaximum = v
+	return s
+}
+
+func (s *RXO) SetRequestedGiveUnits(v *CE) *RXO {
+	s.RequestedGiveUnits = v
+	return s
+}
+
+func (s *RXO) SetRequestedDosageForm(v *CE) *RXO {
+	s.RequestedDosageForm = v
+	return s
+}
+
+func (s *RXO) AddProviderSPharmacyTreatmentInstructions(v CE) *RXO {
+	s.ProviderSPharmacyTreatmentInstructions = append(s.ProviderSPharmacyTreatmentInstructions, v)
+	return s
+}
+
+func (s *RXO) AddProviderSAdministrationInstructions(v CE) *RXO {
+	s.ProviderSAdministrationInstructions = append(s.ProviderSAdministrationInstructions, v)
+	return s
+}
+
+func (s *RXO) SetDeliverToLocation(v *LA1) *RXO {
+	s.DeliverToLocation = v
+	return s
+}
+
+func (s *RXO) SetAllowSubstitutions(v *ID) *RXO {
+	s.AllowSubstitutions = v
+	return s
+}
+
+func (s *RXO) SetRequestedDispenseCode(v *CE) *RXO {
+	s.RequestedDispenseCode = v
+	return s
+}
+
+func (s *RXO) SetRequestedDispenseAmount(v *NM) *RXO {
+	s.RequestedDispenseAmount = v
+	return s
+}
+
+func (s *RXO) SetRequestedDispenseUnits(v *CE) *RXO {
+	s.RequestedDispenseUnits = v
+	return s
+}
+
+func (s *RXO) SetNumberOfRefills(v *NM) *RXO {
+	s.NumberOfRefills = v
+	return s
+}
+
+func (s *RXO) AddOrderingProviderSDEANumber(v XCN) *RXO {
+	s.OrderingProviderSDEANumber = append(s.OrderingProviderSDEANumber, v)
+	return s
+}
+
+func (s *RXO) AddPharmacistTreatmentSupplierSVerifierID(v XCN) *RXO {
+	s.PharmacistTreatmentSupplierSVerifierID = append(s.PharmacistTreatmentSupplierSVerifierID, v)
+	return s
+}
+
+func (s *RXO) SetNeedsHumanReview(v *ID) *RXO {
+	s.NeedsHumanReview = v
+	return s
+}
+
+func (s *RXO) SetRequestedGivePerTimeUnit(v *ST) *RXO {
+	s.RequestedGivePerTimeUnit = v
+	return s
+}
+
+func (s *RXO) SetRequestedGiveStrength(v *NM) *RXO {
+	s.RequestedGiveStrength = v
+	return s
+}
+
+func (s *RXO) SetRequestedGiveStrengthUnits(v *CE) *RXO {
+	s.RequestedGiveStrengthUnits = v
+	return s
+}
+
+func (s *RXO) AddIndication(v CE) *RXO {
+	s.Indication = append(s.Indication, v)
+	return s
+}
+
+func (s *RXO) SetRequestedGiveRateAmount(v *ST) *RXO {
+	s.RequestedGiveRateAmount = v
+	return s
+}
+
+func (s *RXO) SetRequestedGiveRateUnits(v *CE) *RXO {
+	s.RequestedGiveRateUnits = v
+	return s
+}
+
+func (s *RXO) SetTotalDailyDose(v *CQ) *RXO {
+	s.TotalDailyDose = v
+	return s
+}
+
+func (s *RXO) AddSupplementaryCode(v CE) *RXO {
+	s.SupplementaryCode = append(s.SupplementaryCode, v)
+	return s
+}
+
+func (s *RXO) SetRequestedDrugStrengthVolume(v *NM) *RXO {
+	s.RequestedDrugStrengthVolume = v
+	return s
+}
+
+func (s *RXO) SetRequestedDrugStrengthVolumeUnits(v *CWE) *RXO {
+	s.RequestedDrugStrengthVolumeUnits = v
+	return s
+}
+
+func (s *RXO) SetPharmacyOrderType(v *ID) *RXO {
+	s.PharmacyOrderType = v
+	return s
+}
+
+func (s *RXO) SetDispensingInterval(v *NM) *RXO {
+	s.DispensingInterval = v
+	return s
 }
 
 // RXR - Pharmacy/Treatment Route
 // The Pharmacy/Treatment Route segment contains the alternative combination of route, site, administration device, and administration method that are prescribed as they apply to a particular order. The pharmacy, treatment staff and/or nursing staff has a choice between the routes based on either their professional judgment or administration instructions provided by the physician.
 type RXR struct {
-	Route                      CE  `hl7:"1,required"`
-	AdministrationSite         CWE `hl7:"2"`
-	AdministrationDevice       CE  `hl7:"3"`
-	AdministrationMethod       CWE `hl7:"4"`
-	RoutingInstruction         CE  `hl7:"5"`
-	AdministrationSiteModifier CWE `hl7:"6"`
+	Route                      *CE  `hl7:"1,required"`
+	AdministrationSite         *CWE `hl7:"2"`
+	AdministrationDevice       *CE  `hl7:"3"`
+	AdministrationMethod       *CWE `hl7:"4"`
+	RoutingInstruction         *CE  `hl7:"5"`
+	AdministrationSiteModifier *CWE `hl7:"6"`
+}
+
+func NewRXR() *RXR {
+	return &RXR{}
+}
+
+func (s *RXR) Validate() error {
+
+	if s.Route == nil {
+		return fmt.Errorf("RXR.Route is required")
+	}
+	if s.Route != nil {
+		if err := s.Route.Validate(); err != nil {
+			return fmt.Errorf("RXR.Route: %w", err)
+		}
+	}
+
+	if s.AdministrationSite != nil {
+		if err := s.AdministrationSite.Validate(); err != nil {
+			return fmt.Errorf("RXR.AdministrationSite: %w", err)
+		}
+	}
+
+	if s.AdministrationDevice != nil {
+		if err := s.AdministrationDevice.Validate(); err != nil {
+			return fmt.Errorf("RXR.AdministrationDevice: %w", err)
+		}
+	}
+
+	if s.AdministrationMethod != nil {
+		if err := s.AdministrationMethod.Validate(); err != nil {
+			return fmt.Errorf("RXR.AdministrationMethod: %w", err)
+		}
+	}
+
+	if s.RoutingInstruction != nil {
+		if err := s.RoutingInstruction.Validate(); err != nil {
+			return fmt.Errorf("RXR.RoutingInstruction: %w", err)
+		}
+	}
+
+	if s.AdministrationSiteModifier != nil {
+		if err := s.AdministrationSiteModifier.Validate(); err != nil {
+			return fmt.Errorf("RXR.AdministrationSiteModifier: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *RXR) SetRoute(v *CE) *RXR {
+	s.Route = v
+	return s
+}
+
+func (s *RXR) SetAdministrationSite(v *CWE) *RXR {
+	s.AdministrationSite = v
+	return s
+}
+
+func (s *RXR) SetAdministrationDevice(v *CE) *RXR {
+	s.AdministrationDevice = v
+	return s
+}
+
+func (s *RXR) SetAdministrationMethod(v *CWE) *RXR {
+	s.AdministrationMethod = v
+	return s
+}
+
+func (s *RXR) SetRoutingInstruction(v *CE) *RXR {
+	s.RoutingInstruction = v
+	return s
+}
+
+func (s *RXR) SetAdministrationSiteModifier(v *CWE) *RXR {
+	s.AdministrationSiteModifier = v
+	return s
 }
 
 // SAC - Specimen Container detail
 // The container detail segment is the data necessary to maintain the containers that are being used throughout the Laboratory Automation System.
 type SAC struct {
-	ExternalAccessionIdentifier       EI    `hl7:"1"`
-	AccessionIdentifier               EI    `hl7:"2"`
-	ContainerIdentifier               EI    `hl7:"3"`
-	PrimaryParentContainerIdentifier  EI    `hl7:"4"`
-	EquipmentContainerIdentifier      EI    `hl7:"5"`
-	SpecimenSource                    SPS   `hl7:"6"`
-	RegistrationDateTime              TS    `hl7:"7"`
-	ContainerStatus                   CE    `hl7:"8"`
-	CarrierType                       CE    `hl7:"9"`
-	CarrierIdentifier                 EI    `hl7:"10"`
-	PositionInCarrier                 NA    `hl7:"11"`
-	TrayTypeSAC                       CE    `hl7:"12"`
-	TrayIdentifier                    EI    `hl7:"13"`
-	PositionInTray                    NA    `hl7:"14"`
+	ExternalAccessionIdentifier       *EI   `hl7:"1"`
+	AccessionIdentifier               *EI   `hl7:"2"`
+	ContainerIdentifier               *EI   `hl7:"3"`
+	PrimaryParentContainerIdentifier  *EI   `hl7:"4"`
+	EquipmentContainerIdentifier      *EI   `hl7:"5"`
+	SpecimenSource                    *SPS  `hl7:"6"`
+	RegistrationDateTime              *TS   `hl7:"7"`
+	ContainerStatus                   *CE   `hl7:"8"`
+	CarrierType                       *CE   `hl7:"9"`
+	CarrierIdentifier                 *EI   `hl7:"10"`
+	PositionInCarrier                 *NA   `hl7:"11"`
+	TrayTypeSAC                       *CE   `hl7:"12"`
+	TrayIdentifier                    *EI   `hl7:"13"`
+	PositionInTray                    *NA   `hl7:"14"`
 	Location                          []CE  `hl7:"15"`
-	ContainerHeight                   NM    `hl7:"16"`
-	ContainerDiameter                 NM    `hl7:"17"`
-	BarrierDelta                      NM    `hl7:"18"`
-	BottomDelta                       NM    `hl7:"19"`
-	ContainerHeightDiameterDeltaUnits CE    `hl7:"20"`
-	ContainerVolume                   NM    `hl7:"21"`
-	AvailableSpecimenVolume           NM    `hl7:"22"`
-	InitialSpecimenVolume             NM    `hl7:"23"`
-	VolumeUnits                       CE    `hl7:"24"`
-	SeparatorType                     CE    `hl7:"25"`
-	CapType                           CE    `hl7:"26"`
+	ContainerHeight                   *NM   `hl7:"16"`
+	ContainerDiameter                 *NM   `hl7:"17"`
+	BarrierDelta                      *NM   `hl7:"18"`
+	BottomDelta                       *NM   `hl7:"19"`
+	ContainerHeightDiameterDeltaUnits *CE   `hl7:"20"`
+	ContainerVolume                   *NM   `hl7:"21"`
+	AvailableSpecimenVolume           *NM   `hl7:"22"`
+	InitialSpecimenVolume             *NM   `hl7:"23"`
+	VolumeUnits                       *CE   `hl7:"24"`
+	SeparatorType                     *CE   `hl7:"25"`
+	CapType                           *CE   `hl7:"26"`
 	Additive                          []CWE `hl7:"27"`
-	SpecimenComponent                 CE    `hl7:"28"`
-	DilutionFactor                    SN    `hl7:"29"`
-	Treatment                         CE    `hl7:"30"`
-	Temperature                       SN    `hl7:"31"`
-	HemolysisIndex                    NM    `hl7:"32"`
-	HemolysisIndexUnits               CE    `hl7:"33"`
-	LipemiaIndex                      NM    `hl7:"34"`
-	LipemiaIndexUnits                 CE    `hl7:"35"`
-	IcterusIndex                      NM    `hl7:"36"`
-	IcterusIndexUnits                 CE    `hl7:"37"`
-	FibrinIndex                       NM    `hl7:"38"`
-	FibrinIndexUnits                  CE    `hl7:"39"`
+	SpecimenComponent                 *CE   `hl7:"28"`
+	DilutionFactor                    *SN   `hl7:"29"`
+	Treatment                         *CE   `hl7:"30"`
+	Temperature                       *SN   `hl7:"31"`
+	HemolysisIndex                    *NM   `hl7:"32"`
+	HemolysisIndexUnits               *CE   `hl7:"33"`
+	LipemiaIndex                      *NM   `hl7:"34"`
+	LipemiaIndexUnits                 *CE   `hl7:"35"`
+	IcterusIndex                      *NM   `hl7:"36"`
+	IcterusIndexUnits                 *CE   `hl7:"37"`
+	FibrinIndex                       *NM   `hl7:"38"`
+	FibrinIndexUnits                  *CE   `hl7:"39"`
 	SystemInducedContaminants         []CE  `hl7:"40"`
 	DrugInterference                  []CE  `hl7:"41"`
-	ArtificialBlood                   CE    `hl7:"42"`
+	ArtificialBlood                   *CE   `hl7:"42"`
 	SpecialHandlingCode               []CWE `hl7:"43"`
 	OtherEnvironmentalFactors         []CE  `hl7:"44"`
+}
+
+func NewSAC() *SAC {
+	return &SAC{}
+}
+
+func (s *SAC) Validate() error {
+
+	if s.ExternalAccessionIdentifier != nil {
+		if err := s.ExternalAccessionIdentifier.Validate(); err != nil {
+			return fmt.Errorf("SAC.ExternalAccessionIdentifier: %w", err)
+		}
+	}
+
+	if s.AccessionIdentifier != nil {
+		if err := s.AccessionIdentifier.Validate(); err != nil {
+			return fmt.Errorf("SAC.AccessionIdentifier: %w", err)
+		}
+	}
+
+	if s.ContainerIdentifier != nil {
+		if err := s.ContainerIdentifier.Validate(); err != nil {
+			return fmt.Errorf("SAC.ContainerIdentifier: %w", err)
+		}
+	}
+
+	if s.PrimaryParentContainerIdentifier != nil {
+		if err := s.PrimaryParentContainerIdentifier.Validate(); err != nil {
+			return fmt.Errorf("SAC.PrimaryParentContainerIdentifier: %w", err)
+		}
+	}
+
+	if s.EquipmentContainerIdentifier != nil {
+		if err := s.EquipmentContainerIdentifier.Validate(); err != nil {
+			return fmt.Errorf("SAC.EquipmentContainerIdentifier: %w", err)
+		}
+	}
+
+	if s.SpecimenSource != nil {
+		if err := s.SpecimenSource.Validate(); err != nil {
+			return fmt.Errorf("SAC.SpecimenSource: %w", err)
+		}
+	}
+
+	if s.RegistrationDateTime != nil {
+		if err := s.RegistrationDateTime.Validate(); err != nil {
+			return fmt.Errorf("SAC.RegistrationDateTime: %w", err)
+		}
+	}
+
+	if s.ContainerStatus != nil {
+		if err := s.ContainerStatus.Validate(); err != nil {
+			return fmt.Errorf("SAC.ContainerStatus: %w", err)
+		}
+	}
+
+	if s.CarrierType != nil {
+		if err := s.CarrierType.Validate(); err != nil {
+			return fmt.Errorf("SAC.CarrierType: %w", err)
+		}
+	}
+
+	if s.CarrierIdentifier != nil {
+		if err := s.CarrierIdentifier.Validate(); err != nil {
+			return fmt.Errorf("SAC.CarrierIdentifier: %w", err)
+		}
+	}
+
+	if s.PositionInCarrier != nil {
+		if err := s.PositionInCarrier.Validate(); err != nil {
+			return fmt.Errorf("SAC.PositionInCarrier: %w", err)
+		}
+	}
+
+	if s.TrayTypeSAC != nil {
+		if err := s.TrayTypeSAC.Validate(); err != nil {
+			return fmt.Errorf("SAC.TrayTypeSAC: %w", err)
+		}
+	}
+
+	if s.TrayIdentifier != nil {
+		if err := s.TrayIdentifier.Validate(); err != nil {
+			return fmt.Errorf("SAC.TrayIdentifier: %w", err)
+		}
+	}
+
+	if s.PositionInTray != nil {
+		if err := s.PositionInTray.Validate(); err != nil {
+			return fmt.Errorf("SAC.PositionInTray: %w", err)
+		}
+	}
+
+	for _, item := range s.Location {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("SAC.Location: %w", err)
+		}
+	}
+
+	if s.ContainerHeightDiameterDeltaUnits != nil {
+		if err := s.ContainerHeightDiameterDeltaUnits.Validate(); err != nil {
+			return fmt.Errorf("SAC.ContainerHeightDiameterDeltaUnits: %w", err)
+		}
+	}
+
+	if s.VolumeUnits != nil {
+		if err := s.VolumeUnits.Validate(); err != nil {
+			return fmt.Errorf("SAC.VolumeUnits: %w", err)
+		}
+	}
+
+	if s.SeparatorType != nil {
+		if err := s.SeparatorType.Validate(); err != nil {
+			return fmt.Errorf("SAC.SeparatorType: %w", err)
+		}
+	}
+
+	if s.CapType != nil {
+		if err := s.CapType.Validate(); err != nil {
+			return fmt.Errorf("SAC.CapType: %w", err)
+		}
+	}
+
+	for _, item := range s.Additive {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("SAC.Additive: %w", err)
+		}
+	}
+
+	if s.SpecimenComponent != nil {
+		if err := s.SpecimenComponent.Validate(); err != nil {
+			return fmt.Errorf("SAC.SpecimenComponent: %w", err)
+		}
+	}
+
+	if s.DilutionFactor != nil {
+		if err := s.DilutionFactor.Validate(); err != nil {
+			return fmt.Errorf("SAC.DilutionFactor: %w", err)
+		}
+	}
+
+	if s.Treatment != nil {
+		if err := s.Treatment.Validate(); err != nil {
+			return fmt.Errorf("SAC.Treatment: %w", err)
+		}
+	}
+
+	if s.Temperature != nil {
+		if err := s.Temperature.Validate(); err != nil {
+			return fmt.Errorf("SAC.Temperature: %w", err)
+		}
+	}
+
+	if s.HemolysisIndexUnits != nil {
+		if err := s.HemolysisIndexUnits.Validate(); err != nil {
+			return fmt.Errorf("SAC.HemolysisIndexUnits: %w", err)
+		}
+	}
+
+	if s.LipemiaIndexUnits != nil {
+		if err := s.LipemiaIndexUnits.Validate(); err != nil {
+			return fmt.Errorf("SAC.LipemiaIndexUnits: %w", err)
+		}
+	}
+
+	if s.IcterusIndexUnits != nil {
+		if err := s.IcterusIndexUnits.Validate(); err != nil {
+			return fmt.Errorf("SAC.IcterusIndexUnits: %w", err)
+		}
+	}
+
+	if s.FibrinIndexUnits != nil {
+		if err := s.FibrinIndexUnits.Validate(); err != nil {
+			return fmt.Errorf("SAC.FibrinIndexUnits: %w", err)
+		}
+	}
+
+	for _, item := range s.SystemInducedContaminants {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("SAC.SystemInducedContaminants: %w", err)
+		}
+	}
+
+	for _, item := range s.DrugInterference {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("SAC.DrugInterference: %w", err)
+		}
+	}
+
+	if s.ArtificialBlood != nil {
+		if err := s.ArtificialBlood.Validate(); err != nil {
+			return fmt.Errorf("SAC.ArtificialBlood: %w", err)
+		}
+	}
+
+	for _, item := range s.SpecialHandlingCode {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("SAC.SpecialHandlingCode: %w", err)
+		}
+	}
+
+	for _, item := range s.OtherEnvironmentalFactors {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("SAC.OtherEnvironmentalFactors: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *SAC) SetExternalAccessionIdentifier(v *EI) *SAC {
+	s.ExternalAccessionIdentifier = v
+	return s
+}
+
+func (s *SAC) SetAccessionIdentifier(v *EI) *SAC {
+	s.AccessionIdentifier = v
+	return s
+}
+
+func (s *SAC) SetContainerIdentifier(v *EI) *SAC {
+	s.ContainerIdentifier = v
+	return s
+}
+
+func (s *SAC) SetPrimaryParentContainerIdentifier(v *EI) *SAC {
+	s.PrimaryParentContainerIdentifier = v
+	return s
+}
+
+func (s *SAC) SetEquipmentContainerIdentifier(v *EI) *SAC {
+	s.EquipmentContainerIdentifier = v
+	return s
+}
+
+func (s *SAC) SetSpecimenSource(v *SPS) *SAC {
+	s.SpecimenSource = v
+	return s
+}
+
+func (s *SAC) SetRegistrationDateTime(v *TS) *SAC {
+	s.RegistrationDateTime = v
+	return s
+}
+
+func (s *SAC) SetContainerStatus(v *CE) *SAC {
+	s.ContainerStatus = v
+	return s
+}
+
+func (s *SAC) SetCarrierType(v *CE) *SAC {
+	s.CarrierType = v
+	return s
+}
+
+func (s *SAC) SetCarrierIdentifier(v *EI) *SAC {
+	s.CarrierIdentifier = v
+	return s
+}
+
+func (s *SAC) SetPositionInCarrier(v *NA) *SAC {
+	s.PositionInCarrier = v
+	return s
+}
+
+func (s *SAC) SetTrayTypeSAC(v *CE) *SAC {
+	s.TrayTypeSAC = v
+	return s
+}
+
+func (s *SAC) SetTrayIdentifier(v *EI) *SAC {
+	s.TrayIdentifier = v
+	return s
+}
+
+func (s *SAC) SetPositionInTray(v *NA) *SAC {
+	s.PositionInTray = v
+	return s
+}
+
+func (s *SAC) AddLocation(v CE) *SAC {
+	s.Location = append(s.Location, v)
+	return s
+}
+
+func (s *SAC) SetContainerHeight(v *NM) *SAC {
+	s.ContainerHeight = v
+	return s
+}
+
+func (s *SAC) SetContainerDiameter(v *NM) *SAC {
+	s.ContainerDiameter = v
+	return s
+}
+
+func (s *SAC) SetBarrierDelta(v *NM) *SAC {
+	s.BarrierDelta = v
+	return s
+}
+
+func (s *SAC) SetBottomDelta(v *NM) *SAC {
+	s.BottomDelta = v
+	return s
+}
+
+func (s *SAC) SetContainerHeightDiameterDeltaUnits(v *CE) *SAC {
+	s.ContainerHeightDiameterDeltaUnits = v
+	return s
+}
+
+func (s *SAC) SetContainerVolume(v *NM) *SAC {
+	s.ContainerVolume = v
+	return s
+}
+
+func (s *SAC) SetAvailableSpecimenVolume(v *NM) *SAC {
+	s.AvailableSpecimenVolume = v
+	return s
+}
+
+func (s *SAC) SetInitialSpecimenVolume(v *NM) *SAC {
+	s.InitialSpecimenVolume = v
+	return s
+}
+
+func (s *SAC) SetVolumeUnits(v *CE) *SAC {
+	s.VolumeUnits = v
+	return s
+}
+
+func (s *SAC) SetSeparatorType(v *CE) *SAC {
+	s.SeparatorType = v
+	return s
+}
+
+func (s *SAC) SetCapType(v *CE) *SAC {
+	s.CapType = v
+	return s
+}
+
+func (s *SAC) AddAdditive(v CWE) *SAC {
+	s.Additive = append(s.Additive, v)
+	return s
+}
+
+func (s *SAC) SetSpecimenComponent(v *CE) *SAC {
+	s.SpecimenComponent = v
+	return s
+}
+
+func (s *SAC) SetDilutionFactor(v *SN) *SAC {
+	s.DilutionFactor = v
+	return s
+}
+
+func (s *SAC) SetTreatment(v *CE) *SAC {
+	s.Treatment = v
+	return s
+}
+
+func (s *SAC) SetTemperature(v *SN) *SAC {
+	s.Temperature = v
+	return s
+}
+
+func (s *SAC) SetHemolysisIndex(v *NM) *SAC {
+	s.HemolysisIndex = v
+	return s
+}
+
+func (s *SAC) SetHemolysisIndexUnits(v *CE) *SAC {
+	s.HemolysisIndexUnits = v
+	return s
+}
+
+func (s *SAC) SetLipemiaIndex(v *NM) *SAC {
+	s.LipemiaIndex = v
+	return s
+}
+
+func (s *SAC) SetLipemiaIndexUnits(v *CE) *SAC {
+	s.LipemiaIndexUnits = v
+	return s
+}
+
+func (s *SAC) SetIcterusIndex(v *NM) *SAC {
+	s.IcterusIndex = v
+	return s
+}
+
+func (s *SAC) SetIcterusIndexUnits(v *CE) *SAC {
+	s.IcterusIndexUnits = v
+	return s
+}
+
+func (s *SAC) SetFibrinIndex(v *NM) *SAC {
+	s.FibrinIndex = v
+	return s
+}
+
+func (s *SAC) SetFibrinIndexUnits(v *CE) *SAC {
+	s.FibrinIndexUnits = v
+	return s
+}
+
+func (s *SAC) AddSystemInducedContaminants(v CE) *SAC {
+	s.SystemInducedContaminants = append(s.SystemInducedContaminants, v)
+	return s
+}
+
+func (s *SAC) AddDrugInterference(v CE) *SAC {
+	s.DrugInterference = append(s.DrugInterference, v)
+	return s
+}
+
+func (s *SAC) SetArtificialBlood(v *CE) *SAC {
+	s.ArtificialBlood = v
+	return s
+}
+
+func (s *SAC) AddSpecialHandlingCode(v CWE) *SAC {
+	s.SpecialHandlingCode = append(s.SpecialHandlingCode, v)
+	return s
+}
+
+func (s *SAC) AddOtherEnvironmentalFactors(v CE) *SAC {
+	s.OtherEnvironmentalFactors = append(s.OtherEnvironmentalFactors, v)
+	return s
 }
 
 // SCH - Scheduling Activity Information
 // The SCH segment contains general information about the scheduled appointment.
 type SCH struct {
-	PlacerAppointmentID       EI    `hl7:"1"`
-	FillerAppointmentID       EI    `hl7:"2"`
-	OccurrenceNumber          NM    `hl7:"3"`
-	PlacerGroupNumber         EI    `hl7:"4"`
-	ScheduleID                CE    `hl7:"5"`
-	EventReason               CE    `hl7:"6,required"`
-	AppointmentReason         CE    `hl7:"7"`
-	AppointmentType           CE    `hl7:"8"`
-	AppointmentDuration       NM    `hl7:"9"`
-	AppointmentDurationUnits  CE    `hl7:"10"`
+	PlacerAppointmentID       *EI   `hl7:"1"`
+	FillerAppointmentID       *EI   `hl7:"2"`
+	OccurrenceNumber          *NM   `hl7:"3"`
+	PlacerGroupNumber         *EI   `hl7:"4"`
+	ScheduleID                *CE   `hl7:"5"`
+	EventReason               *CE   `hl7:"6,required"`
+	AppointmentReason         *CE   `hl7:"7"`
+	AppointmentType           *CE   `hl7:"8"`
+	AppointmentDuration       *NM   `hl7:"9"`
+	AppointmentDurationUnits  *CE   `hl7:"10"`
 	AppointmentTimingQuantity []TQ  `hl7:"11"`
 	PlacerContactPerson       []XCN `hl7:"12"`
-	PlacerContactPhoneNumber  XTN   `hl7:"13"`
+	PlacerContactPhoneNumber  *XTN  `hl7:"13"`
 	PlacerContactAddress      []XAD `hl7:"14"`
-	PlacerContactLocation     PL    `hl7:"15"`
+	PlacerContactLocation     *PL   `hl7:"15"`
 	FillerContactPerson       []XCN `hl7:"16,required"`
-	FillerContactPhoneNumber  XTN   `hl7:"17"`
+	FillerContactPhoneNumber  *XTN  `hl7:"17"`
 	FillerContactAddress      []XAD `hl7:"18"`
-	FillerContactLocation     PL    `hl7:"19"`
+	FillerContactLocation     *PL   `hl7:"19"`
 	EnteredByPerson           []XCN `hl7:"20,required"`
 	EnteredByPhoneNumber      []XTN `hl7:"21"`
-	EnteredByLocation         PL    `hl7:"22"`
-	ParentPlacerAppointmentID EI    `hl7:"23"`
-	ParentFillerAppointmentID EI    `hl7:"24"`
-	FillerStatusCode          CE    `hl7:"25"`
+	EnteredByLocation         *PL   `hl7:"22"`
+	ParentPlacerAppointmentID *EI   `hl7:"23"`
+	ParentFillerAppointmentID *EI   `hl7:"24"`
+	FillerStatusCode          *CE   `hl7:"25"`
 	PlacerOrderNumber         []EI  `hl7:"26"`
 	FillerOrderNumber         []EI  `hl7:"27"`
+}
+
+func NewSCH() *SCH {
+	return &SCH{}
+}
+
+func (s *SCH) Validate() error {
+
+	if s.PlacerAppointmentID != nil {
+		if err := s.PlacerAppointmentID.Validate(); err != nil {
+			return fmt.Errorf("SCH.PlacerAppointmentID: %w", err)
+		}
+	}
+
+	if s.FillerAppointmentID != nil {
+		if err := s.FillerAppointmentID.Validate(); err != nil {
+			return fmt.Errorf("SCH.FillerAppointmentID: %w", err)
+		}
+	}
+
+	if s.PlacerGroupNumber != nil {
+		if err := s.PlacerGroupNumber.Validate(); err != nil {
+			return fmt.Errorf("SCH.PlacerGroupNumber: %w", err)
+		}
+	}
+
+	if s.ScheduleID != nil {
+		if err := s.ScheduleID.Validate(); err != nil {
+			return fmt.Errorf("SCH.ScheduleID: %w", err)
+		}
+	}
+
+	if s.EventReason == nil {
+		return fmt.Errorf("SCH.EventReason is required")
+	}
+	if s.EventReason != nil {
+		if err := s.EventReason.Validate(); err != nil {
+			return fmt.Errorf("SCH.EventReason: %w", err)
+		}
+	}
+
+	if s.AppointmentReason != nil {
+		if err := s.AppointmentReason.Validate(); err != nil {
+			return fmt.Errorf("SCH.AppointmentReason: %w", err)
+		}
+	}
+
+	if s.AppointmentType != nil {
+		if err := s.AppointmentType.Validate(); err != nil {
+			return fmt.Errorf("SCH.AppointmentType: %w", err)
+		}
+	}
+
+	if s.AppointmentDurationUnits != nil {
+		if err := s.AppointmentDurationUnits.Validate(); err != nil {
+			return fmt.Errorf("SCH.AppointmentDurationUnits: %w", err)
+		}
+	}
+
+	for _, item := range s.AppointmentTimingQuantity {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("SCH.AppointmentTimingQuantity: %w", err)
+		}
+	}
+
+	for _, item := range s.PlacerContactPerson {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("SCH.PlacerContactPerson: %w", err)
+		}
+	}
+
+	if s.PlacerContactPhoneNumber != nil {
+		if err := s.PlacerContactPhoneNumber.Validate(); err != nil {
+			return fmt.Errorf("SCH.PlacerContactPhoneNumber: %w", err)
+		}
+	}
+
+	for _, item := range s.PlacerContactAddress {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("SCH.PlacerContactAddress: %w", err)
+		}
+	}
+
+	if s.PlacerContactLocation != nil {
+		if err := s.PlacerContactLocation.Validate(); err != nil {
+			return fmt.Errorf("SCH.PlacerContactLocation: %w", err)
+		}
+	}
+
+	if len(s.FillerContactPerson) == 0 {
+		return fmt.Errorf("SCH.FillerContactPerson is required")
+	}
+	for _, item := range s.FillerContactPerson {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("SCH.FillerContactPerson: %w", err)
+		}
+	}
+
+	if s.FillerContactPhoneNumber != nil {
+		if err := s.FillerContactPhoneNumber.Validate(); err != nil {
+			return fmt.Errorf("SCH.FillerContactPhoneNumber: %w", err)
+		}
+	}
+
+	for _, item := range s.FillerContactAddress {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("SCH.FillerContactAddress: %w", err)
+		}
+	}
+
+	if s.FillerContactLocation != nil {
+		if err := s.FillerContactLocation.Validate(); err != nil {
+			return fmt.Errorf("SCH.FillerContactLocation: %w", err)
+		}
+	}
+
+	if len(s.EnteredByPerson) == 0 {
+		return fmt.Errorf("SCH.EnteredByPerson is required")
+	}
+	for _, item := range s.EnteredByPerson {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("SCH.EnteredByPerson: %w", err)
+		}
+	}
+
+	for _, item := range s.EnteredByPhoneNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("SCH.EnteredByPhoneNumber: %w", err)
+		}
+	}
+
+	if s.EnteredByLocation != nil {
+		if err := s.EnteredByLocation.Validate(); err != nil {
+			return fmt.Errorf("SCH.EnteredByLocation: %w", err)
+		}
+	}
+
+	if s.ParentPlacerAppointmentID != nil {
+		if err := s.ParentPlacerAppointmentID.Validate(); err != nil {
+			return fmt.Errorf("SCH.ParentPlacerAppointmentID: %w", err)
+		}
+	}
+
+	if s.ParentFillerAppointmentID != nil {
+		if err := s.ParentFillerAppointmentID.Validate(); err != nil {
+			return fmt.Errorf("SCH.ParentFillerAppointmentID: %w", err)
+		}
+	}
+
+	if s.FillerStatusCode != nil {
+		if err := s.FillerStatusCode.Validate(); err != nil {
+			return fmt.Errorf("SCH.FillerStatusCode: %w", err)
+		}
+	}
+
+	for _, item := range s.PlacerOrderNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("SCH.PlacerOrderNumber: %w", err)
+		}
+	}
+
+	for _, item := range s.FillerOrderNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("SCH.FillerOrderNumber: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *SCH) SetPlacerAppointmentID(v *EI) *SCH {
+	s.PlacerAppointmentID = v
+	return s
+}
+
+func (s *SCH) SetFillerAppointmentID(v *EI) *SCH {
+	s.FillerAppointmentID = v
+	return s
+}
+
+func (s *SCH) SetOccurrenceNumber(v *NM) *SCH {
+	s.OccurrenceNumber = v
+	return s
+}
+
+func (s *SCH) SetPlacerGroupNumber(v *EI) *SCH {
+	s.PlacerGroupNumber = v
+	return s
+}
+
+func (s *SCH) SetScheduleID(v *CE) *SCH {
+	s.ScheduleID = v
+	return s
+}
+
+func (s *SCH) SetEventReason(v *CE) *SCH {
+	s.EventReason = v
+	return s
+}
+
+func (s *SCH) SetAppointmentReason(v *CE) *SCH {
+	s.AppointmentReason = v
+	return s
+}
+
+func (s *SCH) SetAppointmentType(v *CE) *SCH {
+	s.AppointmentType = v
+	return s
+}
+
+func (s *SCH) SetAppointmentDuration(v *NM) *SCH {
+	s.AppointmentDuration = v
+	return s
+}
+
+func (s *SCH) SetAppointmentDurationUnits(v *CE) *SCH {
+	s.AppointmentDurationUnits = v
+	return s
+}
+
+func (s *SCH) AddAppointmentTimingQuantity(v TQ) *SCH {
+	s.AppointmentTimingQuantity = append(s.AppointmentTimingQuantity, v)
+	return s
+}
+
+func (s *SCH) AddPlacerContactPerson(v XCN) *SCH {
+	s.PlacerContactPerson = append(s.PlacerContactPerson, v)
+	return s
+}
+
+func (s *SCH) SetPlacerContactPhoneNumber(v *XTN) *SCH {
+	s.PlacerContactPhoneNumber = v
+	return s
+}
+
+func (s *SCH) AddPlacerContactAddress(v XAD) *SCH {
+	s.PlacerContactAddress = append(s.PlacerContactAddress, v)
+	return s
+}
+
+func (s *SCH) SetPlacerContactLocation(v *PL) *SCH {
+	s.PlacerContactLocation = v
+	return s
+}
+
+func (s *SCH) AddFillerContactPerson(v XCN) *SCH {
+	s.FillerContactPerson = append(s.FillerContactPerson, v)
+	return s
+}
+
+func (s *SCH) SetFillerContactPhoneNumber(v *XTN) *SCH {
+	s.FillerContactPhoneNumber = v
+	return s
+}
+
+func (s *SCH) AddFillerContactAddress(v XAD) *SCH {
+	s.FillerContactAddress = append(s.FillerContactAddress, v)
+	return s
+}
+
+func (s *SCH) SetFillerContactLocation(v *PL) *SCH {
+	s.FillerContactLocation = v
+	return s
+}
+
+func (s *SCH) AddEnteredByPerson(v XCN) *SCH {
+	s.EnteredByPerson = append(s.EnteredByPerson, v)
+	return s
+}
+
+func (s *SCH) AddEnteredByPhoneNumber(v XTN) *SCH {
+	s.EnteredByPhoneNumber = append(s.EnteredByPhoneNumber, v)
+	return s
+}
+
+func (s *SCH) SetEnteredByLocation(v *PL) *SCH {
+	s.EnteredByLocation = v
+	return s
+}
+
+func (s *SCH) SetParentPlacerAppointmentID(v *EI) *SCH {
+	s.ParentPlacerAppointmentID = v
+	return s
+}
+
+func (s *SCH) SetParentFillerAppointmentID(v *EI) *SCH {
+	s.ParentFillerAppointmentID = v
+	return s
+}
+
+func (s *SCH) SetFillerStatusCode(v *CE) *SCH {
+	s.FillerStatusCode = v
+	return s
+}
+
+func (s *SCH) AddPlacerOrderNumber(v EI) *SCH {
+	s.PlacerOrderNumber = append(s.PlacerOrderNumber, v)
+	return s
+}
+
+func (s *SCH) AddFillerOrderNumber(v EI) *SCH {
+	s.FillerOrderNumber = append(s.FillerOrderNumber, v)
+	return s
 }
 
 // SFT - Software Segment
@@ -2578,12 +21415,86 @@ type SCH struct {
 //
 // Example: MSH [{ SFT }] …..
 type SFT struct {
-	SoftwareVendorOrganization              XON `hl7:"1,required"`
-	SoftwareCertifiedVersionOrReleaseNumber ST  `hl7:"2,required"`
-	SoftwareProductName                     ST  `hl7:"3,required"`
-	SoftwareBinaryID                        ST  `hl7:"4,required"`
-	SoftwareProductInformation              TX  `hl7:"5"`
-	SoftwareInstallDate                     TS  `hl7:"6"`
+	SoftwareVendorOrganization              *XON `hl7:"1,required"`
+	SoftwareCertifiedVersionOrReleaseNumber *ST  `hl7:"2,required"`
+	SoftwareProductName                     *ST  `hl7:"3,required"`
+	SoftwareBinaryID                        *ST  `hl7:"4,required"`
+	SoftwareProductInformation              *TX  `hl7:"5"`
+	SoftwareInstallDate                     *TS  `hl7:"6"`
+}
+
+func NewSFT() *SFT {
+	return &SFT{}
+}
+
+func (s *SFT) Validate() error {
+
+	if s.SoftwareVendorOrganization == nil {
+		return fmt.Errorf("SFT.SoftwareVendorOrganization is required")
+	}
+	if s.SoftwareVendorOrganization != nil {
+		if err := s.SoftwareVendorOrganization.Validate(); err != nil {
+			return fmt.Errorf("SFT.SoftwareVendorOrganization: %w", err)
+		}
+	}
+
+	if s.SoftwareCertifiedVersionOrReleaseNumber == nil {
+		return fmt.Errorf("SFT.SoftwareCertifiedVersionOrReleaseNumber is required")
+	}
+	if string(*s.SoftwareCertifiedVersionOrReleaseNumber) == "" {
+		return fmt.Errorf("SFT.SoftwareCertifiedVersionOrReleaseNumber is empty")
+	}
+
+	if s.SoftwareProductName == nil {
+		return fmt.Errorf("SFT.SoftwareProductName is required")
+	}
+	if string(*s.SoftwareProductName) == "" {
+		return fmt.Errorf("SFT.SoftwareProductName is empty")
+	}
+
+	if s.SoftwareBinaryID == nil {
+		return fmt.Errorf("SFT.SoftwareBinaryID is required")
+	}
+	if string(*s.SoftwareBinaryID) == "" {
+		return fmt.Errorf("SFT.SoftwareBinaryID is empty")
+	}
+
+	if s.SoftwareInstallDate != nil {
+		if err := s.SoftwareInstallDate.Validate(); err != nil {
+			return fmt.Errorf("SFT.SoftwareInstallDate: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *SFT) SetSoftwareVendorOrganization(v *XON) *SFT {
+	s.SoftwareVendorOrganization = v
+	return s
+}
+
+func (s *SFT) SetSoftwareCertifiedVersionOrReleaseNumber(v *ST) *SFT {
+	s.SoftwareCertifiedVersionOrReleaseNumber = v
+	return s
+}
+
+func (s *SFT) SetSoftwareProductName(v *ST) *SFT {
+	s.SoftwareProductName = v
+	return s
+}
+
+func (s *SFT) SetSoftwareBinaryID(v *ST) *SFT {
+	s.SoftwareBinaryID = v
+	return s
+}
+
+func (s *SFT) SetSoftwareProductInformation(v *TX) *SFT {
+	s.SoftwareProductInformation = v
+	return s
+}
+
+func (s *SFT) SetSoftwareInstallDate(v *TS) *SFT {
+	s.SoftwareInstallDate = v
+	return s
 }
 
 // SID - Substance Identifier
@@ -2591,44 +21502,390 @@ type SFT struct {
 //
 // Another purpose of this segment is to transfer the control manufacturer, lot, etc. information for control specimens. In this case the SID segment should be attached to the SAC segment describing the container with the control specimen.
 type SID struct {
-	ApplicationMethodIdentifier     CE `hl7:"1"`
-	SubstanceLotNumber              ST `hl7:"2"`
-	SubstanceContainerIdentifier    ST `hl7:"3"`
-	SubstanceManufacturerIdentifier CE `hl7:"4"`
+	ApplicationMethodIdentifier     *CE `hl7:"1"`
+	SubstanceLotNumber              *ST `hl7:"2"`
+	SubstanceContainerIdentifier    *ST `hl7:"3"`
+	SubstanceManufacturerIdentifier *CE `hl7:"4"`
+}
+
+func NewSID() *SID {
+	return &SID{}
+}
+
+func (s *SID) Validate() error {
+
+	if s.ApplicationMethodIdentifier != nil {
+		if err := s.ApplicationMethodIdentifier.Validate(); err != nil {
+			return fmt.Errorf("SID.ApplicationMethodIdentifier: %w", err)
+		}
+	}
+
+	if s.SubstanceManufacturerIdentifier != nil {
+		if err := s.SubstanceManufacturerIdentifier.Validate(); err != nil {
+			return fmt.Errorf("SID.SubstanceManufacturerIdentifier: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *SID) SetApplicationMethodIdentifier(v *CE) *SID {
+	s.ApplicationMethodIdentifier = v
+	return s
+}
+
+func (s *SID) SetSubstanceLotNumber(v *ST) *SID {
+	s.SubstanceLotNumber = v
+	return s
+}
+
+func (s *SID) SetSubstanceContainerIdentifier(v *ST) *SID {
+	s.SubstanceContainerIdentifier = v
+	return s
+}
+
+func (s *SID) SetSubstanceManufacturerIdentifier(v *CE) *SID {
+	s.SubstanceManufacturerIdentifier = v
+	return s
 }
 
 // SPM - Specimen
 // The intent of this segment is to describe the characteristics of a specimen. It differs from the intent of the OBR in that the OBR addresses order-specific information. It differs from the SAC segment in that the SAC addresses specimen container attributes. An advantage afforded by a separate specimen segment is that it generalizes the multiple relationships among order(s), results, specimen(s) and specimen container(s).
 type SPM struct {
-	SetIDSPM                   SI    `hl7:"1"`
-	SpecimenID                 EIP   `hl7:"2"`
+	SetIDSPM                   *SI   `hl7:"1"`
+	SpecimenID                 *EIP  `hl7:"2"`
 	SpecimenParentIDs          []EIP `hl7:"3"`
-	SpecimenType               CWE   `hl7:"4,required"`
+	SpecimenType               *CWE  `hl7:"4,required"`
 	SpecimenTypeModifier       []CWE `hl7:"5"`
 	SpecimenAdditives          []CWE `hl7:"6"`
-	SpecimenCollectionMethod   CWE   `hl7:"7"`
-	SpecimenSourceSite         CWE   `hl7:"8"`
+	SpecimenCollectionMethod   *CWE  `hl7:"7"`
+	SpecimenSourceSite         *CWE  `hl7:"8"`
 	SpecimenSourceSiteModifier []CWE `hl7:"9"`
-	SpecimenCollectionSite     CWE   `hl7:"10"`
+	SpecimenCollectionSite     *CWE  `hl7:"10"`
 	SpecimenRole               []CWE `hl7:"11"`
-	SpecimenCollectionAmount   CQ    `hl7:"12"`
-	GroupedSpecimenCount       NM    `hl7:"13"`
+	SpecimenCollectionAmount   *CQ   `hl7:"12"`
+	GroupedSpecimenCount       *NM   `hl7:"13"`
 	SpecimenDescription        []ST  `hl7:"14"`
 	SpecimenHandlingCode       []CWE `hl7:"15"`
 	SpecimenRiskCode           []CWE `hl7:"16"`
-	SpecimenCollectionDateTime DR    `hl7:"17"`
-	SpecimenReceivedDateTime   TS    `hl7:"18"`
-	SpecimenExpirationDateTime TS    `hl7:"19"`
-	SpecimenAvailability       ID    `hl7:"20"`
+	SpecimenCollectionDateTime *DR   `hl7:"17"`
+	SpecimenReceivedDateTime   *TS   `hl7:"18"`
+	SpecimenExpirationDateTime *TS   `hl7:"19"`
+	SpecimenAvailability       *ID   `hl7:"20"`
 	SpecimenRejectReason       []CWE `hl7:"21"`
-	SpecimenQuality            CWE   `hl7:"22"`
-	SpecimenAppropriateness    CWE   `hl7:"23"`
+	SpecimenQuality            *CWE  `hl7:"22"`
+	SpecimenAppropriateness    *CWE  `hl7:"23"`
 	SpecimenCondition          []CWE `hl7:"24"`
-	SpecimenCurrentQuantity    CQ    `hl7:"25"`
-	NumberOfSpecimenContainers NM    `hl7:"26"`
-	ContainerType              CWE   `hl7:"27"`
-	ContainerCondition         CWE   `hl7:"28"`
-	SpecimenChildRole          CWE   `hl7:"29"`
+	SpecimenCurrentQuantity    *CQ   `hl7:"25"`
+	NumberOfSpecimenContainers *NM   `hl7:"26"`
+	ContainerType              *CWE  `hl7:"27"`
+	ContainerCondition         *CWE  `hl7:"28"`
+	SpecimenChildRole          *CWE  `hl7:"29"`
+}
+
+func NewSPM() *SPM {
+	return &SPM{}
+}
+
+func (s *SPM) Validate() error {
+
+	if s.SpecimenID != nil {
+		if err := s.SpecimenID.Validate(); err != nil {
+			return fmt.Errorf("SPM.SpecimenID: %w", err)
+		}
+	}
+
+	for _, item := range s.SpecimenParentIDs {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("SPM.SpecimenParentIDs: %w", err)
+		}
+	}
+
+	if s.SpecimenType == nil {
+		return fmt.Errorf("SPM.SpecimenType is required")
+	}
+	if s.SpecimenType != nil {
+		if err := s.SpecimenType.Validate(); err != nil {
+			return fmt.Errorf("SPM.SpecimenType: %w", err)
+		}
+	}
+
+	for _, item := range s.SpecimenTypeModifier {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("SPM.SpecimenTypeModifier: %w", err)
+		}
+	}
+
+	for _, item := range s.SpecimenAdditives {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("SPM.SpecimenAdditives: %w", err)
+		}
+	}
+
+	if s.SpecimenCollectionMethod != nil {
+		if err := s.SpecimenCollectionMethod.Validate(); err != nil {
+			return fmt.Errorf("SPM.SpecimenCollectionMethod: %w", err)
+		}
+	}
+
+	if s.SpecimenSourceSite != nil {
+		if err := s.SpecimenSourceSite.Validate(); err != nil {
+			return fmt.Errorf("SPM.SpecimenSourceSite: %w", err)
+		}
+	}
+
+	for _, item := range s.SpecimenSourceSiteModifier {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("SPM.SpecimenSourceSiteModifier: %w", err)
+		}
+	}
+
+	if s.SpecimenCollectionSite != nil {
+		if err := s.SpecimenCollectionSite.Validate(); err != nil {
+			return fmt.Errorf("SPM.SpecimenCollectionSite: %w", err)
+		}
+	}
+
+	for _, item := range s.SpecimenRole {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("SPM.SpecimenRole: %w", err)
+		}
+	}
+
+	if s.SpecimenCollectionAmount != nil {
+		if err := s.SpecimenCollectionAmount.Validate(); err != nil {
+			return fmt.Errorf("SPM.SpecimenCollectionAmount: %w", err)
+		}
+	}
+
+	for _, item := range s.SpecimenDescription {
+		if string(item) == "" {
+			return fmt.Errorf("SPM.SpecimenDescription item is empty")
+		}
+	}
+
+	for _, item := range s.SpecimenHandlingCode {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("SPM.SpecimenHandlingCode: %w", err)
+		}
+	}
+
+	for _, item := range s.SpecimenRiskCode {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("SPM.SpecimenRiskCode: %w", err)
+		}
+	}
+
+	if s.SpecimenCollectionDateTime != nil {
+		if err := s.SpecimenCollectionDateTime.Validate(); err != nil {
+			return fmt.Errorf("SPM.SpecimenCollectionDateTime: %w", err)
+		}
+	}
+
+	if s.SpecimenReceivedDateTime != nil {
+		if err := s.SpecimenReceivedDateTime.Validate(); err != nil {
+			return fmt.Errorf("SPM.SpecimenReceivedDateTime: %w", err)
+		}
+	}
+
+	if s.SpecimenExpirationDateTime != nil {
+		if err := s.SpecimenExpirationDateTime.Validate(); err != nil {
+			return fmt.Errorf("SPM.SpecimenExpirationDateTime: %w", err)
+		}
+	}
+
+	for _, item := range s.SpecimenRejectReason {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("SPM.SpecimenRejectReason: %w", err)
+		}
+	}
+
+	if s.SpecimenQuality != nil {
+		if err := s.SpecimenQuality.Validate(); err != nil {
+			return fmt.Errorf("SPM.SpecimenQuality: %w", err)
+		}
+	}
+
+	if s.SpecimenAppropriateness != nil {
+		if err := s.SpecimenAppropriateness.Validate(); err != nil {
+			return fmt.Errorf("SPM.SpecimenAppropriateness: %w", err)
+		}
+	}
+
+	for _, item := range s.SpecimenCondition {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("SPM.SpecimenCondition: %w", err)
+		}
+	}
+
+	if s.SpecimenCurrentQuantity != nil {
+		if err := s.SpecimenCurrentQuantity.Validate(); err != nil {
+			return fmt.Errorf("SPM.SpecimenCurrentQuantity: %w", err)
+		}
+	}
+
+	if s.ContainerType != nil {
+		if err := s.ContainerType.Validate(); err != nil {
+			return fmt.Errorf("SPM.ContainerType: %w", err)
+		}
+	}
+
+	if s.ContainerCondition != nil {
+		if err := s.ContainerCondition.Validate(); err != nil {
+			return fmt.Errorf("SPM.ContainerCondition: %w", err)
+		}
+	}
+
+	if s.SpecimenChildRole != nil {
+		if err := s.SpecimenChildRole.Validate(); err != nil {
+			return fmt.Errorf("SPM.SpecimenChildRole: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *SPM) SetSetIDSPM(v *SI) *SPM {
+	s.SetIDSPM = v
+	return s
+}
+
+func (s *SPM) SetSpecimenID(v *EIP) *SPM {
+	s.SpecimenID = v
+	return s
+}
+
+func (s *SPM) AddSpecimenParentIDs(v EIP) *SPM {
+	s.SpecimenParentIDs = append(s.SpecimenParentIDs, v)
+	return s
+}
+
+func (s *SPM) SetSpecimenType(v *CWE) *SPM {
+	s.SpecimenType = v
+	return s
+}
+
+func (s *SPM) AddSpecimenTypeModifier(v CWE) *SPM {
+	s.SpecimenTypeModifier = append(s.SpecimenTypeModifier, v)
+	return s
+}
+
+func (s *SPM) AddSpecimenAdditives(v CWE) *SPM {
+	s.SpecimenAdditives = append(s.SpecimenAdditives, v)
+	return s
+}
+
+func (s *SPM) SetSpecimenCollectionMethod(v *CWE) *SPM {
+	s.SpecimenCollectionMethod = v
+	return s
+}
+
+func (s *SPM) SetSpecimenSourceSite(v *CWE) *SPM {
+	s.SpecimenSourceSite = v
+	return s
+}
+
+func (s *SPM) AddSpecimenSourceSiteModifier(v CWE) *SPM {
+	s.SpecimenSourceSiteModifier = append(s.SpecimenSourceSiteModifier, v)
+	return s
+}
+
+func (s *SPM) SetSpecimenCollectionSite(v *CWE) *SPM {
+	s.SpecimenCollectionSite = v
+	return s
+}
+
+func (s *SPM) AddSpecimenRole(v CWE) *SPM {
+	s.SpecimenRole = append(s.SpecimenRole, v)
+	return s
+}
+
+func (s *SPM) SetSpecimenCollectionAmount(v *CQ) *SPM {
+	s.SpecimenCollectionAmount = v
+	return s
+}
+
+func (s *SPM) SetGroupedSpecimenCount(v *NM) *SPM {
+	s.GroupedSpecimenCount = v
+	return s
+}
+
+func (s *SPM) AddSpecimenDescription(v ST) *SPM {
+	s.SpecimenDescription = append(s.SpecimenDescription, v)
+	return s
+}
+
+func (s *SPM) AddSpecimenHandlingCode(v CWE) *SPM {
+	s.SpecimenHandlingCode = append(s.SpecimenHandlingCode, v)
+	return s
+}
+
+func (s *SPM) AddSpecimenRiskCode(v CWE) *SPM {
+	s.SpecimenRiskCode = append(s.SpecimenRiskCode, v)
+	return s
+}
+
+func (s *SPM) SetSpecimenCollectionDateTime(v *DR) *SPM {
+	s.SpecimenCollectionDateTime = v
+	return s
+}
+
+func (s *SPM) SetSpecimenReceivedDateTime(v *TS) *SPM {
+	s.SpecimenReceivedDateTime = v
+	return s
+}
+
+func (s *SPM) SetSpecimenExpirationDateTime(v *TS) *SPM {
+	s.SpecimenExpirationDateTime = v
+	return s
+}
+
+func (s *SPM) SetSpecimenAvailability(v *ID) *SPM {
+	s.SpecimenAvailability = v
+	return s
+}
+
+func (s *SPM) AddSpecimenRejectReason(v CWE) *SPM {
+	s.SpecimenRejectReason = append(s.SpecimenRejectReason, v)
+	return s
+}
+
+func (s *SPM) SetSpecimenQuality(v *CWE) *SPM {
+	s.SpecimenQuality = v
+	return s
+}
+
+func (s *SPM) SetSpecimenAppropriateness(v *CWE) *SPM {
+	s.SpecimenAppropriateness = v
+	return s
+}
+
+func (s *SPM) AddSpecimenCondition(v CWE) *SPM {
+	s.SpecimenCondition = append(s.SpecimenCondition, v)
+	return s
+}
+
+func (s *SPM) SetSpecimenCurrentQuantity(v *CQ) *SPM {
+	s.SpecimenCurrentQuantity = v
+	return s
+}
+
+func (s *SPM) SetNumberOfSpecimenContainers(v *NM) *SPM {
+	s.NumberOfSpecimenContainers = v
+	return s
+}
+
+func (s *SPM) SetContainerType(v *CWE) *SPM {
+	s.ContainerType = v
+	return s
+}
+
+func (s *SPM) SetContainerCondition(v *CWE) *SPM {
+	s.ContainerCondition = v
+	return s
+}
+
+func (s *SPM) SetSpecimenChildRole(v *CWE) *SPM {
+	s.SpecimenChildRole = v
+	return s
 }
 
 // SPR - Stored Procedure Request Definition
@@ -2636,22 +21893,72 @@ type SPM struct {
 //
 // The SPR segment is used to issue queries using stored procedure calls.  Refer to the functional chapters for the lists of HL7-defined stored procedure names, input parameters and output tables.
 type SPR struct {
-	QueryTag                ST    `hl7:"1"`
-	QueryResponseFormatCode ID    `hl7:"2,required"`
-	StoredProcedureName     CE    `hl7:"3,required"`
+	QueryTag                *ST   `hl7:"1"`
+	QueryResponseFormatCode *ID   `hl7:"2,required"`
+	StoredProcedureName     *CE   `hl7:"3,required"`
 	InputParameterList      []QIP `hl7:"4"`
+}
+
+func NewSPR() *SPR {
+	return &SPR{}
+}
+
+func (s *SPR) Validate() error {
+
+	if s.QueryResponseFormatCode == nil {
+		return fmt.Errorf("SPR.QueryResponseFormatCode is required")
+	}
+	if string(*s.QueryResponseFormatCode) == "" {
+		return fmt.Errorf("SPR.QueryResponseFormatCode is empty")
+	}
+
+	if s.StoredProcedureName == nil {
+		return fmt.Errorf("SPR.StoredProcedureName is required")
+	}
+	if s.StoredProcedureName != nil {
+		if err := s.StoredProcedureName.Validate(); err != nil {
+			return fmt.Errorf("SPR.StoredProcedureName: %w", err)
+		}
+	}
+
+	for _, item := range s.InputParameterList {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("SPR.InputParameterList: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *SPR) SetQueryTag(v *ST) *SPR {
+	s.QueryTag = v
+	return s
+}
+
+func (s *SPR) SetQueryResponseFormatCode(v *ID) *SPR {
+	s.QueryResponseFormatCode = v
+	return s
+}
+
+func (s *SPR) SetStoredProcedureName(v *CE) *SPR {
+	s.StoredProcedureName = v
+	return s
+}
+
+func (s *SPR) AddInputParameterList(v QIP) *SPR {
+	s.InputParameterList = append(s.InputParameterList, v)
+	return s
 }
 
 // STF - Staff Identification
 // The STF segment can identify any personnel referenced by information systems.  These can be providers, staff, system users, and referring agents.  In a network environment, this segment can be used to define personnel to other applications; for example, order entry clerks, insurance verification clerks, admission clerks, as well as provider demographics. When using the STF and PRA segments in the Staff/Practitioner Master File message, MFE-4-primary key value is used to link all the segments pertaining to the same master file entry.  Therefore, in the MFE segment, MFE-4-primary key value must be filled in.  Other segments may follow the STF segment to provide data for a particular type of staff member. The PRA segment (practitioner) is one such.  It may optionally follow the STF segment in order to add practitionerspecific data. Other segments may be defined as needed. When using the segments included in this chapter for other then Staff/Practitioner Master File messages, disregard references to MFE-4 - primary key value.
 type STF struct {
-	PrimaryKeyValueSTF              CE    `hl7:"1"`
+	PrimaryKeyValueSTF              *CE   `hl7:"1"`
 	StaffIdentifierList             []CX  `hl7:"2"`
 	StaffName                       []XPN `hl7:"3"`
 	StaffType                       []IS  `hl7:"4"`
-	AdministrativeSex               IS    `hl7:"5"`
-	DateTimeOfBirth                 TS    `hl7:"6"`
-	ActiveInactiveFlag              ID    `hl7:"7"`
+	AdministrativeSex               *IS   `hl7:"5"`
+	DateTimeOfBirth                 *TS   `hl7:"6"`
+	ActiveInactiveFlag              *ID   `hl7:"7"`
 	Department                      []CE  `hl7:"8"`
 	HospitalServiceSTF              []CE  `hl7:"9"`
 	Phone                           []XTN `hl7:"10"`
@@ -2660,123 +21967,1155 @@ type STF struct {
 	InstitutionInactivationDate     []DIN `hl7:"13"`
 	BackupPersonID                  []CE  `hl7:"14"`
 	EMailAddress                    []ST  `hl7:"15"`
-	PreferredMethodOfContact        CE    `hl7:"16"`
-	MaritalStatus                   CE    `hl7:"17"`
-	JobTitle                        ST    `hl7:"18"`
-	JobCodeClass                    JCC   `hl7:"19"`
-	EmploymentStatusCode            CE    `hl7:"20"`
-	AdditionalInsuredOnAuto         ID    `hl7:"21"`
-	DriverSLicenseNumberStaff       DLN   `hl7:"22"`
-	CopyAutoIns                     ID    `hl7:"23"`
-	AutoInsExpires                  DT    `hl7:"24"`
-	DateLastDMVReview               DT    `hl7:"25"`
-	DateNextDMVReview               DT    `hl7:"26"`
-	Race                            CE    `hl7:"27"`
-	EthnicGroup                     CE    `hl7:"28"`
-	ReActivationApprovalIndicator   ID    `hl7:"29"`
+	PreferredMethodOfContact        *CE   `hl7:"16"`
+	MaritalStatus                   *CE   `hl7:"17"`
+	JobTitle                        *ST   `hl7:"18"`
+	JobCodeClass                    *JCC  `hl7:"19"`
+	EmploymentStatusCode            *CE   `hl7:"20"`
+	AdditionalInsuredOnAuto         *ID   `hl7:"21"`
+	DriverSLicenseNumberStaff       *DLN  `hl7:"22"`
+	CopyAutoIns                     *ID   `hl7:"23"`
+	AutoInsExpires                  *DT   `hl7:"24"`
+	DateLastDMVReview               *DT   `hl7:"25"`
+	DateNextDMVReview               *DT   `hl7:"26"`
+	Race                            *CE   `hl7:"27"`
+	EthnicGroup                     *CE   `hl7:"28"`
+	ReActivationApprovalIndicator   *ID   `hl7:"29"`
 	Citizenship                     []CWE `hl7:"30"`
-	DeathDateAndTime                TS    `hl7:"31"`
-	DeathIndicator                  ID    `hl7:"32"`
-	InstitutionRelationshipTypeCode CWE   `hl7:"33"`
-	InstitutionRelationshipPeriod   DR    `hl7:"34"`
-	ExpectedReturnDate              DT    `hl7:"35"`
+	DeathDateAndTime                *TS   `hl7:"31"`
+	DeathIndicator                  *ID   `hl7:"32"`
+	InstitutionRelationshipTypeCode *CWE  `hl7:"33"`
+	InstitutionRelationshipPeriod   *DR   `hl7:"34"`
+	ExpectedReturnDate              *DT   `hl7:"35"`
 	CostCenterCode                  []CWE `hl7:"36"`
-	GenericClassificationIndicator  ID    `hl7:"37"`
-	InactiveReasonCode              CWE   `hl7:"38"`
+	GenericClassificationIndicator  *ID   `hl7:"37"`
+	InactiveReasonCode              *CWE  `hl7:"38"`
+}
+
+func NewSTF() *STF {
+	return &STF{}
+}
+
+func (s *STF) Validate() error {
+
+	if s.PrimaryKeyValueSTF != nil {
+		if err := s.PrimaryKeyValueSTF.Validate(); err != nil {
+			return fmt.Errorf("STF.PrimaryKeyValueSTF: %w", err)
+		}
+	}
+
+	for _, item := range s.StaffIdentifierList {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("STF.StaffIdentifierList: %w", err)
+		}
+	}
+
+	for _, item := range s.StaffName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("STF.StaffName: %w", err)
+		}
+	}
+
+	for _, item := range s.StaffType {
+		if string(item) == "" {
+			return fmt.Errorf("STF.StaffType item is empty")
+		}
+	}
+
+	if s.DateTimeOfBirth != nil {
+		if err := s.DateTimeOfBirth.Validate(); err != nil {
+			return fmt.Errorf("STF.DateTimeOfBirth: %w", err)
+		}
+	}
+
+	for _, item := range s.Department {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("STF.Department: %w", err)
+		}
+	}
+
+	for _, item := range s.HospitalServiceSTF {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("STF.HospitalServiceSTF: %w", err)
+		}
+	}
+
+	for _, item := range s.Phone {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("STF.Phone: %w", err)
+		}
+	}
+
+	for _, item := range s.OfficeHomeAddressBirthplace {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("STF.OfficeHomeAddressBirthplace: %w", err)
+		}
+	}
+
+	for _, item := range s.InstitutionActivationDate {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("STF.InstitutionActivationDate: %w", err)
+		}
+	}
+
+	for _, item := range s.InstitutionInactivationDate {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("STF.InstitutionInactivationDate: %w", err)
+		}
+	}
+
+	for _, item := range s.BackupPersonID {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("STF.BackupPersonID: %w", err)
+		}
+	}
+
+	for _, item := range s.EMailAddress {
+		if string(item) == "" {
+			return fmt.Errorf("STF.EMailAddress item is empty")
+		}
+	}
+
+	if s.PreferredMethodOfContact != nil {
+		if err := s.PreferredMethodOfContact.Validate(); err != nil {
+			return fmt.Errorf("STF.PreferredMethodOfContact: %w", err)
+		}
+	}
+
+	if s.MaritalStatus != nil {
+		if err := s.MaritalStatus.Validate(); err != nil {
+			return fmt.Errorf("STF.MaritalStatus: %w", err)
+		}
+	}
+
+	if s.JobCodeClass != nil {
+		if err := s.JobCodeClass.Validate(); err != nil {
+			return fmt.Errorf("STF.JobCodeClass: %w", err)
+		}
+	}
+
+	if s.EmploymentStatusCode != nil {
+		if err := s.EmploymentStatusCode.Validate(); err != nil {
+			return fmt.Errorf("STF.EmploymentStatusCode: %w", err)
+		}
+	}
+
+	if s.DriverSLicenseNumberStaff != nil {
+		if err := s.DriverSLicenseNumberStaff.Validate(); err != nil {
+			return fmt.Errorf("STF.DriverSLicenseNumberStaff: %w", err)
+		}
+	}
+
+	if s.Race != nil {
+		if err := s.Race.Validate(); err != nil {
+			return fmt.Errorf("STF.Race: %w", err)
+		}
+	}
+
+	if s.EthnicGroup != nil {
+		if err := s.EthnicGroup.Validate(); err != nil {
+			return fmt.Errorf("STF.EthnicGroup: %w", err)
+		}
+	}
+
+	for _, item := range s.Citizenship {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("STF.Citizenship: %w", err)
+		}
+	}
+
+	if s.DeathDateAndTime != nil {
+		if err := s.DeathDateAndTime.Validate(); err != nil {
+			return fmt.Errorf("STF.DeathDateAndTime: %w", err)
+		}
+	}
+
+	if s.InstitutionRelationshipTypeCode != nil {
+		if err := s.InstitutionRelationshipTypeCode.Validate(); err != nil {
+			return fmt.Errorf("STF.InstitutionRelationshipTypeCode: %w", err)
+		}
+	}
+
+	if s.InstitutionRelationshipPeriod != nil {
+		if err := s.InstitutionRelationshipPeriod.Validate(); err != nil {
+			return fmt.Errorf("STF.InstitutionRelationshipPeriod: %w", err)
+		}
+	}
+
+	for _, item := range s.CostCenterCode {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("STF.CostCenterCode: %w", err)
+		}
+	}
+
+	if s.InactiveReasonCode != nil {
+		if err := s.InactiveReasonCode.Validate(); err != nil {
+			return fmt.Errorf("STF.InactiveReasonCode: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *STF) SetPrimaryKeyValueSTF(v *CE) *STF {
+	s.PrimaryKeyValueSTF = v
+	return s
+}
+
+func (s *STF) AddStaffIdentifierList(v CX) *STF {
+	s.StaffIdentifierList = append(s.StaffIdentifierList, v)
+	return s
+}
+
+func (s *STF) AddStaffName(v XPN) *STF {
+	s.StaffName = append(s.StaffName, v)
+	return s
+}
+
+func (s *STF) AddStaffType(v IS) *STF {
+	s.StaffType = append(s.StaffType, v)
+	return s
+}
+
+func (s *STF) SetAdministrativeSex(v *IS) *STF {
+	s.AdministrativeSex = v
+	return s
+}
+
+func (s *STF) SetDateTimeOfBirth(v *TS) *STF {
+	s.DateTimeOfBirth = v
+	return s
+}
+
+func (s *STF) SetActiveInactiveFlag(v *ID) *STF {
+	s.ActiveInactiveFlag = v
+	return s
+}
+
+func (s *STF) AddDepartment(v CE) *STF {
+	s.Department = append(s.Department, v)
+	return s
+}
+
+func (s *STF) AddHospitalServiceSTF(v CE) *STF {
+	s.HospitalServiceSTF = append(s.HospitalServiceSTF, v)
+	return s
+}
+
+func (s *STF) AddPhone(v XTN) *STF {
+	s.Phone = append(s.Phone, v)
+	return s
+}
+
+func (s *STF) AddOfficeHomeAddressBirthplace(v XAD) *STF {
+	s.OfficeHomeAddressBirthplace = append(s.OfficeHomeAddressBirthplace, v)
+	return s
+}
+
+func (s *STF) AddInstitutionActivationDate(v DIN) *STF {
+	s.InstitutionActivationDate = append(s.InstitutionActivationDate, v)
+	return s
+}
+
+func (s *STF) AddInstitutionInactivationDate(v DIN) *STF {
+	s.InstitutionInactivationDate = append(s.InstitutionInactivationDate, v)
+	return s
+}
+
+func (s *STF) AddBackupPersonID(v CE) *STF {
+	s.BackupPersonID = append(s.BackupPersonID, v)
+	return s
+}
+
+func (s *STF) AddEMailAddress(v ST) *STF {
+	s.EMailAddress = append(s.EMailAddress, v)
+	return s
+}
+
+func (s *STF) SetPreferredMethodOfContact(v *CE) *STF {
+	s.PreferredMethodOfContact = v
+	return s
+}
+
+func (s *STF) SetMaritalStatus(v *CE) *STF {
+	s.MaritalStatus = v
+	return s
+}
+
+func (s *STF) SetJobTitle(v *ST) *STF {
+	s.JobTitle = v
+	return s
+}
+
+func (s *STF) SetJobCodeClass(v *JCC) *STF {
+	s.JobCodeClass = v
+	return s
+}
+
+func (s *STF) SetEmploymentStatusCode(v *CE) *STF {
+	s.EmploymentStatusCode = v
+	return s
+}
+
+func (s *STF) SetAdditionalInsuredOnAuto(v *ID) *STF {
+	s.AdditionalInsuredOnAuto = v
+	return s
+}
+
+func (s *STF) SetDriverSLicenseNumberStaff(v *DLN) *STF {
+	s.DriverSLicenseNumberStaff = v
+	return s
+}
+
+func (s *STF) SetCopyAutoIns(v *ID) *STF {
+	s.CopyAutoIns = v
+	return s
+}
+
+func (s *STF) SetAutoInsExpires(v *DT) *STF {
+	s.AutoInsExpires = v
+	return s
+}
+
+func (s *STF) SetDateLastDMVReview(v *DT) *STF {
+	s.DateLastDMVReview = v
+	return s
+}
+
+func (s *STF) SetDateNextDMVReview(v *DT) *STF {
+	s.DateNextDMVReview = v
+	return s
+}
+
+func (s *STF) SetRace(v *CE) *STF {
+	s.Race = v
+	return s
+}
+
+func (s *STF) SetEthnicGroup(v *CE) *STF {
+	s.EthnicGroup = v
+	return s
+}
+
+func (s *STF) SetReActivationApprovalIndicator(v *ID) *STF {
+	s.ReActivationApprovalIndicator = v
+	return s
+}
+
+func (s *STF) AddCitizenship(v CWE) *STF {
+	s.Citizenship = append(s.Citizenship, v)
+	return s
+}
+
+func (s *STF) SetDeathDateAndTime(v *TS) *STF {
+	s.DeathDateAndTime = v
+	return s
+}
+
+func (s *STF) SetDeathIndicator(v *ID) *STF {
+	s.DeathIndicator = v
+	return s
+}
+
+func (s *STF) SetInstitutionRelationshipTypeCode(v *CWE) *STF {
+	s.InstitutionRelationshipTypeCode = v
+	return s
+}
+
+func (s *STF) SetInstitutionRelationshipPeriod(v *DR) *STF {
+	s.InstitutionRelationshipPeriod = v
+	return s
+}
+
+func (s *STF) SetExpectedReturnDate(v *DT) *STF {
+	s.ExpectedReturnDate = v
+	return s
+}
+
+func (s *STF) AddCostCenterCode(v CWE) *STF {
+	s.CostCenterCode = append(s.CostCenterCode, v)
+	return s
+}
+
+func (s *STF) SetGenericClassificationIndicator(v *ID) *STF {
+	s.GenericClassificationIndicator = v
+	return s
+}
+
+func (s *STF) SetInactiveReasonCode(v *CWE) *STF {
+	s.InactiveReasonCode = v
+	return s
 }
 
 // TCC - Test Code Configuration
 // The test (e.g., analyte) code configuration segment is the data necessary to maintain and transmit information concerning the test entity codes that are being used throughout the "automated system."
 type TCC struct {
-	UniversalServiceIdentifier            CE  `hl7:"1,required"`
-	TestApplicationIdentifier             EI  `hl7:"2,required"`
-	SpecimenSource                        SPS `hl7:"3"`
-	AutoDilutionFactorDefault             SN  `hl7:"4"`
-	RerunDilutionFactorDefault            SN  `hl7:"5"`
-	PreDilutionFactorDefault              SN  `hl7:"6"`
-	EndogenousContentOfPreDilutionDiluent SN  `hl7:"7"`
-	InventoryLimitsWarningLevel           NM  `hl7:"8"`
-	AutomaticRerunAllowed                 ID  `hl7:"9"`
-	AutomaticRepeatAllowed                ID  `hl7:"10"`
-	AutomaticReflexAllowed                ID  `hl7:"11"`
-	EquipmentDynamicRange                 SN  `hl7:"12"`
-	Units                                 CE  `hl7:"13"`
-	ProcessingType                        CE  `hl7:"14"`
+	UniversalServiceIdentifier            *CE  `hl7:"1,required"`
+	TestApplicationIdentifier             *EI  `hl7:"2,required"`
+	SpecimenSource                        *SPS `hl7:"3"`
+	AutoDilutionFactorDefault             *SN  `hl7:"4"`
+	RerunDilutionFactorDefault            *SN  `hl7:"5"`
+	PreDilutionFactorDefault              *SN  `hl7:"6"`
+	EndogenousContentOfPreDilutionDiluent *SN  `hl7:"7"`
+	InventoryLimitsWarningLevel           *NM  `hl7:"8"`
+	AutomaticRerunAllowed                 *ID  `hl7:"9"`
+	AutomaticRepeatAllowed                *ID  `hl7:"10"`
+	AutomaticReflexAllowed                *ID  `hl7:"11"`
+	EquipmentDynamicRange                 *SN  `hl7:"12"`
+	Units                                 *CE  `hl7:"13"`
+	ProcessingType                        *CE  `hl7:"14"`
+}
+
+func NewTCC() *TCC {
+	return &TCC{}
+}
+
+func (s *TCC) Validate() error {
+
+	if s.UniversalServiceIdentifier == nil {
+		return fmt.Errorf("TCC.UniversalServiceIdentifier is required")
+	}
+	if s.UniversalServiceIdentifier != nil {
+		if err := s.UniversalServiceIdentifier.Validate(); err != nil {
+			return fmt.Errorf("TCC.UniversalServiceIdentifier: %w", err)
+		}
+	}
+
+	if s.TestApplicationIdentifier == nil {
+		return fmt.Errorf("TCC.TestApplicationIdentifier is required")
+	}
+	if s.TestApplicationIdentifier != nil {
+		if err := s.TestApplicationIdentifier.Validate(); err != nil {
+			return fmt.Errorf("TCC.TestApplicationIdentifier: %w", err)
+		}
+	}
+
+	if s.SpecimenSource != nil {
+		if err := s.SpecimenSource.Validate(); err != nil {
+			return fmt.Errorf("TCC.SpecimenSource: %w", err)
+		}
+	}
+
+	if s.AutoDilutionFactorDefault != nil {
+		if err := s.AutoDilutionFactorDefault.Validate(); err != nil {
+			return fmt.Errorf("TCC.AutoDilutionFactorDefault: %w", err)
+		}
+	}
+
+	if s.RerunDilutionFactorDefault != nil {
+		if err := s.RerunDilutionFactorDefault.Validate(); err != nil {
+			return fmt.Errorf("TCC.RerunDilutionFactorDefault: %w", err)
+		}
+	}
+
+	if s.PreDilutionFactorDefault != nil {
+		if err := s.PreDilutionFactorDefault.Validate(); err != nil {
+			return fmt.Errorf("TCC.PreDilutionFactorDefault: %w", err)
+		}
+	}
+
+	if s.EndogenousContentOfPreDilutionDiluent != nil {
+		if err := s.EndogenousContentOfPreDilutionDiluent.Validate(); err != nil {
+			return fmt.Errorf("TCC.EndogenousContentOfPreDilutionDiluent: %w", err)
+		}
+	}
+
+	if s.EquipmentDynamicRange != nil {
+		if err := s.EquipmentDynamicRange.Validate(); err != nil {
+			return fmt.Errorf("TCC.EquipmentDynamicRange: %w", err)
+		}
+	}
+
+	if s.Units != nil {
+		if err := s.Units.Validate(); err != nil {
+			return fmt.Errorf("TCC.Units: %w", err)
+		}
+	}
+
+	if s.ProcessingType != nil {
+		if err := s.ProcessingType.Validate(); err != nil {
+			return fmt.Errorf("TCC.ProcessingType: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *TCC) SetUniversalServiceIdentifier(v *CE) *TCC {
+	s.UniversalServiceIdentifier = v
+	return s
+}
+
+func (s *TCC) SetTestApplicationIdentifier(v *EI) *TCC {
+	s.TestApplicationIdentifier = v
+	return s
+}
+
+func (s *TCC) SetSpecimenSource(v *SPS) *TCC {
+	s.SpecimenSource = v
+	return s
+}
+
+func (s *TCC) SetAutoDilutionFactorDefault(v *SN) *TCC {
+	s.AutoDilutionFactorDefault = v
+	return s
+}
+
+func (s *TCC) SetRerunDilutionFactorDefault(v *SN) *TCC {
+	s.RerunDilutionFactorDefault = v
+	return s
+}
+
+func (s *TCC) SetPreDilutionFactorDefault(v *SN) *TCC {
+	s.PreDilutionFactorDefault = v
+	return s
+}
+
+func (s *TCC) SetEndogenousContentOfPreDilutionDiluent(v *SN) *TCC {
+	s.EndogenousContentOfPreDilutionDiluent = v
+	return s
+}
+
+func (s *TCC) SetInventoryLimitsWarningLevel(v *NM) *TCC {
+	s.InventoryLimitsWarningLevel = v
+	return s
+}
+
+func (s *TCC) SetAutomaticRerunAllowed(v *ID) *TCC {
+	s.AutomaticRerunAllowed = v
+	return s
+}
+
+func (s *TCC) SetAutomaticRepeatAllowed(v *ID) *TCC {
+	s.AutomaticRepeatAllowed = v
+	return s
+}
+
+func (s *TCC) SetAutomaticReflexAllowed(v *ID) *TCC {
+	s.AutomaticReflexAllowed = v
+	return s
+}
+
+func (s *TCC) SetEquipmentDynamicRange(v *SN) *TCC {
+	s.EquipmentDynamicRange = v
+	return s
+}
+
+func (s *TCC) SetUnits(v *CE) *TCC {
+	s.Units = v
+	return s
+}
+
+func (s *TCC) SetProcessingType(v *CE) *TCC {
+	s.ProcessingType = v
+	return s
 }
 
 // TCD - Test Code Detail
 // The test code detail segment contains the data necessary to perform operations or calculations, or execute decisions by the laboratory automation system, and which are not supported by the original HL7 segments related to orders (ORC, OBR).
 type TCD struct {
-	UniversalServiceIdentifier            CE `hl7:"1,required"`
-	AutoDilutionFactor                    SN `hl7:"2"`
-	RerunDilutionFactor                   SN `hl7:"3"`
-	PreDilutionFactor                     SN `hl7:"4"`
-	EndogenousContentOfPreDilutionDiluent SN `hl7:"5"`
-	AutomaticRepeatAllowed                ID `hl7:"6"`
-	ReflexAllowed                         ID `hl7:"7"`
-	AnalyteRepeatStatus                   CE `hl7:"8"`
+	UniversalServiceIdentifier            *CE `hl7:"1,required"`
+	AutoDilutionFactor                    *SN `hl7:"2"`
+	RerunDilutionFactor                   *SN `hl7:"3"`
+	PreDilutionFactor                     *SN `hl7:"4"`
+	EndogenousContentOfPreDilutionDiluent *SN `hl7:"5"`
+	AutomaticRepeatAllowed                *ID `hl7:"6"`
+	ReflexAllowed                         *ID `hl7:"7"`
+	AnalyteRepeatStatus                   *CE `hl7:"8"`
+}
+
+func NewTCD() *TCD {
+	return &TCD{}
+}
+
+func (s *TCD) Validate() error {
+
+	if s.UniversalServiceIdentifier == nil {
+		return fmt.Errorf("TCD.UniversalServiceIdentifier is required")
+	}
+	if s.UniversalServiceIdentifier != nil {
+		if err := s.UniversalServiceIdentifier.Validate(); err != nil {
+			return fmt.Errorf("TCD.UniversalServiceIdentifier: %w", err)
+		}
+	}
+
+	if s.AutoDilutionFactor != nil {
+		if err := s.AutoDilutionFactor.Validate(); err != nil {
+			return fmt.Errorf("TCD.AutoDilutionFactor: %w", err)
+		}
+	}
+
+	if s.RerunDilutionFactor != nil {
+		if err := s.RerunDilutionFactor.Validate(); err != nil {
+			return fmt.Errorf("TCD.RerunDilutionFactor: %w", err)
+		}
+	}
+
+	if s.PreDilutionFactor != nil {
+		if err := s.PreDilutionFactor.Validate(); err != nil {
+			return fmt.Errorf("TCD.PreDilutionFactor: %w", err)
+		}
+	}
+
+	if s.EndogenousContentOfPreDilutionDiluent != nil {
+		if err := s.EndogenousContentOfPreDilutionDiluent.Validate(); err != nil {
+			return fmt.Errorf("TCD.EndogenousContentOfPreDilutionDiluent: %w", err)
+		}
+	}
+
+	if s.AnalyteRepeatStatus != nil {
+		if err := s.AnalyteRepeatStatus.Validate(); err != nil {
+			return fmt.Errorf("TCD.AnalyteRepeatStatus: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *TCD) SetUniversalServiceIdentifier(v *CE) *TCD {
+	s.UniversalServiceIdentifier = v
+	return s
+}
+
+func (s *TCD) SetAutoDilutionFactor(v *SN) *TCD {
+	s.AutoDilutionFactor = v
+	return s
+}
+
+func (s *TCD) SetRerunDilutionFactor(v *SN) *TCD {
+	s.RerunDilutionFactor = v
+	return s
+}
+
+func (s *TCD) SetPreDilutionFactor(v *SN) *TCD {
+	s.PreDilutionFactor = v
+	return s
+}
+
+func (s *TCD) SetEndogenousContentOfPreDilutionDiluent(v *SN) *TCD {
+	s.EndogenousContentOfPreDilutionDiluent = v
+	return s
+}
+
+func (s *TCD) SetAutomaticRepeatAllowed(v *ID) *TCD {
+	s.AutomaticRepeatAllowed = v
+	return s
+}
+
+func (s *TCD) SetReflexAllowed(v *ID) *TCD {
+	s.ReflexAllowed = v
+	return s
+}
+
+func (s *TCD) SetAnalyteRepeatStatus(v *CE) *TCD {
+	s.AnalyteRepeatStatus = v
+	return s
 }
 
 // TQ1 - Timing/Quantity
 // The TQ1 segment is used to specify the complex timing of events and actions such as those that occur in order management and scheduling systems. This segment determines the quantity, frequency, priority, and timing of a service. By allowing the segment to repeat, it is possible to have service requests that vary the quantity, frequency and priority of a service request over time.
 type TQ1 struct {
-	SetIDTQ1             SI    `hl7:"1"`
-	Quantity             CQ    `hl7:"2"`
+	SetIDTQ1             *SI   `hl7:"1"`
+	Quantity             *CQ   `hl7:"2"`
 	RepeatPattern        []RPT `hl7:"3"`
 	ExplicitTime         []TM  `hl7:"4"`
 	RelativeTimeAndUnits []CQ  `hl7:"5"`
-	ServiceDuration      CQ    `hl7:"6"`
-	StartDateTime        TS    `hl7:"7"`
-	EndDateTime          TS    `hl7:"8"`
+	ServiceDuration      *CQ   `hl7:"6"`
+	StartDateTime        *TS   `hl7:"7"`
+	EndDateTime          *TS   `hl7:"8"`
 	Priority             []CWE `hl7:"9"`
-	ConditionText        TX    `hl7:"10"`
-	TextInstruction      TX    `hl7:"11"`
-	Conjunction          ID    `hl7:"12"`
-	OccurrenceDuration   CQ    `hl7:"13"`
-	TotalOccurrences     NM    `hl7:"14"`
+	ConditionText        *TX   `hl7:"10"`
+	TextInstruction      *TX   `hl7:"11"`
+	Conjunction          *ID   `hl7:"12"`
+	OccurrenceDuration   *CQ   `hl7:"13"`
+	TotalOccurrences     *NM   `hl7:"14"`
+}
+
+func NewTQ1() *TQ1 {
+	return &TQ1{}
+}
+
+func (s *TQ1) Validate() error {
+
+	if s.Quantity != nil {
+		if err := s.Quantity.Validate(); err != nil {
+			return fmt.Errorf("TQ1.Quantity: %w", err)
+		}
+	}
+
+	for _, item := range s.RepeatPattern {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("TQ1.RepeatPattern: %w", err)
+		}
+	}
+
+	for _, item := range s.ExplicitTime {
+		if string(item) == "" {
+			return fmt.Errorf("TQ1.ExplicitTime item is empty")
+		}
+	}
+
+	for _, item := range s.RelativeTimeAndUnits {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("TQ1.RelativeTimeAndUnits: %w", err)
+		}
+	}
+
+	if s.ServiceDuration != nil {
+		if err := s.ServiceDuration.Validate(); err != nil {
+			return fmt.Errorf("TQ1.ServiceDuration: %w", err)
+		}
+	}
+
+	if s.StartDateTime != nil {
+		if err := s.StartDateTime.Validate(); err != nil {
+			return fmt.Errorf("TQ1.StartDateTime: %w", err)
+		}
+	}
+
+	if s.EndDateTime != nil {
+		if err := s.EndDateTime.Validate(); err != nil {
+			return fmt.Errorf("TQ1.EndDateTime: %w", err)
+		}
+	}
+
+	for _, item := range s.Priority {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("TQ1.Priority: %w", err)
+		}
+	}
+
+	if s.OccurrenceDuration != nil {
+		if err := s.OccurrenceDuration.Validate(); err != nil {
+			return fmt.Errorf("TQ1.OccurrenceDuration: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *TQ1) SetSetIDTQ1(v *SI) *TQ1 {
+	s.SetIDTQ1 = v
+	return s
+}
+
+func (s *TQ1) SetQuantity(v *CQ) *TQ1 {
+	s.Quantity = v
+	return s
+}
+
+func (s *TQ1) AddRepeatPattern(v RPT) *TQ1 {
+	s.RepeatPattern = append(s.RepeatPattern, v)
+	return s
+}
+
+func (s *TQ1) AddExplicitTime(v TM) *TQ1 {
+	s.ExplicitTime = append(s.ExplicitTime, v)
+	return s
+}
+
+func (s *TQ1) AddRelativeTimeAndUnits(v CQ) *TQ1 {
+	s.RelativeTimeAndUnits = append(s.RelativeTimeAndUnits, v)
+	return s
+}
+
+func (s *TQ1) SetServiceDuration(v *CQ) *TQ1 {
+	s.ServiceDuration = v
+	return s
+}
+
+func (s *TQ1) SetStartDateTime(v *TS) *TQ1 {
+	s.StartDateTime = v
+	return s
+}
+
+func (s *TQ1) SetEndDateTime(v *TS) *TQ1 {
+	s.EndDateTime = v
+	return s
+}
+
+func (s *TQ1) AddPriority(v CWE) *TQ1 {
+	s.Priority = append(s.Priority, v)
+	return s
+}
+
+func (s *TQ1) SetConditionText(v *TX) *TQ1 {
+	s.ConditionText = v
+	return s
+}
+
+func (s *TQ1) SetTextInstruction(v *TX) *TQ1 {
+	s.TextInstruction = v
+	return s
+}
+
+func (s *TQ1) SetConjunction(v *ID) *TQ1 {
+	s.Conjunction = v
+	return s
+}
+
+func (s *TQ1) SetOccurrenceDuration(v *CQ) *TQ1 {
+	s.OccurrenceDuration = v
+	return s
+}
+
+func (s *TQ1) SetTotalOccurrences(v *NM) *TQ1 {
+	s.TotalOccurrences = v
+	return s
 }
 
 // TQ2 - Timing/Quantity Relationship
 // The TQ2 segment is used to form a relationship between the service request the TQ1/TQ2 segments are associated with, and other service requests. The TQ2 segment will link the current service request with one or more other service requests.
 type TQ2 struct {
-	SetIDTQ2                          SI   `hl7:"1"`
-	SequenceResultsFlag               ID   `hl7:"2"`
+	SetIDTQ2                          *SI  `hl7:"1"`
+	SequenceResultsFlag               *ID  `hl7:"2"`
 	RelatedPlacerNumber               []EI `hl7:"3"`
 	RelatedFillerNumber               []EI `hl7:"4"`
 	RelatedPlacerGroupNumber          []EI `hl7:"5"`
-	SequenceConditionCode             ID   `hl7:"6"`
-	CyclicEntryExitIndicator          ID   `hl7:"7"`
-	SequenceConditionTimeInterval     CQ   `hl7:"8"`
-	CyclicGroupMaximumNumberOfRepeats NM   `hl7:"9"`
-	SpecialServiceRequestRelationship ID   `hl7:"10"`
+	SequenceConditionCode             *ID  `hl7:"6"`
+	CyclicEntryExitIndicator          *ID  `hl7:"7"`
+	SequenceConditionTimeInterval     *CQ  `hl7:"8"`
+	CyclicGroupMaximumNumberOfRepeats *NM  `hl7:"9"`
+	SpecialServiceRequestRelationship *ID  `hl7:"10"`
+}
+
+func NewTQ2() *TQ2 {
+	return &TQ2{}
+}
+
+func (s *TQ2) Validate() error {
+
+	for _, item := range s.RelatedPlacerNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("TQ2.RelatedPlacerNumber: %w", err)
+		}
+	}
+
+	for _, item := range s.RelatedFillerNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("TQ2.RelatedFillerNumber: %w", err)
+		}
+	}
+
+	for _, item := range s.RelatedPlacerGroupNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("TQ2.RelatedPlacerGroupNumber: %w", err)
+		}
+	}
+
+	if s.SequenceConditionTimeInterval != nil {
+		if err := s.SequenceConditionTimeInterval.Validate(); err != nil {
+			return fmt.Errorf("TQ2.SequenceConditionTimeInterval: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *TQ2) SetSetIDTQ2(v *SI) *TQ2 {
+	s.SetIDTQ2 = v
+	return s
+}
+
+func (s *TQ2) SetSequenceResultsFlag(v *ID) *TQ2 {
+	s.SequenceResultsFlag = v
+	return s
+}
+
+func (s *TQ2) AddRelatedPlacerNumber(v EI) *TQ2 {
+	s.RelatedPlacerNumber = append(s.RelatedPlacerNumber, v)
+	return s
+}
+
+func (s *TQ2) AddRelatedFillerNumber(v EI) *TQ2 {
+	s.RelatedFillerNumber = append(s.RelatedFillerNumber, v)
+	return s
+}
+
+func (s *TQ2) AddRelatedPlacerGroupNumber(v EI) *TQ2 {
+	s.RelatedPlacerGroupNumber = append(s.RelatedPlacerGroupNumber, v)
+	return s
+}
+
+func (s *TQ2) SetSequenceConditionCode(v *ID) *TQ2 {
+	s.SequenceConditionCode = v
+	return s
+}
+
+func (s *TQ2) SetCyclicEntryExitIndicator(v *ID) *TQ2 {
+	s.CyclicEntryExitIndicator = v
+	return s
+}
+
+func (s *TQ2) SetSequenceConditionTimeInterval(v *CQ) *TQ2 {
+	s.SequenceConditionTimeInterval = v
+	return s
+}
+
+func (s *TQ2) SetCyclicGroupMaximumNumberOfRepeats(v *NM) *TQ2 {
+	s.CyclicGroupMaximumNumberOfRepeats = v
+	return s
+}
+
+func (s *TQ2) SetSpecialServiceRequestRelationship(v *ID) *TQ2 {
+	s.SpecialServiceRequestRelationship = v
+	return s
 }
 
 // TXA - Transcription Document Header
 // The TXA segment contains information specific to a transcribed document but does not include the text of the document. The message is created as a result of a document status change. This information updates other healthcare systems and allows them to identify reports that are available in the transcription system. By maintaining the TXA message information in these systems, the information is available when constructing queries to the transcription system requesting the full document text.
 type TXA struct {
-	SetIDTXA                                 SI    `hl7:"1,required"`
-	DocumentType                             IS    `hl7:"2,required"`
-	DocumentContentPresentation              ID    `hl7:"3"`
-	ActivityDateTime                         TS    `hl7:"4"`
+	SetIDTXA                                 *SI   `hl7:"1,required"`
+	DocumentType                             *IS   `hl7:"2,required"`
+	DocumentContentPresentation              *ID   `hl7:"3"`
+	ActivityDateTime                         *TS   `hl7:"4"`
 	PrimaryActivityProviderCodeName          []XCN `hl7:"5"`
-	OriginationDateTime                      TS    `hl7:"6"`
-	TranscriptionDateTime                    TS    `hl7:"7"`
+	OriginationDateTime                      *TS   `hl7:"6"`
+	TranscriptionDateTime                    *TS   `hl7:"7"`
 	EditDateTime                             []TS  `hl7:"8"`
 	OriginatorCodeName                       []XCN `hl7:"9"`
 	AssignedDocumentAuthenticator            []XCN `hl7:"10"`
 	TranscriptionistCodeName                 []XCN `hl7:"11"`
-	UniqueDocumentNumber                     EI    `hl7:"12,required"`
-	ParentDocumentNumber                     EI    `hl7:"13"`
+	UniqueDocumentNumber                     *EI   `hl7:"12,required"`
+	ParentDocumentNumber                     *EI   `hl7:"13"`
 	PlacerOrderNumber                        []EI  `hl7:"14"`
-	FillerOrderNumber                        EI    `hl7:"15"`
-	UniqueDocumentFileName                   ST    `hl7:"16"`
-	DocumentCompletionStatus                 ID    `hl7:"17,required"`
-	DocumentConfidentialityStatus            ID    `hl7:"18"`
-	DocumentAvailabilityStatus               ID    `hl7:"19"`
-	DocumentStorageStatus                    ID    `hl7:"20"`
-	DocumentChangeReason                     ST    `hl7:"21"`
+	FillerOrderNumber                        *EI   `hl7:"15"`
+	UniqueDocumentFileName                   *ST   `hl7:"16"`
+	DocumentCompletionStatus                 *ID   `hl7:"17,required"`
+	DocumentConfidentialityStatus            *ID   `hl7:"18"`
+	DocumentAvailabilityStatus               *ID   `hl7:"19"`
+	DocumentStorageStatus                    *ID   `hl7:"20"`
+	DocumentChangeReason                     *ST   `hl7:"21"`
 	AuthenticationPersonTimeStamp            []PPN `hl7:"22"`
 	DistributedCopiesCodeAndNameOfRecipients []XCN `hl7:"23"`
+}
+
+func NewTXA() *TXA {
+	return &TXA{}
+}
+
+func (s *TXA) Validate() error {
+
+	if s.SetIDTXA == nil {
+		return fmt.Errorf("TXA.SetIDTXA is required")
+	}
+	if string(*s.SetIDTXA) == "" {
+		return fmt.Errorf("TXA.SetIDTXA is empty")
+	}
+
+	if s.DocumentType == nil {
+		return fmt.Errorf("TXA.DocumentType is required")
+	}
+	if string(*s.DocumentType) == "" {
+		return fmt.Errorf("TXA.DocumentType is empty")
+	}
+
+	if s.ActivityDateTime != nil {
+		if err := s.ActivityDateTime.Validate(); err != nil {
+			return fmt.Errorf("TXA.ActivityDateTime: %w", err)
+		}
+	}
+
+	for _, item := range s.PrimaryActivityProviderCodeName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("TXA.PrimaryActivityProviderCodeName: %w", err)
+		}
+	}
+
+	if s.OriginationDateTime != nil {
+		if err := s.OriginationDateTime.Validate(); err != nil {
+			return fmt.Errorf("TXA.OriginationDateTime: %w", err)
+		}
+	}
+
+	if s.TranscriptionDateTime != nil {
+		if err := s.TranscriptionDateTime.Validate(); err != nil {
+			return fmt.Errorf("TXA.TranscriptionDateTime: %w", err)
+		}
+	}
+
+	for _, item := range s.EditDateTime {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("TXA.EditDateTime: %w", err)
+		}
+	}
+
+	for _, item := range s.OriginatorCodeName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("TXA.OriginatorCodeName: %w", err)
+		}
+	}
+
+	for _, item := range s.AssignedDocumentAuthenticator {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("TXA.AssignedDocumentAuthenticator: %w", err)
+		}
+	}
+
+	for _, item := range s.TranscriptionistCodeName {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("TXA.TranscriptionistCodeName: %w", err)
+		}
+	}
+
+	if s.UniqueDocumentNumber == nil {
+		return fmt.Errorf("TXA.UniqueDocumentNumber is required")
+	}
+	if s.UniqueDocumentNumber != nil {
+		if err := s.UniqueDocumentNumber.Validate(); err != nil {
+			return fmt.Errorf("TXA.UniqueDocumentNumber: %w", err)
+		}
+	}
+
+	if s.ParentDocumentNumber != nil {
+		if err := s.ParentDocumentNumber.Validate(); err != nil {
+			return fmt.Errorf("TXA.ParentDocumentNumber: %w", err)
+		}
+	}
+
+	for _, item := range s.PlacerOrderNumber {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("TXA.PlacerOrderNumber: %w", err)
+		}
+	}
+
+	if s.FillerOrderNumber != nil {
+		if err := s.FillerOrderNumber.Validate(); err != nil {
+			return fmt.Errorf("TXA.FillerOrderNumber: %w", err)
+		}
+	}
+
+	if s.DocumentCompletionStatus == nil {
+		return fmt.Errorf("TXA.DocumentCompletionStatus is required")
+	}
+	if string(*s.DocumentCompletionStatus) == "" {
+		return fmt.Errorf("TXA.DocumentCompletionStatus is empty")
+	}
+
+	for _, item := range s.AuthenticationPersonTimeStamp {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("TXA.AuthenticationPersonTimeStamp: %w", err)
+		}
+	}
+
+	for _, item := range s.DistributedCopiesCodeAndNameOfRecipients {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("TXA.DistributedCopiesCodeAndNameOfRecipients: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *TXA) SetSetIDTXA(v *SI) *TXA {
+	s.SetIDTXA = v
+	return s
+}
+
+func (s *TXA) SetDocumentType(v *IS) *TXA {
+	s.DocumentType = v
+	return s
+}
+
+func (s *TXA) SetDocumentContentPresentation(v *ID) *TXA {
+	s.DocumentContentPresentation = v
+	return s
+}
+
+func (s *TXA) SetActivityDateTime(v *TS) *TXA {
+	s.ActivityDateTime = v
+	return s
+}
+
+func (s *TXA) AddPrimaryActivityProviderCodeName(v XCN) *TXA {
+	s.PrimaryActivityProviderCodeName = append(s.PrimaryActivityProviderCodeName, v)
+	return s
+}
+
+func (s *TXA) SetOriginationDateTime(v *TS) *TXA {
+	s.OriginationDateTime = v
+	return s
+}
+
+func (s *TXA) SetTranscriptionDateTime(v *TS) *TXA {
+	s.TranscriptionDateTime = v
+	return s
+}
+
+func (s *TXA) AddEditDateTime(v TS) *TXA {
+	s.EditDateTime = append(s.EditDateTime, v)
+	return s
+}
+
+func (s *TXA) AddOriginatorCodeName(v XCN) *TXA {
+	s.OriginatorCodeName = append(s.OriginatorCodeName, v)
+	return s
+}
+
+func (s *TXA) AddAssignedDocumentAuthenticator(v XCN) *TXA {
+	s.AssignedDocumentAuthenticator = append(s.AssignedDocumentAuthenticator, v)
+	return s
+}
+
+func (s *TXA) AddTranscriptionistCodeName(v XCN) *TXA {
+	s.TranscriptionistCodeName = append(s.TranscriptionistCodeName, v)
+	return s
+}
+
+func (s *TXA) SetUniqueDocumentNumber(v *EI) *TXA {
+	s.UniqueDocumentNumber = v
+	return s
+}
+
+func (s *TXA) SetParentDocumentNumber(v *EI) *TXA {
+	s.ParentDocumentNumber = v
+	return s
+}
+
+func (s *TXA) AddPlacerOrderNumber(v EI) *TXA {
+	s.PlacerOrderNumber = append(s.PlacerOrderNumber, v)
+	return s
+}
+
+func (s *TXA) SetFillerOrderNumber(v *EI) *TXA {
+	s.FillerOrderNumber = v
+	return s
+}
+
+func (s *TXA) SetUniqueDocumentFileName(v *ST) *TXA {
+	s.UniqueDocumentFileName = v
+	return s
+}
+
+func (s *TXA) SetDocumentCompletionStatus(v *ID) *TXA {
+	s.DocumentCompletionStatus = v
+	return s
+}
+
+func (s *TXA) SetDocumentConfidentialityStatus(v *ID) *TXA {
+	s.DocumentConfidentialityStatus = v
+	return s
+}
+
+func (s *TXA) SetDocumentAvailabilityStatus(v *ID) *TXA {
+	s.DocumentAvailabilityStatus = v
+	return s
+}
+
+func (s *TXA) SetDocumentStorageStatus(v *ID) *TXA {
+	s.DocumentStorageStatus = v
+	return s
+}
+
+func (s *TXA) SetDocumentChangeReason(v *ST) *TXA {
+	s.DocumentChangeReason = v
+	return s
+}
+
+func (s *TXA) AddAuthenticationPersonTimeStamp(v PPN) *TXA {
+	s.AuthenticationPersonTimeStamp = append(s.AuthenticationPersonTimeStamp, v)
+	return s
+}
+
+func (s *TXA) AddDistributedCopiesCodeAndNameOfRecipients(v XCN) *TXA {
+	s.DistributedCopiesCodeAndNameOfRecipients = append(s.DistributedCopiesCodeAndNameOfRecipients, v)
+	return s
 }
 
 // UB1 - UB82 Data
@@ -2784,29 +23123,189 @@ type TXA struct {
 //
 // The Uniform Billing segments are specific to the US and may not be implemented in non-US systems.
 type UB1 struct {
-	SetIDUB1                  SI    `hl7:"1"`
-	BloodDeductible43         NM    `hl7:"2"`
-	BloodFurnishedPintsOf40   NM    `hl7:"3"`
-	BloodReplacedPints41      NM    `hl7:"4"`
-	BloodNotReplacedPints42   NM    `hl7:"5"`
-	CoInsuranceDays25         NM    `hl7:"6"`
+	SetIDUB1                  *SI   `hl7:"1"`
+	BloodDeductible43         *NM   `hl7:"2"`
+	BloodFurnishedPintsOf40   *NM   `hl7:"3"`
+	BloodReplacedPints41      *NM   `hl7:"4"`
+	BloodNotReplacedPints42   *NM   `hl7:"5"`
+	CoInsuranceDays25         *NM   `hl7:"6"`
 	ConditionCode3539         []IS  `hl7:"7"`
-	CoveredDays23             NM    `hl7:"8"`
-	NonCoveredDays24          NM    `hl7:"9"`
+	CoveredDays23             *NM   `hl7:"8"`
+	NonCoveredDays24          *NM   `hl7:"9"`
 	ValueAmountAndCode4649    []UVC `hl7:"10"`
-	NumberOfGraceDays90       NM    `hl7:"11"`
-	SpecialProgramIndicator44 CE    `hl7:"12"`
-	PSROURApprovalIndicator87 CE    `hl7:"13"`
-	PSROURApprovedStayFm88    DT    `hl7:"14"`
-	PSROURApprovedStayTo89    DT    `hl7:"15"`
+	NumberOfGraceDays90       *NM   `hl7:"11"`
+	SpecialProgramIndicator44 *CE   `hl7:"12"`
+	PSROURApprovalIndicator87 *CE   `hl7:"13"`
+	PSROURApprovedStayFm88    *DT   `hl7:"14"`
+	PSROURApprovedStayTo89    *DT   `hl7:"15"`
 	Occurrence2832            []OCD `hl7:"16"`
-	OccurrenceSpan33          CE    `hl7:"17"`
-	OccurSpanStartDate33      DT    `hl7:"18"`
-	OccurSpanEndDate33        DT    `hl7:"19"`
-	UB82Locator2              ST    `hl7:"20"`
-	UB82Locator9              ST    `hl7:"21"`
-	UB82Locator27             ST    `hl7:"22"`
-	UB82Locator45             ST    `hl7:"23"`
+	OccurrenceSpan33          *CE   `hl7:"17"`
+	OccurSpanStartDate33      *DT   `hl7:"18"`
+	OccurSpanEndDate33        *DT   `hl7:"19"`
+	UB82Locator2              *ST   `hl7:"20"`
+	UB82Locator9              *ST   `hl7:"21"`
+	UB82Locator27             *ST   `hl7:"22"`
+	UB82Locator45             *ST   `hl7:"23"`
+}
+
+func NewUB1() *UB1 {
+	return &UB1{}
+}
+
+func (s *UB1) Validate() error {
+
+	for _, item := range s.ConditionCode3539 {
+		if string(item) == "" {
+			return fmt.Errorf("UB1.ConditionCode3539 item is empty")
+		}
+	}
+
+	for _, item := range s.ValueAmountAndCode4649 {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("UB1.ValueAmountAndCode4649: %w", err)
+		}
+	}
+
+	if s.SpecialProgramIndicator44 != nil {
+		if err := s.SpecialProgramIndicator44.Validate(); err != nil {
+			return fmt.Errorf("UB1.SpecialProgramIndicator44: %w", err)
+		}
+	}
+
+	if s.PSROURApprovalIndicator87 != nil {
+		if err := s.PSROURApprovalIndicator87.Validate(); err != nil {
+			return fmt.Errorf("UB1.PSROURApprovalIndicator87: %w", err)
+		}
+	}
+
+	for _, item := range s.Occurrence2832 {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("UB1.Occurrence2832: %w", err)
+		}
+	}
+
+	if s.OccurrenceSpan33 != nil {
+		if err := s.OccurrenceSpan33.Validate(); err != nil {
+			return fmt.Errorf("UB1.OccurrenceSpan33: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *UB1) SetSetIDUB1(v *SI) *UB1 {
+	s.SetIDUB1 = v
+	return s
+}
+
+func (s *UB1) SetBloodDeductible43(v *NM) *UB1 {
+	s.BloodDeductible43 = v
+	return s
+}
+
+func (s *UB1) SetBloodFurnishedPintsOf40(v *NM) *UB1 {
+	s.BloodFurnishedPintsOf40 = v
+	return s
+}
+
+func (s *UB1) SetBloodReplacedPints41(v *NM) *UB1 {
+	s.BloodReplacedPints41 = v
+	return s
+}
+
+func (s *UB1) SetBloodNotReplacedPints42(v *NM) *UB1 {
+	s.BloodNotReplacedPints42 = v
+	return s
+}
+
+func (s *UB1) SetCoInsuranceDays25(v *NM) *UB1 {
+	s.CoInsuranceDays25 = v
+	return s
+}
+
+func (s *UB1) AddConditionCode3539(v IS) *UB1 {
+	s.ConditionCode3539 = append(s.ConditionCode3539, v)
+	return s
+}
+
+func (s *UB1) SetCoveredDays23(v *NM) *UB1 {
+	s.CoveredDays23 = v
+	return s
+}
+
+func (s *UB1) SetNonCoveredDays24(v *NM) *UB1 {
+	s.NonCoveredDays24 = v
+	return s
+}
+
+func (s *UB1) AddValueAmountAndCode4649(v UVC) *UB1 {
+	s.ValueAmountAndCode4649 = append(s.ValueAmountAndCode4649, v)
+	return s
+}
+
+func (s *UB1) SetNumberOfGraceDays90(v *NM) *UB1 {
+	s.NumberOfGraceDays90 = v
+	return s
+}
+
+func (s *UB1) SetSpecialProgramIndicator44(v *CE) *UB1 {
+	s.SpecialProgramIndicator44 = v
+	return s
+}
+
+func (s *UB1) SetPSROURApprovalIndicator87(v *CE) *UB1 {
+	s.PSROURApprovalIndicator87 = v
+	return s
+}
+
+func (s *UB1) SetPSROURApprovedStayFm88(v *DT) *UB1 {
+	s.PSROURApprovedStayFm88 = v
+	return s
+}
+
+func (s *UB1) SetPSROURApprovedStayTo89(v *DT) *UB1 {
+	s.PSROURApprovedStayTo89 = v
+	return s
+}
+
+func (s *UB1) AddOccurrence2832(v OCD) *UB1 {
+	s.Occurrence2832 = append(s.Occurrence2832, v)
+	return s
+}
+
+func (s *UB1) SetOccurrenceSpan33(v *CE) *UB1 {
+	s.OccurrenceSpan33 = v
+	return s
+}
+
+func (s *UB1) SetOccurSpanStartDate33(v *DT) *UB1 {
+	s.OccurSpanStartDate33 = v
+	return s
+}
+
+func (s *UB1) SetOccurSpanEndDate33(v *DT) *UB1 {
+	s.OccurSpanEndDate33 = v
+	return s
+}
+
+func (s *UB1) SetUB82Locator2(v *ST) *UB1 {
+	s.UB82Locator2 = v
+	return s
+}
+
+func (s *UB1) SetUB82Locator9(v *ST) *UB1 {
+	s.UB82Locator9 = v
+	return s
+}
+
+func (s *UB1) SetUB82Locator27(v *ST) *UB1 {
+	s.UB82Locator27 = v
+	return s
+}
+
+func (s *UB1) SetUB82Locator45(v *ST) *UB1 {
+	s.UB82Locator45 = v
+	return s
 }
 
 // UB2 - UB92 Data
@@ -2814,23 +23313,177 @@ type UB1 struct {
 //
 // The Uniform Billing segments are specific to the US and may not be implemented in non-US systems.
 type UB2 struct {
-	SetIDUB2                  SI    `hl7:"1"`
-	CoInsuranceDays9          ST    `hl7:"2"`
+	SetIDUB2                  *SI   `hl7:"1"`
+	CoInsuranceDays9          *ST   `hl7:"2"`
 	ConditionCode2430         []IS  `hl7:"3"`
-	CoveredDays7              ST    `hl7:"4"`
-	NonCoveredDays8           ST    `hl7:"5"`
+	CoveredDays7              *ST   `hl7:"4"`
+	NonCoveredDays8           *ST   `hl7:"5"`
 	ValueAmountAndCode        []UVC `hl7:"6"`
 	OccurrenceCodeAndDate3235 []OCD `hl7:"7"`
 	OccurrenceSpanCodeDates36 []OSP `hl7:"8"`
 	UB92Locator2State         []ST  `hl7:"9"`
 	UB92Locator11State        []ST  `hl7:"10"`
-	UB92Locator31National     ST    `hl7:"11"`
+	UB92Locator31National     *ST   `hl7:"11"`
 	DocumentControlNumber     []ST  `hl7:"12"`
 	UB92Locator49National     []ST  `hl7:"13"`
 	UB92Locator56State        []ST  `hl7:"14"`
-	UB92Locator57National     ST    `hl7:"15"`
+	UB92Locator57National     *ST   `hl7:"15"`
 	UB92Locator78State        []ST  `hl7:"16"`
-	SpecialVisitCount         NM    `hl7:"17"`
+	SpecialVisitCount         *NM   `hl7:"17"`
+}
+
+func NewUB2() *UB2 {
+	return &UB2{}
+}
+
+func (s *UB2) Validate() error {
+
+	for _, item := range s.ConditionCode2430 {
+		if string(item) == "" {
+			return fmt.Errorf("UB2.ConditionCode2430 item is empty")
+		}
+	}
+
+	for _, item := range s.ValueAmountAndCode {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("UB2.ValueAmountAndCode: %w", err)
+		}
+	}
+
+	for _, item := range s.OccurrenceCodeAndDate3235 {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("UB2.OccurrenceCodeAndDate3235: %w", err)
+		}
+	}
+
+	for _, item := range s.OccurrenceSpanCodeDates36 {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("UB2.OccurrenceSpanCodeDates36: %w", err)
+		}
+	}
+
+	for _, item := range s.UB92Locator2State {
+		if string(item) == "" {
+			return fmt.Errorf("UB2.UB92Locator2State item is empty")
+		}
+	}
+
+	for _, item := range s.UB92Locator11State {
+		if string(item) == "" {
+			return fmt.Errorf("UB2.UB92Locator11State item is empty")
+		}
+	}
+
+	for _, item := range s.DocumentControlNumber {
+		if string(item) == "" {
+			return fmt.Errorf("UB2.DocumentControlNumber item is empty")
+		}
+	}
+
+	for _, item := range s.UB92Locator49National {
+		if string(item) == "" {
+			return fmt.Errorf("UB2.UB92Locator49National item is empty")
+		}
+	}
+
+	for _, item := range s.UB92Locator56State {
+		if string(item) == "" {
+			return fmt.Errorf("UB2.UB92Locator56State item is empty")
+		}
+	}
+
+	for _, item := range s.UB92Locator78State {
+		if string(item) == "" {
+			return fmt.Errorf("UB2.UB92Locator78State item is empty")
+		}
+	}
+
+	return nil
+}
+
+func (s *UB2) SetSetIDUB2(v *SI) *UB2 {
+	s.SetIDUB2 = v
+	return s
+}
+
+func (s *UB2) SetCoInsuranceDays9(v *ST) *UB2 {
+	s.CoInsuranceDays9 = v
+	return s
+}
+
+func (s *UB2) AddConditionCode2430(v IS) *UB2 {
+	s.ConditionCode2430 = append(s.ConditionCode2430, v)
+	return s
+}
+
+func (s *UB2) SetCoveredDays7(v *ST) *UB2 {
+	s.CoveredDays7 = v
+	return s
+}
+
+func (s *UB2) SetNonCoveredDays8(v *ST) *UB2 {
+	s.NonCoveredDays8 = v
+	return s
+}
+
+func (s *UB2) AddValueAmountAndCode(v UVC) *UB2 {
+	s.ValueAmountAndCode = append(s.ValueAmountAndCode, v)
+	return s
+}
+
+func (s *UB2) AddOccurrenceCodeAndDate3235(v OCD) *UB2 {
+	s.OccurrenceCodeAndDate3235 = append(s.OccurrenceCodeAndDate3235, v)
+	return s
+}
+
+func (s *UB2) AddOccurrenceSpanCodeDates36(v OSP) *UB2 {
+	s.OccurrenceSpanCodeDates36 = append(s.OccurrenceSpanCodeDates36, v)
+	return s
+}
+
+func (s *UB2) AddUB92Locator2State(v ST) *UB2 {
+	s.UB92Locator2State = append(s.UB92Locator2State, v)
+	return s
+}
+
+func (s *UB2) AddUB92Locator11State(v ST) *UB2 {
+	s.UB92Locator11State = append(s.UB92Locator11State, v)
+	return s
+}
+
+func (s *UB2) SetUB92Locator31National(v *ST) *UB2 {
+	s.UB92Locator31National = v
+	return s
+}
+
+func (s *UB2) AddDocumentControlNumber(v ST) *UB2 {
+	s.DocumentControlNumber = append(s.DocumentControlNumber, v)
+	return s
+}
+
+func (s *UB2) AddUB92Locator49National(v ST) *UB2 {
+	s.UB92Locator49National = append(s.UB92Locator49National, v)
+	return s
+}
+
+func (s *UB2) AddUB92Locator56State(v ST) *UB2 {
+	s.UB92Locator56State = append(s.UB92Locator56State, v)
+	return s
+}
+
+func (s *UB2) SetUB92Locator57National(v *ST) *UB2 {
+	s.UB92Locator57National = v
+	return s
+}
+
+func (s *UB2) AddUB92Locator78State(v ST) *UB2 {
+	s.UB92Locator78State = append(s.UB92Locator78State, v)
+	return s
+}
+
+func (s *UB2) SetSpecialVisitCount(v *NM) *UB2 {
+	s.SpecialVisitCount = v
+	return s
 }
 
 // URD - Results/update Definition
@@ -2838,13 +23491,90 @@ type UB2 struct {
 //
 // The URD segment is used in sending unsolicited updates about orders and results.  Its purpose is similar to that of the QRD segment, but from the results/unsolicited update point of view.  Some of the fields have parallels in the QRD segment.
 type URD struct {
-	RUDateTime              TS    `hl7:"1"`
-	ReportPriority          ID    `hl7:"2"`
+	RUDateTime              *TS   `hl7:"1"`
+	ReportPriority          *ID   `hl7:"2"`
 	RUWhoSubjectDefinition  []XCN `hl7:"3,required"`
 	RUWhatSubjectDefinition []CE  `hl7:"4"`
 	RUWhatDepartmentCode    []CE  `hl7:"5"`
 	RUDisplayPrintLocations []ST  `hl7:"6"`
-	RUResultsLevel          ID    `hl7:"7"`
+	RUResultsLevel          *ID   `hl7:"7"`
+}
+
+func NewURD() *URD {
+	return &URD{}
+}
+
+func (s *URD) Validate() error {
+
+	if s.RUDateTime != nil {
+		if err := s.RUDateTime.Validate(); err != nil {
+			return fmt.Errorf("URD.RUDateTime: %w", err)
+		}
+	}
+
+	if len(s.RUWhoSubjectDefinition) == 0 {
+		return fmt.Errorf("URD.RUWhoSubjectDefinition is required")
+	}
+	for _, item := range s.RUWhoSubjectDefinition {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("URD.RUWhoSubjectDefinition: %w", err)
+		}
+	}
+
+	for _, item := range s.RUWhatSubjectDefinition {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("URD.RUWhatSubjectDefinition: %w", err)
+		}
+	}
+
+	for _, item := range s.RUWhatDepartmentCode {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("URD.RUWhatDepartmentCode: %w", err)
+		}
+	}
+
+	for _, item := range s.RUDisplayPrintLocations {
+		if string(item) == "" {
+			return fmt.Errorf("URD.RUDisplayPrintLocations item is empty")
+		}
+	}
+
+	return nil
+}
+
+func (s *URD) SetRUDateTime(v *TS) *URD {
+	s.RUDateTime = v
+	return s
+}
+
+func (s *URD) SetReportPriority(v *ID) *URD {
+	s.ReportPriority = v
+	return s
+}
+
+func (s *URD) AddRUWhoSubjectDefinition(v XCN) *URD {
+	s.RUWhoSubjectDefinition = append(s.RUWhoSubjectDefinition, v)
+	return s
+}
+
+func (s *URD) AddRUWhatSubjectDefinition(v CE) *URD {
+	s.RUWhatSubjectDefinition = append(s.RUWhatSubjectDefinition, v)
+	return s
+}
+
+func (s *URD) AddRUWhatDepartmentCode(v CE) *URD {
+	s.RUWhatDepartmentCode = append(s.RUWhatDepartmentCode, v)
+	return s
+}
+
+func (s *URD) AddRUDisplayPrintLocations(v ST) *URD {
+	s.RUDisplayPrintLocations = append(s.RUDisplayPrintLocations, v)
+	return s
+}
+
+func (s *URD) SetRUResultsLevel(v *ID) *URD {
+	s.RUResultsLevel = v
+	return s
 }
 
 // URS - Unsolicited Selection
@@ -2853,25 +23583,215 @@ type URD struct {
 // The URS segment is identical with the QRF segment, except that if the name of any field contains Query (of QRY), this word has been changed to Results (see URS-5-R/U other results subject definition).
 type URS struct {
 	RUWhereSubjectDefinition        []ST `hl7:"1,required"`
-	RUWhenDataStartDateTime         TS   `hl7:"2"`
-	RUWhenDataEndDateTime           TS   `hl7:"3"`
+	RUWhenDataStartDateTime         *TS  `hl7:"2"`
+	RUWhenDataEndDateTime           *TS  `hl7:"3"`
 	RUWhatUserQualifier             []ST `hl7:"4"`
 	RUOtherResultsSubjectDefinition []ST `hl7:"5"`
 	RUWhichDateTimeQualifier        []ID `hl7:"6"`
 	RUWhichDateTimeStatusQualifier  []ID `hl7:"7"`
 	RUDateTimeSelectionQualifier    []ID `hl7:"8"`
-	RUQuantityTimingQualifier       TQ   `hl7:"9"`
+	RUQuantityTimingQualifier       *TQ  `hl7:"9"`
+}
+
+func NewURS() *URS {
+	return &URS{}
+}
+
+func (s *URS) Validate() error {
+
+	if len(s.RUWhereSubjectDefinition) == 0 {
+		return fmt.Errorf("URS.RUWhereSubjectDefinition is required")
+	}
+	for _, item := range s.RUWhereSubjectDefinition {
+		if string(item) == "" {
+			return fmt.Errorf("URS.RUWhereSubjectDefinition item is empty")
+		}
+	}
+
+	if s.RUWhenDataStartDateTime != nil {
+		if err := s.RUWhenDataStartDateTime.Validate(); err != nil {
+			return fmt.Errorf("URS.RUWhenDataStartDateTime: %w", err)
+		}
+	}
+
+	if s.RUWhenDataEndDateTime != nil {
+		if err := s.RUWhenDataEndDateTime.Validate(); err != nil {
+			return fmt.Errorf("URS.RUWhenDataEndDateTime: %w", err)
+		}
+	}
+
+	for _, item := range s.RUWhatUserQualifier {
+		if string(item) == "" {
+			return fmt.Errorf("URS.RUWhatUserQualifier item is empty")
+		}
+	}
+
+	for _, item := range s.RUOtherResultsSubjectDefinition {
+		if string(item) == "" {
+			return fmt.Errorf("URS.RUOtherResultsSubjectDefinition item is empty")
+		}
+	}
+
+	for _, item := range s.RUWhichDateTimeQualifier {
+		if string(item) == "" {
+			return fmt.Errorf("URS.RUWhichDateTimeQualifier item is empty")
+		}
+	}
+
+	for _, item := range s.RUWhichDateTimeStatusQualifier {
+		if string(item) == "" {
+			return fmt.Errorf("URS.RUWhichDateTimeStatusQualifier item is empty")
+		}
+	}
+
+	for _, item := range s.RUDateTimeSelectionQualifier {
+		if string(item) == "" {
+			return fmt.Errorf("URS.RUDateTimeSelectionQualifier item is empty")
+		}
+	}
+
+	if s.RUQuantityTimingQualifier != nil {
+		if err := s.RUQuantityTimingQualifier.Validate(); err != nil {
+			return fmt.Errorf("URS.RUQuantityTimingQualifier: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *URS) AddRUWhereSubjectDefinition(v ST) *URS {
+	s.RUWhereSubjectDefinition = append(s.RUWhereSubjectDefinition, v)
+	return s
+}
+
+func (s *URS) SetRUWhenDataStartDateTime(v *TS) *URS {
+	s.RUWhenDataStartDateTime = v
+	return s
+}
+
+func (s *URS) SetRUWhenDataEndDateTime(v *TS) *URS {
+	s.RUWhenDataEndDateTime = v
+	return s
+}
+
+func (s *URS) AddRUWhatUserQualifier(v ST) *URS {
+	s.RUWhatUserQualifier = append(s.RUWhatUserQualifier, v)
+	return s
+}
+
+func (s *URS) AddRUOtherResultsSubjectDefinition(v ST) *URS {
+	s.RUOtherResultsSubjectDefinition = append(s.RUOtherResultsSubjectDefinition, v)
+	return s
+}
+
+func (s *URS) AddRUWhichDateTimeQualifier(v ID) *URS {
+	s.RUWhichDateTimeQualifier = append(s.RUWhichDateTimeQualifier, v)
+	return s
+}
+
+func (s *URS) AddRUWhichDateTimeStatusQualifier(v ID) *URS {
+	s.RUWhichDateTimeStatusQualifier = append(s.RUWhichDateTimeStatusQualifier, v)
+	return s
+}
+
+func (s *URS) AddRUDateTimeSelectionQualifier(v ID) *URS {
+	s.RUDateTimeSelectionQualifier = append(s.RUDateTimeSelectionQualifier, v)
+	return s
+}
+
+func (s *URS) SetRUQuantityTimingQualifier(v *TQ) *URS {
+	s.RUQuantityTimingQualifier = v
+	return s
 }
 
 // VAR - Variance
 // The variance segment contains the data necessary to describe differences that may have occurred at the time when a healthcare event was documented.
 type VAR struct {
-	VarianceInstanceID     EI    `hl7:"1,required"`
-	DocumentedDateTime     TS    `hl7:"2,required"`
-	StatedVarianceDateTime TS    `hl7:"3"`
+	VarianceInstanceID     *EI   `hl7:"1,required"`
+	DocumentedDateTime     *TS   `hl7:"2,required"`
+	StatedVarianceDateTime *TS   `hl7:"3"`
 	VarianceOriginator     []XCN `hl7:"4"`
-	VarianceClassification CE    `hl7:"5"`
+	VarianceClassification *CE   `hl7:"5"`
 	VarianceDescription    []ST  `hl7:"6"`
+}
+
+func NewVAR() *VAR {
+	return &VAR{}
+}
+
+func (s *VAR) Validate() error {
+
+	if s.VarianceInstanceID == nil {
+		return fmt.Errorf("VAR.VarianceInstanceID is required")
+	}
+	if s.VarianceInstanceID != nil {
+		if err := s.VarianceInstanceID.Validate(); err != nil {
+			return fmt.Errorf("VAR.VarianceInstanceID: %w", err)
+		}
+	}
+
+	if s.DocumentedDateTime == nil {
+		return fmt.Errorf("VAR.DocumentedDateTime is required")
+	}
+	if s.DocumentedDateTime != nil {
+		if err := s.DocumentedDateTime.Validate(); err != nil {
+			return fmt.Errorf("VAR.DocumentedDateTime: %w", err)
+		}
+	}
+
+	if s.StatedVarianceDateTime != nil {
+		if err := s.StatedVarianceDateTime.Validate(); err != nil {
+			return fmt.Errorf("VAR.StatedVarianceDateTime: %w", err)
+		}
+	}
+
+	for _, item := range s.VarianceOriginator {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("VAR.VarianceOriginator: %w", err)
+		}
+	}
+
+	if s.VarianceClassification != nil {
+		if err := s.VarianceClassification.Validate(); err != nil {
+			return fmt.Errorf("VAR.VarianceClassification: %w", err)
+		}
+	}
+
+	for _, item := range s.VarianceDescription {
+		if string(item) == "" {
+			return fmt.Errorf("VAR.VarianceDescription item is empty")
+		}
+	}
+	return nil
+}
+
+func (s *VAR) SetVarianceInstanceID(v *EI) *VAR {
+	s.VarianceInstanceID = v
+	return s
+}
+
+func (s *VAR) SetDocumentedDateTime(v *TS) *VAR {
+	s.DocumentedDateTime = v
+	return s
+}
+
+func (s *VAR) SetStatedVarianceDateTime(v *TS) *VAR {
+	s.StatedVarianceDateTime = v
+	return s
+}
+
+func (s *VAR) AddVarianceOriginator(v XCN) *VAR {
+	s.VarianceOriginator = append(s.VarianceOriginator, v)
+	return s
+}
+
+func (s *VAR) SetVarianceClassification(v *CE) *VAR {
+	s.VarianceClassification = v
+	return s
+}
+
+func (s *VAR) AddVarianceDescription(v ST) *VAR {
+	s.VarianceDescription = append(s.VarianceDescription, v)
+	return s
 }
 
 // VTQ - Virtual Table Query Request
@@ -2879,9 +23799,73 @@ type VAR struct {
 //
 // The VTQ segment is used to define queries that are responded to with the Tabular Data Message (TBR).  The VTQ query message is an alternate method to the EQQ query message that some systems may find easier to implement, due to its use of HL7 delimiters that separate components of the selection definition, and its limited selection criteria.  Queries involving complex selection criteria (nested operators, etc.) may need to be formatted as an EQL segment.
 type VTQ struct {
-	QueryTag                ST    `hl7:"1"`
-	QueryResponseFormatCode ID    `hl7:"2,required"`
-	VTQueryName             CE    `hl7:"3,required"`
-	VirtualTableName        CE    `hl7:"4,required"`
+	QueryTag                *ST   `hl7:"1"`
+	QueryResponseFormatCode *ID   `hl7:"2,required"`
+	VTQueryName             *CE   `hl7:"3,required"`
+	VirtualTableName        *CE   `hl7:"4,required"`
 	SelectionCriteria       []QSC `hl7:"5"`
+}
+
+func NewVTQ() *VTQ {
+	return &VTQ{}
+}
+
+func (s *VTQ) Validate() error {
+
+	if s.QueryResponseFormatCode == nil {
+		return fmt.Errorf("VTQ.QueryResponseFormatCode is required")
+	}
+	if string(*s.QueryResponseFormatCode) == "" {
+		return fmt.Errorf("VTQ.QueryResponseFormatCode is empty")
+	}
+
+	if s.VTQueryName == nil {
+		return fmt.Errorf("VTQ.VTQueryName is required")
+	}
+	if s.VTQueryName != nil {
+		if err := s.VTQueryName.Validate(); err != nil {
+			return fmt.Errorf("VTQ.VTQueryName: %w", err)
+		}
+	}
+
+	if s.VirtualTableName == nil {
+		return fmt.Errorf("VTQ.VirtualTableName is required")
+	}
+	if s.VirtualTableName != nil {
+		if err := s.VirtualTableName.Validate(); err != nil {
+			return fmt.Errorf("VTQ.VirtualTableName: %w", err)
+		}
+	}
+
+	for _, item := range s.SelectionCriteria {
+		if err := item.Validate(); err != nil {
+			return fmt.Errorf("VTQ.SelectionCriteria: %w", err)
+		}
+	}
+	return nil
+}
+
+func (s *VTQ) SetQueryTag(v *ST) *VTQ {
+	s.QueryTag = v
+	return s
+}
+
+func (s *VTQ) SetQueryResponseFormatCode(v *ID) *VTQ {
+	s.QueryResponseFormatCode = v
+	return s
+}
+
+func (s *VTQ) SetVTQueryName(v *CE) *VTQ {
+	s.VTQueryName = v
+	return s
+}
+
+func (s *VTQ) SetVirtualTableName(v *CE) *VTQ {
+	s.VirtualTableName = v
+	return s
+}
+
+func (s *VTQ) AddSelectionCriteria(v QSC) *VTQ {
+	s.SelectionCriteria = append(s.SelectionCriteria, v)
+	return s
 }

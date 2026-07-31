@@ -2,6 +2,10 @@
 
 package v24
 
+import (
+	"fmt"
+)
+
 // AD - Address
 // Note: Replaced by the XAD data type as of v 2.3.
 //
@@ -18,11 +22,84 @@ type AD struct {
 	OtherGeographicDesignation ST `hl7:"8"`
 }
 
+func NewAD() *AD {
+	return &AD{}
+}
+
+func (d *AD) Validate() error {
+
+	return nil
+}
+
+func (d *AD) SetStreetAddress(v string) *AD {
+	d.StreetAddress = ST(v)
+	return d
+}
+
+func (d *AD) SetOtherDesignation(v string) *AD {
+	d.OtherDesignation = ST(v)
+	return d
+}
+
+func (d *AD) SetCity(v string) *AD {
+	d.City = ST(v)
+	return d
+}
+
+func (d *AD) SetStateOrProvince(v string) *AD {
+	d.StateOrProvince = ST(v)
+	return d
+}
+
+func (d *AD) SetZipOrPostalCode(v string) *AD {
+	d.ZipOrPostalCode = ST(v)
+	return d
+}
+
+func (d *AD) SetCountry(v string) *AD {
+	d.Country = ID(v)
+	return d
+}
+
+func (d *AD) SetAddressType(v string) *AD {
+	d.AddressType = ID(v)
+	return d
+}
+
+func (d *AD) SetOtherGeographicDesignation(v string) *AD {
+	d.OtherGeographicDesignation = ST(v)
+	return d
+}
+
 // AUI - Authorization Information
 type AUI struct {
 	AuthorizationNumber ST `hl7:"1"`
 	Date                DT `hl7:"2"`
 	Source              ST `hl7:"3"`
+}
+
+func NewAUI() *AUI {
+	return &AUI{}
+}
+
+func (d *AUI) Validate() error {
+
+	return nil
+}
+
+func (d *AUI) SetAuthorizationNumber(v string) *AUI {
+	d.AuthorizationNumber = ST(v)
+	return d
+}
+
+func (d *AUI) SetDate(v string) *AUI {
+	d.Date = DT(v)
+	return d
+}
+
+func (d *AUI) SetSource(v string) *AUI {
+	d.Source = ST(v)
+	return d
 }
 
 // CCD - Charge Time
@@ -31,11 +108,60 @@ type CCD struct {
 	DateTime         TS `hl7:"2"`
 }
 
+func NewCCD() *CCD {
+	return &CCD{}
+}
+
+func (d *CCD) Validate() error {
+
+	if (d.DateTime != TS{}) {
+		if err := d.DateTime.Validate(); err != nil {
+			return fmt.Errorf("CCD.DateTime: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *CCD) SetWhenToChargeCode(v string) *CCD {
+	d.WhenToChargeCode = ID(v)
+	return d
+}
+
+func (d *CCD) SetDateTime(v TS) *CCD {
+	d.DateTime = v
+	return d
+}
+
 // CCP - Channel Calibration Parameters
 type CCP struct {
 	ChannelCalibrationSensitivityCorrectionFactor NM `hl7:"1"`
 	ChannelCalibrationBaseline                    NM `hl7:"2"`
 	ChannelCalibrationTimeSkew                    NM `hl7:"3"`
+}
+
+func NewCCP() *CCP {
+	return &CCP{}
+}
+
+func (d *CCP) Validate() error {
+
+	return nil
+}
+
+func (d *CCP) SetChannelCalibrationSensitivityCorrectionFactor(v string) *CCP {
+	d.ChannelCalibrationSensitivityCorrectionFactor = NM(v)
+	return d
+}
+
+func (d *CCP) SetChannelCalibrationBaseline(v string) *CCP {
+	d.ChannelCalibrationBaseline = NM(v)
+	return d
+}
+
+func (d *CCP) SetChannelCalibrationTimeSkew(v string) *CCP {
+	d.ChannelCalibrationTimeSkew = NM(v)
+	return d
 }
 
 // CD - Channel Definition
@@ -47,6 +173,75 @@ type CD struct {
 	ChannelCalibrationParameters CCP `hl7:"4"`
 	ChannelSamplingFrequency     NM  `hl7:"5"`
 	MinimumMaximumDataValues     NR  `hl7:"6"`
+}
+
+func NewCD() *CD {
+	return &CD{}
+}
+
+func (d *CD) Validate() error {
+
+	if (d.ChannelIdentifier != WVI{}) {
+		if err := d.ChannelIdentifier.Validate(); err != nil {
+			return fmt.Errorf("CD.ChannelIdentifier: %w", err)
+		}
+	}
+
+	if (d.WaveformSource != WVS{}) {
+		if err := d.WaveformSource.Validate(); err != nil {
+			return fmt.Errorf("CD.WaveformSource: %w", err)
+		}
+	}
+
+	if (d.ChannelSensitivityUnits != CSU{}) {
+		if err := d.ChannelSensitivityUnits.Validate(); err != nil {
+			return fmt.Errorf("CD.ChannelSensitivityUnits: %w", err)
+		}
+	}
+
+	if (d.ChannelCalibrationParameters != CCP{}) {
+		if err := d.ChannelCalibrationParameters.Validate(); err != nil {
+			return fmt.Errorf("CD.ChannelCalibrationParameters: %w", err)
+		}
+	}
+
+	if (d.MinimumMaximumDataValues != NR{}) {
+		if err := d.MinimumMaximumDataValues.Validate(); err != nil {
+			return fmt.Errorf("CD.MinimumMaximumDataValues: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *CD) SetChannelIdentifier(v WVI) *CD {
+	d.ChannelIdentifier = v
+	return d
+}
+
+func (d *CD) SetWaveformSource(v WVS) *CD {
+	d.WaveformSource = v
+	return d
+}
+
+func (d *CD) SetChannelSensitivityUnits(v CSU) *CD {
+	d.ChannelSensitivityUnits = v
+	return d
+}
+
+func (d *CD) SetChannelCalibrationParameters(v CCP) *CD {
+	d.ChannelCalibrationParameters = v
+	return d
+}
+
+func (d *CD) SetChannelSamplingFrequency(v string) *CD {
+	d.ChannelSamplingFrequency = NM(v)
+	return d
+}
+
+func (d *CD) SetMinimumMaximumDataValues(v NR) *CD {
+	d.MinimumMaximumDataValues = v
+	return d
 }
 
 // CE - Coded Element
@@ -63,6 +258,45 @@ type CE struct {
 	NameOfAlternateCodingSystem IS `hl7:"6"`
 }
 
+func NewCE() *CE {
+	return &CE{}
+}
+
+func (d *CE) Validate() error {
+
+	return nil
+}
+
+func (d *CE) SetIdentifier(v string) *CE {
+	d.Identifier = ST(v)
+	return d
+}
+
+func (d *CE) SetText(v string) *CE {
+	d.Text = ST(v)
+	return d
+}
+
+func (d *CE) SetNameOfCodingSystem(v string) *CE {
+	d.NameOfCodingSystem = IS(v)
+	return d
+}
+
+func (d *CE) SetAlternateIdentifier(v string) *CE {
+	d.AlternateIdentifier = ST(v)
+	return d
+}
+
+func (d *CE) SetAlternateText(v string) *CE {
+	d.AlternateText = ST(v)
+	return d
+}
+
+func (d *CE) SetNameOfAlternateCodingSystem(v string) *CE {
+	d.NameOfAlternateCodingSystem = IS(v)
+	return d
+}
+
 // CF - Coded Element With Formatted Values
 // This data type transmits codes and the formatted text associated with the code. This data type can be used to transmit for the first time the formatted text for the canned text portion of a report, for example, a standard radiologic description for a normal chest X-ray. The receiving system can store this information and in subsequent messages only the identifier need be sent. Another potential use of this data type is transmitting master file records that contain formatted text.
 //
@@ -76,6 +310,45 @@ type CF struct {
 	NameOfAlternateCodingSystem IS `hl7:"6"`
 }
 
+func NewCF() *CF {
+	return &CF{}
+}
+
+func (d *CF) Validate() error {
+
+	return nil
+}
+
+func (d *CF) SetIdentifier(v string) *CF {
+	d.Identifier = ID(v)
+	return d
+}
+
+func (d *CF) SetFormattedText(v string) *CF {
+	d.FormattedText = FT(v)
+	return d
+}
+
+func (d *CF) SetNameOfCodingSystem(v string) *CF {
+	d.NameOfCodingSystem = IS(v)
+	return d
+}
+
+func (d *CF) SetAlternateIdentifier(v string) *CF {
+	d.AlternateIdentifier = ID(v)
+	return d
+}
+
+func (d *CF) SetAlternateFormattedText(v string) *CF {
+	d.AlternateFormattedText = FT(v)
+	return d
+}
+
+func (d *CF) SetNameOfAlternateCodingSystem(v string) *CF {
+	d.NameOfAlternateCodingSystem = IS(v)
+	return d
+}
+
 // CK - Composite ID With Check Digit
 // This data type is used only in CDM-11-Contract number as defined in chapter 8, section 8.10.2.11. If a site is not using check digits for a particular CK field, the second and third components are not valued.
 //
@@ -86,6 +359,41 @@ type CK struct {
 	CheckDigit                                 ST `hl7:"2"`
 	CodeIdentifyingTheCheckDigitSchemeEmployed ID `hl7:"3"`
 	AssigningAuthority                         HD `hl7:"4"`
+}
+
+func NewCK() *CK {
+	return &CK{}
+}
+
+func (d *CK) Validate() error {
+
+	if (d.AssigningAuthority != HD{}) {
+		if err := d.AssigningAuthority.Validate(); err != nil {
+			return fmt.Errorf("CK.AssigningAuthority: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *CK) SetIdNumber(v string) *CK {
+	d.IdNumber = NM(v)
+	return d
+}
+
+func (d *CK) SetCheckDigit(v string) *CK {
+	d.CheckDigit = ST(v)
+	return d
+}
+
+func (d *CK) SetCodeIdentifyingTheCheckDigitSchemeEmployed(v string) *CK {
+	d.CodeIdentifyingTheCheckDigitSchemeEmployed = ID(v)
+	return d
+}
+
+func (d *CK) SetAssigningAuthority(v HD) *CK {
+	d.AssigningAuthority = v
+	return d
 }
 
 // CN - Composite ID Number And Name
@@ -107,6 +415,72 @@ type CN struct {
 	AssigningAuthority                          HD `hl7:"9"`
 }
 
+func NewCN() *CN {
+	return &CN{}
+}
+
+func (d *CN) Validate() error {
+
+	if (d.FamilyName != FN{}) {
+		if err := d.FamilyName.Validate(); err != nil {
+			return fmt.Errorf("CN.FamilyName: %w", err)
+		}
+	}
+
+	if (d.AssigningAuthority != HD{}) {
+		if err := d.AssigningAuthority.Validate(); err != nil {
+			return fmt.Errorf("CN.AssigningAuthority: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *CN) SetIdNumber(v string) *CN {
+	d.IdNumber = ST(v)
+	return d
+}
+
+func (d *CN) SetFamilyName(v FN) *CN {
+	d.FamilyName = v
+	return d
+}
+
+func (d *CN) SetGivenName(v string) *CN {
+	d.GivenName = ST(v)
+	return d
+}
+
+func (d *CN) SetSecondAndFurtherGivenNamesOrInitialsThereof(v string) *CN {
+	d.SecondAndFurtherGivenNamesOrInitialsThereof = ST(v)
+	return d
+}
+
+func (d *CN) SetSuffix(v string) *CN {
+	d.Suffix = ST(v)
+	return d
+}
+
+func (d *CN) SetPrefix(v string) *CN {
+	d.Prefix = ST(v)
+	return d
+}
+
+func (d *CN) SetDegree(v string) *CN {
+	d.Degree = IS(v)
+	return d
+}
+
+func (d *CN) SetSourceTable(v string) *CN {
+	d.SourceTable = IS(v)
+	return d
+}
+
+func (d *CN) SetAssigningAuthority(v HD) *CN {
+	d.AssigningAuthority = v
+	return d
+}
+
 // CNE - Coded With No Exceptions
 type CNE struct {
 	Identifier                     ST `hl7:"1"`
@@ -118,6 +492,60 @@ type CNE struct {
 	CodingSystemVersionId          ST `hl7:"7"`
 	AlternateCodingSystemVersionId ST `hl7:"8"`
 	OriginalText                   ST `hl7:"9"`
+}
+
+func NewCNE() *CNE {
+	return &CNE{}
+}
+
+func (d *CNE) Validate() error {
+
+	return nil
+}
+
+func (d *CNE) SetIdentifier(v string) *CNE {
+	d.Identifier = ST(v)
+	return d
+}
+
+func (d *CNE) SetText(v string) *CNE {
+	d.Text = ST(v)
+	return d
+}
+
+func (d *CNE) SetNameOfCodingSystem(v string) *CNE {
+	d.NameOfCodingSystem = IS(v)
+	return d
+}
+
+func (d *CNE) SetAlternateIdentifier(v string) *CNE {
+	d.AlternateIdentifier = ST(v)
+	return d
+}
+
+func (d *CNE) SetAlternateText(v string) *CNE {
+	d.AlternateText = ST(v)
+	return d
+}
+
+func (d *CNE) SetNameOfAlternateCodingSystem(v string) *CNE {
+	d.NameOfAlternateCodingSystem = IS(v)
+	return d
+}
+
+func (d *CNE) SetCodingSystemVersionId(v string) *CNE {
+	d.CodingSystemVersionId = ST(v)
+	return d
+}
+
+func (d *CNE) SetAlternateCodingSystemVersionId(v string) *CNE {
+	d.AlternateCodingSystemVersionId = ST(v)
+	return d
+}
+
+func (d *CNE) SetOriginalText(v string) *CNE {
+	d.OriginalText = ST(v)
+	return d
 }
 
 // CNN - Composite ID Number And Name (special DT For NDL
@@ -133,6 +561,70 @@ type CNN struct {
 	AssigningAuthorityNamespaceID               IS `hl7:"9"`
 	AssigningAuthorityUniversalID               ST `hl7:"10"`
 	AssigningAuthorityUniversalIDType           ID `hl7:"11"`
+}
+
+func NewCNN() *CNN {
+	return &CNN{}
+}
+
+func (d *CNN) Validate() error {
+
+	return nil
+}
+
+func (d *CNN) SetIDNumber(v string) *CNN {
+	d.IDNumber = ST(v)
+	return d
+}
+
+func (d *CNN) SetFamilyName(v string) *CNN {
+	d.FamilyName = ST(v)
+	return d
+}
+
+func (d *CNN) SetGivenName(v string) *CNN {
+	d.GivenName = ST(v)
+	return d
+}
+
+func (d *CNN) SetSecondAndFurtherGivenNamesOrInitialsThereof(v string) *CNN {
+	d.SecondAndFurtherGivenNamesOrInitialsThereof = ST(v)
+	return d
+}
+
+func (d *CNN) SetSuffix(v string) *CNN {
+	d.Suffix = ST(v)
+	return d
+}
+
+func (d *CNN) SetPrefix(v string) *CNN {
+	d.Prefix = ST(v)
+	return d
+}
+
+func (d *CNN) SetDegree(v string) *CNN {
+	d.Degree = IS(v)
+	return d
+}
+
+func (d *CNN) SetSourceTable(v string) *CNN {
+	d.SourceTable = IS(v)
+	return d
+}
+
+func (d *CNN) SetAssigningAuthorityNamespaceID(v string) *CNN {
+	d.AssigningAuthorityNamespaceID = IS(v)
+	return d
+}
+
+func (d *CNN) SetAssigningAuthorityUniversalID(v string) *CNN {
+	d.AssigningAuthorityUniversalID = ST(v)
+	return d
+}
+
+func (d *CNN) SetAssigningAuthorityUniversalIDType(v string) *CNN {
+	d.AssigningAuthorityUniversalIDType = ID(v)
+	return d
 }
 
 // CP - Composite Price
@@ -151,6 +643,57 @@ type CP struct {
 	RangeType  ID `hl7:"6"`
 }
 
+func NewCP() *CP {
+	return &CP{}
+}
+
+func (d *CP) Validate() error {
+
+	if (d.Price != MO{}) {
+		if err := d.Price.Validate(); err != nil {
+			return fmt.Errorf("CP.Price: %w", err)
+		}
+	}
+
+	if (d.RangeUnits != CE{}) {
+		if err := d.RangeUnits.Validate(); err != nil {
+			return fmt.Errorf("CP.RangeUnits: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *CP) SetPrice(v MO) *CP {
+	d.Price = v
+	return d
+}
+
+func (d *CP) SetPriceType(v string) *CP {
+	d.PriceType = ID(v)
+	return d
+}
+
+func (d *CP) SetFromValue(v string) *CP {
+	d.FromValue = NM(v)
+	return d
+}
+
+func (d *CP) SetToValue(v string) *CP {
+	d.ToValue = NM(v)
+	return d
+}
+
+func (d *CP) SetRangeUnits(v CE) *CP {
+	d.RangeUnits = v
+	return d
+}
+
+func (d *CP) SetRangeType(v string) *CP {
+	d.RangeType = ID(v)
+	return d
+}
+
 // CQ - Composite Quantity With Units
 // Note: In future versions, CQ fields should be avoided because the same data can usually be sent as two separate fields, one with the value and one with the units as a CE data type.
 //
@@ -160,6 +703,25 @@ type CP struct {
 type CQ struct {
 	Quantity NM `hl7:"1"`
 	Units    ST `hl7:"2"`
+}
+
+func NewCQ() *CQ {
+	return &CQ{}
+}
+
+func (d *CQ) Validate() error {
+
+	return nil
+}
+
+func (d *CQ) SetQuantity(v string) *CQ {
+	d.Quantity = NM(v)
+	return d
+}
+
+func (d *CQ) SetUnits(v string) *CQ {
+	d.Units = ST(v)
+	return d
 }
 
 // CSU - Channel Sensitivity/units
@@ -173,6 +735,50 @@ type CSU struct {
 	AlternateUnitOfMeasureCodingSystem IS `hl7:"7"`
 }
 
+func NewCSU() *CSU {
+	return &CSU{}
+}
+
+func (d *CSU) Validate() error {
+
+	return nil
+}
+
+func (d *CSU) SetChannelSensitivity(v string) *CSU {
+	d.ChannelSensitivity = NM(v)
+	return d
+}
+
+func (d *CSU) SetUnitOfMeasureIdentifier(v string) *CSU {
+	d.UnitOfMeasureIdentifier = ST(v)
+	return d
+}
+
+func (d *CSU) SetUnitOfMeasureDescription(v string) *CSU {
+	d.UnitOfMeasureDescription = ST(v)
+	return d
+}
+
+func (d *CSU) SetUnitOfMeasureCodingSystem(v string) *CSU {
+	d.UnitOfMeasureCodingSystem = IS(v)
+	return d
+}
+
+func (d *CSU) SetAlternateUnitOfMeasureIdentifier(v string) *CSU {
+	d.AlternateUnitOfMeasureIdentifier = ST(v)
+	return d
+}
+
+func (d *CSU) SetAlternateUnitOfMeasureDescription(v string) *CSU {
+	d.AlternateUnitOfMeasureDescription = ST(v)
+	return d
+}
+
+func (d *CSU) SetAlternateUnitOfMeasureCodingSystem(v string) *CSU {
+	d.AlternateUnitOfMeasureCodingSystem = IS(v)
+	return d
+}
+
 // CWE - Coded With Exceptions
 type CWE struct {
 	Identifier                     ST `hl7:"1"`
@@ -184,6 +790,60 @@ type CWE struct {
 	CodingSystemVersionId          ST `hl7:"7"`
 	AlternateCodingSystemVersionId ST `hl7:"8"`
 	OriginalText                   ST `hl7:"9"`
+}
+
+func NewCWE() *CWE {
+	return &CWE{}
+}
+
+func (d *CWE) Validate() error {
+
+	return nil
+}
+
+func (d *CWE) SetIdentifier(v string) *CWE {
+	d.Identifier = ST(v)
+	return d
+}
+
+func (d *CWE) SetText(v string) *CWE {
+	d.Text = ST(v)
+	return d
+}
+
+func (d *CWE) SetNameOfCodingSystem(v string) *CWE {
+	d.NameOfCodingSystem = IS(v)
+	return d
+}
+
+func (d *CWE) SetAlternateIdentifier(v string) *CWE {
+	d.AlternateIdentifier = ST(v)
+	return d
+}
+
+func (d *CWE) SetAlternateText(v string) *CWE {
+	d.AlternateText = ST(v)
+	return d
+}
+
+func (d *CWE) SetNameOfAlternateCodingSystem(v string) *CWE {
+	d.NameOfAlternateCodingSystem = IS(v)
+	return d
+}
+
+func (d *CWE) SetCodingSystemVersionId(v string) *CWE {
+	d.CodingSystemVersionId = ST(v)
+	return d
+}
+
+func (d *CWE) SetAlternateCodingSystemVersionId(v string) *CWE {
+	d.AlternateCodingSystemVersionId = ST(v)
+	return d
+}
+
+func (d *CWE) SetOriginalText(v string) *CWE {
+	d.OriginalText = ST(v)
+	return d
 }
 
 // CX - Extended Composite ID With Check Digit
@@ -202,11 +862,96 @@ type CX struct {
 	ExpirationDate                             DT `hl7:"8"`
 }
 
+func NewCX() *CX {
+	return &CX{}
+}
+
+func (d *CX) Validate() error {
+
+	if (d.AssigningAuthority != HD{}) {
+		if err := d.AssigningAuthority.Validate(); err != nil {
+			return fmt.Errorf("CX.AssigningAuthority: %w", err)
+		}
+	}
+
+	if (d.AssigningFacility != HD{}) {
+		if err := d.AssigningFacility.Validate(); err != nil {
+			return fmt.Errorf("CX.AssigningFacility: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *CX) SetId(v string) *CX {
+	d.Id = ST(v)
+	return d
+}
+
+func (d *CX) SetCheckDigit(v string) *CX {
+	d.CheckDigit = ST(v)
+	return d
+}
+
+func (d *CX) SetCodeIdentifyingTheCheckDigitSchemeEmployed(v string) *CX {
+	d.CodeIdentifyingTheCheckDigitSchemeEmployed = ID(v)
+	return d
+}
+
+func (d *CX) SetAssigningAuthority(v HD) *CX {
+	d.AssigningAuthority = v
+	return d
+}
+
+func (d *CX) SetIdentifierTypeCode(v string) *CX {
+	d.IdentifierTypeCode = ID(v)
+	return d
+}
+
+func (d *CX) SetAssigningFacility(v HD) *CX {
+	d.AssigningFacility = v
+	return d
+}
+
+func (d *CX) SetEffectiveDate(v string) *CX {
+	d.EffectiveDate = DT(v)
+	return d
+}
+
+func (d *CX) SetExpirationDate(v string) *CX {
+	d.ExpirationDate = DT(v)
+	return d
+}
+
 // DDI - Daily Deductible
 type DDI struct {
 	DelayDays    NM `hl7:"1"`
 	Amount       NM `hl7:"2"`
 	NumberOfDays NM `hl7:"3"`
+}
+
+func NewDDI() *DDI {
+	return &DDI{}
+}
+
+func (d *DDI) Validate() error {
+
+	return nil
+}
+
+func (d *DDI) SetDelayDays(v string) *DDI {
+	d.DelayDays = NM(v)
+	return d
+}
+
+func (d *DDI) SetAmount(v string) *DDI {
+	d.Amount = NM(v)
+	return d
+}
+
+func (d *DDI) SetNumberOfDays(v string) *DDI {
+	d.NumberOfDays = NM(v)
+	return d
 }
 
 // DIN - Activation Date
@@ -215,10 +960,66 @@ type DIN struct {
 	InstitutionName CE `hl7:"2"`
 }
 
+func NewDIN() *DIN {
+	return &DIN{}
+}
+
+func (d *DIN) Validate() error {
+
+	if (d.Date != TS{}) {
+		if err := d.Date.Validate(); err != nil {
+			return fmt.Errorf("DIN.Date: %w", err)
+		}
+	}
+
+	if (d.InstitutionName != CE{}) {
+		if err := d.InstitutionName.Validate(); err != nil {
+			return fmt.Errorf("DIN.InstitutionName: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *DIN) SetDate(v TS) *DIN {
+	d.Date = v
+	return d
+}
+
+func (d *DIN) SetInstitutionName(v CE) *DIN {
+	d.InstitutionName = v
+	return d
+}
+
 // DLD - Discharge Location
 type DLD struct {
 	DischargeLocation ID `hl7:"1"`
 	EffectiveDate     TS `hl7:"2"`
+}
+
+func NewDLD() *DLD {
+	return &DLD{}
+}
+
+func (d *DLD) Validate() error {
+
+	if (d.EffectiveDate != TS{}) {
+		if err := d.EffectiveDate.Validate(); err != nil {
+			return fmt.Errorf("DLD.EffectiveDate: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *DLD) SetDischargeLocation(v string) *DLD {
+	d.DischargeLocation = ID(v)
+	return d
+}
+
+func (d *DLD) SetEffectiveDate(v TS) *DLD {
+	d.EffectiveDate = v
+	return d
 }
 
 // DLN - Driver's License Number
@@ -229,6 +1030,30 @@ type DLN struct {
 	ExpirationDate              DT `hl7:"3"`
 }
 
+func NewDLN() *DLN {
+	return &DLN{}
+}
+
+func (d *DLN) Validate() error {
+
+	return nil
+}
+
+func (d *DLN) SetDriversLicenseNumber(v string) *DLN {
+	d.DriversLicenseNumber = ST(v)
+	return d
+}
+
+func (d *DLN) SetIssuingStateProvinceCountry(v string) *DLN {
+	d.IssuingStateProvinceCountry = IS(v)
+	return d
+}
+
+func (d *DLN) SetExpirationDate(v string) *DLN {
+	d.ExpirationDate = DT(v)
+	return d
+}
+
 // DLT - Delta Check
 type DLT struct {
 	Range_            NR `hl7:"1"`
@@ -237,10 +1062,76 @@ type DLT struct {
 	LengthOfTimeDays  NM `hl7:"4"`
 }
 
+func NewDLT() *DLT {
+	return &DLT{}
+}
+
+func (d *DLT) Validate() error {
+
+	if (d.Range_ != NR{}) {
+		if err := d.Range_.Validate(); err != nil {
+			return fmt.Errorf("DLT.Range_: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *DLT) SetRange_(v NR) *DLT {
+	d.Range_ = v
+	return d
+}
+
+func (d *DLT) SetNumericThreshold(v string) *DLT {
+	d.NumericThreshold = NM(v)
+	return d
+}
+
+func (d *DLT) SetChangeComputation(v string) *DLT {
+	d.ChangeComputation = ST(v)
+	return d
+}
+
+func (d *DLT) SetLengthOfTimeDays(v string) *DLT {
+	d.LengthOfTimeDays = NM(v)
+	return d
+}
+
 // DR - Date/time Range
 type DR struct {
 	RangeStartDateTime TS `hl7:"1"`
 	RangeEndDateTime   TS `hl7:"2"`
+}
+
+func NewDR() *DR {
+	return &DR{}
+}
+
+func (d *DR) Validate() error {
+
+	if (d.RangeStartDateTime != TS{}) {
+		if err := d.RangeStartDateTime.Validate(); err != nil {
+			return fmt.Errorf("DR.RangeStartDateTime: %w", err)
+		}
+	}
+
+	if (d.RangeEndDateTime != TS{}) {
+		if err := d.RangeEndDateTime.Validate(); err != nil {
+			return fmt.Errorf("DR.RangeEndDateTime: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *DR) SetRangeStartDateTime(v TS) *DR {
+	d.RangeStartDateTime = v
+	return d
+}
+
+func (d *DR) SetRangeEndDateTime(v TS) *DR {
+	d.RangeEndDateTime = v
+	return d
 }
 
 // DT - Date
@@ -253,14 +1144,51 @@ type DR struct {
 // |199503|
 type DT string
 
+func NewDT(s string) *DT {
+	v := DT(s)
+	return &v
+}
+
+func (d DT) Validate() error {
+	return nil
+}
+
 // DTM - Date/Time
 // Specifies a point in time using a 24-hour clock notation.
 type DTM string
+
+func NewDTM(s string) *DTM {
+	v := DTM(s)
+	return &v
+}
+
+func (d DTM) Validate() error {
+	return nil
+}
 
 // DTN - Day Type And Number
 type DTN struct {
 	DayType      IS `hl7:"1"`
 	NumberOfDays NM `hl7:"2"`
+}
+
+func NewDTN() *DTN {
+	return &DTN{}
+}
+
+func (d *DTN) Validate() error {
+
+	return nil
+}
+
+func (d *DTN) SetDayType(v string) *DTN {
+	d.DayType = IS(v)
+	return d
+}
+
+func (d *DTN) SetNumberOfDays(v string) *DTN {
+	d.NumberOfDays = NM(v)
+	return d
 }
 
 // ED - Encapsulated Data
@@ -273,6 +1201,46 @@ type ED struct {
 	Data              ST `hl7:"5"`
 }
 
+func NewED() *ED {
+	return &ED{}
+}
+
+func (d *ED) Validate() error {
+
+	if (d.SourceApplication != HD{}) {
+		if err := d.SourceApplication.Validate(); err != nil {
+			return fmt.Errorf("ED.SourceApplication: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *ED) SetSourceApplication(v HD) *ED {
+	d.SourceApplication = v
+	return d
+}
+
+func (d *ED) SetTypeOfData(v string) *ED {
+	d.TypeOfData = ID(v)
+	return d
+}
+
+func (d *ED) SetDataSubtype(v string) *ED {
+	d.DataSubtype = ID(v)
+	return d
+}
+
+func (d *ED) SetEncoding(v string) *ED {
+	d.Encoding = ID(v)
+	return d
+}
+
+func (d *ED) SetData(v string) *ED {
+	d.Data = ST(v)
+	return d
+}
+
 // EI - Entity Identifier
 // The entity identifier defines a given entity within a specified series of identifiers.
 type EI struct {
@@ -282,10 +1250,70 @@ type EI struct {
 	UniversalIdType  ID `hl7:"4"`
 }
 
+func NewEI() *EI {
+	return &EI{}
+}
+
+func (d *EI) Validate() error {
+
+	return nil
+}
+
+func (d *EI) SetEntityIdentifier(v string) *EI {
+	d.EntityIdentifier = ST(v)
+	return d
+}
+
+func (d *EI) SetNamespaceId(v string) *EI {
+	d.NamespaceId = IS(v)
+	return d
+}
+
+func (d *EI) SetUniversalId(v string) *EI {
+	d.UniversalId = ST(v)
+	return d
+}
+
+func (d *EI) SetUniversalIdType(v string) *EI {
+	d.UniversalIdType = ID(v)
+	return d
+}
+
 // EIP - Parent Order
 type EIP struct {
 	ParentSPlacerOrderNumber EI `hl7:"1"`
 	ParentSFillerOrderNumber EI `hl7:"2"`
+}
+
+func NewEIP() *EIP {
+	return &EIP{}
+}
+
+func (d *EIP) Validate() error {
+
+	if (d.ParentSPlacerOrderNumber != EI{}) {
+		if err := d.ParentSPlacerOrderNumber.Validate(); err != nil {
+			return fmt.Errorf("EIP.ParentSPlacerOrderNumber: %w", err)
+		}
+	}
+
+	if (d.ParentSFillerOrderNumber != EI{}) {
+		if err := d.ParentSFillerOrderNumber.Validate(); err != nil {
+			return fmt.Errorf("EIP.ParentSFillerOrderNumber: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *EIP) SetParentSPlacerOrderNumber(v EI) *EIP {
+	d.ParentSPlacerOrderNumber = v
+	return d
+}
+
+func (d *EIP) SetParentSFillerOrderNumber(v EI) *EIP {
+	d.ParentSFillerOrderNumber = v
+	return d
 }
 
 // ELD - Error
@@ -296,10 +1324,70 @@ type ELD struct {
 	CodeIdentifyingError CE `hl7:"4"`
 }
 
+func NewELD() *ELD {
+	return &ELD{}
+}
+
+func (d *ELD) Validate() error {
+
+	if (d.CodeIdentifyingError != CE{}) {
+		if err := d.CodeIdentifyingError.Validate(); err != nil {
+			return fmt.Errorf("ELD.CodeIdentifyingError: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *ELD) SetSegmentID(v string) *ELD {
+	d.SegmentID = ST(v)
+	return d
+}
+
+func (d *ELD) SetSequence(v string) *ELD {
+	d.Sequence = NM(v)
+	return d
+}
+
+func (d *ELD) SetFieldPosition(v string) *ELD {
+	d.FieldPosition = NM(v)
+	return d
+}
+
+func (d *ELD) SetCodeIdentifyingError(v CE) *ELD {
+	d.CodeIdentifyingError = v
+	return d
+}
+
 // FC - Financial Class
 type FC struct {
 	FinancialClass IS `hl7:"1"`
 	EffectiveDate  TS `hl7:"2"`
+}
+
+func NewFC() *FC {
+	return &FC{}
+}
+
+func (d *FC) Validate() error {
+
+	if (d.EffectiveDate != TS{}) {
+		if err := d.EffectiveDate.Validate(); err != nil {
+			return fmt.Errorf("FC.EffectiveDate: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *FC) SetFinancialClass(v string) *FC {
+	d.FinancialClass = IS(v)
+	return d
+}
+
+func (d *FC) SetEffectiveDate(v TS) *FC {
+	d.EffectiveDate = v
+	return d
 }
 
 // FN - Family Name
@@ -314,9 +1402,52 @@ type FN struct {
 	SurnameFromPartnerSpouse       ST `hl7:"5"`
 }
 
+func NewFN() *FN {
+	return &FN{}
+}
+
+func (d *FN) Validate() error {
+
+	return nil
+}
+
+func (d *FN) SetSurname(v string) *FN {
+	d.Surname = ST(v)
+	return d
+}
+
+func (d *FN) SetOwnSurnamePrefix(v string) *FN {
+	d.OwnSurnamePrefix = ST(v)
+	return d
+}
+
+func (d *FN) SetOwnSurname(v string) *FN {
+	d.OwnSurname = ST(v)
+	return d
+}
+
+func (d *FN) SetSurnamePrefixFromPartnerSpouse(v string) *FN {
+	d.SurnamePrefixFromPartnerSpouse = ST(v)
+	return d
+}
+
+func (d *FN) SetSurnameFromPartnerSpouse(v string) *FN {
+	d.SurnameFromPartnerSpouse = ST(v)
+	return d
+}
+
 // FT - Formatted Text Data
 // This data type is derived from the string data type by allowing the addition of embedded formatting instructions.  These instructions are limited to those that are intrinsic and independent of the circumstances under which the field is being used.  The actual instructions and their representation are described later in this chapter.  The FT field is of arbitrary length (up to 64k) and may contain formatting commands enclosed in escape characters.
 type FT string
+
+func NewFT(s string) *FT {
+	v := FT(s)
+	return &v
+}
+
+func (d FT) Validate() error {
+	return nil
+}
 
 // HD - Hierarchic Designator
 // The HD is designed to be more powerful and more general replacement for the application identifier of HL7 versions 2.1 and 2.2. It adds two additional components, the <universal ID> and the <universal ID type> to the former application ID (which is renamed more generically to be the namespace ID)
@@ -326,18 +1457,79 @@ type HD struct {
 	UniversalIdType ID `hl7:"3"`
 }
 
+func NewHD() *HD {
+	return &HD{}
+}
+
+func (d *HD) Validate() error {
+
+	return nil
+}
+
+func (d *HD) SetNamespaceId(v string) *HD {
+	d.NamespaceId = IS(v)
+	return d
+}
+
+func (d *HD) SetUniversalId(v string) *HD {
+	d.UniversalId = ST(v)
+	return d
+}
+
+func (d *HD) SetUniversalIdType(v string) *HD {
+	d.UniversalIdType = ID(v)
+	return d
+}
+
 // ID - Coded values for HL7 tables
 // The value of such a field follows the formatting rules for an ST field except that it is drawn from a table of legal values. There shall be an HL7 table number associated with ID data types. An examples of an ID field is OBR-25-result status. This data type should be used only for HL7 tables (see Section 2.7.6, Table). The reverse is not true, since in some circumstances it is more appropriate to use the CE data type for HL7 tables.
 type ID string
+
+func NewID(s string) *ID {
+	v := ID(s)
+	return &v
+}
+
+func (d ID) Validate() error {
+	return nil
+}
 
 // IS - Coded value for user-defined tables
 // The value of such a field follows the formatting rules for a ST field except that it is drawn from a site-defined (or user-defined) table of legal values. There shall be an HL7 table number associated with IS data types. An example of an IS field is the Event reason code defined in Section 3.3.1.4, Event reason code. This data type should be used only for user-defined tables (see Section 2.7.6, Table). The reverse is not true, since in some circumstances, it is more appropriate to use the CE data type for user-defined tables.
 type IS string
 
+func NewIS(s string) *IS {
+	v := IS(s)
+	return &v
+}
+
+func (d IS) Validate() error {
+	return nil
+}
+
 // JCC - Job Code/class
 type JCC struct {
 	JobCode  IS `hl7:"1"`
 	JobClass IS `hl7:"2"`
+}
+
+func NewJCC() *JCC {
+	return &JCC{}
+}
+
+func (d *JCC) Validate() error {
+
+	return nil
+}
+
+func (d *JCC) SetJobCode(v string) *JCC {
+	d.JobCode = IS(v)
+	return d
+}
+
+func (d *JCC) SetJobClass(v string) *JCC {
+	d.JobClass = IS(v)
+	return d
 }
 
 // LA1 - Location With Address Information (variant 1
@@ -351,6 +1543,72 @@ type LA1 struct {
 	Building           IS `hl7:"7"`
 	Floor              IS `hl7:"8"`
 	Address            AD `hl7:"9"`
+}
+
+func NewLA1() *LA1 {
+	return &LA1{}
+}
+
+func (d *LA1) Validate() error {
+
+	if (d.Facility != HD{}) {
+		if err := d.Facility.Validate(); err != nil {
+			return fmt.Errorf("LA1.Facility: %w", err)
+		}
+	}
+
+	if (d.Address != AD{}) {
+		if err := d.Address.Validate(); err != nil {
+			return fmt.Errorf("LA1.Address: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *LA1) SetPointOfCare(v string) *LA1 {
+	d.PointOfCare = IS(v)
+	return d
+}
+
+func (d *LA1) SetRoom(v string) *LA1 {
+	d.Room = IS(v)
+	return d
+}
+
+func (d *LA1) SetBed(v string) *LA1 {
+	d.Bed = IS(v)
+	return d
+}
+
+func (d *LA1) SetFacility(v HD) *LA1 {
+	d.Facility = v
+	return d
+}
+
+func (d *LA1) SetLocationStatus(v string) *LA1 {
+	d.LocationStatus = IS(v)
+	return d
+}
+
+func (d *LA1) SetPersonLocationType(v string) *LA1 {
+	d.PersonLocationType = IS(v)
+	return d
+}
+
+func (d *LA1) SetBuilding(v string) *LA1 {
+	d.Building = IS(v)
+	return d
+}
+
+func (d *LA1) SetFloor(v string) *LA1 {
+	d.Floor = IS(v)
+	return d
+}
+
+func (d *LA1) SetAddress(v AD) *LA1 {
+	d.Address = v
+	return d
 }
 
 // LA2 - Location With Address Information (variant 2
@@ -373,6 +1631,101 @@ type LA2 struct {
 	OtherGeographicDesignation ST `hl7:"16"`
 }
 
+func NewLA2() *LA2 {
+	return &LA2{}
+}
+
+func (d *LA2) Validate() error {
+
+	if (d.Facility != HD{}) {
+		if err := d.Facility.Validate(); err != nil {
+			return fmt.Errorf("LA2.Facility: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *LA2) SetPointOfCare(v string) *LA2 {
+	d.PointOfCare = IS(v)
+	return d
+}
+
+func (d *LA2) SetRoom(v string) *LA2 {
+	d.Room = IS(v)
+	return d
+}
+
+func (d *LA2) SetBed(v string) *LA2 {
+	d.Bed = IS(v)
+	return d
+}
+
+func (d *LA2) SetFacility(v HD) *LA2 {
+	d.Facility = v
+	return d
+}
+
+func (d *LA2) SetLocationStatus(v string) *LA2 {
+	d.LocationStatus = IS(v)
+	return d
+}
+
+func (d *LA2) SetPersonLocationType(v string) *LA2 {
+	d.PersonLocationType = IS(v)
+	return d
+}
+
+func (d *LA2) SetBuilding(v string) *LA2 {
+	d.Building = IS(v)
+	return d
+}
+
+func (d *LA2) SetFloor(v string) *LA2 {
+	d.Floor = IS(v)
+	return d
+}
+
+func (d *LA2) SetStreetAddress(v string) *LA2 {
+	d.StreetAddress = ST(v)
+	return d
+}
+
+func (d *LA2) SetOtherDesignation(v string) *LA2 {
+	d.OtherDesignation = ST(v)
+	return d
+}
+
+func (d *LA2) SetCity(v string) *LA2 {
+	d.City = ST(v)
+	return d
+}
+
+func (d *LA2) SetStateOrProvince(v string) *LA2 {
+	d.StateOrProvince = ST(v)
+	return d
+}
+
+func (d *LA2) SetZipOrPostalCode(v string) *LA2 {
+	d.ZipOrPostalCode = ST(v)
+	return d
+}
+
+func (d *LA2) SetCountry(v string) *LA2 {
+	d.Country = ID(v)
+	return d
+}
+
+func (d *LA2) SetAddressType(v string) *LA2 {
+	d.AddressType = ID(v)
+	return d
+}
+
+func (d *LA2) SetOtherGeographicDesignation(v string) *LA2 {
+	d.OtherGeographicDesignation = ST(v)
+	return d
+}
+
 // MA - Multiplexed Array
 // This data type is used to represent channel-multiplexed waveform data, (e.g., the digitized values from an analog-to-digital converter or other digital data source).  Each value is of type NM, and represents a time sample from a channel.  This segment may contain data from one or more channels. The waveform data is in channel-multiplexed format (that is, the values for all channels for the first time sample are transmitted, then the values for the next time sample, and so on until the requisite number of time samples have been transmitted).  Time samples are separated by repeat delimiters (~), and channels within a sample are separated by component delimiters (^).  The time between samples (the sampling interval) is the reciprocal of the digitization frequency as specified using the CD data type.
 type MA struct {
@@ -384,11 +1737,69 @@ type MA struct {
 	Sample1FromChannel6 NM `hl7:"6"`
 }
 
+func NewMA() *MA {
+	return &MA{}
+}
+
+func (d *MA) Validate() error {
+
+	return nil
+}
+
+func (d *MA) SetSample1FromChannel1(v string) *MA {
+	d.Sample1FromChannel1 = NM(v)
+	return d
+}
+
+func (d *MA) SetSample1FromChannel2(v string) *MA {
+	d.Sample1FromChannel2 = NM(v)
+	return d
+}
+
+func (d *MA) SetSample1FromChannel3(v string) *MA {
+	d.Sample1FromChannel3 = NM(v)
+	return d
+}
+
+func (d *MA) SetSample1FromChannel4(v string) *MA {
+	d.Sample1FromChannel4 = NM(v)
+	return d
+}
+
+func (d *MA) SetSample1FromChannel5(v string) *MA {
+	d.Sample1FromChannel5 = NM(v)
+	return d
+}
+
+func (d *MA) SetSample1FromChannel6(v string) *MA {
+	d.Sample1FromChannel6 = NM(v)
+	return d
+}
+
 // MO - Money
 // Note: Intent is that it appear only as a component of data type CP.
 type MO struct {
 	Quantity     NM `hl7:"1"`
 	Denomination ID `hl7:"2"`
+}
+
+func NewMO() *MO {
+	return &MO{}
+}
+
+func (d *MO) Validate() error {
+
+	return nil
+}
+
+func (d *MO) SetQuantity(v string) *MO {
+	d.Quantity = NM(v)
+	return d
+}
+
+func (d *MO) SetDenomination(v string) *MO {
+	d.Denomination = ID(v)
+	return d
 }
 
 // MOC - Charge To Practise
@@ -397,10 +1808,60 @@ type MOC struct {
 	ChargeCode   CE `hl7:"2"`
 }
 
+func NewMOC() *MOC {
+	return &MOC{}
+}
+
+func (d *MOC) Validate() error {
+
+	if (d.DollarAmount != MO{}) {
+		if err := d.DollarAmount.Validate(); err != nil {
+			return fmt.Errorf("MOC.DollarAmount: %w", err)
+		}
+	}
+
+	if (d.ChargeCode != CE{}) {
+		if err := d.ChargeCode.Validate(); err != nil {
+			return fmt.Errorf("MOC.ChargeCode: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *MOC) SetDollarAmount(v MO) *MOC {
+	d.DollarAmount = v
+	return d
+}
+
+func (d *MOC) SetChargeCode(v CE) *MOC {
+	d.ChargeCode = v
+	return d
+}
+
 // MOP - Money Or Percentage
 type MOP struct {
 	MoneyOrPercentageIndicator IS `hl7:"1"`
 	MoneyOrPercentageQuantity  NM `hl7:"2"`
+}
+
+func NewMOP() *MOP {
+	return &MOP{}
+}
+
+func (d *MOP) Validate() error {
+
+	return nil
+}
+
+func (d *MOP) SetMoneyOrPercentageIndicator(v string) *MOP {
+	d.MoneyOrPercentageIndicator = IS(v)
+	return d
+}
+
+func (d *MOP) SetMoneyOrPercentageQuantity(v string) *MOP {
+	d.MoneyOrPercentageQuantity = NM(v)
+	return d
 }
 
 // MSG - Message Type
@@ -410,6 +1871,30 @@ type MSG struct {
 	MessageStructure ID `hl7:"3"`
 }
 
+func NewMSG() *MSG {
+	return &MSG{}
+}
+
+func (d *MSG) Validate() error {
+
+	return nil
+}
+
+func (d *MSG) SetMessageType(v string) *MSG {
+	d.MessageType = ID(v)
+	return d
+}
+
+func (d *MSG) SetTriggerEvent(v string) *MSG {
+	d.TriggerEvent = ID(v)
+	return d
+}
+
+func (d *MSG) SetMessageStructure(v string) *MSG {
+	d.MessageStructure = ID(v)
+	return d
+}
+
 // NA - Numeric Array
 // This data type is used to represent a series (array) of numeric values, each one having a data type of NM.  A field of this type may contain a one-dimensional array (vector or row) of numbers.  Also, by allowing the field to repeat, a two-dimensional array (table) of numbers may be transmitted using this format, with each row of the table represented as one repetition of the field.  Arrays which have one or more values not present may be transmitted using this data type.  “Not present” values are represented as two adjacent component delimiters.  If the absent values occur at the end of a row, the trailing component delimiters may be omitted.  If an entire row of a table has no values, no component delimiters are necessary (in this case, there will be two adjacent repetition delimiters).  The maximum number of values in one repetition of an NA format field is determined by the maximum field length
 type NA struct {
@@ -417,6 +1902,35 @@ type NA struct {
 	Value2 NM `hl7:"2"`
 	Value3 NM `hl7:"3"`
 	Value4 NM `hl7:"4"`
+}
+
+func NewNA() *NA {
+	return &NA{}
+}
+
+func (d *NA) Validate() error {
+
+	return nil
+}
+
+func (d *NA) SetValue1(v string) *NA {
+	d.Value1 = NM(v)
+	return d
+}
+
+func (d *NA) SetValue2(v string) *NA {
+	d.Value2 = NM(v)
+	return d
+}
+
+func (d *NA) SetValue3(v string) *NA {
+	d.Value3 = NM(v)
+	return d
+}
+
+func (d *NA) SetValue4(v string) *NA {
+	d.Value4 = NM(v)
+	return d
 }
 
 // NDL - Observing Practitioner
@@ -434,6 +1948,94 @@ type NDL struct {
 	Floor              IS  `hl7:"11"`
 }
 
+func NewNDL() *NDL {
+	return &NDL{}
+}
+
+func (d *NDL) Validate() error {
+
+	if (d.OPName != CNN{}) {
+		if err := d.OPName.Validate(); err != nil {
+			return fmt.Errorf("NDL.OPName: %w", err)
+		}
+	}
+
+	if (d.StartDateTime != TS{}) {
+		if err := d.StartDateTime.Validate(); err != nil {
+			return fmt.Errorf("NDL.StartDateTime: %w", err)
+		}
+	}
+
+	if (d.EndDateTime != TS{}) {
+		if err := d.EndDateTime.Validate(); err != nil {
+			return fmt.Errorf("NDL.EndDateTime: %w", err)
+		}
+	}
+
+	if (d.Facility != HD{}) {
+		if err := d.Facility.Validate(); err != nil {
+			return fmt.Errorf("NDL.Facility: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *NDL) SetOPName(v CNN) *NDL {
+	d.OPName = v
+	return d
+}
+
+func (d *NDL) SetStartDateTime(v TS) *NDL {
+	d.StartDateTime = v
+	return d
+}
+
+func (d *NDL) SetEndDateTime(v TS) *NDL {
+	d.EndDateTime = v
+	return d
+}
+
+func (d *NDL) SetPointOfCare(v string) *NDL {
+	d.PointOfCare = IS(v)
+	return d
+}
+
+func (d *NDL) SetRoom(v string) *NDL {
+	d.Room = IS(v)
+	return d
+}
+
+func (d *NDL) SetBed(v string) *NDL {
+	d.Bed = IS(v)
+	return d
+}
+
+func (d *NDL) SetFacility(v HD) *NDL {
+	d.Facility = v
+	return d
+}
+
+func (d *NDL) SetLocationStatus(v string) *NDL {
+	d.LocationStatus = IS(v)
+	return d
+}
+
+func (d *NDL) SetPersonLocationType(v string) *NDL {
+	d.PersonLocationType = IS(v)
+	return d
+}
+
+func (d *NDL) SetBuilding(v string) *NDL {
+	d.Building = IS(v)
+	return d
+}
+
+func (d *NDL) SetFloor(v string) *NDL {
+	d.Floor = IS(v)
+	return d
+}
+
 // NM - Numeric
 // A number represented as a series of ASCII numeric characters consisting of an optional leading sign (+ or -), the digits and an optional decimal point. In the absence of a sign, the number is assumed to be positive. If there is no decimal point the number is assumed to be an integer.
 //
@@ -442,16 +2044,63 @@ type NDL struct {
 // |-123.792|
 type NM string
 
+func NewNM(s string) *NM {
+	v := NM(s)
+	return &v
+}
+
+func (d NM) Validate() error {
+	return nil
+}
+
 // NR - Wertebereich
 type NR struct {
 	LowValue  NM `hl7:"1"`
 	HighValue NM `hl7:"2"`
 }
 
+func NewNR() *NR {
+	return &NR{}
+}
+
+func (d *NR) Validate() error {
+
+	return nil
+}
+
+func (d *NR) SetLowValue(v string) *NR {
+	d.LowValue = NM(v)
+	return d
+}
+
+func (d *NR) SetHighValue(v string) *NR {
+	d.HighValue = NM(v)
+	return d
+}
+
 // OCD - Occurence
 type OCD struct {
 	OccurrenceCode IS `hl7:"1"`
 	OccurrenceDate DT `hl7:"2"`
+}
+
+func NewOCD() *OCD {
+	return &OCD{}
+}
+
+func (d *OCD) Validate() error {
+
+	return nil
+}
+
+func (d *OCD) SetOccurrenceCode(v string) *OCD {
+	d.OccurrenceCode = IS(v)
+	return d
+}
+
+func (d *OCD) SetOccurrenceDate(v string) *OCD {
+	d.OccurrenceDate = DT(v)
+	return d
 }
 
 // OSD - Order Sequence
@@ -469,11 +2118,133 @@ type OSD struct {
 	FillerOrderNumberUniversalIDType  ID `hl7:"11"`
 }
 
+func NewOSD() *OSD {
+	return &OSD{}
+}
+
+func (d *OSD) Validate() error {
+
+	if string(d.SequenceResultsFlag) == "" {
+		return fmt.Errorf("OSD.SequenceResultsFlag is required")
+	}
+
+	if string(d.PlacerOrderNumberEntityIdentifier) == "" {
+		return fmt.Errorf("OSD.PlacerOrderNumberEntityIdentifier is required")
+	}
+
+	if string(d.FillerOrderNumberEntityIdentifier) == "" {
+		return fmt.Errorf("OSD.FillerOrderNumberEntityIdentifier is required")
+	}
+
+	if string(d.SequenceConditionValue) == "" {
+		return fmt.Errorf("OSD.SequenceConditionValue is required")
+	}
+
+	if string(d.MaximumNumberOfRepeats) == "" {
+		return fmt.Errorf("OSD.MaximumNumberOfRepeats is required")
+	}
+
+	if string(d.PlacerOrderNumberUniversalID) == "" {
+		return fmt.Errorf("OSD.PlacerOrderNumberUniversalID is required")
+	}
+
+	if string(d.FillerOrderNumberUniversalID) == "" {
+		return fmt.Errorf("OSD.FillerOrderNumberUniversalID is required")
+	}
+
+	return nil
+}
+
+func (d *OSD) SetSequenceResultsFlag(v string) *OSD {
+	d.SequenceResultsFlag = ID(v)
+	return d
+}
+
+func (d *OSD) SetPlacerOrderNumberEntityIdentifier(v string) *OSD {
+	d.PlacerOrderNumberEntityIdentifier = ST(v)
+	return d
+}
+
+func (d *OSD) SetPlacerOrderNumberNamespaceID(v string) *OSD {
+	d.PlacerOrderNumberNamespaceID = IS(v)
+	return d
+}
+
+func (d *OSD) SetFillerOrderNumberEntityIdentifier(v string) *OSD {
+	d.FillerOrderNumberEntityIdentifier = ST(v)
+	return d
+}
+
+func (d *OSD) SetFillerOrderNumberNamespaceID(v string) *OSD {
+	d.FillerOrderNumberNamespaceID = IS(v)
+	return d
+}
+
+func (d *OSD) SetSequenceConditionValue(v string) *OSD {
+	d.SequenceConditionValue = ST(v)
+	return d
+}
+
+func (d *OSD) SetMaximumNumberOfRepeats(v string) *OSD {
+	d.MaximumNumberOfRepeats = NM(v)
+	return d
+}
+
+func (d *OSD) SetPlacerOrderNumberUniversalID(v string) *OSD {
+	d.PlacerOrderNumberUniversalID = ST(v)
+	return d
+}
+
+func (d *OSD) SetPlacerOrderNumberUniversalIDType(v string) *OSD {
+	d.PlacerOrderNumberUniversalIDType = ID(v)
+	return d
+}
+
+func (d *OSD) SetFillerOrderNumberUniversalID(v string) *OSD {
+	d.FillerOrderNumberUniversalID = ST(v)
+	return d
+}
+
+func (d *OSD) SetFillerOrderNumberUniversalIDType(v string) *OSD {
+	d.FillerOrderNumberUniversalIDType = ID(v)
+	return d
+}
+
 // OSP - Occurence Span
 type OSP struct {
 	OccurrenceSpanCode      CE `hl7:"1"`
 	OccurrenceSpanStartDate DT `hl7:"2"`
 	OccurrenceSpanStopDate  DT `hl7:"3"`
+}
+
+func NewOSP() *OSP {
+	return &OSP{}
+}
+
+func (d *OSP) Validate() error {
+
+	if (d.OccurrenceSpanCode != CE{}) {
+		if err := d.OccurrenceSpanCode.Validate(); err != nil {
+			return fmt.Errorf("OSP.OccurrenceSpanCode: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *OSP) SetOccurrenceSpanCode(v CE) *OSP {
+	d.OccurrenceSpanCode = v
+	return d
+}
+
+func (d *OSP) SetOccurrenceSpanStartDate(v string) *OSP {
+	d.OccurrenceSpanStartDate = DT(v)
+	return d
+}
+
+func (d *OSP) SetOccurrenceSpanStopDate(v string) *OSP {
+	d.OccurrenceSpanStopDate = DT(v)
+	return d
 }
 
 // PCF - Pre-certification Required
@@ -483,11 +2254,65 @@ type PCF struct {
 	PreCertificationWindow      TS `hl7:"3"`
 }
 
+func NewPCF() *PCF {
+	return &PCF{}
+}
+
+func (d *PCF) Validate() error {
+
+	if (d.PreCertificationWindow != TS{}) {
+		if err := d.PreCertificationWindow.Validate(); err != nil {
+			return fmt.Errorf("PCF.PreCertificationWindow: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *PCF) SetPreCertificationPatientType(v string) *PCF {
+	d.PreCertificationPatientType = IS(v)
+	return d
+}
+
+func (d *PCF) SetPreCertificationRequired(v string) *PCF {
+	d.PreCertificationRequired = ID(v)
+	return d
+}
+
+func (d *PCF) SetPreCertificationWindow(v TS) *PCF {
+	d.PreCertificationWindow = v
+	return d
+}
+
 // PI - Person Identifier
 type PI struct {
 	IDNumber            ST `hl7:"1"`
 	TypeOfIDNumber      IS `hl7:"2"`
 	OtherQualifyingInfo ST `hl7:"3"`
+}
+
+func NewPI() *PI {
+	return &PI{}
+}
+
+func (d *PI) Validate() error {
+
+	return nil
+}
+
+func (d *PI) SetIDNumber(v string) *PI {
+	d.IDNumber = ST(v)
+	return d
+}
+
+func (d *PI) SetTypeOfIDNumber(v string) *PI {
+	d.TypeOfIDNumber = IS(v)
+	return d
+}
+
+func (d *PI) SetOtherQualifyingInfo(v string) *PI {
+	d.OtherQualifyingInfo = ST(v)
+	return d
 }
 
 // PIP - Privileges
@@ -497,6 +2322,58 @@ type PIP struct {
 	ExpirationDate DT `hl7:"3"`
 	ActivationDate DT `hl7:"4"`
 	Facility       EI `hl7:"5"`
+}
+
+func NewPIP() *PIP {
+	return &PIP{}
+}
+
+func (d *PIP) Validate() error {
+
+	if (d.Privilege != CE{}) {
+		if err := d.Privilege.Validate(); err != nil {
+			return fmt.Errorf("PIP.Privilege: %w", err)
+		}
+	}
+
+	if (d.PrivilegeClass != CE{}) {
+		if err := d.PrivilegeClass.Validate(); err != nil {
+			return fmt.Errorf("PIP.PrivilegeClass: %w", err)
+		}
+	}
+
+	if (d.Facility != EI{}) {
+		if err := d.Facility.Validate(); err != nil {
+			return fmt.Errorf("PIP.Facility: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *PIP) SetPrivilege(v CE) *PIP {
+	d.Privilege = v
+	return d
+}
+
+func (d *PIP) SetPrivilegeClass(v CE) *PIP {
+	d.PrivilegeClass = v
+	return d
+}
+
+func (d *PIP) SetExpirationDate(v string) *PIP {
+	d.ExpirationDate = DT(v)
+	return d
+}
+
+func (d *PIP) SetActivationDate(v string) *PIP {
+	d.ActivationDate = DT(v)
+	return d
+}
+
+func (d *PIP) SetFacility(v EI) *PIP {
+	d.Facility = v
+	return d
 }
 
 // PL - Person Location
@@ -515,12 +2392,101 @@ type PL struct {
 	LocationDescription ST `hl7:"9"`
 }
 
+func NewPL() *PL {
+	return &PL{}
+}
+
+func (d *PL) Validate() error {
+
+	if (d.Facility != HD{}) {
+		if err := d.Facility.Validate(); err != nil {
+			return fmt.Errorf("PL.Facility: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *PL) SetPointOfCare(v string) *PL {
+	d.PointOfCare = IS(v)
+	return d
+}
+
+func (d *PL) SetRoom(v string) *PL {
+	d.Room = IS(v)
+	return d
+}
+
+func (d *PL) SetBed(v string) *PL {
+	d.Bed = IS(v)
+	return d
+}
+
+func (d *PL) SetFacility(v HD) *PL {
+	d.Facility = v
+	return d
+}
+
+func (d *PL) SetLocationStatus(v string) *PL {
+	d.LocationStatus = IS(v)
+	return d
+}
+
+func (d *PL) SetPersonLocationType(v string) *PL {
+	d.PersonLocationType = IS(v)
+	return d
+}
+
+func (d *PL) SetBuilding(v string) *PL {
+	d.Building = IS(v)
+	return d
+}
+
+func (d *PL) SetFloor(v string) *PL {
+	d.Floor = IS(v)
+	return d
+}
+
+func (d *PL) SetLocationDescription(v string) *PL {
+	d.LocationDescription = ST(v)
+	return d
+}
+
 // PLN - Practitioner ID Numbers
 type PLN struct {
 	IDNumber                 ST `hl7:"1"`
 	TypeOfIDNumber           IS `hl7:"2"`
 	StateOtherQualifyingInfo ST `hl7:"3"`
 	ExpirationDate           DT `hl7:"4"`
+}
+
+func NewPLN() *PLN {
+	return &PLN{}
+}
+
+func (d *PLN) Validate() error {
+
+	return nil
+}
+
+func (d *PLN) SetIDNumber(v string) *PLN {
+	d.IDNumber = ST(v)
+	return d
+}
+
+func (d *PLN) SetTypeOfIDNumber(v string) *PLN {
+	d.TypeOfIDNumber = IS(v)
+	return d
+}
+
+func (d *PLN) SetStateOtherQualifyingInfo(v string) *PLN {
+	d.StateOtherQualifyingInfo = ST(v)
+	return d
+}
+
+func (d *PLN) SetExpirationDate(v string) *PLN {
+	d.ExpirationDate = DT(v)
+	return d
 }
 
 // PN - Person Name
@@ -537,6 +2503,51 @@ type PN struct {
 	Suffix                                      ST `hl7:"4"`
 	Prefix                                      ST `hl7:"5"`
 	Degree                                      IS `hl7:"6"`
+}
+
+func NewPN() *PN {
+	return &PN{}
+}
+
+func (d *PN) Validate() error {
+
+	if (d.FamilyName != FN{}) {
+		if err := d.FamilyName.Validate(); err != nil {
+			return fmt.Errorf("PN.FamilyName: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *PN) SetFamilyName(v FN) *PN {
+	d.FamilyName = v
+	return d
+}
+
+func (d *PN) SetGivenName(v string) *PN {
+	d.GivenName = ST(v)
+	return d
+}
+
+func (d *PN) SetSecondAndFurtherGivenNamesOrInitialsThereof(v string) *PN {
+	d.SecondAndFurtherGivenNamesOrInitialsThereof = ST(v)
+	return d
+}
+
+func (d *PN) SetSuffix(v string) *PN {
+	d.Suffix = ST(v)
+	return d
+}
+
+func (d *PN) SetPrefix(v string) *PN {
+	d.Prefix = ST(v)
+	return d
+}
+
+func (d *PN) SetDegree(v string) *PN {
+	d.Degree = IS(v)
+	return d
 }
 
 // PPN - Performing Person Time Stamp
@@ -563,11 +2574,181 @@ type PPN struct {
 	NameAssemblyOrder                           ID `hl7:"19"`
 }
 
+func NewPPN() *PPN {
+	return &PPN{}
+}
+
+func (d *PPN) Validate() error {
+
+	if (d.FamilyName != FN{}) {
+		if err := d.FamilyName.Validate(); err != nil {
+			return fmt.Errorf("PPN.FamilyName: %w", err)
+		}
+	}
+
+	if (d.AssigningAuthority != HD{}) {
+		if err := d.AssigningAuthority.Validate(); err != nil {
+			return fmt.Errorf("PPN.AssigningAuthority: %w", err)
+		}
+	}
+
+	if (d.AssigningFacility != HD{}) {
+		if err := d.AssigningFacility.Validate(); err != nil {
+			return fmt.Errorf("PPN.AssigningFacility: %w", err)
+		}
+	}
+
+	if (d.DateTimeActionPerformed != TS{}) {
+		if err := d.DateTimeActionPerformed.Validate(); err != nil {
+			return fmt.Errorf("PPN.DateTimeActionPerformed: %w", err)
+		}
+	}
+
+	if (d.NameContext != CE{}) {
+		if err := d.NameContext.Validate(); err != nil {
+			return fmt.Errorf("PPN.NameContext: %w", err)
+		}
+	}
+
+	if (d.NameValidityRange != DR{}) {
+		if err := d.NameValidityRange.Validate(); err != nil {
+			return fmt.Errorf("PPN.NameValidityRange: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *PPN) SetIdNumber(v string) *PPN {
+	d.IdNumber = ST(v)
+	return d
+}
+
+func (d *PPN) SetFamilyName(v FN) *PPN {
+	d.FamilyName = v
+	return d
+}
+
+func (d *PPN) SetGivenName(v string) *PPN {
+	d.GivenName = ST(v)
+	return d
+}
+
+func (d *PPN) SetSecondAndFurtherGivenNamesOrInitialsThereof(v string) *PPN {
+	d.SecondAndFurtherGivenNamesOrInitialsThereof = ST(v)
+	return d
+}
+
+func (d *PPN) SetSuffix(v string) *PPN {
+	d.Suffix = ST(v)
+	return d
+}
+
+func (d *PPN) SetPrefix(v string) *PPN {
+	d.Prefix = ST(v)
+	return d
+}
+
+func (d *PPN) SetDegree(v string) *PPN {
+	d.Degree = IS(v)
+	return d
+}
+
+func (d *PPN) SetSourceTable(v string) *PPN {
+	d.SourceTable = IS(v)
+	return d
+}
+
+func (d *PPN) SetAssigningAuthority(v HD) *PPN {
+	d.AssigningAuthority = v
+	return d
+}
+
+func (d *PPN) SetNameTypeCode(v string) *PPN {
+	d.NameTypeCode = ID(v)
+	return d
+}
+
+func (d *PPN) SetIdentifierCheckDigit(v string) *PPN {
+	d.IdentifierCheckDigit = ST(v)
+	return d
+}
+
+func (d *PPN) SetCodeIdentifyingTheCheckDigitSchemeEmployed(v string) *PPN {
+	d.CodeIdentifyingTheCheckDigitSchemeEmployed = ID(v)
+	return d
+}
+
+func (d *PPN) SetIdentifierTypeCode(v string) *PPN {
+	d.IdentifierTypeCode = IS(v)
+	return d
+}
+
+func (d *PPN) SetAssigningFacility(v HD) *PPN {
+	d.AssigningFacility = v
+	return d
+}
+
+func (d *PPN) SetDateTimeActionPerformed(v TS) *PPN {
+	d.DateTimeActionPerformed = v
+	return d
+}
+
+func (d *PPN) SetNameRepresentationCode(v string) *PPN {
+	d.NameRepresentationCode = ID(v)
+	return d
+}
+
+func (d *PPN) SetNameContext(v CE) *PPN {
+	d.NameContext = v
+	return d
+}
+
+func (d *PPN) SetNameValidityRange(v DR) *PPN {
+	d.NameValidityRange = v
+	return d
+}
+
+func (d *PPN) SetNameAssemblyOrder(v string) *PPN {
+	d.NameAssemblyOrder = ID(v)
+	return d
+}
+
 // PRL - Parent Result Link
 type PRL struct {
 	OBX3ObservationIdentifierOfParentResult CE `hl7:"1"`
 	OBX4SubIDOfParentResult                 ST `hl7:"2"`
 	PartOfOBX5ObservationResultFromParent   TX `hl7:"3"`
+}
+
+func NewPRL() *PRL {
+	return &PRL{}
+}
+
+func (d *PRL) Validate() error {
+
+	if (d.OBX3ObservationIdentifierOfParentResult != CE{}) {
+		if err := d.OBX3ObservationIdentifierOfParentResult.Validate(); err != nil {
+			return fmt.Errorf("PRL.OBX3ObservationIdentifierOfParentResult: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *PRL) SetOBX3ObservationIdentifierOfParentResult(v CE) *PRL {
+	d.OBX3ObservationIdentifierOfParentResult = v
+	return d
+}
+
+func (d *PRL) SetOBX4SubIDOfParentResult(v string) *PRL {
+	d.OBX4SubIDOfParentResult = ST(v)
+	return d
+}
+
+func (d *PRL) SetPartOfOBX5ObservationResultFromParent(v string) *PRL {
+	d.PartOfOBX5ObservationResultFromParent = TX(v)
+	return d
 }
 
 // PT - Processing Type
@@ -577,11 +2758,54 @@ type PT struct {
 	ProcessingMode ID `hl7:"2"`
 }
 
+func NewPT() *PT {
+	return &PT{}
+}
+
+func (d *PT) Validate() error {
+
+	return nil
+}
+
+func (d *PT) SetProcessingId(v string) *PT {
+	d.ProcessingId = ID(v)
+	return d
+}
+
+func (d *PT) SetProcessingMode(v string) *PT {
+	d.ProcessingMode = ID(v)
+	return d
+}
+
 // PTA - Policy Type
 type PTA struct {
 	PolicyType  IS `hl7:"1"`
 	AmountClass IS `hl7:"2"`
 	Amount      NM `hl7:"3"`
+}
+
+func NewPTA() *PTA {
+	return &PTA{}
+}
+
+func (d *PTA) Validate() error {
+
+	return nil
+}
+
+func (d *PTA) SetPolicyType(v string) *PTA {
+	d.PolicyType = IS(v)
+	return d
+}
+
+func (d *PTA) SetAmountClass(v string) *PTA {
+	d.AmountClass = IS(v)
+	return d
+}
+
+func (d *PTA) SetAmount(v string) *PTA {
+	d.Amount = NM(v)
+	return d
 }
 
 // QIP - Query Input Parameter List
@@ -592,6 +2816,25 @@ type PTA struct {
 type QIP struct {
 	SegmentFieldName   ST `hl7:"1"`
 	Value1Value2Value3 ST `hl7:"2"`
+}
+
+func NewQIP() *QIP {
+	return &QIP{}
+}
+
+func (d *QIP) Validate() error {
+
+	return nil
+}
+
+func (d *QIP) SetSegmentFieldName(v string) *QIP {
+	d.SegmentFieldName = ST(v)
+	return d
+}
+
+func (d *QIP) SetValue1Value2Value3(v string) *QIP {
+	d.Value1Value2Value3 = ST(v)
+	return d
 }
 
 // QSC - Query Selection Criteria
@@ -606,6 +2849,35 @@ type QSC struct {
 	RelationalConjunction ID `hl7:"4"`
 }
 
+func NewQSC() *QSC {
+	return &QSC{}
+}
+
+func (d *QSC) Validate() error {
+
+	return nil
+}
+
+func (d *QSC) SetSegmentFieldName(v string) *QSC {
+	d.SegmentFieldName = ST(v)
+	return d
+}
+
+func (d *QSC) SetRelationalOperator(v string) *QSC {
+	d.RelationalOperator = ID(v)
+	return d
+}
+
+func (d *QSC) SetValue(v string) *QSC {
+	d.Value = ST(v)
+	return d
+}
+
+func (d *QSC) SetRelationalConjunction(v string) *QSC {
+	d.RelationalConjunction = ID(v)
+	return d
+}
+
 // RCD - Row Column Definition
 // Definition: This specifies the format of a column in terms of a segment field name, a data type, and a maximum length. It consists of three components:
 //
@@ -616,6 +2888,30 @@ type RCD struct {
 	SegmentFieldName   ST `hl7:"1"`
 	Hl7DataType        ST `hl7:"2"`
 	MaximumColumnWidth NM `hl7:"3"`
+}
+
+func NewRCD() *RCD {
+	return &RCD{}
+}
+
+func (d *RCD) Validate() error {
+
+	return nil
+}
+
+func (d *RCD) SetSegmentFieldName(v string) *RCD {
+	d.SegmentFieldName = ST(v)
+	return d
+}
+
+func (d *RCD) SetHl7DataType(v string) *RCD {
+	d.Hl7DataType = ST(v)
+	return d
+}
+
+func (d *RCD) SetMaximumColumnWidth(v string) *RCD {
+	d.MaximumColumnWidth = NM(v)
+	return d
 }
 
 // RFR - Reference Range
@@ -629,6 +2925,68 @@ type RFR struct {
 	Conditions        TX `hl7:"7"`
 }
 
+func NewRFR() *RFR {
+	return &RFR{}
+}
+
+func (d *RFR) Validate() error {
+
+	if (d.NumericRange != NR{}) {
+		if err := d.NumericRange.Validate(); err != nil {
+			return fmt.Errorf("RFR.NumericRange: %w", err)
+		}
+	}
+
+	if (d.AgeRange != NR{}) {
+		if err := d.AgeRange.Validate(); err != nil {
+			return fmt.Errorf("RFR.AgeRange: %w", err)
+		}
+	}
+
+	if (d.GestationalRange != NR{}) {
+		if err := d.GestationalRange.Validate(); err != nil {
+			return fmt.Errorf("RFR.GestationalRange: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *RFR) SetNumericRange(v NR) *RFR {
+	d.NumericRange = v
+	return d
+}
+
+func (d *RFR) SetAdministrativeSex(v string) *RFR {
+	d.AdministrativeSex = IS(v)
+	return d
+}
+
+func (d *RFR) SetAgeRange(v NR) *RFR {
+	d.AgeRange = v
+	return d
+}
+
+func (d *RFR) SetGestationalRange(v NR) *RFR {
+	d.GestationalRange = v
+	return d
+}
+
+func (d *RFR) SetSpecies(v string) *RFR {
+	d.Species = TX(v)
+	return d
+}
+
+func (d *RFR) SetRaceSubspecies(v string) *RFR {
+	d.RaceSubspecies = ST(v)
+	return d
+}
+
+func (d *RFR) SetConditions(v string) *RFR {
+	d.Conditions = TX(v)
+	return d
+}
+
 // RI - Repeat Interval
 // This field contains the interval between repeating appointments. The default setting indicates that the appointment should occur once, when the component is not valued. The definition of this field is equivalent to the definition of the Interval component of the Quantity/Timing field given in Chapter 4, Section 4.4.2 Interval component (CM).
 type RI struct {
@@ -636,11 +2994,54 @@ type RI struct {
 	ExplicitTimeInterval ST `hl7:"2"`
 }
 
+func NewRI() *RI {
+	return &RI{}
+}
+
+func (d *RI) Validate() error {
+
+	return nil
+}
+
+func (d *RI) SetRepeatPattern(v string) *RI {
+	d.RepeatPattern = IS(v)
+	return d
+}
+
+func (d *RI) SetExplicitTimeInterval(v string) *RI {
+	d.ExplicitTimeInterval = ST(v)
+	return d
+}
+
 // RMC - Room Coverage
 type RMC struct {
 	RoomType       IS `hl7:"1"`
 	AmountType     IS `hl7:"2"`
 	CoverageAmount NM `hl7:"3"`
+}
+
+func NewRMC() *RMC {
+	return &RMC{}
+}
+
+func (d *RMC) Validate() error {
+
+	return nil
+}
+
+func (d *RMC) SetRoomType(v string) *RMC {
+	d.RoomType = IS(v)
+	return d
+}
+
+func (d *RMC) SetAmountType(v string) *RMC {
+	d.AmountType = IS(v)
+	return d
+}
+
+func (d *RMC) SetCoverageAmount(v string) *RMC {
+	d.CoverageAmount = NM(v)
+	return d
 }
 
 // RP - Reference Pointer
@@ -652,12 +3053,71 @@ type RP struct {
 	Subtype       ID `hl7:"4"`
 }
 
+func NewRP() *RP {
+	return &RP{}
+}
+
+func (d *RP) Validate() error {
+
+	if (d.ApplicationId != HD{}) {
+		if err := d.ApplicationId.Validate(); err != nil {
+			return fmt.Errorf("RP.ApplicationId: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *RP) SetPointer(v string) *RP {
+	d.Pointer = ST(v)
+	return d
+}
+
+func (d *RP) SetApplicationId(v HD) *RP {
+	d.ApplicationId = v
+	return d
+}
+
+func (d *RP) SetTypeOfData(v string) *RP {
+	d.TypeOfData = ID(v)
+	return d
+}
+
+func (d *RP) SetSubtype(v string) *RP {
+	d.Subtype = ID(v)
+	return d
+}
+
 // SAD - Street Address
 // Note: Appears ONLY in the XAD data type
 type SAD struct {
 	StreetOrMailingAddress ST `hl7:"1"`
 	StreetName             ST `hl7:"2"`
 	DwellingNumber         ST `hl7:"3"`
+}
+
+func NewSAD() *SAD {
+	return &SAD{}
+}
+
+func (d *SAD) Validate() error {
+
+	return nil
+}
+
+func (d *SAD) SetStreetOrMailingAddress(v string) *SAD {
+	d.StreetOrMailingAddress = ST(v)
+	return d
+}
+
+func (d *SAD) SetStreetName(v string) *SAD {
+	d.StreetName = ST(v)
+	return d
+}
+
+func (d *SAD) SetDwellingNumber(v string) *SAD {
+	d.DwellingNumber = ST(v)
+	return d
 }
 
 // SCV - Scheduling Class Value Pair
@@ -667,9 +3127,37 @@ type SCV struct {
 	ParameterValue ST `hl7:"2"`
 }
 
+func NewSCV() *SCV {
+	return &SCV{}
+}
+
+func (d *SCV) Validate() error {
+
+	return nil
+}
+
+func (d *SCV) SetParameterClass(v string) *SCV {
+	d.ParameterClass = IS(v)
+	return d
+}
+
+func (d *SCV) SetParameterValue(v string) *SCV {
+	d.ParameterValue = ST(v)
+	return d
+}
+
 // SI - Sequence ID
 // A non-negative integer in the form of a NM field. The uses of this data type are defined in the chapters defining the segments and messages in which it appears.
 type SI string
+
+func NewSI(s string) *SI {
+	v := SI(s)
+	return &v
+}
+
+func (d SI) Validate() error {
+	return nil
+}
 
 // SN - Structured Numeric
 // The structured numeric data type is used to unambiguously express numeric clinical results along with qualifications. This enables receiving systems to store the components separately, and facilitates the use of numeric database queries. The corresponding sets of values indicated with the <comparator> and <separator/suffix> components are intended to be the authoritative and complete set of values. If additional values are needed for the <comparator> and <separator/suffix> components, they should be submitted to HL7 for inclusion in the Standard.
@@ -682,12 +3170,70 @@ type SN struct {
 	Num2            NM `hl7:"4"`
 }
 
+func NewSN() *SN {
+	return &SN{}
+}
+
+func (d *SN) Validate() error {
+
+	return nil
+}
+
+func (d *SN) SetComparator(v string) *SN {
+	d.Comparator = ST(v)
+	return d
+}
+
+func (d *SN) SetNum1(v string) *SN {
+	d.Num1 = NM(v)
+	return d
+}
+
+func (d *SN) SetSeparatorSuffix(v string) *SN {
+	d.SeparatorSuffix = ST(v)
+	return d
+}
+
+func (d *SN) SetNum2(v string) *SN {
+	d.Num2 = NM(v)
+	return d
+}
+
 // SPD - Specialty
 type SPD struct {
 	SpecialtyName       ST `hl7:"1"`
 	GoverningBoard      ST `hl7:"2"`
 	EligibleOrCertified ID `hl7:"3"`
 	DateOfCertification DT `hl7:"4"`
+}
+
+func NewSPD() *SPD {
+	return &SPD{}
+}
+
+func (d *SPD) Validate() error {
+
+	return nil
+}
+
+func (d *SPD) SetSpecialtyName(v string) *SPD {
+	d.SpecialtyName = ST(v)
+	return d
+}
+
+func (d *SPD) SetGoverningBoard(v string) *SPD {
+	d.GoverningBoard = ST(v)
+	return d
+}
+
+func (d *SPD) SetEligibleOrCertified(v string) *SPD {
+	d.EligibleOrCertified = ID(v)
+	return d
+}
+
+func (d *SPD) SetDateOfCertification(v string) *SPD {
+	d.DateOfCertification = DT(v)
+	return d
 }
 
 // SPS - Specimen Source
@@ -701,11 +3247,104 @@ type SPS struct {
 	SpecimenRole                 CE `hl7:"7"`
 }
 
+func NewSPS() *SPS {
+	return &SPS{}
+}
+
+func (d *SPS) Validate() error {
+
+	if (d.SpecimenSourceNameOrCode != CE{}) {
+		if err := d.SpecimenSourceNameOrCode.Validate(); err != nil {
+			return fmt.Errorf("SPS.SpecimenSourceNameOrCode: %w", err)
+		}
+	}
+
+	if (d.BodySite != CE{}) {
+		if err := d.BodySite.Validate(); err != nil {
+			return fmt.Errorf("SPS.BodySite: %w", err)
+		}
+	}
+
+	if (d.SiteModifier != CE{}) {
+		if err := d.SiteModifier.Validate(); err != nil {
+			return fmt.Errorf("SPS.SiteModifier: %w", err)
+		}
+	}
+
+	if (d.CollectionModifierMethodCode != CE{}) {
+		if err := d.CollectionModifierMethodCode.Validate(); err != nil {
+			return fmt.Errorf("SPS.CollectionModifierMethodCode: %w", err)
+		}
+	}
+
+	if (d.SpecimenRole != CE{}) {
+		if err := d.SpecimenRole.Validate(); err != nil {
+			return fmt.Errorf("SPS.SpecimenRole: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *SPS) SetSpecimenSourceNameOrCode(v CE) *SPS {
+	d.SpecimenSourceNameOrCode = v
+	return d
+}
+
+func (d *SPS) SetAdditives(v string) *SPS {
+	d.Additives = TX(v)
+	return d
+}
+
+func (d *SPS) SetFreetext(v string) *SPS {
+	d.Freetext = TX(v)
+	return d
+}
+
+func (d *SPS) SetBodySite(v CE) *SPS {
+	d.BodySite = v
+	return d
+}
+
+func (d *SPS) SetSiteModifier(v CE) *SPS {
+	d.SiteModifier = v
+	return d
+}
+
+func (d *SPS) SetCollectionModifierMethodCode(v CE) *SPS {
+	d.CollectionModifierMethodCode = v
+	return d
+}
+
+func (d *SPS) SetSpecimenRole(v CE) *SPS {
+	d.SpecimenRole = v
+	return d
+}
+
 // SRT - Sort Order
 // Specifies those parameters by which the response will be sorted and by what method.
 type SRT struct {
 	SortByField ST `hl7:"1"`
 	Sequencing  ID `hl7:"2"`
+}
+
+func NewSRT() *SRT {
+	return &SRT{}
+}
+
+func (d *SRT) Validate() error {
+
+	return nil
+}
+
+func (d *SRT) SetSortByField(v string) *SRT {
+	d.SortByField = ST(v)
+	return d
+}
+
+func (d *SRT) SetSequencing(v string) *SRT {
+	d.Sequencing = ID(v)
+	return d
 }
 
 // ST - String Data
@@ -717,11 +3356,29 @@ type SRT struct {
 // Usage note: The ST data type is intended for short strings (e.g., less than 200 characters).  For longer strings the TX or FT data types should be used (see Sections 2.9.48, “TX - text data” or 2.9.20, “FT - formatted text data”).
 type ST string
 
+func NewST(s string) *ST {
+	v := ST(s)
+	return &v
+}
+
+func (d ST) Validate() error {
+	return nil
+}
+
 // TM - Time
 // In prior versions of HL7, this data type was always specified to be in the format HHMM[SS[.SSSS]][+/-ZZZZ] using a 24 hour clock notation. In the current and future versions, the precision of a time may be expressed by limiting the number of digits used with the format specification as shown above. By site-specific agreement, HHMM[SS[.SSSS]][+/-ZZZZ] may be used where backward compatibility must be maintained.
 //
 // Format: HH[MM[SS[.S[S[S[S]]]]]][+/-ZZZZ]
 type TM string
+
+func NewTM(s string) *TM {
+	v := TM(s)
+	return &v
+}
+
+func (d TM) Validate() error {
+	return nil
+}
 
 // TN - Telephone Number
 // For use in the United States and conforming countries, the telephone number is always in the form
@@ -730,6 +3387,15 @@ type TM string
 //
 // Note: Replaced by XTN data type as of v 2.3
 type TN string
+
+func NewTN(s string) *TN {
+	v := TN(s)
+	return &v
+}
+
+func (d TN) Validate() error {
+	return nil
+}
 
 // TQ - Timing Quantity
 // Quantity/timing (ORC-7, OBR-27) provides a means of specifying when the service described by the order segment is to be performed and how frequently.  It is a complex multicomponent field that can have repeats; i.e., more than one quantity/timing specification, separated by repeat delimiters, may appear. It is a distinct data type (see Section 2.8.41, “TQ - timing quantity”).  The components of a single quantity/timing specification are described in Sections 4.3.1, “Quantity component  (CQ),” through 4.3.12, “Total occurrences component (NM).”
@@ -748,6 +3414,111 @@ type TQ struct {
 	TotalOccurences      NM  `hl7:"12"`
 }
 
+func NewTQ() *TQ {
+	return &TQ{}
+}
+
+func (d *TQ) Validate() error {
+
+	if (d.Quantity != CQ{}) {
+		if err := d.Quantity.Validate(); err != nil {
+			return fmt.Errorf("TQ.Quantity: %w", err)
+		}
+	}
+
+	if (d.Interval != RI{}) {
+		if err := d.Interval.Validate(); err != nil {
+			return fmt.Errorf("TQ.Interval: %w", err)
+		}
+	}
+
+	if (d.StartDateTime != TS{}) {
+		if err := d.StartDateTime.Validate(); err != nil {
+			return fmt.Errorf("TQ.StartDateTime: %w", err)
+		}
+	}
+
+	if (d.EndDateTime != TS{}) {
+		if err := d.EndDateTime.Validate(); err != nil {
+			return fmt.Errorf("TQ.EndDateTime: %w", err)
+		}
+	}
+
+	if (d.OrderSequencing != OSD{}) {
+		if err := d.OrderSequencing.Validate(); err != nil {
+			return fmt.Errorf("TQ.OrderSequencing: %w", err)
+		}
+	}
+
+	if (d.OccurrenceDuration != CE{}) {
+		if err := d.OccurrenceDuration.Validate(); err != nil {
+			return fmt.Errorf("TQ.OccurrenceDuration: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *TQ) SetQuantity(v CQ) *TQ {
+	d.Quantity = v
+	return d
+}
+
+func (d *TQ) SetInterval(v RI) *TQ {
+	d.Interval = v
+	return d
+}
+
+func (d *TQ) SetDuration(v string) *TQ {
+	d.Duration = ST(v)
+	return d
+}
+
+func (d *TQ) SetStartDateTime(v TS) *TQ {
+	d.StartDateTime = v
+	return d
+}
+
+func (d *TQ) SetEndDateTime(v TS) *TQ {
+	d.EndDateTime = v
+	return d
+}
+
+func (d *TQ) SetPriority(v string) *TQ {
+	d.Priority = ST(v)
+	return d
+}
+
+func (d *TQ) SetCondition(v string) *TQ {
+	d.Condition = ST(v)
+	return d
+}
+
+func (d *TQ) SetText(v string) *TQ {
+	d.Text = TX(v)
+	return d
+}
+
+func (d *TQ) SetConjunctionComponent(v string) *TQ {
+	d.ConjunctionComponent = ID(v)
+	return d
+}
+
+func (d *TQ) SetOrderSequencing(v OSD) *TQ {
+	d.OrderSequencing = v
+	return d
+}
+
+func (d *TQ) SetOccurrenceDuration(v CE) *TQ {
+	d.OccurrenceDuration = v
+	return d
+}
+
+func (d *TQ) SetTotalOccurences(v string) *TQ {
+	d.TotalOccurences = NM(v)
+	return d
+}
+
 // TS - Time Stamp
 // Contains the exact time of an event, including the date and time. The date portion of a time stamp follows the rules of a date field and the time portion follows the rules of a time field. The time zone (+/-ZZZZ) is represented as +/-HHMM offset from UTC (formerly Greenwich Mean Time (GMT)), where +0000 or -0000 both represent UTC (without offset). The specific data representations used in the HL7 encoding rules are compatible with ISO 8824-1987(E).
 //
@@ -761,6 +3532,25 @@ type TS struct {
 	DegreeOfPrecision ST `hl7:"2"`
 }
 
+func NewTS() *TS {
+	return &TS{}
+}
+
+func (d *TS) Validate() error {
+
+	return nil
+}
+
+func (d *TS) SetTimeOfAnEvent(v string) *TS {
+	d.TimeOfAnEvent = ST(v)
+	return d
+}
+
+func (d *TS) SetDegreeOfPrecision(v string) *TS {
+	d.DegreeOfPrecision = ST(v)
+	return d
+}
+
 // TX - Text Data
 // String data meant for user display (on a terminal or printer).  Such data would not necessarily be left justified since leading spaces may contribute greatly to the clarity of the presentation to the user.  Because this type of data is intended for display, it may contain certain escape character sequences designed to control the display.  Escape sequence formatting is defined later in this chapter in Section 2.10 “Use of escape sequences in text fields.”  Leading spaces should be included.  Trailing spaces should be removed.
 //
@@ -770,14 +3560,51 @@ type TS struct {
 // |  leading spaces are allowed.|
 type TX string
 
+func NewTX(s string) *TX {
+	v := TX(s)
+	return &v
+}
+
+func (d TX) Validate() error {
+	return nil
+}
+
 // UVC - Value Code And Amount
 type UVC struct {
 	ValueCode   IS `hl7:"1"`
 	ValueAmount NM `hl7:"2"`
 }
 
+func NewUVC() *UVC {
+	return &UVC{}
+}
+
+func (d *UVC) Validate() error {
+
+	return nil
+}
+
+func (d *UVC) SetValueCode(v string) *UVC {
+	d.ValueCode = IS(v)
+	return d
+}
+
+func (d *UVC) SetValueAmount(v string) *UVC {
+	d.ValueAmount = NM(v)
+	return d
+}
+
 // VARIES - Variable Datatype
 type VARIES string
+
+func NewVARIES(s string) *VARIES {
+	v := VARIES(s)
+	return &v
+}
+
+func (d VARIES) Validate() error {
+	return nil
+}
 
 // VH - Visiting Hours
 // This data type contains the hours when a patient location is open for visiting. Refer to HL7 Table 0267 - Days of the week for valid values for the first two components.
@@ -788,11 +3615,76 @@ type VH struct {
 	EndHourRange   TM `hl7:"4"`
 }
 
+func NewVH() *VH {
+	return &VH{}
+}
+
+func (d *VH) Validate() error {
+
+	return nil
+}
+
+func (d *VH) SetStartDayRange(v string) *VH {
+	d.StartDayRange = ID(v)
+	return d
+}
+
+func (d *VH) SetEndDayRange(v string) *VH {
+	d.EndDayRange = ID(v)
+	return d
+}
+
+func (d *VH) SetStartHourRange(v string) *VH {
+	d.StartHourRange = TM(v)
+	return d
+}
+
+func (d *VH) SetEndHourRange(v string) *VH {
+	d.EndHourRange = TM(v)
+	return d
+}
+
 // VID - Version Identifier
 type VID struct {
 	VersionId                ID `hl7:"1"`
 	InternationalizationCode CE `hl7:"2"`
 	InternationalVersionId   CE `hl7:"3"`
+}
+
+func NewVID() *VID {
+	return &VID{}
+}
+
+func (d *VID) Validate() error {
+
+	if (d.InternationalizationCode != CE{}) {
+		if err := d.InternationalizationCode.Validate(); err != nil {
+			return fmt.Errorf("VID.InternationalizationCode: %w", err)
+		}
+	}
+
+	if (d.InternationalVersionId != CE{}) {
+		if err := d.InternationalVersionId.Validate(); err != nil {
+			return fmt.Errorf("VID.InternationalVersionId: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *VID) SetVersionId(v string) *VID {
+	d.VersionId = ID(v)
+	return d
+}
+
+func (d *VID) SetInternationalizationCode(v CE) *VID {
+	d.InternationalizationCode = v
+	return d
+}
+
+func (d *VID) SetInternationalVersionId(v CE) *VID {
+	d.InternationalVersionId = v
+	return d
 }
 
 // VR - Value Qualifier
@@ -801,16 +3693,73 @@ type VR struct {
 	LastDataCodeValue  ST `hl7:"2"`
 }
 
+func NewVR() *VR {
+	return &VR{}
+}
+
+func (d *VR) Validate() error {
+
+	return nil
+}
+
+func (d *VR) SetFirstDataCodeValue(v string) *VR {
+	d.FirstDataCodeValue = ST(v)
+	return d
+}
+
+func (d *VR) SetLastDataCodeValue(v string) *VR {
+	d.LastDataCodeValue = ST(v)
+	return d
+}
+
 // WVI - Channel Identifier
 type WVI struct {
 	ChannelNumber NM `hl7:"1"`
 	ChannelName   ST `hl7:"2"`
 }
 
+func NewWVI() *WVI {
+	return &WVI{}
+}
+
+func (d *WVI) Validate() error {
+
+	return nil
+}
+
+func (d *WVI) SetChannelNumber(v string) *WVI {
+	d.ChannelNumber = NM(v)
+	return d
+}
+
+func (d *WVI) SetChannelName(v string) *WVI {
+	d.ChannelName = ST(v)
+	return d
+}
+
 // WVS - Waveform Source
 type WVS struct {
 	SourceName1 ST `hl7:"1"`
 	SourceName2 ST `hl7:"2"`
+}
+
+func NewWVS() *WVS {
+	return &WVS{}
+}
+
+func (d *WVS) Validate() error {
+
+	return nil
+}
+
+func (d *WVS) SetSourceName1(v string) *WVS {
+	d.SourceName1 = ST(v)
+	return d
+}
+
+func (d *WVS) SetSourceName2(v string) *WVS {
+	d.SourceName2 = ST(v)
+	return d
 }
 
 // XAD - Extended Address
@@ -833,6 +3782,87 @@ type XAD struct {
 	CensusTract                IS  `hl7:"10"`
 	AddressRepresentationCode  ID  `hl7:"11"`
 	AddressValidityRange       DR  `hl7:"12"`
+}
+
+func NewXAD() *XAD {
+	return &XAD{}
+}
+
+func (d *XAD) Validate() error {
+
+	if (d.StreetAddress != SAD{}) {
+		if err := d.StreetAddress.Validate(); err != nil {
+			return fmt.Errorf("XAD.StreetAddress: %w", err)
+		}
+	}
+
+	if (d.AddressValidityRange != DR{}) {
+		if err := d.AddressValidityRange.Validate(); err != nil {
+			return fmt.Errorf("XAD.AddressValidityRange: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *XAD) SetStreetAddress(v SAD) *XAD {
+	d.StreetAddress = v
+	return d
+}
+
+func (d *XAD) SetOtherDesignation(v string) *XAD {
+	d.OtherDesignation = ST(v)
+	return d
+}
+
+func (d *XAD) SetCity(v string) *XAD {
+	d.City = ST(v)
+	return d
+}
+
+func (d *XAD) SetStateOrProvince(v string) *XAD {
+	d.StateOrProvince = ST(v)
+	return d
+}
+
+func (d *XAD) SetZipOrPostalCode(v string) *XAD {
+	d.ZipOrPostalCode = ST(v)
+	return d
+}
+
+func (d *XAD) SetCountry(v string) *XAD {
+	d.Country = ID(v)
+	return d
+}
+
+func (d *XAD) SetAddressType(v string) *XAD {
+	d.AddressType = ID(v)
+	return d
+}
+
+func (d *XAD) SetOtherGeographicDesignation(v string) *XAD {
+	d.OtherGeographicDesignation = ST(v)
+	return d
+}
+
+func (d *XAD) SetCountyParishCode(v string) *XAD {
+	d.CountyParishCode = IS(v)
+	return d
+}
+
+func (d *XAD) SetCensusTract(v string) *XAD {
+	d.CensusTract = IS(v)
+	return d
+}
+
+func (d *XAD) SetAddressRepresentationCode(v string) *XAD {
+	d.AddressRepresentationCode = ID(v)
+	return d
+}
+
+func (d *XAD) SetAddressValidityRange(v DR) *XAD {
+	d.AddressValidityRange = v
+	return d
 }
 
 // XCN - Extended Composite ID Number And Name For Persons
@@ -860,6 +3890,135 @@ type XCN struct {
 	NameAssemblyOrder                           ID `hl7:"18"`
 }
 
+func NewXCN() *XCN {
+	return &XCN{}
+}
+
+func (d *XCN) Validate() error {
+
+	if (d.FamilyName != FN{}) {
+		if err := d.FamilyName.Validate(); err != nil {
+			return fmt.Errorf("XCN.FamilyName: %w", err)
+		}
+	}
+
+	if (d.AssigningAuthority != HD{}) {
+		if err := d.AssigningAuthority.Validate(); err != nil {
+			return fmt.Errorf("XCN.AssigningAuthority: %w", err)
+		}
+	}
+
+	if (d.AssigningFacility != HD{}) {
+		if err := d.AssigningFacility.Validate(); err != nil {
+			return fmt.Errorf("XCN.AssigningFacility: %w", err)
+		}
+	}
+
+	if (d.NameContext != CE{}) {
+		if err := d.NameContext.Validate(); err != nil {
+			return fmt.Errorf("XCN.NameContext: %w", err)
+		}
+	}
+
+	if (d.NameValidityRange != DR{}) {
+		if err := d.NameValidityRange.Validate(); err != nil {
+			return fmt.Errorf("XCN.NameValidityRange: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *XCN) SetIdNumber(v string) *XCN {
+	d.IdNumber = ST(v)
+	return d
+}
+
+func (d *XCN) SetFamilyName(v FN) *XCN {
+	d.FamilyName = v
+	return d
+}
+
+func (d *XCN) SetGivenName(v string) *XCN {
+	d.GivenName = ST(v)
+	return d
+}
+
+func (d *XCN) SetSecondAndFurtherGivenNamesOrInitialsThereof(v string) *XCN {
+	d.SecondAndFurtherGivenNamesOrInitialsThereof = ST(v)
+	return d
+}
+
+func (d *XCN) SetSuffix(v string) *XCN {
+	d.Suffix = ST(v)
+	return d
+}
+
+func (d *XCN) SetPrefix(v string) *XCN {
+	d.Prefix = ST(v)
+	return d
+}
+
+func (d *XCN) SetDegree(v string) *XCN {
+	d.Degree = IS(v)
+	return d
+}
+
+func (d *XCN) SetSourceTable(v string) *XCN {
+	d.SourceTable = IS(v)
+	return d
+}
+
+func (d *XCN) SetAssigningAuthority(v HD) *XCN {
+	d.AssigningAuthority = v
+	return d
+}
+
+func (d *XCN) SetNameTypeCode(v string) *XCN {
+	d.NameTypeCode = ID(v)
+	return d
+}
+
+func (d *XCN) SetIdentifierCheckDigit(v string) *XCN {
+	d.IdentifierCheckDigit = ST(v)
+	return d
+}
+
+func (d *XCN) SetCodeIdentifyingTheCheckDigitSchemeEmployed(v string) *XCN {
+	d.CodeIdentifyingTheCheckDigitSchemeEmployed = ID(v)
+	return d
+}
+
+func (d *XCN) SetIdentifierTypeCode(v string) *XCN {
+	d.IdentifierTypeCode = IS(v)
+	return d
+}
+
+func (d *XCN) SetAssigningFacility(v HD) *XCN {
+	d.AssigningFacility = v
+	return d
+}
+
+func (d *XCN) SetNameRepresentationCode(v string) *XCN {
+	d.NameRepresentationCode = ID(v)
+	return d
+}
+
+func (d *XCN) SetNameContext(v CE) *XCN {
+	d.NameContext = v
+	return d
+}
+
+func (d *XCN) SetNameValidityRange(v DR) *XCN {
+	d.NameValidityRange = v
+	return d
+}
+
+func (d *XCN) SetNameAssemblyOrder(v string) *XCN {
+	d.NameAssemblyOrder = ID(v)
+	return d
+}
+
 // XON - Extended Composite Name And Identification Number For Organizations
 // This data type is used in fields (e.g., PV2-23, NK1-13, PD1-3, OBR-44) to specify the name and ID number of an organization.
 type XON struct {
@@ -872,6 +4031,72 @@ type XON struct {
 	IdentifierTypeCode                         IS `hl7:"7"`
 	AssigningFacilityId                        HD `hl7:"8"`
 	NameRepresentationCode                     ID `hl7:"9"`
+}
+
+func NewXON() *XON {
+	return &XON{}
+}
+
+func (d *XON) Validate() error {
+
+	if (d.AssigningAuthority != HD{}) {
+		if err := d.AssigningAuthority.Validate(); err != nil {
+			return fmt.Errorf("XON.AssigningAuthority: %w", err)
+		}
+	}
+
+	if (d.AssigningFacilityId != HD{}) {
+		if err := d.AssigningFacilityId.Validate(); err != nil {
+			return fmt.Errorf("XON.AssigningFacilityId: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *XON) SetOrganizationName(v string) *XON {
+	d.OrganizationName = ST(v)
+	return d
+}
+
+func (d *XON) SetOrganizationNameTypeCode(v string) *XON {
+	d.OrganizationNameTypeCode = IS(v)
+	return d
+}
+
+func (d *XON) SetIdNumber(v string) *XON {
+	d.IdNumber = NM(v)
+	return d
+}
+
+func (d *XON) SetCheckDigit(v string) *XON {
+	d.CheckDigit = ST(v)
+	return d
+}
+
+func (d *XON) SetCodeIdentifyingTheCheckDigitSchemeEmployed(v string) *XON {
+	d.CodeIdentifyingTheCheckDigitSchemeEmployed = ID(v)
+	return d
+}
+
+func (d *XON) SetAssigningAuthority(v HD) *XON {
+	d.AssigningAuthority = v
+	return d
+}
+
+func (d *XON) SetIdentifierTypeCode(v string) *XON {
+	d.IdentifierTypeCode = IS(v)
+	return d
+}
+
+func (d *XON) SetAssigningFacilityId(v HD) *XON {
+	d.AssigningFacilityId = v
+	return d
+}
+
+func (d *XON) SetNameRepresentationCode(v string) *XON {
+	d.NameRepresentationCode = ID(v)
+	return d
 }
 
 // XPN - Extended Person Name
@@ -893,6 +4118,88 @@ type XPN struct {
 	NameAssemblyOrder                           ID `hl7:"11"`
 }
 
+func NewXPN() *XPN {
+	return &XPN{}
+}
+
+func (d *XPN) Validate() error {
+
+	if (d.FamilyName != FN{}) {
+		if err := d.FamilyName.Validate(); err != nil {
+			return fmt.Errorf("XPN.FamilyName: %w", err)
+		}
+	}
+
+	if (d.NameContext != CE{}) {
+		if err := d.NameContext.Validate(); err != nil {
+			return fmt.Errorf("XPN.NameContext: %w", err)
+		}
+	}
+
+	if (d.NameValidityRange != DR{}) {
+		if err := d.NameValidityRange.Validate(); err != nil {
+			return fmt.Errorf("XPN.NameValidityRange: %w", err)
+		}
+	}
+
+	return nil
+}
+
+func (d *XPN) SetFamilyName(v FN) *XPN {
+	d.FamilyName = v
+	return d
+}
+
+func (d *XPN) SetGivenName(v string) *XPN {
+	d.GivenName = ST(v)
+	return d
+}
+
+func (d *XPN) SetSecondAndFurtherGivenNamesOrInitialsThereof(v string) *XPN {
+	d.SecondAndFurtherGivenNamesOrInitialsThereof = ST(v)
+	return d
+}
+
+func (d *XPN) SetSuffix(v string) *XPN {
+	d.Suffix = ST(v)
+	return d
+}
+
+func (d *XPN) SetPrefix(v string) *XPN {
+	d.Prefix = ST(v)
+	return d
+}
+
+func (d *XPN) SetDegree(v string) *XPN {
+	d.Degree = IS(v)
+	return d
+}
+
+func (d *XPN) SetNameTypeCode(v string) *XPN {
+	d.NameTypeCode = ID(v)
+	return d
+}
+
+func (d *XPN) SetNameRepresentationCode(v string) *XPN {
+	d.NameRepresentationCode = ID(v)
+	return d
+}
+
+func (d *XPN) SetNameContext(v CE) *XPN {
+	d.NameContext = v
+	return d
+}
+
+func (d *XPN) SetNameValidityRange(v DR) *XPN {
+	d.NameValidityRange = v
+	return d
+}
+
+func (d *XPN) SetNameAssemblyOrder(v string) *XPN {
+	d.NameAssemblyOrder = ID(v)
+	return d
+}
+
 // XTN - Extended Telecommunication Number
 // Note: Replaces TN data type as of v 2.3
 //
@@ -908,4 +4215,58 @@ type XTN struct {
 	PhoneNumber                    NM `hl7:"7"`
 	Extension                      NM `hl7:"8"`
 	AnyText                        ST `hl7:"9"`
+}
+
+func NewXTN() *XTN {
+	return &XTN{}
+}
+
+func (d *XTN) Validate() error {
+
+	return nil
+}
+
+func (d *XTN) SetTelephoneNumber(v string) *XTN {
+	d.TelephoneNumber = TN(v)
+	return d
+}
+
+func (d *XTN) SetTelecommunicationUseCode(v string) *XTN {
+	d.TelecommunicationUseCode = ID(v)
+	return d
+}
+
+func (d *XTN) SetTelecommunicationEquipmentType(v string) *XTN {
+	d.TelecommunicationEquipmentType = ID(v)
+	return d
+}
+
+func (d *XTN) SetEmailAddress(v string) *XTN {
+	d.EmailAddress = ST(v)
+	return d
+}
+
+func (d *XTN) SetCountryCode(v string) *XTN {
+	d.CountryCode = NM(v)
+	return d
+}
+
+func (d *XTN) SetAreaCityCode(v string) *XTN {
+	d.AreaCityCode = NM(v)
+	return d
+}
+
+func (d *XTN) SetPhoneNumber(v string) *XTN {
+	d.PhoneNumber = NM(v)
+	return d
+}
+
+func (d *XTN) SetExtension(v string) *XTN {
+	d.Extension = NM(v)
+	return d
+}
+
+func (d *XTN) SetAnyText(v string) *XTN {
+	d.AnyText = ST(v)
+	return d
 }

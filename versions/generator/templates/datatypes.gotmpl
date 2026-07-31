@@ -2,12 +2,70 @@
 
 package {{.PackageName}}
 
-{{range .Datatypes}}
-// {{.ID}} - {{.Name}}
-{{if .Description}}{{.Description}}
-{{end}}{{if .IsPrimitive}}type {{.ID}} string
-{{else}}type {{.ID}} struct {
-{{range .Fields}}	{{.GoName}} {{.GoType}} `hl7:"{{.Tag}}"`
+{{if .HasComplexDatatypes}}import (
+	"fmt"
+)
+{{end}}
+
+{{range $dt := .Datatypes}}
+// {{$dt.ID}} - {{$dt.Name}}
+{{if $dt.Description}}{{$dt.Description}}
+{{end}}{{if $dt.IsPrimitive}}type {{$dt.ID}} string
+
+func New{{$dt.ID}}(s string) *{{$dt.ID}} {
+	v := {{$dt.ID}}(s)
+	return &v
+}
+
+func (d {{$dt.ID}}) Validate() error {
+	return nil
+}
+{{else}}type {{$dt.ID}} struct {
+{{range $dt.Fields}}	{{.GoName}} {{.GoType}} `hl7:"{{.Tag}}"`
 {{end}}}
+
+func New{{$dt.ID}}() *{{$dt.ID}} {
+	return &{{$dt.ID}}{}
+}
+
+func (d *{{$dt.ID}}) Validate() error {
+{{range $dt.Fields}}{{if .IsSlice}}
+{{if .IsRequired}}	if len(d.{{.GoName}}) == 0 {
+		return fmt.Errorf("{{$dt.ID}}.{{.GoName}} is required")
+	}
+{{end}}	for _, item := range d.{{.GoName}} {
+{{if .IsPrimitive}}		if string(item) == "" {
+			return fmt.Errorf("{{$dt.ID}}.{{.GoName}} item is empty")
+		}
+{{else}}		if err := item.Validate(); err != nil {
+			return fmt.Errorf("{{$dt.ID}}.{{.GoName}}: %w", err)
+		}
+{{end}}	}
+{{else if .IsPrimitive}}
+{{if .IsRequired}}	if string(d.{{.GoName}}) == "" {
+		return fmt.Errorf("{{$dt.ID}}.{{.GoName}} is required")
+	}
+{{end}}
+{{else}}
+{{if .IsRequired}}	if err := d.{{.GoName}}.Validate(); err != nil {
+		return fmt.Errorf("{{$dt.ID}}.{{.GoName}}: %w", err)
+	}
+{{else}}	if (d.{{.GoName}} != {{.GoType}}{}) {
+		if err := d.{{.GoName}}.Validate(); err != nil {
+			return fmt.Errorf("{{$dt.ID}}.{{.GoName}}: %w", err)
+		}
+	}
+{{end}}
+{{end}}{{end}}	return nil
+}
+
+{{range $dt.Fields}}
+func (d *{{$dt.ID}}) {{.MethodName}}(v {{.ParamType}}) *{{$dt.ID}} {
+	d.{{.GoName}} = {{.InitExpr}}
+	return d
+}
 {{end}}
 {{end}}
+{{end}}
+
+

@@ -53,20 +53,46 @@ var goKeywords = map[string]bool{
 
 type Deduper struct {
 	used map[string]int
+	seen map[string]bool
 }
 
 func NewDeduper() *Deduper {
-	return &Deduper{used: make(map[string]int)}
+	return &Deduper{
+		used: make(map[string]int),
+		seen: make(map[string]bool),
+	}
 }
 
 func (d *Deduper) Name(raw string) string {
 	base := SanitizeIdentifier(raw)
-	d.used[base]++
+	candidate := base
 	count := d.used[base]
-	if count == 1 {
-		return base
+
+	for d.seen[candidate] {
+		count++
+		candidate = fmt.Sprintf("%s_%d", base, count)
 	}
-	return fmt.Sprintf("%s%d", base, count)
+
+	d.used[base] = count
+	d.seen[candidate] = true
+	return candidate
+}
+
+type ParamDeduper struct {
+	used map[string]int
+}
+
+func NewParamDeduper() *ParamDeduper {
+	return &ParamDeduper{used: make(map[string]int)}
+}
+
+func (d *ParamDeduper) Name(raw string) string {
+	d.used[raw]++
+	count := d.used[raw]
+	if count == 1 {
+		return raw
+	}
+	return fmt.Sprintf("%s%d", raw, count)
 }
 
 func SanitizeIdentifier(s string) string {
@@ -97,6 +123,39 @@ func SanitizeIdentifier(s string) string {
 
 	if goKeywords[strings.ToLower(res)] {
 		res = res + "_"
+	}
+
+	return res
+}
+
+func uncapitalizeIdentifier(s string) string {
+	s = strings.TrimSpace(s)
+	if s == "" {
+		return "param"
+	}
+	runes := []rune(s)
+	if len(runes) == 0 {
+		return "param"
+	}
+
+	i := 0
+	for i < len(runes) && unicode.IsUpper(runes[i]) {
+		i++
+	}
+
+	var res string
+	if i == 0 {
+		res = s
+	} else if i == 1 {
+		res = string(unicode.ToLower(runes[0])) + string(runes[1:])
+	} else if i == len(runes) {
+		res = strings.ToLower(s)
+	} else {
+		res = strings.ToLower(string(runes[:i-1])) + string(runes[i-1:])
+	}
+
+	if goKeywords[strings.ToLower(res)] {
+		res += "_"
 	}
 
 	return res
@@ -147,9 +206,15 @@ func New(ver string, opts ...Option) (*Generator, error) {
 }
 
 type DatatypeFieldModel struct {
-	GoName string
-	GoType string
-	Tag    string
+	GoName      string
+	GoType      string
+	Tag         string
+	ParamType   string
+	InitExpr    string
+	MethodName  string
+	IsRequired  bool
+	IsPrimitive bool
+	IsSlice     bool
 }
 
 type DatatypeModel struct {
@@ -161,14 +226,34 @@ type DatatypeModel struct {
 }
 
 type DatatypesFileData struct {
-	PackageName string
-	Datatypes   []DatatypeModel
+	PackageName         string
+	Datatypes          []DatatypeModel
+	HasComplexDatatypes bool
 }
 
 type SegmentFieldModel struct {
-	GoName string
-	GoType string
-	Tag    string
+	GoName      string
+	GoType      string
+	Tag         string
+	IsSlice     bool
+	IsPrimitive bool
+	IsRequired  bool
+	ElemType    string
+	MethodName  string
+}
+
+type MSHInitModel struct {
+	FieldSeparatorName     string
+	EncodingCharactersName string
+	DateTimeName           string
+	DateTimeExpr           string
+	MessageTypeName        string
+	MessageTypeParamType   string
+	MessageControlIDName   string
+	ProcessingIDName       string
+	ProcessingIDExpr       string
+	VersionIDName          string
+	VersionIDExpr          string
 }
 
 type SegmentModel struct {
@@ -176,6 +261,8 @@ type SegmentModel struct {
 	Name        string
 	Description string
 	Fields      []SegmentFieldModel
+	IsMSH       bool
+	MSHInit     MSHInitModel
 }
 
 type SegmentsFileData struct {
@@ -184,9 +271,13 @@ type SegmentsFileData struct {
 }
 
 type MessageFieldModel struct {
-	GoName string
-	GoType string
-	Tag    string
+	GoName     string
+	GoType     string
+	Tag        string
+	IsSlice    bool
+	IsRequired bool
+	ElemType   string
+	MethodName string
 }
 
 type GroupModel struct {
@@ -200,6 +291,7 @@ type MessageModel struct {
 	Description string
 	Groups      []GroupModel
 	Fields      []MessageFieldModel
+	MSHInitExpr string
 }
 
 type MessagesFileData struct {
@@ -217,6 +309,33 @@ type MessageTestsFileData struct {
 	Version     string
 }
 
+type TableEntryModel struct {
+	ConstName          string
+	Value              string
+	Description        string
+	DescriptionEscaped string
+	Comment            string
+}
+
+type TableModel struct {
+	ID          string
+	TypeName    string
+	Name        string
+	Description string
+	Entries     []TableEntryModel
+}
+
+type TablesFileData struct {
+	PackageName string
+	Tables      []TableModel
+	HasIS       bool
+	HasID       bool
+	HasST       bool
+	HasCE       bool
+	HasCWE      bool
+	HasCNE      bool
+}
+
 func (g *Generator) GenerateAll(outputBase string) error {
 	pkgName := PackageName(g.ver.String())
 	targetDir := filepath.Join(outputBase, pkgName)
@@ -232,6 +351,9 @@ func (g *Generator) GenerateAll(outputBase string) error {
 	}
 	if err := g.GenerateMessages(targetDir, pkgName); err != nil {
 		return fmt.Errorf("messages gen error: %w", err)
+	}
+	if err := g.GenerateTables(targetDir, pkgName); err != nil {
+		return fmt.Errorf("tables gen error: %w", err)
 	}
 	if err := g.GenerateRegistry(targetDir, pkgName); err != nil {
 		return fmt.Errorf("registry gen error: %w", err)
@@ -261,26 +383,77 @@ func (g *Generator) GenerateDatatypes(targetDir, pkgName string) error {
 				if f.Name == "" {
 					goName = d.Name(f.ID)
 				}
+				methodName := "Set" + goName
+
 				fType := f.DataType
 				if fType == "" {
 					fType = "ST"
 				}
-				if f.Repeatable() {
-					fType = "[]" + fType
+
+				fDT := g.schema.DataType(fType)
+				isPrimitive := fDT == nil || fDT.IsPrimitive()
+
+				var goType string
+				var paramType string
+				var initExpr string
+
+				if isPrimitive {
+					if f.Repeatable() {
+						goType = "[]" + fType
+						paramType = "[]string"
+						initExpr = fmt.Sprintf("func() []%s { if v == nil { return nil }; res := make([]%s, len(v)); for i, val := range v { res[i] = %s(val) }; return res }()", fType, fType, fType)
+					} else {
+						goType = fType
+						paramType = "string"
+						initExpr = fmt.Sprintf("%s(v)", fType)
+					}
+				} else {
+					if f.Repeatable() {
+						goType = "[]" + fType
+						paramType = "[]" + fType
+						initExpr = "v"
+					} else {
+						goType = fType
+						paramType = fType
+						initExpr = "v"
+					}
 				}
+
 				m.Fields = append(m.Fields, DatatypeFieldModel{
-					GoName: goName,
-					GoType: fType,
-					Tag:    fmt.Sprintf("%d", pos),
+					GoName:      goName,
+					GoType:      goType,
+					Tag:         fmt.Sprintf("%d", pos),
+					ParamType:   paramType,
+					InitExpr:    initExpr,
+					MethodName:  methodName,
+					IsRequired:  f.Required(),
+					IsPrimitive: isPrimitive,
+					IsSlice:     f.Repeatable(),
 				})
 			}
 		}
 		models = append(models, m)
 	}
 
+	hasComplex := false
+	for _, m := range models {
+		if !m.IsPrimitive {
+			for _, f := range m.Fields {
+				if f.IsRequired || f.IsSlice || !f.IsPrimitive {
+					hasComplex = true
+					break
+				}
+			}
+			if hasComplex {
+				break
+			}
+		}
+	}
+
 	data := DatatypesFileData{
-		PackageName: pkgName,
-		Datatypes:   models,
+		PackageName:         pkgName,
+		Datatypes:           models,
+		HasComplexDatatypes: hasComplex,
 	}
 
 	return renderAndWrite("templates/datatypes.gotmpl", data, filepath.Join(targetDir, "datatypes.go"))
@@ -293,6 +466,7 @@ func (g *Generator) GenerateSegments(targetDir, pkgName string) error {
 			ID:          seg.ID,
 			Name:        seg.Name,
 			Description: CommentLines(seg.Description),
+			IsMSH:       seg.ID == "MSH",
 		}
 
 		d := NewDeduper()
@@ -315,8 +489,14 @@ func (g *Generator) GenerateSegments(targetDir, pkgName string) error {
 			if fType == "" {
 				fType = "ST"
 			}
-			if f.Repeatable() {
-				fType = "[]" + fType
+
+			isSlice := f.Repeatable()
+			elemType := fType
+			goType := fType
+			methodName := "Set" + goName
+			if isSlice {
+				goType = "[]" + fType
+				methodName = "Add" + goName
 			}
 
 			tagOpts := ""
@@ -324,12 +504,107 @@ func (g *Generator) GenerateSegments(targetDir, pkgName string) error {
 				tagOpts = ",required"
 			}
 
+			fDT := g.schema.DataType(fType)
+			isPrimitive := fDT == nil || fDT.IsPrimitive()
+
 			m.Fields = append(m.Fields, SegmentFieldModel{
-				GoName: goName,
-				GoType: fType,
-				Tag:    fmt.Sprintf("%d%s", pos, tagOpts),
+				GoName:      goName,
+				GoType:      goType,
+				Tag:         fmt.Sprintf("%d%s", pos, tagOpts),
+				IsSlice:     isSlice,
+				IsPrimitive: isPrimitive,
+				IsRequired:  f.Required(),
+				ElemType:    elemType,
+				MethodName:  methodName,
 			})
 		}
+
+		if m.IsMSH {
+			init := MSHInitModel{}
+
+			for _, f := range m.Fields {
+				if strings.HasPrefix(f.GoName, "FieldSeparator") {
+					init.FieldSeparatorName = f.GoName
+				} else if strings.HasPrefix(f.GoName, "EncodingCharacters") {
+					init.EncodingCharactersName = f.GoName
+				} else if strings.HasPrefix(f.GoName, "DateTime") {
+					init.DateTimeName = f.GoName
+					fDT := g.schema.DataType(f.ElemType)
+					if fDT == nil || fDT.IsPrimitive() {
+						init.DateTimeExpr = fmt.Sprintf("New%s(time.Now().Format(\"20060102150405\"))", f.ElemType)
+					} else {
+						subF := fDT.Fields[0]
+						subGoName := SanitizeIdentifier(subF.Name)
+						if subF.Name == "" {
+							subGoName = SanitizeIdentifier(subF.ID)
+						}
+						init.DateTimeExpr = fmt.Sprintf("New%s().Set%s(time.Now().Format(\"20060102150405\"))", f.ElemType, subGoName)
+					}
+				} else if strings.HasPrefix(f.GoName, "MessageType") {
+					init.MessageTypeName = f.GoName
+					init.MessageTypeParamType = f.ElemType
+				} else if strings.HasPrefix(f.GoName, "MessageControl") {
+					init.MessageControlIDName = f.GoName
+				} else if strings.HasPrefix(f.GoName, "ProcessingI") {
+					init.ProcessingIDName = f.GoName
+					fDT := g.schema.DataType(f.ElemType)
+					if fDT == nil || fDT.IsPrimitive() {
+						init.ProcessingIDExpr = fmt.Sprintf("New%s(\"P\")", f.ElemType)
+					} else if len(fDT.Fields) > 0 {
+						subF := fDT.Fields[0]
+						subGoName := SanitizeIdentifier(subF.Name)
+						if subF.Name == "" {
+							subGoName = SanitizeIdentifier(subF.ID)
+						}
+						init.ProcessingIDExpr = fmt.Sprintf("New%s().Set%s(\"P\")", f.ElemType, subGoName)
+					}
+				} else if strings.HasPrefix(f.GoName, "VersionI") {
+					init.VersionIDName = f.GoName
+					fDT := g.schema.DataType(f.ElemType)
+					if fDT == nil || fDT.IsPrimitive() {
+						init.VersionIDExpr = fmt.Sprintf("New%s(\"%s\")", f.ElemType, g.ver.String())
+					} else {
+						subF := fDT.Fields[0]
+						subGoName := SanitizeIdentifier(subF.Name)
+						if subF.Name == "" {
+							subGoName = SanitizeIdentifier(subF.ID)
+						}
+						init.VersionIDExpr = fmt.Sprintf("New%s().Set%s(\"%s\")", f.ElemType, subGoName, g.ver.String())
+					}
+				}
+			}
+
+			if init.FieldSeparatorName == "" {
+				init.FieldSeparatorName = "FieldSeparator"
+			}
+			if init.EncodingCharactersName == "" {
+				init.EncodingCharactersName = "EncodingCharacters"
+			}
+			if init.DateTimeName == "" {
+				init.DateTimeName = "DateTimeOfMessage"
+			}
+			if init.DateTimeExpr == "" {
+				init.DateTimeExpr = "TS(time.Now().Format(\"20060102150405\"))"
+			}
+			if init.MessageTypeName == "" {
+				init.MessageTypeName = "MessageType"
+			}
+			if init.MessageTypeParamType == "" {
+				init.MessageTypeParamType = "MSG"
+			}
+			if init.MessageControlIDName == "" {
+				init.MessageControlIDName = "MessageControlID"
+			}
+			if init.VersionIDName == "" {
+				init.VersionIDName = "VersionID"
+			}
+			if init.VersionIDExpr == "" {
+				init.VersionIDExpr = fmt.Sprintf("VID{VersionID: ID(\"%s\")}", g.ver.String())
+			}
+
+			m.MSHInit = init
+		}
+
 		models = append(models, m)
 	}
 
@@ -365,8 +640,14 @@ func (c *groupCollector) addGroup(msgID string, groupDeduper *Deduper, ms *schem
 			tagID = child.ID
 		}
 
-		if child.Repeatable() {
-			fType = "[]" + fType
+		goName := subDeduper.Name(child.Name)
+		isSlice := child.Repeatable()
+		elemType := fType
+		goType := fType
+		methodName := "Set" + goName
+		if isSlice {
+			goType = "[]" + fType
+			methodName = "Add" + goName
 		}
 
 		tagOpts := ""
@@ -375,9 +656,13 @@ func (c *groupCollector) addGroup(msgID string, groupDeduper *Deduper, ms *schem
 		}
 
 		gm.Fields = append(gm.Fields, MessageFieldModel{
-			GoName: subDeduper.Name(child.Name),
-			GoType: fType,
-			Tag:    fmt.Sprintf("%s%s", tagID, tagOpts),
+			GoName:     goName,
+			GoType:     goType,
+			Tag:        fmt.Sprintf("%s%s", tagID, tagOpts),
+			IsSlice:    isSlice,
+			IsRequired: child.Required(),
+			ElemType:   elemType,
+			MethodName: methodName,
 		})
 	}
 
@@ -386,12 +671,65 @@ func (c *groupCollector) addGroup(msgID string, groupDeduper *Deduper, ms *schem
 }
 
 func (g *Generator) GenerateMessages(targetDir, pkgName string) error {
+	var mshMsgType string
+	mshSeg := g.schema.Segment("MSH")
+	if mshSeg != nil {
+		for _, f := range mshSeg.Fields {
+			if strings.HasPrefix(f.Name, "Message Type") || f.ID == "MSG" || f.ID == "CM_MSG" || f.ID == "ID" {
+				mshMsgType = f.DataType
+				break
+			}
+		}
+	}
+	if mshMsgType == "" {
+		mshMsgType = "MSG"
+	}
+
 	var models []MessageModel
 	for _, msg := range g.schema.Messages() {
+		parts := strings.Split(msg.ID, "_")
+		code := parts[0]
+		event := ""
+		if len(parts) > 1 {
+			event = parts[1]
+		}
+		structure := msg.ID
+
+		var mshInitExpr string
+		switch mshMsgType {
+		case "MSG":
+			f1Setter := "SetMessageCode"
+			msgDT := g.schema.DataType("MSG")
+			if msgDT != nil && len(msgDT.Fields) > 0 {
+				d := NewDeduper()
+				f1Name := d.Name(msgDT.Fields[0].Name)
+				if msgDT.Fields[0].Name == "" {
+					f1Name = d.Name(msgDT.Fields[0].ID)
+				}
+				f1Setter = "Set" + f1Name
+			}
+			mshInitExpr = fmt.Sprintf("NewMSH(NewMSG().%s(\"%s\").SetTriggerEvent(\"%s\").SetMessageStructure(\"%s\"))", f1Setter, code, event, structure)
+		case "CM_MSG":
+			f1Setter := "SetMessageType"
+			cmMsgDT := g.schema.DataType("CM_MSG")
+			if cmMsgDT != nil && len(cmMsgDT.Fields) > 0 {
+				d := NewDeduper()
+				f1Name := d.Name(cmMsgDT.Fields[0].Name)
+				if cmMsgDT.Fields[0].Name == "" {
+					f1Name = d.Name(cmMsgDT.Fields[0].ID)
+				}
+				f1Setter = "Set" + f1Name
+			}
+			mshInitExpr = fmt.Sprintf("NewMSH(NewCM_MSG().%s(\"%s\").SetTriggerEvent(\"%s\"))", f1Setter, code, event)
+		default:
+			mshInitExpr = fmt.Sprintf("NewMSH(NewID(\"%s\"))", msg.ID)
+		}
+
 		m := MessageModel{
 			ID:          msg.ID,
 			Name:        msg.Name,
 			Description: CommentLines(msg.Description),
+			MSHInitExpr: mshInitExpr,
 		}
 
 		collector := &groupCollector{}
@@ -411,8 +749,17 @@ func (g *Generator) GenerateMessages(targetDir, pkgName string) error {
 				tagID = seg.ID
 			}
 
-			if seg.Repeatable() {
-				fType = "[]" + fType
+			goName := d.Name(seg.Name)
+			if seg.Name == "" {
+				goName = d.Name(seg.ID)
+			}
+			isSlice := seg.Repeatable()
+			elemType := fType
+			goType := fType
+			methodName := "Set" + goName
+			if isSlice {
+				goType = "[]" + fType
+				methodName = "Add" + goName
 			}
 
 			tagOpts := ""
@@ -421,9 +768,13 @@ func (g *Generator) GenerateMessages(targetDir, pkgName string) error {
 			}
 
 			m.Fields = append(m.Fields, MessageFieldModel{
-				GoName: d.Name(seg.Name),
-				GoType: fType,
-				Tag:    fmt.Sprintf("%s%s", tagID, tagOpts),
+				GoName:     goName,
+				GoType:     goType,
+				Tag:        fmt.Sprintf("%s%s", tagID, tagOpts),
+				IsSlice:    isSlice,
+				IsRequired: seg.Required(),
+				ElemType:   elemType,
+				MethodName: methodName,
 			})
 		}
 
@@ -447,6 +798,81 @@ func (g *Generator) GenerateRegistry(targetDir, pkgName string) error {
 	}
 
 	return renderAndWrite("templates/registry.gotmpl", data, filepath.Join(targetDir, "registry.go"))
+}
+
+func (g *Generator) GenerateTables(targetDir, pkgName string) error {
+	var models []TableModel
+	tableDeduper := NewDeduper()
+
+	for _, tbl := range g.schema.Tables() {
+		rawID := strings.Map(func(r rune) rune {
+			if (r >= 'a' && r <= 'z') || (r >= 'A' && r <= 'Z') || (r >= '0' && r <= '9') {
+				return r
+			}
+			return -1
+		}, tbl.ID)
+		if rawID == "" {
+			rawID = "Unknown"
+		}
+		typeName := tableDeduper.Name("Table" + rawID)
+
+		tm := TableModel{
+			ID:          tbl.ID,
+			TypeName:    typeName,
+			Name:        tbl.Name,
+			Description: CommentLines(tbl.Name),
+		}
+
+		entryDeduper := NewDeduper()
+		seenValues := make(map[string]bool)
+
+		for _, e := range tbl.Entries {
+			if seenValues[e.Value] {
+				continue
+			}
+			seenValues[e.Value] = true
+
+			var base string
+			if e.Description != "" {
+				base = SanitizeIdentifier(e.Description)
+			}
+			if base == "" {
+				base = SanitizeIdentifier(e.Value)
+			}
+			if base == "" {
+				base = "Value"
+			}
+			if len(base) > 0 && base[0] >= '0' && base[0] <= '9' {
+				base = "V" + base
+			}
+
+			constName := typeName + entryDeduper.Name(base)
+			descEscaped := strings.ReplaceAll(strings.ReplaceAll(e.Description, "\\", "\\\\"), "\"", "\\\"")
+
+			tm.Entries = append(tm.Entries, TableEntryModel{
+				ConstName:          constName,
+				Value:              e.Value,
+				Description:        e.Description,
+				DescriptionEscaped: descEscaped,
+				Comment:            e.Comment,
+			})
+		}
+
+		models = append(models, tm)
+	}
+
+	data := TablesFileData{
+		PackageName: pkgName,
+		Tables:      models,
+		HasIS:       g.schema.DataType("IS") != nil,
+		HasID:       g.schema.DataType("ID") != nil,
+		HasST:       g.schema.DataType("ST") != nil,
+		HasCE:       g.schema.DataType("CE") != nil,
+		HasCWE:      g.schema.DataType("CWE") != nil,
+		HasCNE:      g.schema.DataType("CNE") != nil,
+	}
+
+	return renderAndWrite("templates/tables.gotmpl", data, filepath.Join(targetDir, "tables.go"))
 }
 
 func (g *Generator) GenerateMessageTests(targetDir, pkgName string) error {

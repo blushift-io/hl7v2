@@ -7,7 +7,7 @@ import (
 )
 
 func TestSegmentElement(t *testing.T) {
-	msg, err := NewMessageFromFile("./fixtures/ORM_O01_1.hl7", FixLineEndings())
+	msg, err := NewMessageFromFile("./test/fixtures/ORM_O01_1.hl7", FixLineEndings())
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -2,10 +2,81 @@
 
 package {{.PackageName}}
 
-{{range .Segments}}
-// {{.ID}} - {{.Name}}
-{{if .Description}}{{.Description}}
-{{end}}type {{.ID}} struct {
-{{range .Fields}}	{{.GoName}} {{.GoType}} `hl7:"{{.Tag}}"`
-{{end}}}
+import (
+	"fmt"
+	"time"
+
+	"github.com/google/uuid"
+)
+
+{{range $seg := .Segments}}
+// {{$seg.ID}} - {{$seg.Name}}
+{{if $seg.Description}}{{$seg.Description}}
+{{end}}type {{$seg.ID}} struct {
+{{range $seg.Fields}}{{if .IsSlice}}	{{.GoName}} {{.GoType}} `hl7:"{{.Tag}}"`
+{{else}}	{{.GoName}} *{{.GoType}} `hl7:"{{.Tag}}"`
+{{end}}{{end}}}
+
+{{if $seg.IsMSH}}
+func New{{$seg.ID}}(msgType *{{$seg.MSHInit.MessageTypeParamType}}) *{{$seg.ID}} {
+	return &{{$seg.ID}}{
+		{{$seg.MSHInit.FieldSeparatorName}}:     NewST("|"),
+		{{$seg.MSHInit.EncodingCharactersName}}: NewST("^~\\&"),
+		{{$seg.MSHInit.DateTimeName}}:           {{$seg.MSHInit.DateTimeExpr}},
+		{{$seg.MSHInit.MessageTypeName}}:        msgType,
+		{{$seg.MSHInit.MessageControlIDName}}:   NewST(uuid.NewString()),
+{{if $seg.MSHInit.ProcessingIDName}}		{{$seg.MSHInit.ProcessingIDName}}:       {{$seg.MSHInit.ProcessingIDExpr}},
+{{end}}		{{$seg.MSHInit.VersionIDName}}:          {{$seg.MSHInit.VersionIDExpr}},
+	}
+}
+{{else}}
+func New{{$seg.ID}}() *{{$seg.ID}} {
+	return &{{$seg.ID}}{}
+}
 {{end}}
+
+func (s *{{$seg.ID}}) Validate() error {
+{{range $seg.Fields}}{{if .IsSlice}}
+{{if .IsRequired}}	if len(s.{{.GoName}}) == 0 {
+		return fmt.Errorf("{{$seg.ID}}.{{.GoName}} is required")
+	}
+{{end}}	for _, item := range s.{{.GoName}} {
+{{if .IsPrimitive}}		if string(item) == "" {
+			return fmt.Errorf("{{$seg.ID}}.{{.GoName}} item is empty")
+		}
+{{else}}		if err := item.Validate(); err != nil {
+			return fmt.Errorf("{{$seg.ID}}.{{.GoName}}: %w", err)
+		}
+{{end}}	}
+{{else if .IsPrimitive}}
+{{if .IsRequired}}	if s.{{.GoName}} == nil {
+		return fmt.Errorf("{{$seg.ID}}.{{.GoName}} is required")
+	}
+	if string(*s.{{.GoName}}) == "" {
+		return fmt.Errorf("{{$seg.ID}}.{{.GoName}} is empty")
+	}
+{{end}}
+{{else}}
+{{if .IsRequired}}	if s.{{.GoName}} == nil {
+		return fmt.Errorf("{{$seg.ID}}.{{.GoName}} is required")
+	}
+{{end}}	if s.{{.GoName}} != nil {
+		if err := s.{{.GoName}}.Validate(); err != nil {
+			return fmt.Errorf("{{$seg.ID}}.{{.GoName}}: %w", err)
+		}
+	}
+{{end}}{{end}}	return nil
+}
+{{range $seg.Fields}}{{if .IsSlice}}
+func (s *{{$seg.ID}}) {{.MethodName}}(v {{.ElemType}}) *{{$seg.ID}} {
+	s.{{.GoName}} = append(s.{{.GoName}}, v)
+	return s
+}
+{{else}}
+func (s *{{$seg.ID}}) {{.MethodName}}(v *{{.ElemType}}) *{{$seg.ID}} {
+	s.{{.GoName}} = v
+	return s
+}
+{{end}}{{end}}
+{{end}}
+

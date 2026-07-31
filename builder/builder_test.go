@@ -55,7 +55,7 @@ func TestBuilder(t *testing.T) {
 }
 
 func TestSegmentBuilder(t *testing.T) {
-	msg, err := hl7v2.NewMessageFromFile("./fixtures/ORM_O01_1.hl7", hl7v2.FixLineEndings())
+	msg, err := hl7v2.NewMessageFromFile("../test/fixtures/ORM_O01_1.hl7", hl7v2.FixLineEndings())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -101,6 +101,7 @@ func TestSegmentBuilder(t *testing.T) {
 		t.Fatal(err)
 	}
 
+	_ = os.MkdirAll("./tmp", 0755)
 	if err := os.WriteFile("./tmp/appended_zxx.hl7", enc, 0644); err != nil {
 		t.Fatal(err)
 	}

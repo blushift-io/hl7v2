@@ -57,6 +57,14 @@ func NewDateTimeValue(date time.Time) Value {
 	return NewStringValue(date.Format("20060102150405"))
 }
 
+func NewTimestampValue(t time.Time) Value {
+	if t.IsZero() {
+		return NewEmptyValue()
+	}
+
+	return NewStringValue(t.Format("200601021504059"))
+}
+
 func MarshalValue(v any) Value {
 	if rv := reflect.ValueOf(v); rv.IsZero() || rv.IsNil() {
 		return Value{}
