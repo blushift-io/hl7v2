@@ -2,6 +2,7 @@ package tcp
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/blushift-io/hl7v2"
@@ -27,6 +28,10 @@ func WithTimeout(d time.Duration) SendOption {
 }
 
 func Send(ctx context.Context, host string, msg *hl7v2.RawMessage, opts ...SendOption) (*hl7v2.RawMessage, error) {
+	if msg == nil {
+		return nil, fmt.Errorf("tcp: message cannot be nil")
+	}
+
 	options := &SendOptions{
 		WaitForAck: false,
 		Timeout:    30 * time.Second,
@@ -62,12 +67,15 @@ func Send(ctx context.Context, host string, msg *hl7v2.RawMessage, opts ...SendO
 		ackCh <- ack
 	}()
 
+	timer := time.NewTimer(options.Timeout)
+	defer timer.Stop()
+
 	select {
 	case ack := <-ackCh:
 		return ack, nil
 	case err := <-errCh:
 		return nil, err
-	case <-time.After(options.Timeout):
+	case <-timer.C:
 		return nil, context.DeadlineExceeded
 	case <-ctx.Done():
 		return nil, ctx.Err()

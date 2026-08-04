@@ -5,6 +5,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"regexp"
+	"strconv"
+	"strings"
 
 	"github.com/blushift-io/hl7v2/query"
 )
@@ -86,7 +89,11 @@ func (m *RawMessage) QueryValue(q string) (*Value, error) {
 	}
 
 	if loc.Segment == "" {
-		return nil, fmt.Errorf("invalid query: missing segment")
+		if len(m.segs) > 0 {
+			loc.Segment = m.segs[0].ID()
+		} else {
+			return nil, ErrElementNotFound
+		}
 	}
 
 	if !m.hasSegment(loc.Segment) {
@@ -128,18 +135,52 @@ func (m *RawMessage) append(seg RawSegment) {
 	m.segs = append(m.segs, seg)
 }
 
-func (m *RawMessage) JSON(pretty ...bool) ([]byte, error) {
-	msg := jsonMessage{}
+func (m *RawMessage) toJSONMessage() jsonMessage {
+	jmsg := jsonMessage{
+		Segments: make([]jsonSegment, 0, len(m.segs)),
+	}
+	if m.delims != nil {
+		jmsg.Delimiters = string(m.delims.Field) + m.delims.EncodingCharsValue().String()
+	}
 
 	for _, seg := range m.segs {
-		msg.Segments = append(msg.Segments, extractJSONSegment(seg))
+		jseg := extractJSONSegment(seg)
+		if jseg.ID != "" {
+			jmsg.Segments = append(jmsg.Segments, jseg)
+		}
+	}
+
+	return jmsg
+}
+
+func (m *RawMessage) MarshalJSON() ([]byte, error) {
+	if m == nil {
+		return []byte("null"), nil
+	}
+
+	return json.Marshal(m.toJSONMessage())
+}
+
+func (m *RawMessage) UnmarshalJSON(b []byte) error {
+	msg, err := ParseJSON(b)
+	if err != nil {
+		return err
+	}
+
+	*m = *msg
+	return nil
+}
+
+func (m *RawMessage) JSON(pretty ...bool) ([]byte, error) {
+	if m == nil {
+		return []byte("null"), nil
 	}
 
 	if len(pretty) > 0 && pretty[0] {
-		return json.MarshalIndent(msg, "", "  ")
+		return json.MarshalIndent(m.toJSONMessage(), "", "  ")
 	}
 
-	return json.Marshal(msg)
+	return m.MarshalJSON()
 }
 
 func (m *RawMessage) Decode() (*Message, error) {
@@ -224,11 +265,15 @@ func (p *rawParser) Parse() (*RawMessage, error) {
 	}
 
 	rem, err := buf.ReadBytes(delims.Segment.Byte())
-	if err != nil {
+	if err != nil && err != io.EOF {
 		return nil, fmt.Errorf("error reading segment: %w", err)
 	}
 
 	p.parseSeg(rem)
+
+	if err == io.EOF {
+		return p.msg, nil
+	}
 
 	for {
 		b, err := buf.ReadBytes(delims.Segment.Byte())
@@ -249,6 +294,9 @@ func (p *rawParser) Parse() (*RawMessage, error) {
 
 func (p *rawParser) parseSeg(b []byte) {
 	b = bytes.TrimSpace(b)
+	if len(b) == 0 {
+		return
+	}
 	for _, f := range p.delims.Split(b, FieldDelimiter) {
 		for _, r := range p.delims.Split(f, RepetitionDelimiter) {
 			for _, c := range p.delims.Split(r, ComponentDelimiter) {
@@ -298,7 +346,8 @@ func (p *rawParser) commitBuffer(b []byte) {
 }
 
 type jsonMessage struct {
-	Segments []jsonSegment `json:"segments"`
+	Delimiters string        `json:"delimiters,omitempty"`
+	Segments   []jsonSegment `json:"segments"`
 }
 
 type jsonSegment struct {
@@ -307,42 +356,213 @@ type jsonSegment struct {
 }
 
 func extractJSONSegment(seg RawSegment) jsonSegment {
-	id := seg[0][0][0][0]
+	if len(seg) == 0 {
+		return jsonSegment{Fields: make(map[string]any)}
+	}
+
+	id := seg.ID()
 	flds := make(map[string]any)
 
-	for fi, fld := range seg {
-		if fi == 0 {
+	for fi := 1; fi < len(seg); fi++ {
+		fld := seg[fi]
+		numReps := len(fld)
+		if numReps == 0 {
 			continue
 		}
 
-		idx := fmt.Sprintf("%d", fi)
-		for ri, rep := range fld {
-			if len(fld) > 1 {
-				idx = fmt.Sprintf("%s[%d]", idx, ri+1)
+		for ri := 0; ri < numReps; ri++ {
+			rep := fld[ri]
+			numComps := len(rep)
+			if numComps == 0 {
+				continue
 			}
 
-			if len(rep) > 1 {
-				idx = fmt.Sprintf("%s.%d", idx, ri+1)
-			}
-
-			for ci, cmp := range rep {
-				if len(cmp) > 1 {
-					idx = fmt.Sprintf("%s.%d", idx, ci+1)
+			for ci := 0; ci < numComps; ci++ {
+				cmp := rep[ci]
+				numSubs := len(cmp)
+				if numSubs == 0 {
+					continue
 				}
 
-				for si, sub := range cmp {
-					if len(cmp) > 1 {
-						idx = fmt.Sprintf("%s-%d", idx, si+1)
+				for si := 0; si < numSubs; si++ {
+					subStr := string(cmp[si])
+					if len(subStr) == 0 {
+						continue
 					}
 
-					flds[idx] = string(sub)
+					key := formatFieldKey(fi, ri, ci, si, numReps, numComps, numSubs)
+					flds[key] = subStr
 				}
 			}
 		}
 	}
 
 	return jsonSegment{
-		ID:     string(id),
+		ID:     id,
 		Fields: flds,
+	}
+}
+
+func formatFieldKey(fi, ri, ci, si, numReps, numComps, numSubs int) string {
+	var sb strings.Builder
+	sb.WriteString(strconv.Itoa(fi))
+
+	if numReps > 1 {
+		sb.WriteString("[")
+		sb.WriteString(strconv.Itoa(ri))
+		sb.WriteString("]")
+	}
+
+	if numComps > 1 || ci > 0 || numSubs > 1 || si > 0 {
+		sb.WriteString(".")
+		sb.WriteString(strconv.Itoa(ci + 1))
+	}
+
+	if numSubs > 1 || si > 0 {
+		sb.WriteString(".")
+		sb.WriteString(strconv.Itoa(si + 1))
+	}
+
+	return sb.String()
+}
+
+func ReadJSON(r io.Reader) (*RawMessage, error) {
+	b, err := io.ReadAll(r)
+	if err != nil {
+		return nil, err
+	}
+
+	return ParseJSON(b)
+}
+
+var keyRegex = regexp.MustCompile(`^(\d+)(?:\[(\d+)\])?(?:\.(\d+)(?:[\.-](\d+))?)?$`)
+
+func ParseJSON(b []byte) (*RawMessage, error) {
+	var jmsg jsonMessage
+	if err := json.Unmarshal(b, &jmsg); err != nil {
+		return nil, fmt.Errorf("hl7v2: failed to unmarshal json: %w", err)
+	}
+
+	var delims *Delimiters
+	var err error
+	if jmsg.Delimiters != "" {
+		delims, err = ParseDelimiters([]byte(jmsg.Delimiters))
+		if err != nil {
+			delims = DefaultDelimiters()
+		}
+	} else {
+		var msh1, msh2 string
+		for _, seg := range jmsg.Segments {
+			if seg.ID == "MSH" {
+				if v, ok := seg.Fields["1"]; ok {
+					msh1 = fmt.Sprint(v)
+				}
+				if v, ok := seg.Fields["2"]; ok {
+					msh2 = fmt.Sprint(v)
+				}
+				break
+			}
+		}
+		if msh1 != "" && msh2 != "" {
+			delims, err = ParseDelimiters([]byte(msh1 + msh2))
+			if err != nil {
+				delims = DefaultDelimiters()
+			}
+		} else {
+			delims = DefaultDelimiters()
+		}
+	}
+
+	rawSegs := make([]RawSegment, 0, len(jmsg.Segments))
+	for _, jseg := range jmsg.Segments {
+		seg, err := buildRawSegment(jseg)
+		if err != nil {
+			return nil, err
+		}
+		rawSegs = append(rawSegs, seg)
+	}
+
+	return NewRawMessage(delims, rawSegs...), nil
+}
+
+func buildRawSegment(jseg jsonSegment) (RawSegment, error) {
+	var seg RawSegment
+
+	ensureField(&seg, 0)
+	ensureRep(&seg[0], 0)
+	ensureComp(&seg[0][0], 0)
+	ensureSub(&seg[0][0][0], 0)
+	seg[0][0][0][0] = RawSubcomponent(jseg.ID)
+
+	for key, valAny := range jseg.Fields {
+		valStr := fmt.Sprint(valAny)
+
+		fieldIdx, repIdx, compIdx, subIdx, err := parseFieldKey(key)
+		if err != nil {
+			return nil, fmt.Errorf("hl7v2: invalid field key %q in segment %s: %w", key, jseg.ID, err)
+		}
+
+		ensureField(&seg, fieldIdx)
+		ensureRep(&seg[fieldIdx], repIdx)
+		ensureComp(&seg[fieldIdx][repIdx], compIdx-1)
+		ensureSub(&seg[fieldIdx][repIdx][compIdx-1], subIdx-1)
+
+		seg[fieldIdx][repIdx][compIdx-1][subIdx-1] = RawSubcomponent(valStr)
+	}
+
+	return seg, nil
+}
+
+func parseFieldKey(key string) (fieldIdx, repIdx, compIdx, subIdx int, err error) {
+	matches := keyRegex.FindStringSubmatch(key)
+	if matches == nil {
+		return 0, 0, 0, 0, fmt.Errorf("invalid key format")
+	}
+
+	fieldIdx, _ = strconv.Atoi(matches[1])
+
+	repIdx = 0
+	if matches[2] != "" {
+		repIdx, _ = strconv.Atoi(matches[2])
+	}
+
+	compIdx = 1
+	if matches[3] != "" {
+		compIdx, _ = strconv.Atoi(matches[3])
+	}
+
+	subIdx = 1
+	if matches[4] != "" {
+		subIdx, _ = strconv.Atoi(matches[4])
+	}
+
+	if fieldIdx < 1 || repIdx < 0 || compIdx < 1 || subIdx < 1 {
+		return 0, 0, 0, 0, fmt.Errorf("indices must be >= 1 for fields/components/subcomponents, >= 0 for reps")
+	}
+
+	return fieldIdx, repIdx, compIdx, subIdx, nil
+}
+
+func ensureField(seg *RawSegment, fieldIdx int) {
+	for len(*seg) <= fieldIdx {
+		*seg = append(*seg, RawField{})
+	}
+}
+
+func ensureRep(fld *RawField, repIdx int) {
+	for len(*fld) <= repIdx {
+		*fld = append(*fld, RawRepetition{})
+	}
+}
+
+func ensureComp(rep *RawRepetition, compIdx int) {
+	for len(*rep) <= compIdx {
+		*rep = append(*rep, RawComponent{})
+	}
+}
+
+func ensureSub(cmp *RawComponent, subIdx int) {
+	for len(*cmp) <= subIdx {
+		*cmp = append(*cmp, RawSubcomponent{})
 	}
 }

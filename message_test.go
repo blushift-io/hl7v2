@@ -9,7 +9,7 @@ import (
 
 func TestNewMessage(t *testing.T) {
 
-	msg, err := NewMessageFromFile("./fixtures/ORU_R01_1.hl7", FixLineEndings())
+	msg, err := NewMessageFromFile("./test/fixtures/ORU_R01_1.hl7", FixLineEndings())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -41,7 +41,7 @@ func walkElements(root Element) {
 }
 
 func TestMessageGrammar(t *testing.T) {
-	msg, err := NewMessageFromFile("./fixtures/ORM_O01_1.hl7", FixLineEndings())
+	msg, err := NewMessageFromFile("./test/fixtures/ORM_O01_1.hl7", FixLineEndings())
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -21,17 +21,8 @@ type Message struct {
 	header   *MessageHeader
 }
 
-func NewMessage(r io.Reader, opts ...ParserOption) (*Message, error) {
+func ReadMessage(r io.Reader, opts ...ParserOption) (*Message, error) {
 	raw, err := ReadRaw(r, opts...)
-	if err != nil {
-		return nil, err
-	}
-
-	return newMessage(nil, 0, raw)
-}
-
-func NewMessageFromBytes(b []byte, opts ...ParserOption) (*Message, error) {
-	raw, err := ParseRaw(b, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -45,10 +36,19 @@ func NewMessageFromFile(f string, opts ...ParserOption) (*Message, error) {
 		return nil, err
 	}
 
-	return NewMessageFromBytes(b, opts...)
+	return NewMessage(b, opts...)
 }
 
-func newMessage(parent Element, pos int, raw *RawMessage, opts ...ParserOption) (*Message, error) {
+func NewMessage(b []byte, opts ...ParserOption) (*Message, error) {
+	raw, err := ParseRaw(b, opts...)
+	if err != nil {
+		return nil, err
+	}
+
+	return newMessage(nil, 0, raw)
+}
+
+func newMessage(parent Element, pos int, raw *RawMessage) (*Message, error) {
 	msg := &Message{
 		raw:      raw,
 		parent:   parent,

@@ -194,7 +194,7 @@ func newMessageHeader(m *RawMessage) (*MessageHeader, error) {
 	//msh := seg[0]
 
 	var h MessageHeader
-	if err := Unmarshal(m, &h); err != nil {
+	if err := Unmarshal(m.v, &h); err != nil {
 		return nil, err
 	}
 

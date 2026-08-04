@@ -1,8 +1,10 @@
 package tcp
 
 import (
+	"errors"
 	"fmt"
 	"net"
+	"sync"
 	"time"
 )
 
@@ -21,18 +23,20 @@ func (l keepAliveListener) Accept() (net.Conn, error) {
 		return nil, err
 	}
 
-	if err := c.SetKeepAlivePeriod(l.d); err != nil {
-		return nil, err
+	if l.d > 0 {
+		if err := c.SetKeepAlivePeriod(l.d); err != nil {
+			return nil, err
+		}
 	}
 
 	return c, nil
 }
 
 type listener struct {
-	l      []net.Listener
-	close  chan struct{}
-	closed bool
-	conns  chan accepter
+	l         []net.Listener
+	close     chan struct{}
+	closeOnce sync.Once
+	conns     chan accepter
 }
 
 type accepter struct {
@@ -57,34 +61,29 @@ func newListener(l ...net.Listener) (*listener, error) {
 }
 
 func (l *listener) Addr() net.Addr {
+	if l == nil || len(l.l) == 0 {
+		return nil
+	}
 	return l.l[0].Addr()
 }
 
 func (l *listener) Close() error {
-	if l.closed {
+	if l == nil {
 		return nil
 	}
 
-	close(l.close)
-	l.closed = true
+	l.closeOnce.Do(func() {
+		close(l.close)
+	})
 
 	var errs []error
 	for i := range l.l {
-		if err := l.l[i].Close(); err != nil {
+		if err := l.l[i].Close(); err != nil && !errors.Is(err, net.ErrClosed) {
 			errs = append(errs, err)
 		}
 	}
 
-	if len(errs) == 0 {
-		return nil
-	}
-
-	var errMsg string
-	for i := range errs {
-		errMsg += fmt.Sprintf("%s\n", errs[i].Error())
-	}
-
-	return fmt.Errorf("error closing listener: %s", errMsg)
+	return errors.Join(errs...)
 }
 
 func (l *listener) Accept() (net.Conn, error) {
@@ -93,10 +92,9 @@ func (l *listener) Accept() (net.Conn, error) {
 		if ok {
 			return a.conn, a.err
 		}
-
-		return nil, fmt.Errorf("inner listener channel closed")
+		return nil, net.ErrClosed
 	case <-l.close:
-		return nil, fmt.Errorf("listener closed")
+		return nil, net.ErrClosed
 	}
 }
 
@@ -109,6 +107,24 @@ func (l *listener) start() {
 func (l *listener) run(nl net.Listener) {
 	for {
 		conn, err := nl.Accept()
+		if err != nil {
+			select {
+			case <-l.close:
+				return
+			default:
+				a := accepter{conn: conn, err: err}
+				select {
+				case l.conns <- a:
+				case <-l.close:
+					return
+				}
+				if errors.Is(err, net.ErrClosed) {
+					return
+				}
+				continue
+			}
+		}
+
 		a := accepter{
 			conn: conn,
 			err:  err,
@@ -117,10 +133,9 @@ func (l *listener) run(nl net.Listener) {
 		select {
 		case l.conns <- a:
 		case <-l.close:
-			if a.err == nil {
+			if a.conn != nil {
 				a.conn.Close()
 			}
-
 			return
 		}
 	}
