@@ -9,6 +9,7 @@ require (
 	github.com/davecgh/go-spew v1.1.1
 	github.com/google/uuid v1.6.0
 	github.com/magefile/mage v1.13.0
+	github.com/oklog/run v1.2.0
 	github.com/spf13/cast v1.5.0
 	github.com/urfave/cli/v3 v3.10.0
 	golang.org/x/tools v0.6.0
