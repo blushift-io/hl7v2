@@ -99,9 +99,9 @@ func (h *header) Security() string {
 }
 
 type MessageType struct {
-	Code      string
-	Event     string
-	Structure string
+	Code      string `json:"code"`
+	Event     string `json:"event"`
+	Structure string `json:"structure"`
 }
 
 func ParseMessageType(s string, delims *Delimiters) (MessageType, error) {
@@ -179,6 +179,20 @@ type MessageHeader struct {
 	ReceivingResponsibleOrgCode   string      `json:"receiving_responsible_org_code" hl7:"MSH.23"`
 	SendingNetworkAddress         string      `json:"sending_network_address" hl7:"MSH.24"`
 	ReceivingNetworkAddress       string      `json:"receiving_network_address" hl7:"MSH.25"`
+}
+
+func ParseHeader(b []byte) (*MessageHeader, error) {
+	p, err := newRawParser(b, OnlyHeader())
+	if err != nil {
+		return nil, err
+	}
+
+	msg, err := p.Parse()
+	if err != nil {
+		return nil, err
+	}
+
+	return newMessageHeader(msg)
 }
 
 func newMessageHeader(m *RawMessage) (*MessageHeader, error) {
