@@ -31,6 +31,7 @@ export default defineConfig({
           { text: 'Raw Messages (Fast Parser)', link: '/guide/raw-message' },
           { text: 'Structured Messages (Object Model)', link: '/guide/message' },
           { text: 'Query & Grammar Selection', link: '/guide/query-grammar' },
+          { text: 'Schema & Validation', link: '/guide/schema' },
           { text: 'MLLP & Networking', link: '/guide/mllp' }
         ]
       },
