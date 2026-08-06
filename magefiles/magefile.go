@@ -19,3 +19,13 @@ func InstallDeps() error {
 
 	return nil
 }
+
+// DocsDev starts the local VitePress documentation development server.
+func DocsDev() error {
+	return sh.RunV("pnpm", "--prefix", "docs", "run", "dev")
+}
+
+// DocsBuild builds the static documentation site.
+func DocsBuild() error {
+	return sh.RunV("pnpm", "--prefix", "docs", "run", "build")
+}
