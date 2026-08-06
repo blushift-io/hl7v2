@@ -10,9 +10,9 @@ export default defineConfig({
       { text: 'Guide', link: '/guide/getting-started' },
       { text: 'Examples', link: '/guide/examples' },
       {
-        text: 'v0.1.0',
+        text: 'v0.3.0',
         items: [
-          { text: 'v0.1.0 (Latest)', link: '/guide/getting-started' },
+          { text: 'v0.3.0 (Latest)', link: '/guide/getting-started' },
           { text: 'Release Notes', link: '/guide/versioning' }
         ]
       }
