@@ -286,5 +286,10 @@ func (b *HeaderBuilder) Segment(opts ...SegmentBuildOption) *SegmentBuilder {
 		),
 	}, opts...)
 
-	return Segment("MSH", opts...)
+	anyOpts := make([]any, len(opts))
+	for i, o := range opts {
+		anyOpts[i] = o
+	}
+
+	return Segment("MSH", anyOpts...)
 }

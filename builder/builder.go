@@ -91,7 +91,11 @@ func (b *Builder) AddSegment(seg *SegmentBuilder) *Builder {
 
 // Segment creates and appends a new SegmentBuilder with the given ID and options.
 func (b *Builder) Segment(id string, opts ...SegmentBuildOption) *SegmentBuilder {
-	seg := Segment(id, opts...)
+	anyOpts := make([]any, len(opts))
+	for i, o := range opts {
+		anyOpts[i] = o
+	}
+	seg := Segment(id, anyOpts...)
 	b.segments = append(b.segments, seg)
 
 	return seg
