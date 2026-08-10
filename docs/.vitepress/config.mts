@@ -10,9 +10,9 @@ export default defineConfig({
       { text: 'Guide', link: '/guide/getting-started' },
       { text: 'Examples', link: '/guide/examples' },
       {
-        text: 'v0.3.0',
+        text: 'v0.3.1',
         items: [
-          { text: 'v0.3.0 (Latest)', link: '/guide/getting-started' },
+          { text: 'v0.3.1 (Latest)', link: '/guide/getting-started' },
           { text: 'Release Notes', link: '/guide/versioning' }
         ]
       }
@@ -32,6 +32,7 @@ export default defineConfig({
           { text: 'Structured Messages (Object Model)', link: '/guide/message' },
           { text: 'Query & Grammar Selection', link: '/guide/query-grammar' },
           { text: 'Schema & Validation', link: '/guide/schema' },
+          { text: 'Transformers & JS Scripting', link: '/guide/transformers' },
           { text: 'MLLP & Networking', link: '/guide/mllp' }
         ]
       },
