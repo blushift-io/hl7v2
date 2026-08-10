@@ -21,6 +21,7 @@ var (
 	matchSegment = regexp.MustCompile("^([A-Z])([A-Z])([A-Z]|[0-9])$")
 )
 
+// ParseGrammars parses a grammar expression string into a slice of Grammar rules.
 func ParseGrammars(q string) (Grammars, error) {
 	if len(q) == 0 {
 		return nil, fmt.Errorf("grammar query cannot be empty")
@@ -29,6 +30,7 @@ func ParseGrammars(q string) (Grammars, error) {
 	return parseGrammar(q)
 }
 
+// Grammar represents an HL7 v2 message grammar rule for segment structure validation and selection.
 type Grammar struct {
 	ID        string
 	Optional  bool
@@ -37,6 +39,7 @@ type Grammar struct {
 	Children  []Grammar
 }
 
+// Validate verifies whether the provided slice of segment IDs satisfies the grammar rule.
 func (g Grammar) Validate(msg []string) error {
 	idx, ok := matchInSet(g.ID, msg)
 	if !g.Optional && !ok {
@@ -52,6 +55,7 @@ func (g Grammar) Validate(msg []string) error {
 	return nil
 }
 
+// Select extracts matching segment IDs from the provided message slice according to the grammar rule.
 func (g Grammar) Select(msg []string) ([]string, error) {
 	var res []string
 
@@ -76,6 +80,7 @@ func (g Grammar) Select(msg []string) ([]string, error) {
 	return res, nil
 }
 
+// String returns the string representation of the Grammar rule.
 func (g Grammar) String() string {
 	var b strings.Builder
 	if g.Group {
@@ -112,8 +117,10 @@ func (g Grammar) String() string {
 	return b.String()
 }
 
+// Grammars represents a collection of Grammar rules.
 type Grammars []Grammar
 
+// Validate verifies whether the provided slice of segment IDs satisfies all grammar rules in the collection.
 func (g Grammars) Validate(msg []string) error {
 	for _, m := range g {
 		if err := m.Validate(msg); err != nil {
@@ -124,6 +131,7 @@ func (g Grammars) Validate(msg []string) error {
 	return nil
 }
 
+// Select extracts matching segment IDs from the provided message slice according to all grammar rules in the collection.
 func (g Grammars) Select(msg []string) ([]string, error) {
 	var res []string
 	for _, m := range g {
@@ -138,6 +146,7 @@ func (g Grammars) Select(msg []string) ([]string, error) {
 	return res, nil
 }
 
+// String returns the formatted string representation of all grammar rules in the collection.
 func (g Grammars) String() string {
 	j := make([]string, len(g))
 	for i, m := range g {

@@ -1,3 +1,4 @@
+// Package script provides JavaScript-based transformation capabilities for HL7 v2 messages using the Goja ECMAScript engine.
 package script
 
 import (
@@ -36,6 +37,7 @@ func newScript(userFn string) (string, error) {
 	return buf.String(), nil
 }
 
+// NewTransform compiles a JavaScript transformation script into a RawTransform function.
 func NewTransform(script string) (hl7v2.RawTransform, error) {
 	scr, err := newScript(script)
 	if err != nil {

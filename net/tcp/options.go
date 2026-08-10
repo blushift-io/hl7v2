@@ -9,6 +9,7 @@ const (
 	defaultPort = "2525"
 )
 
+// ServerOptions holds configuration settings for a TCP server.
 type ServerOptions struct {
 	Addresses       []string
 	KeepAlivePeriod time.Duration
@@ -18,6 +19,7 @@ type ServerOptions struct {
 	TLSConfig       *tls.Config
 }
 
+// ServerOption defines a function signature for setting ServerOptions.
 type ServerOption func(*ServerOptions)
 
 func defaultServerOptions() *ServerOptions {
@@ -30,6 +32,7 @@ func defaultServerOptions() *ServerOptions {
 	}
 }
 
+// NewServerOptions creates ServerOptions initialized with defaults and updated by options.
 func NewServerOptions(opts ...ServerOption) *ServerOptions {
 	o := defaultServerOptions()
 	for _, opt := range opts {
@@ -39,12 +42,14 @@ func NewServerOptions(opts ...ServerOption) *ServerOptions {
 	return o
 }
 
+// WithAddresses returns a ServerOption that sets the listening addresses for the server.
 func WithAddresses(addrs ...string) ServerOption {
 	return func(o *ServerOptions) {
 		o.Addresses = addrs
 	}
 }
 
+// ConnOptions holds configuration settings for TCP connections.
 type ConnOptions struct {
 	DialRetries       int
 	DialRetryDelay    time.Duration
@@ -56,8 +61,10 @@ type ConnOptions struct {
 	ReceiveBufferWait time.Duration
 }
 
+// ConnOption defines a function signature for setting ConnOptions.
 type ConnOption func(*ConnOptions)
 
+// DefaultConnOptions returns the default ConnOptions.
 func DefaultConnOptions() *ConnOptions {
 	return &ConnOptions{
 		DialRetries:       3,
@@ -67,6 +74,7 @@ func DefaultConnOptions() *ConnOptions {
 	}
 }
 
+// NewConnOptions creates ConnOptions initialized with defaults and updated by options.
 func NewConnOptions(opts ...ConnOption) *ConnOptions {
 	o := DefaultConnOptions()
 	for _, opt := range opts {

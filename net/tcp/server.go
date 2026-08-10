@@ -12,6 +12,7 @@ import (
 	"github.com/blushift-io/hl7v2/mllp"
 )
 
+// Server manages an MLLP TCP server that accepts client connections and handles messages.
 type Server struct {
 	opts      *ServerOptions
 	h         Handler
@@ -22,6 +23,7 @@ type Server struct {
 	closeOnce sync.Once
 }
 
+// NewServer creates a new Server with the specified Handler and options.
 func NewServer(h Handler, opts ...ServerOption) (*Server, error) {
 	if h == nil {
 		return nil, fmt.Errorf("tcp: handler cannot be nil")
@@ -37,6 +39,7 @@ func NewServer(h Handler, opts ...ServerOption) (*Server, error) {
 	}, nil
 }
 
+// Start opens listeners on configured addresses and begins serving incoming connections.
 func (s *Server) Start() error {
 	log.Printf("starting server on %s", s.opts.Addresses)
 
@@ -58,6 +61,7 @@ func (s *Server) Start() error {
 	return s.Serve(l)
 }
 
+// Serve accepts connections on the provided net.Listener and processes them.
 func (s *Server) Serve(l net.Listener) error {
 	s.connL.Lock()
 	s.l = l
@@ -119,6 +123,7 @@ func (s *Server) Serve(l net.Listener) error {
 	}
 }
 
+// Shutdown gracefully stops the server and closes all active client connections.
 func (s *Server) Shutdown() error {
 	s.closeOnce.Do(func() {
 		if s.close != nil {

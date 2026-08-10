@@ -7,21 +7,26 @@ import (
 	"github.com/blushift-io/hl7v2/schema"
 )
 
+// ValidationResult holds the result of a validation operation and any validation errors.
 type ValidationResult struct {
 	Valid  bool
 	Errors []error
 }
 
+// Validator is the interface implemented by types that can validate an HL7 Element.
 type Validator interface {
 	Validate(Element) ValidationResult
 }
 
+// ValidationFunc is an adapter allowing a function to be used as a Validator.
 type ValidationFunc func(Element) ValidationResult
 
+// Validate implements the Validator interface for ValidationFunc.
 func (f ValidationFunc) Validate(e Element) ValidationResult {
 	return f(e)
 }
 
+// ValidateMessageSchema validates an HL7 message against its schema specification.
 func ValidateMessageSchema(el Element) ValidationResult {
 	if el.Type() != ElementMessage {
 		return ValidationResult{false, []error{fmt.Errorf("invalid element type: %s", el.Type())}}
@@ -69,6 +74,7 @@ func ValidateMessageSchema(el Element) ValidationResult {
 	return ValidationResult{true, nil}
 }
 
+// ValidateSegmentSchema validates an HL7 segment against its schema specification.
 func ValidateSegmentSchema(el Element) ValidationResult {
 	seg, ok := el.(*Segment)
 	if !ok {

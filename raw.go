@@ -12,6 +12,7 @@ import (
 	"github.com/blushift-io/hl7v2/query"
 )
 
+// RawMessage represents an unparsed HL7 message consisting of raw segments.
 type RawMessage struct {
 	v      []byte
 	delims *Delimiters
@@ -19,6 +20,7 @@ type RawMessage struct {
 	segs   []RawSegment
 }
 
+// NewRawMessage constructs a RawMessage with the provided delimiters and raw segments.
 func NewRawMessage(delims *Delimiters, segs ...RawSegment) *RawMessage {
 	msg := &RawMessage{
 		delims: delims,
@@ -34,6 +36,7 @@ func NewRawMessage(delims *Delimiters, segs ...RawSegment) *RawMessage {
 	return msg
 }
 
+// ReadRaw reads and parses raw message bytes from an io.Reader.
 func ReadRaw(r io.Reader, opts ...ParserOption) (*RawMessage, error) {
 	b, err := io.ReadAll(r)
 	if err != nil {
@@ -44,6 +47,7 @@ func ReadRaw(r io.Reader, opts ...ParserOption) (*RawMessage, error) {
 
 }
 
+// ParseRaw parses a byte slice into a RawMessage.
 func ParseRaw(b []byte, opts ...ParserOption) (*RawMessage, error) {
 	p, err := newRawParser(b, opts...)
 	if err != nil {
@@ -53,14 +57,17 @@ func ParseRaw(b []byte, opts ...ParserOption) (*RawMessage, error) {
 	return p.Parse()
 }
 
+// Delimiters returns the message delimiters.
 func (m *RawMessage) Delimiters() *Delimiters {
 	return m.delims
 }
 
+// ToMessage converts the RawMessage into a fully parsed Message.
 func (m *RawMessage) ToMessage() (*Message, error) {
 	return newMessage(nil, 0, m)
 }
 
+// Segments returns all raw segments or those matching the provided ID.
 func (m *RawMessage) Segments(id ...string) []RawSegment {
 	if len(id) == 0 {
 		return m.segs
@@ -82,6 +89,7 @@ func (m *RawMessage) hasSegment(id string) bool {
 	return ok
 }
 
+// QueryValue queries a value from the raw message using a location string.
 func (m *RawMessage) QueryValue(q string) (*Value, error) {
 	loc, err := query.ParseLocation(q)
 	if err != nil {
@@ -117,6 +125,7 @@ func (m *RawMessage) QueryValue(q string) (*Value, error) {
 	return v, nil
 }
 
+// Value returns the combined Value of all raw segments in the message.
 func (m *RawMessage) Value() Value {
 	var b [][]byte
 
@@ -153,6 +162,7 @@ func (m *RawMessage) toJSONMessage() jsonMessage {
 	return jmsg
 }
 
+// MarshalJSON marshals the RawMessage into a JSON byte slice.
 func (m *RawMessage) MarshalJSON() ([]byte, error) {
 	if m == nil {
 		return []byte("null"), nil
@@ -161,6 +171,7 @@ func (m *RawMessage) MarshalJSON() ([]byte, error) {
 	return json.Marshal(m.toJSONMessage())
 }
 
+// UnmarshalJSON unmarshals a JSON byte slice into the RawMessage.
 func (m *RawMessage) UnmarshalJSON(b []byte) error {
 	msg, err := ParseJSON(b)
 	if err != nil {
@@ -171,6 +182,7 @@ func (m *RawMessage) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+// JSON formats the RawMessage as a JSON byte slice, optionally indented if pretty is true.
 func (m *RawMessage) JSON(pretty ...bool) ([]byte, error) {
 	if m == nil {
 		return []byte("null"), nil
@@ -183,6 +195,7 @@ func (m *RawMessage) JSON(pretty ...bool) ([]byte, error) {
 	return m.MarshalJSON()
 }
 
+// Decode converts the RawMessage into a fully parsed Message.
 func (m *RawMessage) Decode() (*Message, error) {
 	return newMessage(nil, 0, m)
 }
@@ -430,6 +443,7 @@ func formatFieldKey(fi, ri, ci, si, numReps, numComps, numSubs int) string {
 	return sb.String()
 }
 
+// ReadJSON reads JSON representation from an io.Reader and parses it into a RawMessage.
 func ReadJSON(r io.Reader) (*RawMessage, error) {
 	b, err := io.ReadAll(r)
 	if err != nil {
@@ -441,6 +455,7 @@ func ReadJSON(r io.Reader) (*RawMessage, error) {
 
 var keyRegex = regexp.MustCompile(`^(\d+)(?:\[(\d+)\])?(?:\.(\d+)(?:[\.-](\d+))?)?$`)
 
+// ParseJSON parses a JSON byte slice into a RawMessage.
 func ParseJSON(b []byte) (*RawMessage, error) {
 	var jmsg jsonMessage
 	if err := json.Unmarshal(b, &jmsg); err != nil {

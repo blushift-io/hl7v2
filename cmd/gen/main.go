@@ -1,3 +1,4 @@
+// Package main provides a code generation tool for HL7v2 schema Go code.
 package main
 
 import (

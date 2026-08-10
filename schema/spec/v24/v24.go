@@ -1,3 +1,4 @@
+// Package v24 provides embedded HL7 v2.4 schema specification files and loader.
 package v24
 
 import (
@@ -30,6 +31,7 @@ func init() {
 	}
 }
 
+// LoadSchema registers the HL7 v2.4 schema specification.
 func LoadSchema() error {
 	spec := &schema.JSONSpec{
 		Schema:    version,

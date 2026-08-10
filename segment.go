@@ -7,7 +7,10 @@ import (
 	"github.com/blushift-io/hl7v2/query"
 )
 
+// RawSegmentGroup represents an unparsed group of segments.
 type RawSegmentGroup []RawSegment
+
+// RawSegment represents an unparsed segment containing raw fields.
 type RawSegment []RawField
 
 func (s RawSegment) collect(delims ...*Delimiters) []byte {
@@ -31,6 +34,7 @@ func (s RawSegment) collect(delims ...*Delimiters) []byte {
 
 }
 
+// Query queries the RawSegment at the specified location.
 func (s RawSegment) Query(loc query.Location, delims ...*Delimiters) (*Value, error) {
 	if loc.Field == 0 {
 		val := NewValue(s.collect(delims...))
@@ -44,6 +48,7 @@ func (s RawSegment) Query(loc query.Location, delims ...*Delimiters) (*Value, er
 	return s[loc.Field].Query(loc, delims...)
 }
 
+// ID returns the segment identifier name (e.g., "MSH", "PID").
 func (s RawSegment) ID() string {
 	if len(s) == 0 {
 		return ""
@@ -52,10 +57,12 @@ func (s RawSegment) ID() string {
 	return s[0].String()
 }
 
+// Value wraps the RawSegment bytes in a Value.
 func (s RawSegment) Value(delims ...*Delimiters) Value {
 	return NewValue(s.collect(delims...))
 }
 
+// String converts the RawSegment to its string representation.
 func (s RawSegment) String(delims ...*Delimiters) string {
 	if len(s) == 0 {
 		return ""
@@ -64,6 +71,7 @@ func (s RawSegment) String(delims ...*Delimiters) string {
 	return string(s.collect(delims...))
 }
 
+// Segment represents a parsed HL7 segment containing fields.
 type Segment struct {
 	id       string
 	pos      int
@@ -71,6 +79,7 @@ type Segment struct {
 	children []*Field
 }
 
+// NewSegment creates a new Segment instance.
 func NewSegment(parent Element, pos int, raw RawSegment) *Segment {
 	seg := &Segment{
 		id:       raw.ID(),
@@ -86,14 +95,17 @@ func NewSegment(parent Element, pos int, raw RawSegment) *Segment {
 	return seg
 }
 
+// Type returns the element type for Segment.
 func (s *Segment) Type() ElementType {
 	return ElementSegment
 }
 
+// Name returns the segment identifier name.
 func (s *Segment) Name() string {
 	return s.id
 }
 
+// Delimiters returns the message delimiters.
 func (s *Segment) Delimiters() *Delimiters {
 	if s.parent == nil {
 		return DefaultDelimiters()
@@ -102,6 +114,7 @@ func (s *Segment) Delimiters() *Delimiters {
 	return s.parent.Delimiters()
 }
 
+// Header returns the message header.
 func (s *Segment) Header() *MessageHeader {
 	if s.parent == nil {
 		return nil
@@ -110,22 +123,27 @@ func (s *Segment) Header() *MessageHeader {
 	return s.parent.Header()
 }
 
+// Parent returns the parent element.
 func (s *Segment) Parent() Element {
 	return s.parent
 }
 
+// Children returns the fields as child elements.
 func (s *Segment) Children() []Element {
 	return makeElements(s.children...)
 }
 
+// Length returns the number of fields in the segment.
 func (s *Segment) Length() int {
 	return len(s.children)
 }
 
+// Position returns the 1-indexed position of the segment in the message.
 func (s *Segment) Position() int {
 	return s.pos
 }
 
+// Index returns the segment set ID index if present.
 func (s *Segment) Index() int {
 	if len(s.children) < 2 {
 		return 0
@@ -134,6 +152,7 @@ func (s *Segment) Index() int {
 	return s.children[1].Value().Int()
 }
 
+// Location returns the query Location of the segment.
 func (s *Segment) Location() query.Location {
 	loc := query.Location{}
 	if s == nil {
@@ -153,6 +172,7 @@ func (s *Segment) Location() query.Location {
 	return loc
 }
 
+// Value returns the Value of the segment.
 func (s *Segment) Value(escape ...bool) Value {
 	var b [][]byte
 
@@ -176,6 +196,7 @@ func (s *Segment) Value(escape ...bool) Value {
 	return NewValue(s.Delimiters().Join(b, FieldDelimiter))
 }
 
+// GetLocation resolves an element inside the segment by its location query.
 func (s *Segment) GetLocation(loc query.Location) (Element, error) {
 	if loc.Segment != s.id {
 		return nil, fmt.Errorf("segment mismatch: querying %s, got %s", s.id, loc.Segment)
@@ -188,6 +209,7 @@ func (s *Segment) GetLocation(loc query.Location) (Element, error) {
 	return s.children[loc.Field].GetLocation(loc)
 }
 
+// SetLocation updates the value at the given location inside the segment.
 func (s *Segment) SetLocation(loc query.Location, val Value) error {
 	if loc.Segment != s.id {
 		return fmt.Errorf("segment mismatch: querying %s, got %s", s.id, loc.Segment)
@@ -200,10 +222,12 @@ func (s *Segment) SetLocation(loc query.Location, val Value) error {
 	return s.children[loc.Field].SetLocation(loc, val)
 }
 
+// Encode encodes the segment into its byte representation.
 func (s *Segment) Encode() ([]byte, error) {
 	return s.Value().Bytes(), nil
 }
 
+// Append appends a field element to the segment.
 func (s *Segment) Append(el Element) error {
 	if el.Type() != ElementField {
 		return fmt.Errorf("cannot append type %s to segment", el.Type())
@@ -221,10 +245,12 @@ func (s *Segment) Append(el Element) error {
 	return nil
 }
 
+// Fields returns the child fields in the segment.
 func (s *Segment) Fields() []*Field {
 	return s.children
 }
 
+// Field returns the field at the specified 0-indexed position.
 func (s *Segment) Field(index int) (*Field, error) {
 	if index < 0 || index > len(s.children)-1 {
 		return nil, fmt.Errorf("field %d not found", index)

@@ -5,6 +5,7 @@ import (
 	"fmt"
 )
 
+// JSONSpec contains raw JSON specification data for building an HL7 Schema.
 type JSONSpec struct {
 	Schema    []byte
 	Chapters  []byte
@@ -14,6 +15,7 @@ type JSONSpec struct {
 	Segments  []byte
 }
 
+// MustBuild compiles the JSON specification into a Schema, panicking if an error occurs.
 func (spec *JSONSpec) MustBuild() *Schema {
 	s, err := spec.Build()
 	if err != nil {
@@ -23,6 +25,7 @@ func (spec *JSONSpec) MustBuild() *Schema {
 	return s
 }
 
+// Build parses and compiles the JSON specification into a Schema instance.
 func (spec *JSONSpec) Build() (*Schema, error) {
 	sm := make(map[string]any)
 	if err := json.Unmarshal(spec.Schema, &sm); err != nil {

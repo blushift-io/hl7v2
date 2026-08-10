@@ -1,3 +1,4 @@
+// Package schema provides models and registry capabilities for HL7 v2 specifications, messages, segments, data types, and tables.
 package schema
 
 import (
@@ -12,9 +13,11 @@ import (
 //go:generate enumer -type=TableType,DataTypeType -json -text -sql -yaml -linecomment -output=schema_enums.go
 
 var (
+	// ErrMessageTypeNotFound indicates that a specified message type could not be located in the schema.
 	ErrMessageTypeNotFound = errors.New("message type not found")
 )
 
+// Schema represents an HL7 v2 specification schema containing chapters, tables, data types, messages, and segments.
 type Schema struct {
 	l sync.RWMutex
 
@@ -26,6 +29,7 @@ type Schema struct {
 	segments  map[string]*Segment
 }
 
+// NewSchema creates a new Schema instance for the given HL7 version.
 func NewSchema(v string) *Schema {
 	return &Schema{
 		version:   v,
@@ -37,6 +41,7 @@ func NewSchema(v string) *Schema {
 	}
 }
 
+// AddChapters registers one or more chapters with the schema.
 func (s *Schema) AddChapters(ch ...*Chapter) {
 	s.l.Lock()
 	defer s.l.Unlock()
@@ -47,6 +52,7 @@ func (s *Schema) AddChapters(ch ...*Chapter) {
 	}
 }
 
+// AddTables registers one or more tables with the schema.
 func (s *Schema) AddTables(t ...*Table) {
 	s.l.Lock()
 	defer s.l.Unlock()
@@ -57,6 +63,7 @@ func (s *Schema) AddTables(t ...*Table) {
 	}
 }
 
+// AddDataTypes registers one or more data types with the schema.
 func (s *Schema) AddDataTypes(d ...*DataType) {
 	s.l.Lock()
 	defer s.l.Unlock()
@@ -67,6 +74,7 @@ func (s *Schema) AddDataTypes(d ...*DataType) {
 	}
 }
 
+// AddMessages registers one or more message structures with the schema.
 func (s *Schema) AddMessages(m ...*Message) {
 	s.l.Lock()
 	defer s.l.Unlock()
@@ -77,6 +85,7 @@ func (s *Schema) AddMessages(m ...*Message) {
 	}
 }
 
+// AddSegments registers one or more segment definitions with the schema.
 func (s *Schema) AddSegments(se ...*Segment) {
 	s.l.Lock()
 	defer s.l.Unlock()
@@ -87,10 +96,12 @@ func (s *Schema) AddSegments(se ...*Segment) {
 	}
 }
 
+// Version returns the HL7 specification version of the schema.
 func (s *Schema) Version() string {
 	return s.version
 }
 
+// Chapters returns a sorted slice of all chapters in the schema.
 func (s *Schema) Chapters() []*Chapter {
 	s.l.RLock()
 	defer s.l.RUnlock()
@@ -105,6 +116,7 @@ func (s *Schema) Chapters() []*Chapter {
 	return cs
 }
 
+// Chapter retrieves a chapter by its ID.
 func (s *Schema) Chapter(id string) *Chapter {
 	s.l.RLock()
 	defer s.l.RUnlock()
@@ -112,6 +124,7 @@ func (s *Schema) Chapter(id string) *Chapter {
 	return s.chapters[id]
 }
 
+// Tables returns a sorted slice of all tables in the schema.
 func (s *Schema) Tables() []*Table {
 	s.l.RLock()
 	defer s.l.RUnlock()
@@ -126,6 +139,7 @@ func (s *Schema) Tables() []*Table {
 	return ts
 }
 
+// Table retrieves a table by its ID.
 func (s *Schema) Table(id string) *Table {
 	s.l.RLock()
 	defer s.l.RUnlock()
@@ -133,6 +147,7 @@ func (s *Schema) Table(id string) *Table {
 	return s.tables[id]
 }
 
+// DataTypes returns a sorted slice of all data types in the schema.
 func (s *Schema) DataTypes() []*DataType {
 	s.l.RLock()
 	defer s.l.RUnlock()
@@ -147,6 +162,7 @@ func (s *Schema) DataTypes() []*DataType {
 	return ds
 }
 
+// DataType retrieves a data type by its ID.
 func (s *Schema) DataType(id string) *DataType {
 	s.l.RLock()
 	defer s.l.RUnlock()
@@ -154,6 +170,7 @@ func (s *Schema) DataType(id string) *DataType {
 	return s.dataTypes[id]
 }
 
+// Messages returns a sorted slice of all message definitions in the schema.
 func (s *Schema) Messages() []*Message {
 	s.l.RLock()
 	defer s.l.RUnlock()
@@ -167,6 +184,7 @@ func (s *Schema) Messages() []*Message {
 	return ms
 }
 
+// Message retrieves a message definition by its ID.
 func (s *Schema) Message(id string) *Message {
 	s.l.RLock()
 	defer s.l.RUnlock()
@@ -174,6 +192,7 @@ func (s *Schema) Message(id string) *Message {
 	return s.messages[id]
 }
 
+// Segments returns a sorted slice of all segment definitions in the schema.
 func (s *Schema) Segments() []*Segment {
 	s.l.RLock()
 	defer s.l.RUnlock()
@@ -187,6 +206,7 @@ func (s *Schema) Segments() []*Segment {
 	return ss
 }
 
+// Segment retrieves a segment definition by its ID.
 func (s *Schema) Segment(id string) *Segment {
 	s.l.RLock()
 	defer s.l.RUnlock()
@@ -203,6 +223,7 @@ type jsonSchema struct {
 	Segments  []*Segment  `json:"segments"`
 }
 
+// MarshalJSON serializes the Schema into its JSON representation.
 func (s *Schema) MarshalJSON() ([]byte, error) {
 	return json.Marshal(&jsonSchema{
 		Version:   s.version,

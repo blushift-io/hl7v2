@@ -9,6 +9,7 @@ import (
 	"github.com/blushift-io/hl7v2/schema"
 )
 
+// Message represents a parsed HL7 message containing structured segments and fields.
 type Message struct {
 	raw *RawMessage
 	sch *schema.Message
@@ -21,6 +22,7 @@ type Message struct {
 	header   *MessageHeader
 }
 
+// ReadMessage parses an HL7 message from an io.Reader.
 func ReadMessage(r io.Reader, opts ...ParserOption) (*Message, error) {
 	raw, err := ReadRaw(r, opts...)
 	if err != nil {
@@ -30,6 +32,7 @@ func ReadMessage(r io.Reader, opts ...ParserOption) (*Message, error) {
 	return newMessage(nil, 0, raw)
 }
 
+// NewMessageFromFile reads and parses an HL7 message from a file path.
 func NewMessageFromFile(f string, opts ...ParserOption) (*Message, error) {
 	b, err := os.ReadFile(f)
 	if err != nil {
@@ -39,6 +42,7 @@ func NewMessageFromFile(f string, opts ...ParserOption) (*Message, error) {
 	return NewMessage(b, opts...)
 }
 
+// NewMessage parses an HL7 message from a byte slice.
 func NewMessage(b []byte, opts ...ParserOption) (*Message, error) {
 	raw, err := ParseRaw(b, opts...)
 	if err != nil {
@@ -73,42 +77,52 @@ func newMessage(parent Element, pos int, raw *RawMessage) (*Message, error) {
 	return msg, nil
 }
 
+// Type returns the element type for Message.
 func (m *Message) Type() ElementType {
 	return ElementMessage
 }
 
+// Name returns the message type name.
 func (m *Message) Name() string {
 	return m.header.MessageType().String()
 }
 
+// Delimiters returns the message delimiters.
 func (m *Message) Delimiters() *Delimiters {
 	return m.delims
 }
 
+// Header returns the parsed MessageHeader.
 func (m *Message) Header() *MessageHeader {
 	return m.header
 }
 
+// Parent returns the parent element.
 func (m *Message) Parent() Element {
 	return m.parent
 }
 
+// Children returns the segments of the message as child elements.
 func (m *Message) Children() []Element {
 	return makeElements(m.segments...)
 }
 
+// Length returns the number of segments in the message.
 func (m *Message) Length() int {
 	return len(m.segments)
 }
 
+// Position returns the position of the message.
 func (m *Message) Position() int {
 	return m.pos
 }
 
+// Location returns the location query of the message.
 func (m *Message) Location() query.Location {
 	return query.Location{}
 }
 
+// Value returns the combined Value of the message segments.
 func (m *Message) Value(escape ...bool) Value {
 	var b [][]byte
 
@@ -119,6 +133,7 @@ func (m *Message) Value(escape ...bool) Value {
 	return NewValue(m.delims.Join(b, SegmentDelimiter))
 }
 
+// GetLocation resolves an element in the message by a query Location.
 func (m *Message) GetLocation(loc query.Location) (Element, error) {
 	if loc.Segment == "" {
 		return nil, fmt.Errorf("invalid message query: missing segment")
@@ -145,6 +160,7 @@ func (m *Message) GetLocation(loc query.Location) (Element, error) {
 	return segs[rep-1].GetLocation(loc)
 }
 
+// SetLocation updates the value at the specified query Location.
 func (m *Message) SetLocation(loc query.Location, val Value) error {
 	el, err := m.GetLocation(loc)
 	if err != nil {
@@ -154,6 +170,7 @@ func (m *Message) SetLocation(loc query.Location, val Value) error {
 	return el.SetLocation(loc, val)
 }
 
+// Append appends a segment element to the message.
 func (m *Message) Append(el Element) error {
 	if el.Type() != ElementSegment {
 		return fmt.Errorf("cannot append %s to message", el.Type())
@@ -172,14 +189,17 @@ func (m *Message) Append(el Element) error {
 	return nil
 }
 
+// Encode encodes the message into HL7 wire format bytes.
 func (m *Message) Encode() ([]byte, error) {
 	return m.Value(true).Bytes(), nil
 }
 
+// Raw returns a RawMessage parsed from the current Message bytes.
 func (m *Message) Raw() (*RawMessage, error) {
 	return ParseRaw(m.Value(true).Bytes())
 }
 
+// Query finds an element in the message using a location query string.
 func (m *Message) Query(q string) (Element, error) {
 	loc, err := query.ParseLocation(q)
 	if err != nil {
@@ -189,6 +209,7 @@ func (m *Message) Query(q string) (Element, error) {
 	return m.GetLocation(loc)
 }
 
+// QueryValue retrieves the Value at the given location query string.
 func (m *Message) QueryValue(q string) (*Value, error) {
 	el, err := m.Query(q)
 	if err != nil {
@@ -204,6 +225,7 @@ func (m *Message) QueryValue(q string) (*Value, error) {
 	return &v, nil
 }
 
+// Schema loads the schema specification matching the message header version and type.
 func (m *Message) Schema() (*schema.Message, error) {
 	sch := schema.Open(m.header.VersionID)
 	if sch == nil {
@@ -219,6 +241,7 @@ func (m *Message) Schema() (*schema.Message, error) {
 	return msg, nil
 }
 
+// Select filters elements in the message using a grammar query string.
 func (m *Message) Select(q string) ([]Element, error) {
 	g, err := query.ParseGrammars(q)
 	if err != nil {
@@ -228,6 +251,7 @@ func (m *Message) Select(q string) ([]Element, error) {
 	return m.doSelect(g)
 }
 
+// Segments returns segments matching the specified ID, or all segments if no ID is given.
 func (m *Message) Segments(id ...string) []*Segment {
 	if len(id) > 0 && id[0] != "" {
 		return m.getSegment(id[0])
@@ -236,6 +260,7 @@ func (m *Message) Segments(id ...string) []*Segment {
 	return m.segments
 }
 
+// Segment returns the segment matching the given name and optional position index.
 func (m *Message) Segment(name string, idx ...int) (*Segment, error) {
 	setID := 0
 	if len(idx) > 0 {
@@ -260,10 +285,12 @@ func (m *Message) Segment(name string, idx ...int) (*Segment, error) {
 	return nil, fmt.Errorf("segment '%s' repetition %d not found", name, setID)
 }
 
+// HasSegment checks if the message contains at least one segment with the given ID.
 func (m *Message) HasSegment(id string) bool {
 	return m.segCount[id] > 0
 }
 
+// SegmentList returns a slice of all segment names present in the message.
 func (m *Message) SegmentList() []string {
 	var segs []string
 

@@ -1,3 +1,4 @@
+// Package v21 provides embedded HL7 v2.1 schema specification files and loader.
 package v21
 
 import (
@@ -30,6 +31,7 @@ func init() {
 	}
 }
 
+// LoadSchema registers the HL7 v2.1 schema specification.
 func LoadSchema() error {
 	spec := &schema.JSONSpec{
 		Schema:    version,

@@ -10,6 +10,9 @@ hero:
       text: Get Started
       link: /guide/getting-started
     - theme: alt
+      text: Reference
+      link: https://pkg.go.dev/github.com/blushift-io/hl7v2
+    - theme: alt
       text: View on GitHub
       link: https://github.com/blushift-io/hl7v2
 

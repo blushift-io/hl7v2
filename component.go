@@ -6,6 +6,7 @@ import (
 	"github.com/blushift-io/hl7v2/query"
 )
 
+// RawComponent represents an unparsed HL7 component containing raw subcomponents.
 type RawComponent []RawSubcomponent
 
 func (c RawComponent) collect(delims ...*Delimiters) []byte {
@@ -19,6 +20,7 @@ func (c RawComponent) collect(delims ...*Delimiters) []byte {
 	return d.Join(b, SubcomponentDelimiter)
 }
 
+// String converts the RawComponent to its string representation.
 func (c RawComponent) String(delims ...*Delimiters) string {
 	if len(c) == 0 {
 		return ""
@@ -27,10 +29,12 @@ func (c RawComponent) String(delims ...*Delimiters) string {
 	return string(c.collect(delims...))
 }
 
+// Value wraps the RawComponent bytes in a Value.
 func (c RawComponent) Value(delims ...*Delimiters) Value {
 	return NewValue(c.collect(delims...))
 }
 
+// Query queries the RawComponent at the specified location.
 func (c RawComponent) Query(loc query.Location, delims ...*Delimiters) (*Value, error) {
 	if loc.Subcomponent == 0 {
 		val := NewValue(c.collect(delims...))
@@ -46,12 +50,14 @@ func (c RawComponent) Query(loc query.Location, delims ...*Delimiters) (*Value, 
 	return &val, nil
 }
 
+// Component represents an HL7 component element within a repetition or field.
 type Component struct {
 	parent   Element
 	children []*Subcomponent
 	pos      int
 }
 
+// NewComponent creates a new Component instance with the given parent, position, and raw content.
 func NewComponent(parent Element, pos int, raw RawComponent) *Component {
 	comp := &Component{
 		parent:   parent,
@@ -66,18 +72,22 @@ func NewComponent(parent Element, pos int, raw RawComponent) *Component {
 	return comp
 }
 
+// Type returns the element type for Component.
 func (c *Component) Type() ElementType {
 	return ElementComponent
 }
 
+// Name returns the name of the component.
 func (c *Component) Name() string {
 	return ""
 }
 
+// Delimiters returns the message delimiters.
 func (c *Component) Delimiters() *Delimiters {
 	return c.parent.Delimiters()
 }
 
+// Header returns the message header.
 func (c *Component) Header() *MessageHeader {
 	if c.parent == nil {
 		return nil
@@ -86,22 +96,27 @@ func (c *Component) Header() *MessageHeader {
 	return c.parent.Header()
 }
 
+// Parent returns the parent element.
 func (c *Component) Parent() Element {
 	return c.parent
 }
 
+// Children returns the subcomponents as child elements.
 func (c *Component) Children() []Element {
 	return makeElements(c.children...)
 }
 
+// Length returns the number of subcomponents in the component.
 func (c *Component) Length() int {
 	return len(c.children)
 }
 
+// Position returns the 1-indexed position of the component within its parent.
 func (c *Component) Position() int {
 	return c.pos
 }
 
+// Location returns the query Location of the component.
 func (c *Component) Location() query.Location {
 	loc := query.Location{}
 	if c == nil {
@@ -116,6 +131,7 @@ func (c *Component) Location() query.Location {
 	return loc
 }
 
+// Value returns the Value of the component.
 func (c *Component) Value(escape ...bool) Value {
 	var b [][]byte
 
@@ -133,6 +149,7 @@ func (c *Component) Value(escape ...bool) Value {
 	return NewValue(c.Delimiters().Join(b, SubcomponentDelimiter))
 }
 
+// GetLocation resolves an element inside the component by its location query.
 func (c *Component) GetLocation(loc query.Location) (Element, error) {
 	if c == nil {
 		return nil, fmt.Errorf("component is nil")
@@ -149,6 +166,7 @@ func (c *Component) GetLocation(loc query.Location) (Element, error) {
 	return c.children[loc.Subcomponent-1], nil
 }
 
+// SetLocation updates the value at the given location inside the component.
 func (c *Component) SetLocation(loc query.Location, val Value) error {
 	el, err := c.GetLocation(loc)
 	if err != nil {
@@ -158,6 +176,7 @@ func (c *Component) SetLocation(loc query.Location, val Value) error {
 	return el.SetLocation(loc, val)
 }
 
+// Append appends a subcomponent element to the component.
 func (c *Component) Append(ne Element) error {
 	if ne.Type() != ElementSubcomponent {
 		return fmt.Errorf("cannot append type %s to component", c.Type())
@@ -175,14 +194,17 @@ func (c *Component) Append(ne Element) error {
 	return nil
 }
 
+// Encode encodes the component into its byte representation.
 func (c *Component) Encode() ([]byte, error) {
 	return c.Value().Bytes(), nil
 }
 
+// Subcomponents returns the child subcomponents.
 func (c *Component) Subcomponents() []*Subcomponent {
 	return c.children
 }
 
+// Subcomponent returns the subcomponent at the specified 1-indexed position.
 func (c *Component) Subcomponent(index int) (*Subcomponent, error) {
 	if index < 0 || index > len(c.children) {
 		return nil, fmt.Errorf("subcomponent %d not found", index)

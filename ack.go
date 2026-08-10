@@ -10,18 +10,27 @@ const (
 	msgTypeACK = "ACK"
 )
 
+// AcknowledgmentCode represents an HL7 acknowledgment code.
 type AcknowledgmentCode int
 
 const (
+	// AckUnknown indicates an unknown acknowledgment code.
 	AckUnknown           AcknowledgmentCode = iota //UN
+	// AckApplicationAccept indicates application accept (AA).
 	AckApplicationAccept                           //AA
+	// AckApplicationError indicates application error (AE).
 	AckApplicationError                            //AE
+	// AckApplicationReject indicates application reject (AR).
 	AckApplicationReject                           //AR
+	// AckCommitAccept indicates commit accept (CA).
 	AckCommitAccept                                //CA
+	// AckCommitError indicates commit error (CE).
 	AckCommitError                                 //CE
+	// AckCommitReject indicates commit reject (CR).
 	AckCommitReject                                //CR
 )
 
+// String returns the 2-character string representation of the AcknowledgmentCode.
 func (a AcknowledgmentCode) String() string {
 	switch a {
 	case AckApplicationAccept:
@@ -41,24 +50,39 @@ func (a AcknowledgmentCode) String() string {
 	}
 }
 
+// MessageErrorCode represents an HL7 error condition code used in ERR segments.
 type MessageErrorCode int
 
 const (
+	// MessageErrorAccepted indicates success (0).
 	MessageErrorAccepted                 MessageErrorCode = 0
+	// MessageErrorSegmentSequence indicates a segment sequence error (100).
 	MessageErrorSegmentSequence          MessageErrorCode = 100
+	// MessageErrorRequiredFieldMissing indicates a missing required field (101).
 	MessageErrorRequiredFieldMissing     MessageErrorCode = 101
+	// MessageErrorDataTypeError indicates a data type error (102).
 	MessageErrorDataTypeError            MessageErrorCode = 102
+	// MessageErrorTableValueNotFound indicates a table value was not found (103).
 	MessageErrorTableValueNotFound       MessageErrorCode = 103
+	// MessageErrorUnsupportedMsgType indicates an unsupported message type (200).
 	MessageErrorUnsupportedMsgType       MessageErrorCode = 200
+	// MessageErrorUnsupportedEventCode indicates an unsupported event code (201).
 	MessageErrorUnsupportedEventCode     MessageErrorCode = 201
+	// MessageErrorUnsupportedProcessingID indicates an unsupported processing ID (202).
 	MessageErrorUnsupportedProcessingID  MessageErrorCode = 202
+	// MessageErrorUnsupportedVersionID indicates an unsupported version ID (203).
 	MessageErrorUnsupportedVersionID     MessageErrorCode = 203
+	// MessageErrorUnknownKeyID indicates an unknown key ID (204).
 	MessageErrorUnknownKeyID             MessageErrorCode = 204
+	// MessageErrorDuplicateKeyID indicates a duplicate key ID (205).
 	MessageErrorDuplicateKeyID           MessageErrorCode = 205
+	// MessageErrorAppRecordLocked indicates an application record is locked (206).
 	MessageErrorAppRecordLocked          MessageErrorCode = 206
+	// MessageErrorApplicationInternalError indicates an application internal error (207).
 	MessageErrorApplicationInternalError MessageErrorCode = 207
 )
 
+// Acknowledgement represents an HL7 acknowledgment message structure.
 type Acknowledgement struct {
 	MessageHeader
 	Code             string
@@ -105,6 +129,7 @@ func buildAckHeader(msg []byte) ([]byte, []byte, *Delimiters, error) {
 	return mshBytes, cid, delims, nil
 }
 
+// AckRawMessage generates a raw HL7 ACK message for the given raw HL7 message.
 func AckRawMessage(msg []byte) ([]byte, error) {
 	mshBytes, cid, delims, err := buildAckHeader(msg)
 	if err != nil {
@@ -123,6 +148,7 @@ func AckRawMessage(msg []byte) ([]byte, error) {
 	return out.Bytes(), nil
 }
 
+// NackRawMessage generates a raw HL7 NACK message for the given raw HL7 message.
 func NackRawMessage(msg []byte, code AcknowledgmentCode, errMsg string, cond ...MessageErrorCode) ([]byte, error) {
 	mshBytes, cid, delims, err := buildAckHeader(msg)
 	if err != nil {

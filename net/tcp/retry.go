@@ -2,6 +2,7 @@ package tcp
 
 import "time"
 
+// Retry defines an interface for calculating backoff delays for retry attempts.
 type Retry interface {
 	Backoff(uint64) (time.Duration, bool)
 }

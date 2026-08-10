@@ -13,11 +13,15 @@ import (
 type HeaderType int
 
 const (
+	// HeaderTypeMessage represents an MSH header type.
 	HeaderTypeMessage HeaderType = iota //MSH
+	// HeaderTypeFile represents an FHS header type.
 	HeaderTypeFile                      //FHS
+	// HeaderTypeBatch represents a BHS header type.
 	HeaderTypeBatch                     //BHS
 )
 
+// Trailer returns the corresponding TrailerType for the HeaderType.
 func (t HeaderType) Trailer() TrailerType {
 	switch t {
 	case HeaderTypeFile:
@@ -29,14 +33,19 @@ func (t HeaderType) Trailer() TrailerType {
 	}
 }
 
+// TrailerType is an enum for valid trailer segment types.
 type TrailerType int
 
 const (
+	// TrailerTypeNone indicates no trailer segment.
 	TrailerTypeNone  TrailerType = iota //_
+	// TrailerTypeFile represents an FTS trailer segment type.
 	TrailerTypeFile                     //FTS
+	// TrailerTypeBatch represents a BTS trailer segment type.
 	TrailerTypeBatch                    //BTS
 )
 
+// Header is an interface representing an HL7 message, file, or batch header.
 type Header interface {
 	Type() HeaderType
 	Delimiters() *Delimiters
@@ -48,6 +57,7 @@ type Header interface {
 	Security() string
 }
 
+// NewHeader returns a new Header for the given HeaderType.
 func NewHeader(typ HeaderType) Header {
 	return &header{
 		typ:    typ,
@@ -98,12 +108,14 @@ func (h *header) Security() string {
 	return h.security
 }
 
+// MessageType represents the HL7 message type, trigger event, and structure.
 type MessageType struct {
 	Code      string `json:"code"`
 	Event     string `json:"event"`
 	Structure string `json:"structure"`
 }
 
+// ParseMessageType parses a message type string into a MessageType struct.
 func ParseMessageType(s string, delims *Delimiters) (MessageType, error) {
 	parts := delims.Split([]byte(s), ComponentDelimiter)
 	var code string
@@ -136,6 +148,7 @@ func ParseMessageType(s string, delims *Delimiters) (MessageType, error) {
 	return mt, nil
 }
 
+// String returns the string representation of the MessageType.
 func (t MessageType) String() string {
 	if len(t.Structure) > 0 {
 		return t.Structure
@@ -144,6 +157,7 @@ func (t MessageType) String() string {
 	return fmt.Sprintf("%s_%s", t.Code, t.Event)
 }
 
+// Encode encodes the MessageType into its byte representation using the given delimiters.
 func (t MessageType) Encode(delims *Delimiters) []byte {
 	return delims.Join([][]byte{
 		[]byte(t.Code),
@@ -152,6 +166,7 @@ func (t MessageType) Encode(delims *Delimiters) []byte {
 	}, ComponentDelimiter)
 }
 
+// MessageHeader represents the parsed MSH header fields of an HL7 message.
 type MessageHeader struct {
 	Delimiters                    *Delimiters `json:"delimiters" hl7:"MSH.1"`
 	SendingApplication            string      `json:"sending_application" hl7:"MSH.3"`
@@ -181,6 +196,7 @@ type MessageHeader struct {
 	ReceivingNetworkAddress       string      `json:"receiving_network_address" hl7:"MSH.25"`
 }
 
+// ParseHeader parses an MSH message header from raw message bytes.
 func ParseHeader(b []byte) (*MessageHeader, error) {
 	p, err := newRawParser(b, OnlyHeader())
 	if err != nil {
@@ -215,6 +231,7 @@ func newMessageHeader(m *RawMessage) (*MessageHeader, error) {
 	return &h, nil
 }
 
+// MessageType constructs a MessageType from the MSH header.
 func (h *MessageHeader) MessageType() MessageType {
 	return MessageType{
 		Code:      h.MessageCode,
@@ -223,6 +240,7 @@ func (h *MessageHeader) MessageType() MessageType {
 	}
 }
 
+// MarshalHL7 marshals the MessageHeader into HL7 wire format bytes.
 func (h *MessageHeader) MarshalHL7() ([]byte, error) {
 	panic("not implemented")
 }

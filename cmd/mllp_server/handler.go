@@ -8,6 +8,7 @@ import (
 )
 
 var (
+	// ErrInvalidMsg indicates that an incoming message is not a valid raw HL7 message.
 	ErrInvalidMsg = errors.New("invalid hl7 raw message")
 )
 

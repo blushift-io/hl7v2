@@ -1,3 +1,4 @@
+// Package main implements a server CLI application that receives, processes, saves, and forwards HL7v2 messages via MLLP.
 package main
 
 import (

@@ -1,3 +1,4 @@
+// Package main contains Mage build targets for project development and documentation.
 package main
 
 import (
@@ -8,8 +9,10 @@ var goDeps = map[string]string{
 	"github.com/alvaroloes/enumer": "latest",
 }
 
+// Build executes standard build tasks.
 func Build() {}
 
+// InstallDeps installs required Go tool dependencies for development.
 func InstallDeps() error {
 	for pkg, ver := range goDeps {
 		if err := sh.Run("go", "install", pkg+"@"+ver); err != nil {

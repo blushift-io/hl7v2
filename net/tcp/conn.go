@@ -10,6 +10,7 @@ import (
 	"github.com/blushift-io/hl7v2/mllp"
 )
 
+// Conn represents an MLLP-enabled TCP connection for reading, writing, acknowledging, and nacking HL7 v2 messages.
 type Conn interface {
 	net.Conn
 	WriteMessage(*hl7v2.RawMessage) error
@@ -18,6 +19,7 @@ type Conn interface {
 	NackMessage(msg *hl7v2.RawMessage, code hl7v2.AcknowledgmentCode, errMsg string, cond ...hl7v2.MessageErrorCode) (*hl7v2.RawMessage, error)
 }
 
+// Dial establishes an outbound TCP connection with retry logic and configures MLLP message handling.
 func Dial(ctx context.Context, addr string, opts ...ConnOption) (Conn, error) {
 	options := NewConnOptions(opts...)
 

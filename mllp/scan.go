@@ -7,6 +7,7 @@ import (
 	"os"
 )
 
+// Scan is a bufio.SplitFunc for scanning MLLP framed messages from a byte stream.
 func Scan(b []byte, atEOF bool) (int, []byte, error) {
 	if atEOF && len(b) == 0 {
 		return 0, nil, nil
@@ -28,6 +29,7 @@ func Scan(b []byte, atEOF bool) (int, []byte, error) {
 	return 0, nil, nil
 }
 
+// NewScanner creates a bufio.Scanner configured with the MLLP split function.
 func NewScanner(r io.Reader) *bufio.Scanner {
 	scanner := bufio.NewScanner(r)
 	scanner.Split(Scan)
@@ -35,6 +37,7 @@ func NewScanner(r io.Reader) *bufio.Scanner {
 	return scanner
 }
 
+// NewBufferedScanner creates a bufio.Scanner with a custom buffer size and MLLP split function.
 func NewBufferedScanner(r io.Reader, size int) *bufio.Scanner {
 	scanner := bufio.NewScanner(r)
 	scanner.Buffer(make([]byte, size), size)
@@ -43,6 +46,7 @@ func NewBufferedScanner(r io.Reader, size int) *bufio.Scanner {
 	return scanner
 }
 
+// NewFileScanner creates a bufio.Scanner optimized for reading MLLP messages from an os.File.
 func NewFileScanner(f *os.File) (*bufio.Scanner, error) {
 	size := bufio.MaxScanTokenSize
 	i, err := f.Stat()

@@ -1,3 +1,5 @@
+// Package http provides HTTP handlers and utilities for transmitting and receiving
+// HL7 v2 messages as JSON or ER7 payloads.
 package http
 
 import (
@@ -11,16 +13,19 @@ import (
 	"github.com/blushift-io/hl7v2"
 )
 
+// Message represents a JSON-encapsulated HL7 v2 message payload.
 type Message struct {
 	Data string `json:"data"`
 }
 
+// NewMessage creates a Message containing base64-encoded binary data.
 func NewMessage(data []byte) *Message {
 	enc := base64.StdEncoding.EncodeToString(data)
 
 	return &Message{Data: enc}
 }
 
+// RawMessage decodes the base64 payload and parses it into a RawMessage.
 func (m Message) RawMessage() (*hl7v2.RawMessage, error) {
 	if len(m.Data) == 0 {
 		return nil, nil
@@ -34,6 +39,7 @@ func (m Message) RawMessage() (*hl7v2.RawMessage, error) {
 	return hl7v2.ParseRaw(dec)
 }
 
+// Handle wraps a message handling function into an http.HandlerFunc supporting ER7 and JSON content types.
 func Handle(fn func(ctx context.Context, msg *hl7v2.RawMessage) error) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ct := r.Header.Get("Content-Type")
@@ -87,6 +93,7 @@ func Handle(fn func(ctx context.Context, msg *hl7v2.RawMessage) error) http.Hand
 	})
 }
 
+// WriteResponse writes an HL7 v2 RawMessage to an http.ResponseWriter using ER7 or JSON formatting.
 func WriteResponse(w http.ResponseWriter, contentType string, msg *hl7v2.RawMessage) error {
 	switch contentType {
 	case "x-application/hl7-v2+er7":

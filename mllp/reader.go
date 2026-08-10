@@ -6,6 +6,7 @@ import (
 	"io"
 )
 
+// Read reads and decodes a single MLLP framed message from an io.Reader.
 func Read(r io.Reader) ([]byte, error) {
 	var br *bufio.Reader
 	if v, ok := r.(*bufio.Reader); ok {
@@ -32,16 +33,19 @@ func Read(r io.Reader) ([]byte, error) {
 	return msg, nil
 }
 
+// Reader reads MLLP framed messages from a buffered input stream.
 type Reader struct {
 	b *bufio.Reader
 }
 
+// NewReader creates a Reader wrapping an io.Reader.
 func NewReader(r io.Reader) *Reader {
 	return &Reader{
 		b: bufio.NewReader(r),
 	}
 }
 
+// ReadMessage reads the next MLLP message frame from the input stream.
 func (r *Reader) ReadMessage() ([]byte, error) {
 	var (
 		err error

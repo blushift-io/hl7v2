@@ -5,6 +5,7 @@ import (
 	"strconv"
 )
 
+// Location represents a structured HL7 v2 location within a message, specifying segment, field, repetition, component, and subcomponent positions.
 type Location struct {
 	Segment      string
 	SegmentRep   *int
@@ -14,6 +15,7 @@ type Location struct {
 	Subcomponent int
 }
 
+// ParseLocation parses a location query string into a Location struct.
 func ParseLocation(q string) (Location, error) {
 	l := lex("query", q)
 
@@ -51,6 +53,7 @@ func ParseLocation(q string) (Location, error) {
 	return loc, nil
 }
 
+// String returns the formatted string representation of the Location query.
 func (l Location) String() string {
 	str := ""
 	if len(l.Segment) > 0 {

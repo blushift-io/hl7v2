@@ -1,3 +1,5 @@
+// Package builder provides a fluent API for constructing HL7 v2 messages, segments,
+// fields, repetitions, components, and subcomponents.
 package builder
 
 import (
@@ -8,14 +10,17 @@ import (
 	"github.com/google/uuid"
 )
 
+// BuildOption defines a function signature for configuring a Builder.
 type BuildOption func(*Builder)
 
+// WithHeader configures a Builder with a new header using the specified message type, version, and header options.
 func WithHeader(typ hl7v2.MessageType, ver hl7v2.Version, opts ...HeaderBuildOption) BuildOption {
 	return func(b *Builder) {
 		b.Header(typ, ver, opts...)
 	}
 }
 
+// ApplyHeaderOptions configures header options on the Builder's header, creating a default header builder if one does not exist.
 func ApplyHeaderOptions(opts ...HeaderBuildOption) BuildOption {
 	return func(b *Builder) {
 		if b.hdr == nil {
@@ -28,12 +33,14 @@ func ApplyHeaderOptions(opts ...HeaderBuildOption) BuildOption {
 	}
 }
 
+// Builder constructs HL7 v2 messages with customizable delimiters, headers, and segments.
 type Builder struct {
 	delims   *hl7v2.Delimiters
 	hdr      *HeaderBuilder
 	segments []*SegmentBuilder
 }
 
+// New creates a new Builder initialized with default delimiters and any provided build options.
 func New(opts ...BuildOption) *Builder {
 	b := &Builder{
 		delims:   hl7v2.DefaultDelimiters(),
@@ -47,6 +54,7 @@ func New(opts ...BuildOption) *Builder {
 	return b
 }
 
+// SetDelimiters sets custom delimiters for the Builder and its header builder if present.
 func (b *Builder) SetDelimiters(delims *hl7v2.Delimiters) *Builder {
 	b.delims = delims
 	if b.hdr != nil {
@@ -56,6 +64,7 @@ func (b *Builder) SetDelimiters(delims *hl7v2.Delimiters) *Builder {
 	return b
 }
 
+// Header configures or updates the header for the Builder and returns its HeaderBuilder.
 func (b *Builder) Header(typ hl7v2.MessageType, ver hl7v2.Version, opts ...HeaderBuildOption) *HeaderBuilder {
 	if b.hdr != nil {
 		b.hdr.SetMessageType(typ).SetVersion(ver)
@@ -67,17 +76,20 @@ func (b *Builder) Header(typ hl7v2.MessageType, ver hl7v2.Version, opts ...Heade
 	return b.hdr
 }
 
+// SetHeader sets the HeaderBuilder for the Builder.
 func (b *Builder) SetHeader(hdr *HeaderBuilder) *Builder {
 	b.hdr = hdr
 
 	return b
 }
 
+// AddSegment appends an existing SegmentBuilder to the Builder.
 func (b *Builder) AddSegment(seg *SegmentBuilder) *Builder {
 	b.segments = append(b.segments, seg)
 	return b
 }
 
+// Segment creates and appends a new SegmentBuilder with the given ID and options.
 func (b *Builder) Segment(id string, opts ...SegmentBuildOption) *SegmentBuilder {
 	seg := Segment(id, opts...)
 	b.segments = append(b.segments, seg)
@@ -85,6 +97,7 @@ func (b *Builder) Segment(id string, opts ...SegmentBuildOption) *SegmentBuilder
 	return seg
 }
 
+// GetSegment retrieves the SegmentBuilder matching the given segment ID and repetition index.
 func (b *Builder) GetSegment(id string, rep ...int) *SegmentBuilder {
 	segRep := 0
 	if len(rep) > 0 {
@@ -105,6 +118,7 @@ func (b *Builder) GetSegment(id string, rep ...int) *SegmentBuilder {
 	return nil
 }
 
+// SetLocation assigns a value to a specific query location within the message segments.
 func (b *Builder) SetLocation(loc query.Location, val hl7v2.Value) *Builder {
 	rep := 0
 	if loc.SegmentRep != nil {
@@ -129,11 +143,13 @@ func (b *Builder) SetLocation(loc query.Location, val hl7v2.Value) *Builder {
 	return b.SetLocation(loc, val)
 }
 
+// Build constructs and returns the finalized HL7 v2 Message.
 func (b *Builder) Build() (*hl7v2.Message, error) {
 	raw := b.BuildRaw()
 	return raw.ToMessage()
 }
 
+// BuildRaw constructs and returns the finalized RawMessage.
 func (b *Builder) BuildRaw() *hl7v2.RawMessage {
 	delims := b.delims
 	if b.hdr != nil {
@@ -143,6 +159,7 @@ func (b *Builder) BuildRaw() *hl7v2.RawMessage {
 	return hl7v2.NewRawMessage(delims, b.BuildRawSegements()...)
 }
 
+// BuildRawSegements constructs and returns a slice of RawSegment items for all header and body segments.
 func (b *Builder) BuildRawSegements() []hl7v2.RawSegment {
 	var segs []hl7v2.RawSegment
 

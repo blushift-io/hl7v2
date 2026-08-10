@@ -8,7 +8,9 @@ import (
 )
 
 var (
+	// ErrEncodingTooShort is returned when encoding characters are fewer than 5 bytes.
 	ErrEncodingTooShort = errors.New("invalid delimiters, encoding chars must be at least 5 bytes")
+	// ErrEncodingInvalid is returned when duplicate characters are found in encoding chars.
 	ErrEncodingInvalid  = errors.New("invalid encoding chars")
 )
 
@@ -18,13 +20,21 @@ var (
 type DelimiterType int
 
 const (
+	// InvalidDelimiter represents an invalid delimiter.
 	InvalidDelimiter      DelimiterType = iota //invalid
+	// SegmentDelimiter represents the segment delimiter character (\r).
 	SegmentDelimiter                           //segment
+	// FieldDelimiter represents the field delimiter character (|).
 	FieldDelimiter                             //field
+	// RepetitionDelimiter represents the field repetition delimiter character (~).
 	RepetitionDelimiter                        //repetition
+	// ComponentDelimiter represents the component delimiter character (^).
 	ComponentDelimiter                         //component
+	// SubcomponentDelimiter represents the subcomponent delimiter character (&).
 	SubcomponentDelimiter                      //subcomponent
+	// EscapeDelimiter represents the escape character (\).
 	EscapeDelimiter                            //escape
+	// TruncationDelimiter represents the truncation delimiter character (#).
 	TruncationDelimiter                        //truncation
 
 	segmentDelimiter = byte('\r')
@@ -33,14 +43,17 @@ const (
 // Delimiter is a byte representation of a single delimiter
 type Delimiter byte
 
+// String returns the delimiter as a string.
 func (d Delimiter) String() string {
 	return string(d)
 }
 
+// Byte returns the delimiter as a byte.
 func (d Delimiter) Byte() byte {
 	return byte(d)
 }
 
+// Bytes returns the delimiter as a byte slice.
 func (d Delimiter) Bytes() []byte {
 	return []byte{byte(d)}
 }
@@ -56,6 +69,7 @@ type Delimiters struct {
 	Truncation   Delimiter
 }
 
+// SetDelimiter is a functional option for configuring Delimiters.
 type SetDelimiter func(*Delimiters)
 
 // DefaultDelimiters returns the default delimiters
@@ -71,6 +85,7 @@ func DefaultDelimiters() *Delimiters {
 	}
 }
 
+// NewDelimiters creates a new Delimiters instance with default settings and applies any functional options.
 func NewDelimiters(setters ...SetDelimiter) *Delimiters {
 	delims := DefaultDelimiters()
 
@@ -81,42 +96,49 @@ func NewDelimiters(setters ...SetDelimiter) *Delimiters {
 	return delims
 }
 
+// SetSegment returns an option function setting the segment delimiter.
 func SetSegment(delim Delimiter) SetDelimiter {
 	return func(d *Delimiters) {
 		d.Segment = delim
 	}
 }
 
+// SetField returns an option function setting the field delimiter.
 func SetField(delim Delimiter) SetDelimiter {
 	return func(d *Delimiters) {
 		d.Field = delim
 	}
 }
 
+// SetComponent returns an option function setting the component delimiter.
 func SetComponent(delim Delimiter) SetDelimiter {
 	return func(d *Delimiters) {
 		d.Component = delim
 	}
 }
 
+// SetRepetition returns an option function setting the repetition delimiter.
 func SetRepetition(delim Delimiter) SetDelimiter {
 	return func(d *Delimiters) {
 		d.Repetition = delim
 	}
 }
 
+// SetSubcomponent returns an option function setting the subcomponent delimiter.
 func SetSubcomponent(delim Delimiter) SetDelimiter {
 	return func(d *Delimiters) {
 		d.Subcomponent = delim
 	}
 }
 
+// SetTruncation returns an option function setting the truncation delimiter.
 func SetTruncation(delim Delimiter) SetDelimiter {
 	return func(d *Delimiters) {
 		d.Truncation = delim
 	}
 }
 
+// ParseDelimiters parses delimiters from an HL7 encoding characters byte slice.
 func ParseDelimiters(b []byte) (*Delimiters, error) {
 	delims := DefaultDelimiters()
 
@@ -147,6 +169,7 @@ func ParseDelimiters(b []byte) (*Delimiters, error) {
 	return delims, nil
 }
 
+// Join joins byte slices using the specified delimiter type.
 func (d *Delimiters) Join(b [][]byte, typ DelimiterType) []byte {
 	var delim Delimiter
 	switch typ {
@@ -171,6 +194,7 @@ func (d *Delimiters) Join(b [][]byte, typ DelimiterType) []byte {
 	return bytes.Join(b, delim.Bytes())
 }
 
+// Split splits a byte slice using the specified delimiter type.
 func (d *Delimiters) Split(b []byte, typ DelimiterType) [][]byte {
 	var delim Delimiter
 	switch typ {
@@ -195,14 +219,17 @@ func (d *Delimiters) Split(b []byte, typ DelimiterType) [][]byte {
 	return bytes.Split(b, delim.Bytes())
 }
 
+// Escaper creates a new Escaper configured with these delimiters.
 func (d *Delimiters) Escaper() *Escaper {
 	return NewEscaper(d)
 }
 
+// FieldSeparatorValue returns the field delimiter as a Value.
 func (d *Delimiters) FieldSeparatorValue() Value {
 	return NewValue(d.Field.Bytes())
 }
 
+// EncodingCharsValue returns the encoding characters as a Value.
 func (d *Delimiters) EncodingCharsValue() Value {
 	b := &bytes.Buffer{}
 	b.Write(d.Component.Bytes())
@@ -213,12 +240,14 @@ func (d *Delimiters) EncodingCharsValue() Value {
 	return NewValue(b.Bytes())
 }
 
+// Escaper handles escaping and unescaping of HL7 delimiter characters.
 type Escaper struct {
 	delims   *Delimiters
 	escape   strings.Replacer
 	unescape strings.Replacer
 }
 
+// NewEscaper returns a new Escaper configured with the provided delimiters.
 func NewEscaper(delims *Delimiters) *Escaper {
 	wrap := func(s string) string {
 		return fmt.Sprintf("%s%s%s", delims.Escape.String(), s, delims.Escape.String())
@@ -247,10 +276,12 @@ func NewEscaper(delims *Delimiters) *Escaper {
 	}
 }
 
+// Escape escapes HL7 delimiter characters in the input byte slice.
 func (e *Escaper) Escape(b []byte) []byte {
 	return []byte(e.escape.Replace(string(b)))
 }
 
+// Unescape unescapes HL7 escape sequences in the input byte slice.
 func (e *Escaper) Unescape(b []byte) []byte {
 	return []byte(e.unescape.Replace(string(b)))
 }

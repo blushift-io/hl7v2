@@ -1,3 +1,4 @@
+// Package generator provides code generation tools for creating version-specific HL7v2 Go structures from schema specifications.
 package generator
 
 import (
@@ -31,13 +32,19 @@ import (
 //go:embed templates/*.gotmpl
 var embeddedTemplates embed.FS
 
+// SpecType represents the type of HL7v2 schema specification entity.
 type SpecType int
 
 const (
+	// SpecTypeUnknown indicates an unspecified schema entity type.
 	SpecTypeUnknown SpecType = iota
+	// SpecTypeDatatype indicates a data type schema entity.
 	SpecTypeDatatype
+	// SpecTypeTable indicates a table schema entity.
 	SpecTypeTable
+	// SpecTypeSegment indicates a segment schema entity.
 	SpecTypeSegment
+	// SpecTypeMessage indicates a message schema entity.
 	SpecTypeMessage
 )
 
@@ -51,11 +58,13 @@ var goKeywords = map[string]bool{
 	"continue": true, "for": true, "import": true, "return": true, "var": true,
 }
 
+// Deduper tracks generated struct field and type names to avoid name collisions.
 type Deduper struct {
 	used map[string]int
 	seen map[string]bool
 }
 
+// NewDeduper creates a new Deduper instance.
 func NewDeduper() *Deduper {
 	return &Deduper{
 		used: make(map[string]int),
@@ -63,6 +72,7 @@ func NewDeduper() *Deduper {
 	}
 }
 
+// Name generates a sanitized, unique Go identifier for a raw string name.
 func (d *Deduper) Name(raw string) string {
 	base := SanitizeIdentifier(raw)
 	candidate := base
@@ -78,14 +88,17 @@ func (d *Deduper) Name(raw string) string {
 	return candidate
 }
 
+// ParamDeduper manages parameter name deduplication.
 type ParamDeduper struct {
 	used map[string]int
 }
 
+// NewParamDeduper creates a new ParamDeduper instance.
 func NewParamDeduper() *ParamDeduper {
 	return &ParamDeduper{used: make(map[string]int)}
 }
 
+// Name returns a unique parameter name by appending a numeric suffix if repeated.
 func (d *ParamDeduper) Name(raw string) string {
 	d.used[raw]++
 	count := d.used[raw]
@@ -95,6 +108,7 @@ func (d *ParamDeduper) Name(raw string) string {
 	return fmt.Sprintf("%s%d", raw, count)
 }
 
+// SanitizeIdentifier cleans and formats a raw string into a valid exported Go identifier.
 func SanitizeIdentifier(s string) string {
 	s = strings.TrimSpace(s)
 	if s == "" {
@@ -161,6 +175,7 @@ func uncapitalizeIdentifier(s string) string {
 	return res
 }
 
+// CommentLines formats a multi-line string into Go comment lines prefixed with //.
 func CommentLines(s string) string {
 	s = strings.TrimSpace(s)
 	if s == "" {
@@ -173,18 +188,21 @@ func CommentLines(s string) string {
 	return strings.Join(lines, "\n")
 }
 
+// PackageName converts a version string like "v2.5.1" into a Go package name like "v251".
 func PackageName(ver string) string {
 	ver = strings.TrimPrefix(ver, "v")
 	ver = strings.ReplaceAll(ver, ".", "")
 	return "v" + ver
 }
 
+// Generator handles code generation for a specific HL7v2 version schema.
 type Generator struct {
 	ver    hl7v2.Version
 	schema *schema.Schema
 	opts   *Options
 }
 
+// New creates a new Generator for the specified HL7v2 version string and options.
 func New(ver string, opts ...Option) (*Generator, error) {
 	v := hl7v2.GetVersion(ver)
 	if v == hl7v2.VersionUnknown {
@@ -205,6 +223,7 @@ func New(ver string, opts ...Option) (*Generator, error) {
 	}, nil
 }
 
+// DatatypeFieldModel holds template data for a field within a data type.
 type DatatypeFieldModel struct {
 	GoName      string
 	GoType      string
@@ -217,6 +236,7 @@ type DatatypeFieldModel struct {
 	IsSlice     bool
 }
 
+// DatatypeModel holds template data for an HL7v2 data type definition.
 type DatatypeModel struct {
 	ID          string
 	Name        string
@@ -225,12 +245,14 @@ type DatatypeModel struct {
 	Fields      []DatatypeFieldModel
 }
 
+// DatatypesFileData holds template rendering data for a datatypes.go file.
 type DatatypesFileData struct {
 	PackageName         string
-	Datatypes          []DatatypeModel
+	Datatypes           []DatatypeModel
 	HasComplexDatatypes bool
 }
 
+// SegmentFieldModel holds template data for a field within a segment.
 type SegmentFieldModel struct {
 	GoName      string
 	GoType      string
@@ -242,6 +264,7 @@ type SegmentFieldModel struct {
 	MethodName  string
 }
 
+// MSHInitModel holds template data for MSH segment initialization logic.
 type MSHInitModel struct {
 	FieldSeparatorName     string
 	EncodingCharactersName string
@@ -256,6 +279,7 @@ type MSHInitModel struct {
 	VersionIDExpr          string
 }
 
+// SegmentModel holds template data for an HL7v2 segment definition.
 type SegmentModel struct {
 	ID          string
 	Name        string
@@ -265,11 +289,13 @@ type SegmentModel struct {
 	MSHInit     MSHInitModel
 }
 
+// SegmentsFileData holds template rendering data for a segments.go file.
 type SegmentsFileData struct {
 	PackageName string
 	Segments    []SegmentModel
 }
 
+// MessageFieldModel holds template data for a field within a message.
 type MessageFieldModel struct {
 	GoName     string
 	GoType     string
@@ -280,11 +306,13 @@ type MessageFieldModel struct {
 	MethodName string
 }
 
+// GroupModel holds template data for a message group structure.
 type GroupModel struct {
 	StructName string
 	Fields     []MessageFieldModel
 }
 
+// MessageModel holds template data for an HL7v2 message definition.
 type MessageModel struct {
 	ID          string
 	Name        string
@@ -294,21 +322,25 @@ type MessageModel struct {
 	MSHInitExpr string
 }
 
+// MessagesFileData holds template rendering data for a messages.go file.
 type MessagesFileData struct {
 	PackageName string
 	Messages    []MessageModel
 }
 
+// RegistryFileData holds template rendering data for a registry.go file.
 type RegistryFileData struct {
 	PackageName string
 	VersionEnum string
 }
 
+// MessageTestsFileData holds template rendering data for a messages_test.go file.
 type MessageTestsFileData struct {
 	PackageName string
 	Version     string
 }
 
+// TableEntryModel holds template data for an entry within a table.
 type TableEntryModel struct {
 	ConstName          string
 	Value              string
@@ -317,6 +349,7 @@ type TableEntryModel struct {
 	Comment            string
 }
 
+// TableModel holds template data for an HL7v2 table definition.
 type TableModel struct {
 	ID          string
 	TypeName    string
@@ -325,6 +358,7 @@ type TableModel struct {
 	Entries     []TableEntryModel
 }
 
+// TablesFileData holds template rendering data for a tables.go file.
 type TablesFileData struct {
 	PackageName string
 	Tables      []TableModel
@@ -336,6 +370,7 @@ type TablesFileData struct {
 	HasCNE      bool
 }
 
+// GenerateAll generates all Go source files for the configured version under outputBase.
 func (g *Generator) GenerateAll(outputBase string) error {
 	pkgName := PackageName(g.ver.String())
 	targetDir := filepath.Join(outputBase, pkgName)
@@ -365,6 +400,7 @@ func (g *Generator) GenerateAll(outputBase string) error {
 	return nil
 }
 
+// GenerateDatatypes generates the datatypes.go file for a target directory and package.
 func (g *Generator) GenerateDatatypes(targetDir, pkgName string) error {
 	var models []DatatypeModel
 	for _, dt := range g.schema.DataTypes() {
@@ -459,6 +495,7 @@ func (g *Generator) GenerateDatatypes(targetDir, pkgName string) error {
 	return renderAndWrite("templates/datatypes.gotmpl", data, filepath.Join(targetDir, "datatypes.go"))
 }
 
+// GenerateSegments generates the segments.go file for a target directory and package.
 func (g *Generator) GenerateSegments(targetDir, pkgName string) error {
 	var models []SegmentModel
 	for _, seg := range g.schema.Segments() {
@@ -670,6 +707,7 @@ func (c *groupCollector) addGroup(msgID string, groupDeduper *Deduper, ms *schem
 	return structName
 }
 
+// GenerateMessages generates the messages.go file for a target directory and package.
 func (g *Generator) GenerateMessages(targetDir, pkgName string) error {
 	var mshMsgType string
 	mshSeg := g.schema.Segment("MSH")
@@ -790,6 +828,7 @@ func (g *Generator) GenerateMessages(targetDir, pkgName string) error {
 	return renderAndWrite("templates/messages.gotmpl", data, filepath.Join(targetDir, "messages.go"))
 }
 
+// GenerateRegistry generates the registry.go file for a target directory and package.
 func (g *Generator) GenerateRegistry(targetDir, pkgName string) error {
 	verEnum := "Version" + strings.ReplaceAll(g.ver.String(), ".", "")
 	data := RegistryFileData{
@@ -800,6 +839,7 @@ func (g *Generator) GenerateRegistry(targetDir, pkgName string) error {
 	return renderAndWrite("templates/registry.gotmpl", data, filepath.Join(targetDir, "registry.go"))
 }
 
+// GenerateTables generates the tables.go file for a target directory and package.
 func (g *Generator) GenerateTables(targetDir, pkgName string) error {
 	var models []TableModel
 	tableDeduper := NewDeduper()
@@ -875,6 +915,7 @@ func (g *Generator) GenerateTables(targetDir, pkgName string) error {
 	return renderAndWrite("templates/tables.gotmpl", data, filepath.Join(targetDir, "tables.go"))
 }
 
+// GenerateMessageTests generates the messages_test.go file for a target directory and package.
 func (g *Generator) GenerateMessageTests(targetDir, pkgName string) error {
 	data := MessageTestsFileData{
 		PackageName: pkgName,

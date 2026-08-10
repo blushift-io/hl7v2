@@ -1,3 +1,5 @@
+// Package tcp implements TCP networking for HL7 v2 messages, including MLLP framing,
+// connection management, message handling, and server lifecycle options.
 package tcp
 
 import (
@@ -8,25 +10,30 @@ import (
 	"github.com/blushift-io/hl7v2"
 )
 
+// SendOptions holds options for sending an HL7 v2 message over TCP.
 type SendOptions struct {
 	WaitForAck bool
 	Timeout    time.Duration
 }
 
+// SendOption defines a function signature for setting SendOptions.
 type SendOption func(*SendOptions)
 
+// WaitForAck returns a SendOption that specifies whether to wait for an acknowledgment response.
 func WaitForAck() SendOption {
 	return func(o *SendOptions) {
 		o.WaitForAck = true
 	}
 }
 
+// WithTimeout returns a SendOption that configures the operation timeout.
 func WithTimeout(d time.Duration) SendOption {
 	return func(o *SendOptions) {
 		o.Timeout = d
 	}
 }
 
+// Send connects to a target host, sends a raw HL7 v2 message over MLLP, and optionally waits for an acknowledgment.
 func Send(ctx context.Context, host string, msg *hl7v2.RawMessage, opts ...SendOption) (*hl7v2.RawMessage, error) {
 	if msg == nil {
 		return nil, fmt.Errorf("tcp: message cannot be nil")

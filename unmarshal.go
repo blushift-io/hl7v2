@@ -8,6 +8,7 @@ import (
 	"time"
 )
 
+// Unmarshal unmarshals HL7 wire format bytes into the provided struct pointer or Unmarshaler.
 func Unmarshal(b []byte, v any) error {
 	if v == nil {
 		return fmt.Errorf("hl7v2: Unmarshal target cannot be nil")
