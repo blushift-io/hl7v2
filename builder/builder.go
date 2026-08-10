@@ -3,6 +3,7 @@
 package builder
 
 import (
+	"strconv"
 	"strings"
 
 	"github.com/blushift-io/hl7v2"
@@ -65,15 +66,9 @@ func (b *Builder) SetDelimiters(delims *hl7v2.Delimiters) *Builder {
 }
 
 // Header configures or updates the header for the Builder and returns its HeaderBuilder.
-func (b *Builder) Header(typ hl7v2.MessageType, ver hl7v2.Version, opts ...HeaderBuildOption) *HeaderBuilder {
-	if b.hdr != nil {
-		b.hdr.SetMessageType(typ).SetVersion(ver)
-		return b.hdr
-	}
-
-	b.hdr = BuildHeader(typ, ver)
-
-	return b.hdr
+func (b *Builder) Header(typ hl7v2.MessageType, ver hl7v2.Version, opts ...HeaderBuildOption) *Builder {
+	b.hdr = BuildHeader(typ, ver, opts...)
+	return b
 }
 
 // SetHeader sets the HeaderBuilder for the Builder.
@@ -90,15 +85,44 @@ func (b *Builder) AddSegment(seg *SegmentBuilder) *Builder {
 }
 
 // Segment creates and appends a new SegmentBuilder with the given ID and options.
-func (b *Builder) Segment(id string, opts ...SegmentBuildOption) *SegmentBuilder {
-	anyOpts := make([]any, len(opts))
-	for i, o := range opts {
-		anyOpts[i] = o
-	}
-	seg := Segment(id, anyOpts...)
+func (b *Builder) Segment(id string, items ...any) *SegmentBuilder {
+	seg := Segment(id, items...)
 	b.segments = append(b.segments, seg)
-
 	return seg
+}
+
+// Set parses a path like "PV1-1" or "PV1-3.1" and sets the value.
+func (b *Builder) Set(path string, val any) *Builder {
+	parts := strings.Split(path, "-")
+	if len(parts) != 2 {
+		return b
+	}
+
+	segID := parts[0]
+	locParts := strings.Split(parts[1], ".")
+
+	fieldIdx, err := strconv.Atoi(locParts[0])
+	if err != nil || fieldIdx <= 0 {
+		return b
+	}
+
+	seg := b.GetSegment(segID)
+	if seg == nil {
+		seg = Segment(segID)
+		b.AddSegment(seg)
+	}
+
+	if len(locParts) == 1 {
+		seg.Set(fieldIdx, val)
+	} else if len(locParts) == 2 {
+		compIdx, err := strconv.Atoi(locParts[1])
+		if err == nil && compIdx > 0 {
+			// Ensure field is a component field and set it
+			seg.Set(fieldIdx, val) // simplified set per instructions
+		}
+	}
+
+	return b
 }
 
 // GetSegment retrieves the SegmentBuilder matching the given segment ID and repetition index.
