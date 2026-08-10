@@ -1,8 +1,9 @@
 package hl7v2
 
 type ParserOptions struct {
-	preParse  []RawTransform
-	postparse []RawTransform
+	preParse   []RawTransform
+	postparse  []RawTransform
+	onlyHeader bool
 }
 
 type ParserOption func(*ParserOptions)
@@ -26,5 +27,11 @@ func FixLineEndings() ParserOption {
 func PreParse(t RawTransform) ParserOption {
 	return func(options *ParserOptions) {
 		options.preParse = append(options.preParse, t)
+	}
+}
+
+func OnlyHeader() ParserOption {
+	return func(options *ParserOptions) {
+		options.onlyHeader = true
 	}
 }

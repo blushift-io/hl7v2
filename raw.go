@@ -275,6 +275,10 @@ func (p *rawParser) Parse() (*RawMessage, error) {
 		return p.msg, nil
 	}
 
+	if p.opts.onlyHeader {
+		return p.msg, nil
+	}
+
 	for {
 		b, err := buf.ReadBytes(delims.Segment.Byte())
 		if err != nil {

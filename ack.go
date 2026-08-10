@@ -74,7 +74,7 @@ func buildAckHeader(msg []byte) ([]byte, []byte, *Delimiters, error) {
 		return nil, nil, nil, fmt.Errorf("no MSH present")
 	}
 
-	msg = replaceLineEndings(msg)
+	msg = ReplaceLineEndings(msg)
 	enc, err := getEncodingChars(msg)
 	if err != nil {
 		return nil, nil, nil, err

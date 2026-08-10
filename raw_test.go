@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"os"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestParseRawMessage(t *testing.T) {
@@ -39,14 +41,12 @@ func TestQueryRawMessage(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	v, err := m.QueryValue("PV1.3")
+	v, err := m.QueryValue("PV1.3[0].1")
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	if v.String() == "" {
-		t.Error("expected non-empty value for PV1.3")
-	}
+	assert.Equal(t, "2000", v.String())
 }
 
 func TestRawMessage_MarshalJSON(t *testing.T) {
