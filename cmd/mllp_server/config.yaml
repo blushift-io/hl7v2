@@ -1,0 +1,6 @@
+port: 2525
+actions:
+  - type: save
+    options:
+      output-path: ./output
+      filename-template: '{{.TSA.1.1}}.hl7'
