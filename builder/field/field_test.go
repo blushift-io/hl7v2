@@ -63,4 +63,19 @@ func TestFieldBuilders(t *testing.T) {
 			t.Fatalf("expected empty field when false")
 		}
 	})
+
+	t.Run("Repeated with Conditional Empty", func(t *testing.T) {
+		f := field.Repeated(
+			field.If(true, "First").Build(),
+			field.If(false, "Second").Build(), // This produces empty RawField
+			field.If(true, "Third").Build(),
+		)
+		raw := f.Build()
+		if len(raw) != 2 {
+			t.Fatalf("expected 2 repetitions, got %d", len(raw))
+		}
+		if string(raw[0][0][0]) != "First" || string(raw[1][0][0]) != "Third" {
+			t.Fatalf("expected First and Third, got %v", raw)
+		}
+	})
 }

@@ -69,18 +69,23 @@ func Components(comps ...any) *Builder {
 }
 
 func Repeated(reps ...any) *Builder {
-	rawReps := make(hl7v2.RawField, len(reps))
-	for i, r := range reps {
+	var rawReps hl7v2.RawField
+	for _, r := range reps {
 		switch v := r.(type) {
-		case *Builder:
-			if len(v.rawhl7) > 0 {
-				rawReps[i] = v.rawhl7[0]
+		case interface{ Build() hl7v2.RawField }:
+			raw := v.Build()
+			if len(raw) > 0 {
+				rawReps = append(rawReps, raw[0])
+			}
+		case hl7v2.RawField:
+			if len(v) > 0 {
+				rawReps = append(rawReps, v[0])
 			}
 		default:
 			str := fmt.Sprintf("%v", r)
-			rawReps[i] = hl7v2.RawRepetition{
+			rawReps = append(rawReps, hl7v2.RawRepetition{
 				hl7v2.RawComponent{hl7v2.RawSubcomponent(str)},
-			}
+			})
 		}
 	}
 

@@ -23,6 +23,10 @@ func When(cond bool, val any) *ConditionalElse {
 	return &ConditionalElse{builder: NewBuilder(nil), cond: false}
 }
 
+func If(cond bool, val any) *ConditionalElse {
+	return When(cond, val)
+}
+
 func (ce *ConditionalElse) Else(val any) *Builder {
 	if ce.cond {
 		return ce.builder
