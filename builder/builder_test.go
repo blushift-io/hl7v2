@@ -130,7 +130,8 @@ func TestFullBuilderFlow(t *testing.T) {
 
 	b.Set("PV1-1", 1).
 		Set("PV1-2", "I").
-		Set("PV1-3.1", "ROOM1")
+		Set("PV1-3.1", "ROOM1").
+		Set("PV1-3.2", "BED2")
 
 	msg, err := b.Build()
 	if err != nil {
@@ -139,5 +140,9 @@ func TestFullBuilderFlow(t *testing.T) {
 
 	if len(msg.Segments()) != 3 { // MSH, PID, PV1
 		t.Fatalf("expected 3 segments, got %d", len(msg.Segments()))
+	}
+	pv1 := b.GetSegment("PV1").Build()
+	if string(pv1[3][0][0][0]) != "ROOM1" || string(pv1[3][0][1][0]) != "BED2" {
+		t.Fatalf("expected PV1-3 to be ROOM1^BED2, got %v", pv1[3][0])
 	}
 }

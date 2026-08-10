@@ -3,11 +3,13 @@
 package builder
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 
 	"github.com/blushift-io/hl7v2"
 	"github.com/blushift-io/hl7v2/query"
+	"github.com/blushift-io/hl7v2/builder/field"
 	"github.com/google/uuid"
 )
 
@@ -117,8 +119,22 @@ func (b *Builder) Set(path string, val any) *Builder {
 	} else if len(locParts) == 2 {
 		compIdx, err := strconv.Atoi(locParts[1])
 		if err == nil && compIdx > 0 {
-			// Ensure field is a component field and set it
-			seg.Set(fieldIdx, val) // simplified set per instructions
+			for len(seg.fields) <= fieldIdx {
+				seg.fields = append(seg.fields, field.String(""))
+			}
+			fld := seg.fields[fieldIdx]
+			var raw hl7v2.RawField
+			if fld != nil {
+				raw = fld.Build()
+			}
+			if len(raw) == 0 {
+				raw = append(raw, hl7v2.RawRepetition{})
+			}
+			for len(raw[0]) < compIdx {
+				raw[0] = append(raw[0], hl7v2.RawComponent{})
+			}
+			raw[0][compIdx-1] = hl7v2.RawComponent{hl7v2.RawSubcomponent(fmt.Sprintf("%v", val))}
+			seg.fields[fieldIdx] = field.NewBuilder(raw)
 		}
 	}
 

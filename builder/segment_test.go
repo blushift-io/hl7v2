@@ -39,4 +39,18 @@ func TestSegmentBuilderRefactored(t *testing.T) {
 			t.Fatalf("expected 2 components in field 3, got %d", len(raw[3][0]))
 		}
 	})
+
+	t.Run("Segment with Conditional Fields", func(t *testing.T) {
+		seg := builder.Segment("PID", field.If(true, "ACTIVE"), field.If(false, "INACTIVE"))
+		raw := seg.Build()
+		if len(raw) != 3 {
+			t.Fatalf("expected 3 fields, got %d", len(raw))
+		}
+		if string(raw[1][0][0][0]) != "ACTIVE" {
+			t.Fatalf("expected ACTIVE, got %s", raw[1][0][0][0])
+		}
+		if len(raw[2]) != 0 {
+			t.Fatalf("expected empty field for false condition")
+		}
+	})
 }

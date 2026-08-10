@@ -35,6 +35,8 @@ func (b *SegmentBuilder) Add(item any) *SegmentBuilder {
 	switch v := item.(type) {
 	case *field.Builder:
 		b.fields = append(b.fields, v)
+	case interface{ Build() hl7v2.RawField }:
+		b.fields = append(b.fields, field.NewBuilder(v.Build()))
 	case SegmentOption:
 		v(b)
 	case *SegmentOption:
@@ -63,6 +65,8 @@ func (b *SegmentBuilder) Set(pos int, items ...any) *SegmentBuilder {
 		switch v := items[0].(type) {
 		case *field.Builder:
 			b.fields[pos] = v
+		case interface{ Build() hl7v2.RawField }:
+			b.fields[pos] = field.NewBuilder(v.Build())
 		default:
 			b.fields[pos] = field.String(fmt.Sprintf("%v", v))
 		}
