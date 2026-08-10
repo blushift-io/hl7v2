@@ -8,6 +8,7 @@ import (
 	"github.com/blushift-io/hl7v2"
 	"github.com/blushift-io/hl7v2/query"
 	_ "github.com/blushift-io/hl7v2/schema/spec/v251"
+	"github.com/blushift-io/hl7v2/builder/field"
 )
 
 func TestBuilder(t *testing.T) {
@@ -19,13 +20,16 @@ func TestBuilder(t *testing.T) {
 
 	b := New()
 
-	b.Header(mt, hl7v2.Version251).
-		SetSendingApplication("test_app").
-		SetSendingFacility("test_facility").
-		SetReceivingApplication("test_receiver").
-		SetReceivingFacility("test_receiver_facility").
-		SetProcessingID("abcd123").
-		SetSequenceNumber(1)
+	b.Header(mt, hl7v2.Version251,
+		SendingApp("test_app"),
+		SendingFacility("test_facility"),
+		ReceivingApp("test_receiver"),
+		ReceivingFacility("test_receiver_facility"),
+		ProcessingID("abcd123"),
+		func(hb *HeaderBuilder) {
+			hb.SetSequenceNumber(1)
+		},
+	)
 
 	b.Segment("PID", WithFields(
 		SingleValueField(hl7v2.NewStringValue("1")),
@@ -105,5 +109,40 @@ func TestSegmentBuilder(t *testing.T) {
 	if err := os.WriteFile("./tmp/appended_zxx.hl7", enc, 0644); err != nil {
 		t.Fatal(err)
 	}
+}
 
+
+func TestFullBuilderFlow(t *testing.T) {
+	mt := hl7v2.MessageType{Code: "ADT", Event: "A01", Structure: "ADT_A01"}
+
+	b := New().
+		Header(mt, hl7v2.Version251,
+			SendingApp("EPIC"),
+			SendingFacility("HOSPITAL_A"),
+		)
+		
+	b.Segment("PID",
+		field.Int(1),
+		field.String(""),
+		field.Components("12345", "", "", "MRN"),
+		field.Components("Doe", "John"),
+	)
+
+	b.Set("PV1-1", 1).
+		Set("PV1-2", "I").
+		Set("PV1-3.1", "ROOM1").
+		Set("PV1-3.2", "BED2")
+
+	msg, err := b.Build()
+	if err != nil {
+		t.Fatalf("build failed: %v", err)
+	}
+
+	if len(msg.Segments()) != 3 { // MSH, PID, PV1
+		t.Fatalf("expected 3 segments, got %d", len(msg.Segments()))
+	}
+	pv1 := b.GetSegment("PV1").Build()
+	if string(pv1[3][0][0][0]) != "ROOM1" || string(pv1[3][0][1][0]) != "BED2" {
+		t.Fatalf("expected PV1-3 to be ROOM1^BED2, got %v", pv1[3][0])
+	}
 }
