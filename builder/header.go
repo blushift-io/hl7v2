@@ -6,8 +6,11 @@ import (
 	"github.com/blushift-io/hl7v2"
 )
 
-// HeaderBuildOption defines a function signature for configuring a HeaderBuilder.
-type HeaderBuildOption func(*HeaderBuilder)
+// HeaderOption defines a function signature for configuring a HeaderBuilder.
+type HeaderOption func(*HeaderBuilder)
+
+// HeaderBuildOption is an alias for backwards compatibility.
+type HeaderBuildOption = HeaderOption
 
 // HeaderBuilder builds HL7 v2 MSH header segments.
 type HeaderBuilder struct {
@@ -16,7 +19,7 @@ type HeaderBuilder struct {
 }
 
 // BuildHeader creates a HeaderBuilder with default header settings for the given message type and version.
-func BuildHeader(typ hl7v2.MessageType, ver hl7v2.Version, opts ...HeaderBuildOption) *HeaderBuilder {
+func BuildHeader(typ hl7v2.MessageType, ver hl7v2.Version, opts ...HeaderOption) *HeaderBuilder {
 	hdr := &hl7v2.MessageHeader{
 		Delimiters:       hl7v2.DefaultDelimiters(),
 		MessageDate:      time.Now(),
@@ -292,4 +295,53 @@ func (b *HeaderBuilder) Segment(opts ...SegmentBuildOption) *SegmentBuilder {
 	}
 
 	return Segment("MSH", anyOpts...)
+}
+
+// SendingApp sets the sending application in MSH-3.
+func SendingApp(app string) HeaderOption {
+	return func(h *HeaderBuilder) {
+		h.hdr.SendingApplication = app
+	}
+}
+
+// SendingFacility sets the sending facility in MSH-4.
+func SendingFacility(facility string) HeaderOption {
+	return func(h *HeaderBuilder) {
+		h.hdr.SendingFacility = facility
+	}
+}
+
+// ReceivingApp sets the receiving application in MSH-5.
+func ReceivingApp(app string) HeaderOption {
+	return func(h *HeaderBuilder) {
+		h.hdr.ReceivingApplication = app
+	}
+}
+
+// ReceivingFacility sets the receiving facility in MSH-6.
+func ReceivingFacility(facility string) HeaderOption {
+	return func(h *HeaderBuilder) {
+		h.hdr.ReceivingFacility = facility
+	}
+}
+
+// MessageDate sets the message timestamp in MSH-7.
+func MessageDate(date time.Time) HeaderOption {
+	return func(h *HeaderBuilder) {
+		h.hdr.MessageDate = date
+	}
+}
+
+// ControlID sets the message control ID in MSH-10.
+func ControlID(id string) HeaderOption {
+	return func(h *HeaderBuilder) {
+		h.hdr.ControlID = id
+	}
+}
+
+// ProcessingID sets the processing ID in MSH-11.
+func ProcessingID(id string) HeaderOption {
+	return func(h *HeaderBuilder) {
+		h.hdr.ProcessingID = id
+	}
 }
