@@ -10,9 +10,9 @@ export default defineConfig({
       { text: 'Guide', link: '/guide/getting-started' },
       { text: 'Examples', link: '/guide/examples' },
       {
-        text: 'v0.3.1',
+        text: 'v0.4.0',
         items: [
-          { text: 'v0.3.1 (Latest)', link: '/guide/getting-started' },
+          { text: 'v0.4.0 (Latest)', link: '/guide/getting-started' },
           { text: 'Release Notes', link: '/guide/versioning' }
         ]
       }
@@ -30,6 +30,7 @@ export default defineConfig({
         items: [
           { text: 'Raw Messages (Fast Parser)', link: '/guide/raw-message' },
           { text: 'Structured Messages (Object Model)', link: '/guide/message' },
+          { text: 'Message Builder API', link: '/guide/builder' },
           { text: 'Query & Grammar Selection', link: '/guide/query-grammar' },
           { text: 'Schema & Validation', link: '/guide/schema' },
           { text: 'Transformers & JS Scripting', link: '/guide/transformers' },
