@@ -5,3 +5,5 @@ docs/node_modules/
 docs/.vitepress/dist/
 docs/.vitepress/cache/
 .pnpm-store/
+
+**/tmp
