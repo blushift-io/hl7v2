@@ -3,7 +3,6 @@ package builder
 import (
 	"fmt"
 	"os"
-	"strings"
 	"testing"
 
 	"github.com/blushift-io/hl7v2"
@@ -112,21 +111,6 @@ func TestSegmentBuilder(t *testing.T) {
 	}
 }
 
-type Report struct {
-	Facility string
-	Location string
-}
-
-func setSendingFacilty(r Report, def string) HeaderBuildOption {
-	fac := def
-	if strings.TrimSpace(r.Location) == "Outside" {
-		fac = strings.TrimSuffix(r.Facility, "_OUT")
-	}
-
-	return func(h *HeaderBuilder) {
-		h.SetSendingFacility(fac)
-	}
-}
 
 func TestFullBuilderFlow(t *testing.T) {
 	mt := hl7v2.MessageType{Code: "ADT", Event: "A01", Structure: "ADT_A01"}
